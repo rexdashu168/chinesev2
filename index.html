@@ -1563,7 +1563,8 @@
         const grid = document.getElementById('levelsGrid');
         grid.innerHTML = '';
         
-        const levelKeys = ['mushroom', 'oak', 'firefly', 'treehouse', 'rainbow'];
+        // 使用所有定義的關卡
+        const levelKeys = Object.keys(levelInfo);
         
         levelKeys.forEach(key => {
             const info = levelInfo[key];
