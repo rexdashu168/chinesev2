@@ -714,6 +714,313 @@ transition:transform 0.2s;
 }
 .sound-toggle:active{transform:scale(0.9);}
 
+/* ===== GUIDE PULSE — 引導動畫 ===== */
+.subject.next-up{
+border-width:3.5px!important;
+box-shadow:0 0 0 0 rgba(99,102,241,0.5);
+animation:subjectPulse 1.8s ease-in-out infinite!important;
+}
+.subject.chinese.next-up{box-shadow:0 0 0 0 rgba(239,68,68,0.5);animation:subjectPulseRed 1.8s ease-in-out infinite!important;}
+.subject.english.next-up{box-shadow:0 0 0 0 rgba(59,130,246,0.5);animation:subjectPulseBlue 1.8s ease-in-out infinite!important;}
+.subject.math.next-up{box-shadow:0 0 0 0 rgba(168,85,247,0.5);animation:subjectPulsePurple 1.8s ease-in-out infinite!important;}
+@keyframes subjectPulseRed{0%,100%{box-shadow:0 0 0 0 rgba(239,68,68,0.5);transform:translateY(0);}50%{box-shadow:0 0 0 12px rgba(239,68,68,0);transform:translateY(-4px);}}
+@keyframes subjectPulseBlue{0%,100%{box-shadow:0 0 0 0 rgba(59,130,246,0.5);transform:translateY(0);}50%{box-shadow:0 0 0 12px rgba(59,130,246,0);transform:translateY(-4px);}}
+@keyframes subjectPulsePurple{0%,100%{box-shadow:0 0 0 0 rgba(168,85,247,0.5);transform:translateY(0);}50%{box-shadow:0 0 0 12px rgba(168,85,247,0);transform:translateY(-4px);}}
+
+/* 科目卡「現在去上！」箭頭標籤 */
+.subject-arrow{
+display:none;
+padding:10px 14px;border-radius:22px;
+font-size:1rem;font-weight:900;color:white;
+white-space:nowrap;
+}
+.subject.next-up .subject-arrow{display:block;animation:arrowBounce 0.7s ease-in-out infinite alternate;}
+.subject.next-up .subj-badge{display:none;}
+.subject.chinese.next-up .subject-arrow{background:linear-gradient(135deg,#ef4444,#dc2626);}
+.subject.english.next-up .subject-arrow{background:linear-gradient(135deg,#3b82f6,#2563eb);}
+.subject.math.next-up .subject-arrow{background:linear-gradient(135deg,#a855f7,#9333ea);}
+@keyframes arrowBounce{from{transform:scale(1) translateX(0);}to{transform:scale(1.08) translateX(4px);}}
+
+/* 任務卡「點我去上課」按鈕 */
+.mission-go-btn{
+display:inline-block;
+margin-top:6px;
+padding:6px 14px;
+font-size:0.85rem;font-weight:900;
+color:white;border:none;border-radius:10px;
+cursor:pointer;font-family:‘Nunito’,sans-serif;
+box-shadow:0 3px 8px rgba(0,0,0,0.15);
+transition:transform 0.15s;
+animation:btnGlow 1.5s ease-in-out infinite alternate;
+}
+.mission-go-btn:active{transform:scale(0.95);}
+.mission-go-btn.go-chinese{background:linear-gradient(135deg,#ef4444,#dc2626);}
+.mission-go-btn.go-english{background:linear-gradient(135deg,#3b82f6,#2563eb);}
+.mission-go-btn.go-math{background:linear-gradient(135deg,#a855f7,#9333ea);}
+.mission-go-btn.go-info{background:linear-gradient(135deg,#6366f1,#4f46e5);}
+@keyframes btnGlow{from{box-shadow:0 3px 8px rgba(0,0,0,0.15);}to{box-shadow:0 4px 16px rgba(99,102,241,0.45);}}
+
+/* ===== GUIDE PULSE — 引導動畫 ===== */
+.subject.next-up{border-width:3.5px!important;}
+.subject.chinese.next-up{box-shadow:0 0 0 0 rgba(239,68,68,0.5);animation:subjectPulseRed 1.8s ease-in-out infinite!important;}
+.subject.english.next-up{box-shadow:0 0 0 0 rgba(59,130,246,0.5);animation:subjectPulseBlue 1.8s ease-in-out infinite!important;}
+.subject.math.next-up{box-shadow:0 0 0 0 rgba(168,85,247,0.5);animation:subjectPulsePurple 1.8s ease-in-out infinite!important;}
+@keyframes subjectPulseRed{0%,100%{box-shadow:0 0 0 0 rgba(239,68,68,0.5);transform:translateY(0);}50%{box-shadow:0 0 0 14px rgba(239,68,68,0);transform:translateY(-5px);}}
+@keyframes subjectPulseBlue{0%,100%{box-shadow:0 0 0 0 rgba(59,130,246,0.5);transform:translateY(0);}50%{box-shadow:0 0 0 14px rgba(59,130,246,0);transform:translateY(-5px);}}
+@keyframes subjectPulsePurple{0%,100%{box-shadow:0 0 0 0 rgba(168,85,247,0.5);transform:translateY(0);}50%{box-shadow:0 0 0 14px rgba(168,85,247,0);transform:translateY(-5px);}}
+
+.subject-arrow{display:none;padding:10px 14px;border-radius:22px;font-size:1rem;font-weight:900;color:white;white-space:nowrap;}
+.subject.next-up .subject-arrow{display:block;animation:arrowBounce 0.7s ease-in-out infinite alternate;}
+.subject.next-up .subj-badge{display:none;}
+.subject.chinese.next-up .subject-arrow{background:linear-gradient(135deg,#ef4444,#dc2626);}
+.subject.english.next-up .subject-arrow{background:linear-gradient(135deg,#3b82f6,#2563eb);}
+.subject.math.next-up .subject-arrow{background:linear-gradient(135deg,#a855f7,#9333ea);}
+@keyframes arrowBounce{from{transform:scale(1) translateX(0);}to{transform:scale(1.08) translateX(5px);}}
+
+.mission-go-btn{
+display:inline-block;margin-top:6px;padding:7px 15px;
+font-size:0.85rem;font-weight:900;color:white;
+border:none;border-radius:10px;cursor:pointer;
+font-family:‘Nunito’,sans-serif;
+animation:missionBtnGlow 1.5s ease-in-out infinite alternate;
+}
+.mission-go-btn:active{transform:scale(0.95);}
+.mission-go-btn.go-chinese{background:linear-gradient(135deg,#ef4444,#dc2626);box-shadow:0 3px 10px rgba(239,68,68,0.35);}
+.mission-go-btn.go-english{background:linear-gradient(135deg,#3b82f6,#2563eb);box-shadow:0 3px 10px rgba(59,130,246,0.35);}
+.mission-go-btn.go-math{background:linear-gradient(135deg,#a855f7,#9333ea);box-shadow:0 3px 10px rgba(168,85,247,0.35);}
+.mission-go-btn.go-info{background:linear-gradient(135deg,#6366f1,#4f46e5);box-shadow:0 3px 10px rgba(99,102,241,0.35);}
+@keyframes missionBtnGlow{from{filter:brightness(1);}to{filter:brightness(1.12);}}
+
+/* ===== DAILY MISSION CARD ===== */
+.mission-card{
+background:linear-gradient(135deg,rgba(238,242,255,0.99),rgba(224,231,255,0.99));
+border:2.5px solid #818cf8;
+}
+.mission-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.mission-title-wrap{display:flex;align-items:center;gap:9px;}
+.mission-title{font-size:1.1rem;font-weight:900;color:#3730a3;}
+.mission-day-badge{
+background:linear-gradient(135deg,#6366f1,#4f46e5);
+color:white;font-size:0.85rem;font-weight:800;
+padding:4px 11px;border-radius:20px;
+box-shadow:0 3px 8px rgba(99,102,241,0.35);
+}
+.mission-week-tag{
+font-size:0.82rem;font-weight:800;
+padding:4px 10px;border-radius:12px;
+background:linear-gradient(135deg,#fef3c7,#fde68a);
+color:#92400e;border:1.5px solid #fbbf24;
+}
+
+/* 任務項目 */
+.mission-item{
+display:flex;align-items:center;gap:12px;
+padding:13px 14px;
+background:white;border-radius:14px;
+margin-bottom:9px;
+border:2px solid #e0e7ff;
+transition:all 0.35s cubic-bezier(.34,1.56,.64,1);
+position:relative;overflow:hidden;
+}
+.mission-item.done{
+background:linear-gradient(135deg,#f0fdf4,#dcfce7);
+border-color:#86efac;
+}
+.mission-item::before{
+content:’’;position:absolute;left:0;top:0;bottom:0;width:4px;
+background:linear-gradient(180deg,#6366f1,#818cf8);
+border-radius:4px 0 0 4px;
+}
+.mission-item.done::before{background:linear-gradient(180deg,var(–green),var(–green-dark));}
+.mission-item.special::before{background:linear-gradient(180deg,#f59e0b,#fbbf24);}
+.mission-item.holiday::before{background:linear-gradient(180deg,#ec4899,#f472b6);}
+
+.mission-icon{font-size:1.7rem;flex-shrink:0;}
+.mission-info{flex:1;min-width:0;}
+.mission-name{font-size:1rem;font-weight:800;color:#3730a3;}
+.mission-item.done .mission-name{color:#166534;}
+.mission-desc{font-size:0.82rem;color:#6366f1;font-weight:600;margin-top:2px;}
+.mission-item.done .mission-desc{color:#16a34a;}
+
+/* 任務狀態標籤 — 取代灰色 checkbox */
+.mission-status{
+display:flex;flex-direction:column;align-items:center;gap:4px;
+flex-shrink:0;
+}
+.mission-reward{
+display:flex;flex-direction:column;align-items:center;
+font-size:0.78rem;font-weight:800;color:#92400e;
+background:linear-gradient(135deg,#fef3c7,#fde68a);
+padding:5px 9px;border-radius:10px;
+border:1.5px solid #fbbf24;
+}
+.mission-reward-icon{font-size:1.15rem;}
+
+/* 未完成：顯示「去完成 →」引導箭頭 */
+.mission-goto{
+font-size:0.72rem;font-weight:800;
+color:#6366f1;
+background:#eef2ff;
+padding:3px 8px;border-radius:8px;
+border:1.5px solid #c7d2fe;
+white-space:nowrap;
+}
+.mission-item.special .mission-goto{color:#d97706;background:#fffbeb;border-color:#fde68a;}
+.mission-item.holiday .mission-goto{color:#db2777;background:#fdf2f8;border-color:#fbcfe8;}
+
+/* 完成：大綠勾動畫 */
+.mission-done-check{
+font-size:2rem;
+animation:checkPop 0.5s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes checkPop{
+0%{transform:scale(0) rotate(-30deg);}
+60%{transform:scale(1.3) rotate(5deg);}
+100%{transform:scale(1) rotate(0);}
+}
+
+/* 今日全部完成橫幅 */
+.all-done-banner{
+background:linear-gradient(135deg,#fef3c7,#fde68a,#fbbf24);
+border-radius:16px;padding:16px;
+text-align:center;margin-top:10px;
+border:3px solid #f59e0b;
+box-shadow:0 6px 20px rgba(251,191,36,0.3);
+animation:bannerPop 0.5s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes bannerPop{from{opacity:0;transform:scale(0.85)}to{opacity:1;transform:scale(1)}}
+.all-done-text{font-size:1.15rem;font-weight:900;color:#92400e;}
+.all-done-sub{font-size:0.95rem;color:#b45309;margin-top:4px;font-weight:700;}
+
+/* 連續天數里程碑 */
+.streak-milestones{
+display:flex;gap:7px;margin-top:12px;flex-wrap:wrap;
+}
+.streak-ms{
+flex:1;min-width:55px;
+text-align:center;padding:9px 5px;
+background:white;border-radius:12px;
+border:2px solid #e0e7ff;
+transition:all 0.3s;
+}
+.streak-ms.reached{
+background:linear-gradient(135deg,#fef3c7,#fde68a);
+border-color:#fbbf24;
+box-shadow:0 3px 10px rgba(251,191,36,0.3);
+}
+.streak-ms-icon{font-size:1.5rem;filter:grayscale(1);opacity:0.4;transition:all 0.3s;}
+.streak-ms.reached .streak-ms-icon{filter:grayscale(0);opacity:1;animation:badgePulse 2s infinite;}
+.streak-ms-day{font-size:0.72rem;font-weight:800;color:#6b7280;}
+.streak-ms.reached .streak-ms-day{color:#92400e;}
+
+/* ===== HAMSTER COSTUME COLLECTION ===== */
+.costume-card{
+background:linear-gradient(135deg,rgba(255,241,242,0.99),rgba(254,205,211,0.99));
+border:2.5px solid #fb7185;
+}
+.costume-title{font-size:1.1rem;font-weight:900;color:#9f1239;margin-bottom:13px;text-align:center;}
+.costume-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;}
+.costume-item{
+text-align:center;padding:12px 6px;
+background:white;border-radius:14px;
+border:2px solid #fecdd3;
+transition:all 0.3s;
+cursor:default;
+position:relative;
+}
+.costume-item.unlocked{
+border-color:#fb7185;
+box-shadow:0 4px 14px rgba(251,113,133,0.25);
+cursor:pointer;
+}
+.costume-item.active{
+background:linear-gradient(135deg,#fff1f2,#fecdd3);
+border-color:#f43f5e;
+box-shadow:0 6px 18px rgba(244,63,94,0.3);
+}
+.costume-ham-wrap{position:relative;display:inline-block;margin:4px 0;}
+.costume-ham{font-size:2rem;filter:grayscale(1);opacity:0.3;transition:all 0.3s;display:block;line-height:1;}
+.costume-badge-icon{position:absolute;top:-8px;right:-10px;font-size:1.05rem;line-height:1;filter:grayscale(1);opacity:0.3;transition:all 0.3s;}
+.costume-item.unlocked .costume-ham{filter:grayscale(0);opacity:1;animation:hamFloat 3s ease-in-out infinite;}
+.costume-item.unlocked .costume-badge-icon{filter:grayscale(0);opacity:1;}
+.costume-item.active .costume-ham{animation:hamDance 0.8s ease infinite!important;}
+.costume-item.active .costume-badge-icon{animation:badgePulse 1s ease infinite;}
+.costume-lock{
+position:absolute;top:5px;right:5px;
+font-size:0.8rem;opacity:0.5;
+}
+.costume-item.unlocked .costume-lock{display:none;}
+.costume-name{font-size:0.7rem;color:#be185d;font-weight:800;margin-top:5px;}
+.costume-item:not(.unlocked) .costume-name{color:#9ca3af;}
+.costume-req{font-size:0.62rem;color:#f43f5e;font-weight:700;}
+
+/* ===== MONTHLY PROGRESS ===== */
+.monthly-card{
+background:linear-gradient(135deg,rgba(240,253,244,0.99),rgba(209,250,229,0.99));
+border:2.5px solid #4ade80;
+}
+.monthly-title{font-size:1.1rem;font-weight:900;color:#14532d;margin-bottom:12px;text-align:center;}
+.cal-grid{
+display:grid;grid-template-columns:repeat(7,1fr);gap:5px;
+}
+.cal-day{
+aspect-ratio:1;border-radius:9px;
+display:flex;align-items:center;justify-content:center;
+font-size:0.75rem;font-weight:800;
+background:white;border:1.5px solid #bbf7d0;
+color:#6b7280;
+transition:all 0.3s;
+}
+.cal-day.today{border-color:#22c55e;color:#166534;background:#f0fdf4;box-shadow:0 0 0 2px #86efac;}
+.cal-day.done{background:linear-gradient(135deg,#22c55e,#16a34a);color:white;border-color:#16a34a;box-shadow:0 2px 6px rgba(34,197,94,0.3);}
+.cal-day.done::after{content:‘✓’;position:absolute;font-size:0.6rem;}
+.cal-day.future{opacity:0.35;}
+.cal-day.special{background:linear-gradient(135deg,#fbbf24,#f59e0b);color:white;border-color:#d97706;}
+.cal-day.holiday{background:linear-gradient(135deg,#ec4899,#db2777);color:white;border-color:#be185d;}
+.cal-label{font-size:0.7rem;font-weight:700;text-align:center;color:#6b7280;margin-bottom:5px;}
+.cal-week-labels{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-bottom:4px;}
+
+/* ===== UNLOCK POPUP ===== */
+.unlock-overlay{
+position:fixed;top:0;left:0;width:100%;height:100%;
+background:rgba(0,0,0,0.75);
+display:flex;align-items:center;justify-content:center;
+z-index:3000;
+backdrop-filter:blur(6px);
+}
+.unlock-popup{
+background:linear-gradient(135deg,#fff1f2,#fce7f3,#fdf2f8);
+border-radius:30px;padding:35px 28px;text-align:center;
+max-width:320px;margin:20px;
+box-shadow:0 30px 80px rgba(244,63,94,0.35),0 0 0 3px #fecdd3;
+animation:popIn 0.6s cubic-bezier(.34,1.56,.64,1);
+}
+.unlock-sparkles{font-size:2rem;letter-spacing:5px;animation:sparkleRow 1s ease-in-out infinite alternate;}
+@keyframes sparkleRow{from{transform:scale(1)}to{transform:scale(1.1) rotate(5deg)}}
+.unlock-costume{
+font-size:7rem;margin:10px 0;
+animation:unlockSpin 0.8s cubic-bezier(.34,1.56,.64,1);
+display:block;
+filter:drop-shadow(0 8px 20px rgba(244,63,94,0.4));
+}
+@keyframes unlockSpin{
+0%{transform:scale(0) rotate(-180deg);}
+60%{transform:scale(1.15) rotate(10deg);}
+100%{transform:scale(1) rotate(0);}
+}
+.unlock-title{font-size:1.6rem;font-weight:900;color:#9f1239;margin-bottom:6px;}
+.unlock-name{font-size:1.35rem;font-weight:900;color:#be185d;margin-bottom:8px;}
+.unlock-desc{font-size:1rem;color:#db2777;margin-bottom:20px;font-weight:600;line-height:1.6;}
+.unlock-btn{
+padding:14px 35px;font-size:1.15rem;font-weight:900;
+background:linear-gradient(135deg,#f43f5e,#e11d48);
+color:white;border:none;border-radius:14px;cursor:pointer;
+font-family:‘Nunito’,sans-serif;
+box-shadow:0 5px 0 #9f1239;
+transition:transform 0.1s,box-shadow 0.1s;
+}
+.unlock-btn:active{transform:translateY(3px);box-shadow:0 2px 0 #9f1239;}
+
 /* ===== RESPONSIVE ===== */
 @media(max-width:400px){
 .big-char{font-size:7rem;}
@@ -814,31 +1121,78 @@ transition:transform 0.2s;
     <div class="enc-msg" id="encourageMsg">早安，<span class="hl">阿均</span>！今天又是學習的好日子！選一個科目開始吧，我相信你一定可以的！💪</div>
   </div>
 
-  <div class="card subject chinese" onclick="startLesson('chinese')">
+  <div class="card subject chinese" id="subjChinese" onclick="startLesson('chinese')">
     <div class="subj-icon">📚</div>
     <div class="subj-info">
       <div class="subj-name">國語魔法課</div>
       <div class="subj-desc">認識美麗的中國文字</div>
     </div>
     <div class="subj-badge" id="chineseBadge">開始</div>
+    <div class="subject-arrow">現在去上！▶</div>
   </div>
 
-  <div class="card subject english" onclick="startLesson('english')">
+  <div class="card subject english" id="subjEnglish" onclick="startLesson('english')">
     <div class="subj-icon">🔤</div>
     <div class="subj-info">
       <div class="subj-name">英文探險課</div>
       <div class="subj-desc">認識字母和單字朋友</div>
     </div>
     <div class="subj-badge" id="englishBadge">開始</div>
+    <div class="subject-arrow">現在去上！▶</div>
   </div>
 
-  <div class="card subject math" onclick="startLesson('math')">
+  <div class="card subject math" id="subjMath" onclick="startLesson('math')">
     <div class="subj-icon">🔢</div>
     <div class="subj-info">
       <div class="subj-name">數學遊戲課</div>
       <div class="subj-desc">數字世界的冒險</div>
     </div>
     <div class="subj-badge" id="mathBadge">開始</div>
+    <div class="subject-arrow">現在去上！▶</div>
+  </div>
+
+  <!-- 每日任務卡 -->
+
+  <div class="card mission-card" id="missionCard">
+    <div class="mission-header">
+      <div class="mission-title-wrap">
+        <span style="font-size:1.4rem">📋</span>
+        <div class="mission-title">今日任務</div>
+      </div>
+      <div style="display:flex;gap:7px;align-items:center">
+        <div class="mission-week-tag" id="missionWeekTag">第1週</div>
+        <div class="mission-day-badge" id="missionDayBadge">Day 1</div>
+      </div>
+    </div>
+    <div id="missionList"></div>
+    <div id="allDoneBanner"></div>
+    <div class="mission-header" style="margin-top:14px;margin-bottom:10px">
+      <div class="mission-title-wrap">
+        <span style="font-size:1.2rem">🔥</span>
+        <div style="font-size:0.95rem;font-weight:800;color:#3730a3">連續天數里程碑</div>
+      </div>
+    </div>
+    <div class="streak-milestones" id="streakMilestones"></div>
+  </div>
+
+  <!-- 倉鼠造型收藏 -->
+
+  <div class="card costume-card">
+    <div class="costume-title">🐹 倉鼠造型收藏館</div>
+    <div class="costume-grid" id="costumeGrid"></div>
+  </div>
+
+  <!-- 月曆進度 -->
+
+  <div class="card monthly-card">
+    <div class="monthly-title">📅 本月學習月曆</div>
+    <div class="cal-week-labels">
+      <div class="cal-label">日</div><div class="cal-label">一</div>
+      <div class="cal-label">二</div><div class="cal-label">三</div>
+      <div class="cal-label">四</div><div class="cal-label">五</div>
+      <div class="cal-label">六</div>
+    </div>
+    <div class="cal-grid" id="calGrid"></div>
   </div>
 
   <div class="card exchange-card">
@@ -883,6 +1237,19 @@ transition:transform 0.2s;
     <div class="popup-title" id="popupTitle">獲得迷你倉徽章！</div>
     <div class="popup-desc" id="popupDesc">太棒了！繼續加油喔！</div>
     <button class="popup-btn" onclick="closeBadgePopup()">太棒了！🎉</button>
+  </div>
+</div>
+
+<!-- 造型解鎖彈窗 -->
+
+<div id="unlockOverlay" class="unlock-overlay hidden">
+  <div class="unlock-popup">
+    <div class="unlock-sparkles">✨🌟✨</div>
+    <span class="unlock-costume" id="unlockCostumeIcon">🐹</span>
+    <div class="unlock-title">🎉 新造型解鎖！</div>
+    <div class="unlock-name" id="unlockCostumeName">學士倉鼠</div>
+    <div class="unlock-desc" id="unlockCostumeDesc">太棒了！繼續努力！</div>
+    <button class="unlock-btn" onclick="closeUnlockPopup()">好耶！馬上換上！🎊</button>
   </div>
 </div>
 
@@ -1149,7 +1516,9 @@ let S = {
   badges:{mini:0,small:0,medium:0,large:0},
   subj:null,unit:0,sessionBadges:0,retries:0,
   today:{chinese:{done:false},english:{done:false},math:{done:false}},
-  stats:{streak:0,lastDate:null,totalRetries:0}
+  stats:{streak:0,lastDate:null,totalRetries:0},
+  missions:{startDate:null,dailyLog:{},challengeLog:{}},
+  costumes:{active:'default',unlocked:['default']}
 };
 
 /* ===================================================
@@ -1190,6 +1559,9 @@ function updateUI(){
   document.getElementById('displayName').textContent = S.name;
   document.getElementById('streakDays').textContent = S.stats.streak;
 
+  // 玩家頭像換成當前造型
+  updateAvatarIcon();
+
   const total = S.badges.mini + S.badges.small*3 + S.badges.medium*9 + S.badges.large*27;
   const titles=[{n:0,t:'學習小新手'},{n:3,t:'認真小學徒'},{n:6,t:'努力小勇士'},{n:10,t:'聰明小達人'},{n:20,t:'學習小明星'},{n:30,t:'超級學霸'}];
   let title = titles[0].t;
@@ -1210,24 +1582,49 @@ function updateUI(){
   document.getElementById('exMedium').disabled = S.badges.small < 3;
   document.getElementById('exLarge').disabled = S.badges.medium < 3;
 
-  const hour = new Date().getHours();
-  const greet = hour<12?'早安':hour<18?'午安':'晚安';
-  document.getElementById('encourageMsg').innerHTML =
-    `${greet}，<span class="hl">${S.name}</span>！今天又是學習的好日子！選一個科目開始吧，我相信你一定可以的！💪`;
-
   ['chinese','english','math'].forEach(s=>{
     const badge = document.getElementById(s+'Badge');
     const cards = document.querySelectorAll('.subject.'+s);
     if(S.today[s].done){
       badge.textContent='完成✓';
       badge.classList.add('done-badge');
-      cards.forEach(c=>c.classList.add('done'));
+      cards.forEach(c=>{ c.classList.add('done'); c.classList.remove('next-up'); });
     } else {
       badge.textContent='開始';
       badge.classList.remove('done-badge');
-      cards.forEach(c=>c.classList.remove('done'));
+      cards.forEach(c=>{ c.classList.remove('done','next-up'); });
     }
   });
+
+  // 找出「下一個還沒完成的科目」，加上引導高亮
+  const order = ['chinese','english','math'];
+  const nextSubj = order.find(s => !S.today[s].done);
+  if(nextSubj){
+    document.querySelectorAll('.subject.'+nextSubj).forEach(c=>c.classList.add('next-up'));
+  }
+
+  // 小倉鼠老師引導語：明確指出下一步
+  const hour = new Date().getHours();
+  const greet = hour<12?'早安':hour<18?'午安':'晚安';
+  const allDone = order.every(s=>S.today[s].done);
+  let guideMsg = '';
+  if(allDone){
+    guideMsg = `${greet}，<span class="hl">${S.name}</span>！🎉 今天三科全部完成了！好厲害！明天再來繼續冒險吧！`;
+  } else if(nextSubj){
+    const subjNames = {chinese:'國語魔法課📚',english:'英文探險課🔤',math:'數學遊戲課🔢'};
+    const doneCount = order.filter(s=>S.today[s].done).length;
+    if(doneCount === 0){
+      guideMsg = `${greet}，<span class="hl">${S.name}</span>！今天的任務開始囉！先去上<b>${subjNames[nextSubj]}</b>，點下面閃閃發光的卡片就可以開始！👇`;
+    } else {
+      guideMsg = `做得很好！<span class="hl">${S.name}</span>已經完成 ${doneCount} 科了！繼續加油，現在去上<b>${subjNames[nextSubj]}</b>吧！👇`;
+    }
+  }
+  document.getElementById('encourageMsg').innerHTML = guideMsg;
+  updateMissionStatus();
+  renderMissions();
+  renderCostumes();
+  renderCalendar();
+  checkCostumeUnlocks();
 }
 
 function exchange(type){
@@ -1417,6 +1814,9 @@ function checkAns(correct, btn){
     el.classList.add('score-anim');
     S.retries=0;
 
+    // 記錄挑戰答題數（只有首次答對才計，不含重試）
+    logChallengeCorrect();
+
     if(S.sessionBadges===1 || S.sessionBadges%3===0){
       setTimeout(()=>{ sfxLevelUp(); showBadgePopup('mini'); }, 900);
     }
@@ -1470,6 +1870,9 @@ function checkTest(correct, btn, ans){
     el.classList.add('score-anim');
     S.retries=0;
 
+    // 記錄挑戰答題數
+    logChallengeCorrect();
+
     const r = btn.getBoundingClientRect();
     burstParticles(r.left+r.width/2, r.top+r.height/2);
 
@@ -1502,19 +1905,47 @@ function showComplete(){
   S.today[S.subj].done = true;
   const today = new Date().toISOString().split('T')[0];
   if(S.stats.lastDate !== today){ S.stats.streak++; S.stats.lastDate=today; }
+
+  // 本科全程無錯誤 → 記錄 perfect
+  if(S.retries === 0){
+    const key = todayStr();
+    if(!S.missions.challengeLog[key]) S.missions.challengeLog[key]={correct:0,perfect:false};
+    S.missions.challengeLog[key].perfect = true;
+  }
+
+  // 更新任務狀態並檢查造型解鎖
+  updateMissionStatus();
   save();
+  checkCostumeUnlocks();
+
   sfxLevelUp();
   triggerBurst();
   setTimeout(triggerBurst, 800);
 
+  // 算出今日已完成幾科
+  const doneCount = ['chinese','english','math'].filter(s=>S.today[s].done).length;
+  const allThreeDone = doneCount === 3;
+
+  // 今日任務完成情況
+  const log = getTodayLog();
+  const missionDoneCount = log ? log.tasks.filter(t=>t.done).length : 0;
+  const missionTotal     = log ? log.tasks.length : 0;
+
+  // 當前造型
+  const activeCostume = COSTUMES.find(c=>c.id===S.costumes.active);
+  const hamBadge = activeCostume?.badge || '';
+  const hamHtml = hamBadge
+    ? `<span style="position:relative;display:inline-block">${activeCostume.ham}<span style="position:absolute;top:-12px;right:-14px;font-size:2.2rem">${hamBadge}</span></span>`
+    : (activeCostume?.ham || '🐹');
+
   document.getElementById('learnContent').innerHTML = `
     <div class="teach-card complete">
-      <span class="complete-ham">🐹</span>
+      <span class="complete-ham">${hamHtml}</span>
       <div class="complete-title">太厲害了！${S.name}！</div>
       <div class="complete-msg">
         今天的${COURSES[S.subj].title}全部完成了！<br>
         你收集了 ${S.sessionBadges} 個迷你倉徽章！<br>
-        繼續加油，你會越來越厲害的！✨
+        ${allThreeDone ? '🎉 三科全部完成！額外獎勵已送出！' : `還差 ${3-doneCount} 科就全部完成！加油！`}
       </div>
       <div class="complete-badges">
         <div class="comp-badge">
@@ -1527,7 +1958,15 @@ function showComplete(){
           <div class="comp-b-count">${S.stats.streak}</div>
           <div class="comp-b-name">連續天數</div>
         </div>
+        <div class="comp-badge">
+          <div class="comp-b-icon">📋</div>
+          <div class="comp-b-count">${missionDoneCount}/${missionTotal}</div>
+          <div class="comp-b-name">今日任務</div>
+        </div>
       </div>
+      ${allThreeDone ? `<div style="background:linear-gradient(135deg,#fef3c7,#fde68a);border-radius:16px;padding:14px;margin-bottom:16px;border:2.5px solid #fbbf24;font-size:1.05rem;font-weight:800;color:#92400e;text-align:center;">
+        🏆 今日全科達標！連續 ${S.stats.streak} 天！繼續保持！
+      </div>` : ''}
       <button class="next-btn" onclick="sfxClick();exitLesson()">🏠 回到主畫面</button>
     </div>`;
 }
@@ -1573,6 +2012,433 @@ function showBadgePopup(type){
 function closeBadgePopup(){
   sfxClick();
   document.getElementById('badgeOverlay').classList.add('hidden');
+}
+
+/* ===================================================
+   MISSION SYSTEM — 一個月任務計畫
+   =================================================== */
+
+// ── 倉鼠造型定義 ──
+const COSTUMES = [
+  {id:'default',   ham:'🐹', badge:'',   name:'原版小倉鼠',  desc:'最可愛的原版造型！',          req:0,  reqType:'day'},
+  {id:'scholar',   ham:'🐹', badge:'🎓', name:'學士倉鼠',    desc:'連續7天學習解鎖！',            req:7,  reqType:'streak'},
+  {id:'star',      ham:'🐹', badge:'⭐', name:'明星倉鼠',    desc:'連續14天學習解鎖！',           req:14, reqType:'streak'},
+  {id:'wizard',    ham:'🐹', badge:'🪄', name:'魔法師倉鼠',  desc:'連續21天學習解鎖！',           req:21, reqType:'streak'},
+  {id:'crown',     ham:'🐹', badge:'👑', name:'皇冠倉鼠',    desc:'完成30天月度挑戰解鎖！',       req:30, reqType:'streak'},
+  {id:'ninja',     ham:'🐹', badge:'🎽', name:'忍者倉鼠',    desc:'完成10次每日挑戰解鎖！',       req:10, reqType:'challenge'},
+  {id:'chef',      ham:'🐹', badge:'🍳', name:'廚師倉鼠',    desc:'累積50個迷你倉徽章解鎖！',     req:50, reqType:'mini'},
+  {id:'astronaut', ham:'🐹', badge:'🚀', name:'太空人倉鼠',  desc:'完成一整個月所有任務解鎖！',   req:30, reqType:'allDone'},
+];
+
+// ── 連續天數里程碑 ──
+const STREAK_MILESTONES = [
+  {days:3,  icon:'🌱', label:'3天'},
+  {days:7,  icon:'🎓', label:'7天'},
+  {days:14, icon:'⭐', label:'14天'},
+  {days:21, icon:'🧙', label:'21天'},
+  {days:30, icon:'👑', label:'30天'},
+];
+
+// ── 特殊節日（月/日）──
+const HOLIDAYS = {
+  '1/1':'🎊 元旦快樂！','2/14':'💝 情人節','4/4':'👶 兒童節',
+  '6/1':'🌍 兒童節(國際)','9/28':'👨‍🏫 教師節','10/31':'🎃 萬聖節',
+  '12/25':'🎄 聖誕節',
+};
+
+// ── 取得今天日期字串 ──
+function todayStr(){ return new Date().toISOString().split('T')[0]; }
+
+// ── 計算從開始到今天是第幾天 (1-based) ──
+function getDayNumber(){
+  if(!S.missions.startDate) return 1;
+  const start = new Date(S.missions.startDate);
+  const now   = new Date(todayStr());
+  const diff  = Math.floor((now - start)/(1000*60*60*24));
+  return Math.max(1, diff+1);
+}
+
+// ── 取得週數 ──
+function getWeekNumber(){
+  const d = getDayNumber();
+  if(d<=7)  return 1;
+  if(d<=14) return 2;
+  if(d<=21) return 3;
+  if(d<=28) return 4;
+  return 5;
+}
+
+// ── 判斷是否為節日 ──
+function getTodayHoliday(){
+  const now = new Date();
+  const key = `${now.getMonth()+1}/${now.getDate()}`;
+  return HOLIDAYS[key] || null;
+}
+
+// ── 產生今天的任務清單 ──
+function generateTodayMissions(dayNum){
+  const week = getWeekNumber();
+  const holiday = getTodayHoliday();
+  const tasks = [];
+
+  // 基本科目任務（依週次遞增難度）
+  if(week === 1){
+    // 第1週：完成任意 2 科即可
+    tasks.push({id:'chinese', icon:'📚', name:'完成國語魔法課', desc:'認識大自然的文字！',      type:'subject', target:'chinese', reward:'🐹×2', mini:2});
+    tasks.push({id:'english', icon:'🔤', name:'完成英文探險課', desc:'認識A-D字母朋友！',       type:'subject', target:'english', reward:'🐹×2', mini:2});
+    tasks.push({id:'math',    icon:'🔢', name:'完成數學遊戲課', desc:'數數和加法大挑戰！',       type:'subject', target:'math',    reward:'🐹×2', mini:2});
+  } else if(week === 2){
+    // 第2週：三科全部完成
+    tasks.push({id:'chinese', icon:'📚', name:'完成國語魔法課', desc:'三科全部完成才算達標喔！', type:'subject', target:'chinese', reward:'🐹×2', mini:2});
+    tasks.push({id:'english', icon:'🔤', name:'完成英文探險課', desc:'加油！三科全完成有加倍獎勵！',type:'subject',target:'english',reward:'🐹×2',mini:2});
+    tasks.push({id:'math',    icon:'🔢', name:'完成數學遊戲課', desc:'最後一科！完成任務！',      type:'subject', target:'math',    reward:'🐹×2', mini:2});
+  } else if(week === 3){
+    tasks.push({id:'chinese', icon:'📚', name:'完成國語魔法課', desc:'挑戰週！全力以赴！',        type:'subject', target:'chinese', reward:'🐹×3', mini:3});
+    tasks.push({id:'english', icon:'🔤', name:'完成英文探險課', desc:'英文加油！',                type:'subject', target:'english', reward:'🐹×3', mini:3});
+    tasks.push({id:'math',    icon:'🔢', name:'完成數學遊戲課', desc:'數學達人！',                type:'subject', target:'math',    reward:'🐹×3', mini:3});
+  } else {
+    tasks.push({id:'chinese', icon:'📚', name:'完成國語魔法課', desc:'大師週！最後衝刺！',        type:'subject', target:'chinese', reward:'🐹×3', mini:3});
+    tasks.push({id:'english', icon:'🔤', name:'完成英文探險課', desc:'英文大師！',                type:'subject', target:'english', reward:'🐹×3', mini:3});
+    tasks.push({id:'math',    icon:'🔢', name:'完成數學遊戲課', desc:'數學大師！',                type:'subject', target:'math',    reward:'🐹×3', mini:3});
+  }
+
+  // 每日限定挑戰題（固定，依日期輪替）
+  const challenges = [
+    {id:'challenge', icon:'⚡', name:'限定挑戰：一口氣答對3題', desc:'答對任意3題不出錯！',         type:'challenge', target:3, reward:'🐹×3', mini:3},
+    {id:'challenge', icon:'🎯', name:'限定挑戰：完成國語不出錯', desc:'國語課中全部答對，不能答錯！',type:'challenge', target:'chinese_perfect', reward:'🐹×4', mini:4},
+    {id:'challenge', icon:'💫', name:'限定挑戰：英文一口氣3題', desc:'英文課連續答對3題！',         type:'challenge', target:'english_streak', reward:'🐹×3', mini:3},
+    {id:'challenge', icon:'🔥', name:'限定挑戰：完成三科不出錯', desc:'三科都不出錯就能拿到超多獎勵！',type:'challenge',target:'all_perfect',reward:'🐹×5',mini:5},
+    {id:'challenge', icon:'⭐', name:'限定挑戰：連續答對5題',    desc:'任何科目連續答對5題！',       type:'challenge', target:5, reward:'🐹×4', mini:4},
+    {id:'challenge', icon:'🌈', name:'限定挑戰：今日學習超快手', desc:'30分鐘內完成任意兩科！',      type:'challenge', target:'speed', reward:'🐹×3', mini:3},
+    {id:'challenge', icon:'🧠', name:'限定挑戰：全部答對無錯誤', desc:'今天三科全部答對！超強！',    type:'challenge', target:'all_correct', reward:'🐹×6', mini:6},
+  ];
+  const chIdx = (dayNum-1) % challenges.length;
+  tasks.push({...challenges[chIdx], id:'challenge_daily'});
+
+  // 連續天數獎勵任務
+  tasks.push({
+    id:'streak',
+    icon:'🔥',
+    name:`連續學習 ${S.stats.streak+1} 天`,
+    desc:'今天完成所有科目就能延續連勝！',
+    type:'streak',
+    target: S.stats.streak+1,
+    reward:'🐹×2',
+    mini:2
+  });
+
+  // 特殊節日任務
+  if(holiday){
+    tasks.push({
+      id:'holiday',
+      icon:'🎉',
+      name:`節日任務：${holiday}`,
+      desc:'今天是特別的日子！完成三科拿限定大獎！',
+      type:'holiday',
+      target:'all',
+      reward:'🐹×5',
+      mini:5,
+      special:true
+    });
+  }
+
+  return tasks;
+}
+
+// ── 取得或建立今天的日誌 ──
+function getTodayLog(){
+  const key = todayStr();
+  if(!S.missions.dailyLog[key]){
+    const dayNum = getDayNumber();
+    if(!S.missions.startDate) S.missions.startDate = key;
+    const tasks = generateTodayMissions(dayNum);
+    S.missions.dailyLog[key] = {
+      tasks: tasks.map(t=>({id:t.id, done:false})),
+      allDone: false,
+      taskDefs: tasks  // 儲存定義方便顯示
+    };
+  }
+  return S.missions.dailyLog[key];
+}
+
+// ── 更新任務完成狀態 ──
+function updateMissionStatus(){
+  const key = todayStr();
+  const log = getTodayLog();
+  if(!log) return;
+
+  let changed = false;
+  log.tasks.forEach((t,i)=>{
+    if(t.done) return;
+    const def = log.taskDefs?.[i];
+    if(!def) return;
+
+    let done = false;
+    if(def.type === 'subject'){
+      done = S.today[def.target]?.done || false;
+    } else if(def.type === 'streak'){
+      done = S.stats.streak >= def.target;
+    } else if(def.type === 'challenge'){
+      const cl = S.missions.challengeLog[key] || {};
+      if(def.target === 3 || def.target === 5){
+        done = (cl.correct||0) >= def.target;
+      } else if(def.target === 'all_correct' || def.target === 'chinese_perfect' || def.target === 'all_perfect'){
+        done = cl.perfect || false;
+      } else {
+        done = false; // speed challenge — manual check
+      }
+    } else if(def.type === 'holiday'){
+      done = S.today.chinese.done && S.today.english.done && S.today.math.done;
+    }
+
+    if(done){ t.done = true; changed = true; }
+  });
+
+  // 判斷今日全部完成（至少科目任務完成）
+  const subjectTasks = log.tasks.filter((_,i)=> log.taskDefs?.[i]?.type === 'subject');
+  const allSubjectDone = subjectTasks.every(t=>t.done);
+  if(allSubjectDone && !log.allDone){
+    log.allDone = true;
+    changed = true;
+    // 額外獎勵
+    const week = getWeekNumber();
+    const bonus = week <= 2 ? 3 : 5;
+    S.badges.mini += bonus;
+    setTimeout(()=>{ sfxLevelUp(); showBadgePopup('mini'); triggerBurst(); }, 500);
+  }
+
+  if(changed) save();
+}
+
+// ── 渲染任務卡 ──
+function renderMissions(){
+  const log = getTodayLog();
+  const dayNum = getDayNumber();
+  const week   = getWeekNumber();
+
+  document.getElementById('missionDayBadge').textContent = `Day ${dayNum}`;
+  document.getElementById('missionWeekTag').textContent  = `第${week}週`;
+
+  const list = document.getElementById('missionList');
+  if(!log || !log.taskDefs){ list.innerHTML = ''; return; }
+
+  // 科目任務對應的跳轉按鈕
+  const subjBtnClass = {chinese:'go-chinese',english:'go-english',math:'go-math'};
+  const subjBtnText  = {chinese:'📚 去上國語課！',english:'🔤 去上英文課！',math:'🔢 去上數學課！'};
+
+  list.innerHTML = log.taskDefs.map((def,i)=>{
+    const taskState = log.tasks[i];
+    const done = taskState?.done || false;
+    const typeClass = def.type==='holiday'?'holiday':def.type==='challenge'?'special':'';
+    const rewardNum = def.reward.split('×')[1] || '?';
+
+    // 未完成的科目任務 → 顯示可點擊跳轉按鈕
+    let actionHtml = '';
+    if(!done){
+      if(def.type === 'subject'){
+        const cls = subjBtnClass[def.target] || 'go-info';
+        const txt = subjBtnText[def.target] || '去上課！';
+        actionHtml = `<button class="mission-go-btn ${cls}" onclick="sfxClick();startLesson('${def.target}')">▶ ${txt}</button>`;
+      } else if(def.type === 'challenge'){
+        actionHtml = `<div style="margin-top:5px;font-size:0.78rem;font-weight:700;color:#d97706;background:#fffbeb;padding:4px 10px;border-radius:8px;border:1.5px solid #fde68a;display:inline-block;">⚡ 上課答題時自動累積</div>`;
+      } else if(def.type === 'streak'){
+        actionHtml = `<div style="margin-top:5px;font-size:0.78rem;font-weight:700;color:#6366f1;background:#eef2ff;padding:4px 10px;border-radius:8px;border:1.5px solid #c7d2fe;display:inline-block;">🔥 完成三科自動達標</div>`;
+      } else if(def.type === 'holiday'){
+        actionHtml = `<div style="margin-top:5px;font-size:0.78rem;font-weight:700;color:#db2777;background:#fdf2f8;padding:4px 10px;border-radius:8px;border:1.5px solid #fbcfe8;display:inline-block;">🎉 完成三科解鎖節日獎勵！</div>`;
+      }
+    }
+
+    return `<div class="mission-item ${done?'done':''} ${typeClass}">
+      <div class="mission-icon">${def.icon}</div>
+      <div class="mission-info">
+        <div class="mission-name">${def.name}</div>
+        <div class="mission-desc">${done ? '✨ 完成！做得太棒了！' : def.desc}</div>
+        ${actionHtml}
+      </div>
+      <div class="mission-status">
+        <div class="mission-reward">
+          <div class="mission-reward-icon">🐹</div>
+          <div>×${rewardNum}</div>
+        </div>
+        ${done ? `<div class="mission-done-check">✅</div>` : ''}
+      </div>
+    </div>`;
+  }).join('');
+
+  // 全部完成橫幅
+  const banner = document.getElementById('allDoneBanner');
+  if(log.allDone){
+    banner.innerHTML = `<div class="all-done-banner">
+      <div class="all-done-text">🎉 今日任務全部完成！太棒了！</div>
+      <div class="all-done-sub">明天又有新任務等著你喔！🐹</div>
+    </div>`;
+  } else { banner.innerHTML=''; }
+
+  renderStreakMilestones();
+}
+
+// ── 渲染連續天數里程碑 ──
+function renderStreakMilestones(){
+  const streak = S.stats.streak;
+  const el = document.getElementById('streakMilestones');
+  el.innerHTML = STREAK_MILESTONES.map(m=>`
+    <div class="streak-ms ${streak>=m.days?'reached':''}">
+      <div class="streak-ms-icon">${m.icon}</div>
+      <div class="streak-ms-day">${m.label}</div>
+    </div>
+  `).join('');
+}
+
+// ── 渲染倉鼠造型收藏館 ──
+function renderCostumes(){
+  const el = document.getElementById('costumeGrid');
+  el.innerHTML = COSTUMES.map(c=>{
+    const unlocked = S.costumes.unlocked.includes(c.id);
+    const active   = S.costumes.active === c.id;
+    const badgeHtml = c.badge
+      ? `<span class="costume-badge-icon">${c.badge}</span>`
+      : '';
+    return `<div class="costume-item ${unlocked?'unlocked':''} ${active?'active':''}"
+      data-cid="${c.id}" title="${c.desc}">
+      <div class="costume-lock">🔒</div>
+      <div class="costume-ham-wrap">
+        <span class="costume-ham">${c.ham}</span>
+        ${badgeHtml}
+      </div>
+      <div class="costume-name">${c.name}</div>
+      ${!unlocked?`<div class="costume-req">${getReqText(c)}</div>`:''}
+    </div>`;
+  }).join('');
+
+  // 用事件委派綁定點擊，避免 template literal 衝突
+  el.onclick = function(e){
+    const item = e.target.closest('.costume-item');
+    if(!item) return;
+    const cid = item.dataset.cid;
+    if(item.classList.contains('unlocked')) equipCostume(cid);
+  };
+}
+
+function getReqText(c){
+  if(c.reqType==='streak') return `🔥${c.req}天`;
+  if(c.reqType==='mini')   return `🐹×${c.req}`;
+  if(c.reqType==='challenge') return `⚡${c.req}次`;
+  if(c.reqType==='allDone')   return `📅全勤`;
+  return '';
+}
+
+function equipCostume(id){
+  sfxClick();
+  S.costumes.active = id;
+  save();
+  renderCostumes();
+  updateAvatarIcon();
+}
+
+function updateAvatarIcon(){
+  const c = COSTUMES.find(x=>x.id===S.costumes.active);
+  if(!c) return;
+  const av = document.querySelector('.player-avatar');
+  if(av) av.innerHTML = c.badge
+    ? `<span style="position:relative;display:inline-block;font-size:2.4rem;line-height:1">${c.ham}<span style="position:absolute;top:-8px;right:-8px;font-size:1.1rem">${c.badge}</span></span>`
+    : `<span style="font-size:2.6rem">${c.ham}</span>`;
+}
+
+// ── 檢查是否解鎖新造型 ──
+function checkCostumeUnlocks(){
+  let newUnlock = null;
+  COSTUMES.forEach(c=>{
+    if(S.costumes.unlocked.includes(c.id)) return;
+    let ok = false;
+    if(c.reqType==='streak')    ok = S.stats.streak >= c.req;
+    if(c.reqType==='mini')      ok = S.badges.mini  >= c.req;
+    if(c.reqType==='challenge'){
+      const total = Object.values(S.missions.challengeLog).filter(l=>l.perfect).length;
+      ok = total >= c.req;
+    }
+    if(c.reqType==='allDone'){
+      const total = Object.values(S.missions.dailyLog).filter(l=>l.allDone).length;
+      ok = total >= c.req;
+    }
+    if(ok){
+      S.costumes.unlocked.push(c.id);
+      newUnlock = c;
+    }
+  });
+  if(newUnlock){
+    save();
+    setTimeout(()=>showUnlockPopup(newUnlock), 1200);
+  }
+}
+
+// ── 造型解鎖彈窗 ──
+function showUnlockPopup(costume){
+  sfxLevelUp();
+  triggerBurst();
+  const popupEl = document.getElementById('unlockCostumeIcon');
+  if(costume.badge){
+    popupEl.innerHTML = `<span style="position:relative;display:inline-block">${costume.ham}<span style="position:absolute;top:-15px;right:-15px;font-size:3rem">${costume.badge}</span></span>`;
+  } else {
+    popupEl.textContent = costume.ham;
+  }
+  document.getElementById('unlockCostumeName').textContent = costume.name;
+  document.getElementById('unlockCostumeDesc').textContent = costume.desc;
+  document.getElementById('unlockOverlay').classList.remove('hidden');
+}
+
+function closeUnlockPopup(){
+  sfxClick();
+  document.getElementById('unlockOverlay').classList.add('hidden');
+  renderCostumes();
+}
+
+// ── 渲染本月月曆 ──
+function renderCalendar(){
+  const now   = new Date();
+  const year  = now.getFullYear();
+  const month = now.getMonth();
+  const today = now.getDate();
+  const firstDay = new Date(year, month, 1).getDay(); // 0=日
+  const daysInMonth = new Date(year, month+1, 0).getDate();
+
+  const el = document.getElementById('calGrid');
+  let html = '';
+
+  // 空白格
+  for(let i=0;i<firstDay;i++) html += '<div class="cal-day future"></div>';
+
+  for(let d=1;d<=daysInMonth;d++){
+    const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const log = S.missions.dailyLog[dateStr];
+    const isToday   = d === today;
+    const isPast    = d < today;
+    const isDone    = log?.allDone;
+    const isHoliday = HOLIDAYS[`${month+1}/${d}`];
+    const isSpecial = isPast && !isDone && d < today; // 錯過
+
+    let cls = 'cal-day';
+    if(isToday)    cls += ' today';
+    if(isDone)     cls += ' done';
+    if(isHoliday && !isDone) cls += ' holiday';
+    if(d > today)  cls += ' future';
+
+    html += `<div class="${cls}" title="${isHoliday||''}">${d}${isDone?'':''}${isHoliday&&!isDone?'🎉':''}</div>`;
+  }
+
+  el.innerHTML = html;
+}
+
+// ── 記錄挑戰答題 ──
+function logChallengeCorrect(){
+  const key = todayStr();
+  if(!S.missions.challengeLog[key]) S.missions.challengeLog[key] = {correct:0, perfect:false};
+  S.missions.challengeLog[key].correct++;
+}
+
+function logChallengePerfect(){
+  const key = todayStr();
+  if(!S.missions.challengeLog[key]) S.missions.challengeLog[key] = {correct:0, perfect:false};
+  S.missions.challengeLog[key].perfect = true;
 }
 
 /* ===================================================
