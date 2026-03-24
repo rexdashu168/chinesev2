@@ -2,2118 +2,1589 @@
 
 <html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>🦊 阿均的每日學習樂園</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-```
-    :root {
-        --primary: #22c55e;
-        --primary-dark: #16a34a;
-        --secondary: #fbbf24;
-        --danger: #ef4444;
-        --chinese: #ef4444;
-        --english: #3b82f6;
-        --math: #a855f7;
-    }
-
-    body {
-        font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Microsoft JhengHei', sans-serif;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-        min-height: 100vh;
-    }
-
-    .container {
-        max-width: 500px;
-        margin: 0 auto;
-        padding: 15px;
-        min-height: 100vh;
-    }
-
-    /* ===== 歡迎畫面 ===== */
-    .welcome-screen {
-        text-align: center;
-        padding: 40px 20px;
-    }
-
-    .welcome-logo {
-        font-size: 80px;
-        margin-bottom: 15px;
-        animation: bounce 2s ease-in-out infinite;
-    }
-
-    @keyframes bounce {
-        0%, 100% { transform: translateY(0); }
-        50% { transform: translateY(-15px); }
-    }
-
-    .welcome-title {
-        font-size: 2rem;
-        font-weight: 900;
-        color: white;
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        margin-bottom: 10px;
-    }
-
-    .welcome-subtitle {
-        font-size: 1rem;
-        color: rgba(255,255,255,0.9);
-        margin-bottom: 30px;
-    }
-
-    .name-input-box {
-        background: rgba(255,255,255,0.95);
-        border-radius: 20px;
-        padding: 25px;
-        margin-bottom: 20px;
-        box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-    }
-
-    .name-input-box label {
-        display: block;
-        font-weight: 700;
-        color: #333;
-        margin-bottom: 10px;
-        font-size: 1.1rem;
-    }
-
-    .name-input-box input {
-        width: 100%;
-        padding: 15px;
-        font-size: 1.2rem;
-        border: 3px solid #e5e5e5;
-        border-radius: 12px;
-        outline: none;
-        font-family: inherit;
-        text-align: center;
-    }
-
-    .name-input-box input:focus {
-        border-color: var(--primary);
-    }
-
-    .start-btn {
-        width: 100%;
-        padding: 18px;
-        font-size: 1.3rem;
-        font-weight: 800;
-        font-family: inherit;
-        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-        color: white;
-        border: none;
-        border-radius: 15px;
-        cursor: pointer;
-        box-shadow: 0 6px 0 #14532d, 0 8px 20px rgba(0,0,0,0.3);
-        transition: all 0.2s;
-    }
-
-    .start-btn:hover {
-        transform: translateY(-2px);
-    }
-
-    .start-btn:active {
-        transform: translateY(4px);
-        box-shadow: 0 2px 0 #14532d;
-    }
-
-    /* ===== 主畫面 ===== */
-    .main-screen {
-        display: none;
-    }
-
-    .date-card {
-        background: rgba(255,255,255,0.95);
-        border-radius: 20px;
-        padding: 20px;
-        text-align: center;
-        margin-bottom: 15px;
-        box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-    }
-
-    .today-date {
-        font-size: 0.85rem;
-        color: #888;
-        margin-bottom: 5px;
-    }
-
-    .greeting {
-        font-size: 1.5rem;
-        font-weight: 900;
-        color: #333;
-    }
-
-    .greeting .name { color: var(--primary); }
-
-    .motivation {
-        font-size: 0.9rem;
-        color: #666;
-        margin-top: 5px;
-    }
-
-    /* ===== 連續學習 ===== */
-    .streak-card {
-        background: linear-gradient(135deg, #ff9a56 0%, #ff6b6b 100%);
-        border-radius: 16px;
-        padding: 15px 20px;
-        margin-bottom: 15px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        color: white;
-        box-shadow: 0 6px 20px rgba(255,107,107,0.4);
-    }
-
-    .streak-info {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-    }
-
-    .streak-icon { font-size: 2.2rem; }
-    .streak-text h3 { font-size: 1rem; font-weight: 800; }
-    .streak-text p { font-size: 0.75rem; opacity: 0.9; }
-
-    .streak-days {
-        text-align: center;
-    }
-
-    .streak-number {
-        font-size: 2.2rem;
-        font-weight: 900;
-        line-height: 1;
-    }
-
-    .streak-label { font-size: 0.7rem; }
-
-    /* ===== 今日進度 ===== */
-    .progress-card {
-        background: rgba(255,255,255,0.95);
-        border-radius: 20px;
-        padding: 20px;
-        margin-bottom: 15px;
-        box-shadow: 0 8px 30px rgba(0,0,0,0.1);
-    }
-
-    .progress-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 12px;
-    }
-
-    .progress-title {
-        font-size: 1rem;
-        font-weight: 800;
-        color: #333;
-    }
-
-    .progress-time {
-        font-size: 0.85rem;
-        color: #888;
-    }
-
-    .progress-bar-bg {
-        height: 14px;
-        background: #e5e5e5;
-        border-radius: 7px;
-        overflow: hidden;
-        margin-bottom: 10px;
-    }
-
-    .progress-bar-fill {
-        height: 100%;
-        background: linear-gradient(90deg, var(--primary), #4ade80);
-        border-radius: 7px;
-        transition: width 0.5s ease;
-        position: relative;
-    }
-
-    .progress-bar-fill::after {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-        animation: shine 2s infinite;
-    }
-
-    @keyframes shine {
-        0% { transform: translateX(-100%); }
-        100% { transform: translateX(100%); }
-    }
-
-    .progress-stats {
-        display: flex;
-        justify-content: space-between;
-        font-size: 0.8rem;
-    }
-
-    .progress-done { color: var(--primary); font-weight: 700; }
-    .progress-total { color: #888; }
-
-    /* ===== 週曆 ===== */
-    .week-calendar {
-        background: rgba(255,255,255,0.95);
-        border-radius: 20px;
-        padding: 15px 20px;
-        margin-bottom: 15px;
-        box-shadow: 0 8px 30px rgba(0,0,0,0.1);
-    }
-
-    .week-title {
-        font-size: 0.9rem;
-        font-weight: 800;
-        color: #333;
-        margin-bottom: 12px;
-        text-align: center;
-    }
-
-    .week-days {
-        display: flex;
-        justify-content: space-between;
-    }
-
-    .day-item { text-align: center; flex: 1; }
-    .day-name { font-size: 0.7rem; color: #888; margin-bottom: 6px; }
-
-    .day-circle {
-        width: 36px;
-        height: 36px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0 auto;
-        font-size: 0.85rem;
-        font-weight: 700;
-    }
-
-    .day-circle.completed {
-        background: linear-gradient(135deg, var(--primary), #4ade80);
-        color: white;
-        box-shadow: 0 3px 10px rgba(34,197,94,0.4);
-    }
-
-    .day-circle.today {
-        background: linear-gradient(135deg, var(--secondary), #f59e0b);
-        color: white;
-        box-shadow: 0 3px 10px rgba(251,191,36,0.4);
-        animation: todayPulse 2s ease-in-out infinite;
-    }
-
-    @keyframes todayPulse {
-        0%, 100% { transform: scale(1); }
-        50% { transform: scale(1.1); }
-    }
-
-    .day-circle.future { background: #f3f4f6; color: #9ca3af; }
-    .day-circle.missed { background: #fee2e2; color: #ef4444; }
-
-    /* ===== 科目卡片 ===== */
-    .subjects-section {
-        margin-bottom: 15px;
-    }
-
-    .section-label {
-        font-size: 0.9rem;
-        font-weight: 700;
-        color: rgba(255,255,255,0.9);
-        margin-bottom: 10px;
-        padding-left: 5px;
-    }
-
-    .subject-card {
-        background: white;
-        border-radius: 18px;
-        padding: 16px;
-        margin-bottom: 10px;
-        display: flex;
-        align-items: center;
-        gap: 14px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-        cursor: pointer;
-        transition: all 0.3s;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .subject-card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 5px;
-        height: 100%;
-    }
-
-    .subject-card.chinese::before { background: var(--chinese); }
-    .subject-card.english::before { background: var(--english); }
-    .subject-card.math::before { background: var(--math); }
-
-    .subject-card:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 8px 25px rgba(0,0,0,0.12);
-    }
-
-    .subject-card.completed {
-        opacity: 0.7;
-        background: #f0fdf4;
-    }
-
-    .subject-card.completed:hover {
-        transform: none;
-    }
-
-    .subject-icon {
-        width: 50px;
-        height: 50px;
-        border-radius: 14px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.6rem;
-    }
-
-    .subject-card.chinese .subject-icon { background: linear-gradient(135deg, #fee2e2, #fecaca); }
-    .subject-card.english .subject-icon { background: linear-gradient(135deg, #dbeafe, #bfdbfe); }
-    .subject-card.math .subject-icon { background: linear-gradient(135deg, #f3e8ff, #e9d5ff); }
-
-    .subject-info { flex: 1; }
-    .subject-name { font-size: 1.05rem; font-weight: 800; color: #333; }
-    .subject-desc { font-size: 0.75rem; color: #888; margin-top: 2px; }
-
-    .subject-status {
-        text-align: right;
-    }
-
-    .subject-questions {
-        font-size: 0.7rem;
-        color: #888;
-        margin-bottom: 4px;
-    }
-
-    .subject-badge {
-        display: inline-block;
-        padding: 4px 10px;
-        border-radius: 20px;
-        font-size: 0.7rem;
-        font-weight: 700;
-    }
-
-    .badge-todo { background: #fef3c7; color: #b45309; }
-    .badge-done { background: #dcfce7; color: #16a34a; }
-
-    /* ===== 家長專區 ===== */
-    .parent-section {
-        background: rgba(255,255,255,0.95);
-        border-radius: 20px;
-        padding: 18px;
-        margin-bottom: 15px;
-        box-shadow: 0 8px 30px rgba(0,0,0,0.1);
-    }
-
-    .parent-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 12px;
-    }
-
-    .parent-title {
-        font-size: 0.95rem;
-        font-weight: 800;
-        color: #333;
-    }
-
-    .parent-toggle {
-        background: none;
-        border: 2px solid #ddd;
-        border-radius: 8px;
-        padding: 5px 12px;
-        font-size: 0.75rem;
-        cursor: pointer;
-        font-family: inherit;
-    }
-
-    .parent-content { display: none; }
-    .parent-content.show { display: block; }
-
-    .stat-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 8px;
-        margin-bottom: 12px;
-    }
-
-    .stat-card {
-        background: #f9fafb;
-        border-radius: 10px;
-        padding: 10px 8px;
-        text-align: center;
-    }
-
-    .stat-value {
-        font-size: 1.2rem;
-        font-weight: 800;
-    }
-
-    .stat-value.chinese { color: var(--chinese); }
-    .stat-value.english { color: var(--english); }
-    .stat-value.math { color: var(--math); }
-
-    .stat-name {
-        font-size: 0.65rem;
-        color: #888;
-        margin-top: 2px;
-    }
-
-    .history-title {
-        font-size: 0.85rem;
-        font-weight: 700;
-        color: #333;
-        margin: 12px 0 8px;
-    }
-
-    .history-list {
-        max-height: 180px;
-        overflow-y: auto;
-    }
-
-    .history-item {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 8px 10px;
-        background: #f9fafb;
-        border-radius: 8px;
-        margin-bottom: 6px;
-        font-size: 0.8rem;
-    }
-
-    .history-date { color: #888; }
-    .history-scores { font-weight: 600; }
-    .history-result { font-weight: 700; }
-    .history-result.pass { color: var(--primary); }
-    .history-result.fail { color: var(--danger); }
-
-    /* ===== 遊戲畫面 ===== */
-    .game-screen {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 1000;
-        overflow-y: auto;
-    }
-
-    .game-screen.chinese-theme {
-        background: linear-gradient(180deg, #fef2f2 0%, #fecaca 50%, #fca5a5 100%);
-    }
-
-    .game-screen.english-theme {
-        background: linear-gradient(180deg, #eff6ff 0%, #bfdbfe 50%, #93c5fd 100%);
-    }
-
-    .game-screen.math-theme {
-        background: linear-gradient(180deg, #faf5ff 0%, #e9d5ff 50%, #d8b4fe 100%);
-    }
-
-    .game-header {
-        background: rgba(255,255,255,0.95);
-        padding: 12px 15px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        position: sticky;
-        top: 0;
-        z-index: 10;
-    }
-
-    .game-back {
-        background: none;
-        border: none;
-        font-size: 1.4rem;
-        cursor: pointer;
-        padding: 5px;
-    }
-
-    .game-title {
-        font-size: 1rem;
-        font-weight: 800;
-        color: #333;
-    }
-
-    .game-progress-info {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-
-    .game-num {
-        background: var(--primary);
-        color: white;
-        padding: 4px 10px;
-        border-radius: 15px;
-        font-weight: 700;
-        font-size: 0.8rem;
-    }
-
-    .game-hearts {
-        display: flex;
-        gap: 2px;
-    }
-
-    .heart {
-        font-size: 1.1rem;
-        transition: all 0.3s;
-    }
-
-    .heart.lost {
-        filter: grayscale(1);
-        opacity: 0.3;
-    }
-
-    .game-content {
-        padding: 20px 15px;
-        max-width: 500px;
-        margin: 0 auto;
-    }
-
-    /* ===== 題目卡片 ===== */
-    .question-card {
-        background: rgba(255,255,255,0.97);
-        border-radius: 25px;
-        padding: 25px 20px;
-        box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-        text-align: center;
-    }
-
-    .q-type-badge {
-        display: inline-block;
-        padding: 5px 14px;
-        border-radius: 20px;
-        font-size: 0.75rem;
-        font-weight: 700;
-        color: white;
-        margin-bottom: 15px;
-    }
-
-    .q-type-badge.chinese { background: var(--chinese); }
-    .q-type-badge.english { background: var(--english); }
-    .q-type-badge.math { background: var(--math); }
-
-    .q-emoji {
-        font-size: 4.5rem;
-        margin-bottom: 15px;
-        filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.1));
-    }
-
-    .q-text {
-        font-size: 1.4rem;
-        font-weight: 700;
-        color: #333;
-        margin-bottom: 8px;
-        line-height: 1.4;
-    }
-
-    .q-hint {
-        font-size: 0.9rem;
-        color: #888;
-        margin-bottom: 15px;
-    }
-
-    .speak-btn {
-        background: linear-gradient(135deg, var(--secondary), #f59e0b);
-        border: none;
-        border-radius: 50%;
-        width: 55px;
-        height: 55px;
-        font-size: 1.5rem;
-        cursor: pointer;
-        box-shadow: 0 4px 15px rgba(251,191,36,0.4);
-        margin-bottom: 15px;
-        transition: transform 0.2s;
-    }
-
-    .speak-btn:hover { transform: scale(1.1); }
-
-    .speak-btn.speaking {
-        animation: pulse 0.5s ease-in-out infinite;
-    }
-
-    @keyframes pulse {
-        0%, 100% { transform: scale(1); }
-        50% { transform: scale(1.15); }
-    }
-
-    /* ===== 數學專用 ===== */
-    .math-equation {
-        font-size: 2.5rem;
-        font-weight: 900;
-        color: var(--math);
-        margin: 15px 0 20px;
-        letter-spacing: 3px;
-    }
-
-    .counting-display {
-        font-size: 2rem;
-        line-height: 1.8;
-        margin: 10px 0 15px;
-        word-break: break-all;
-    }
-
-    /* ===== 選項按鈕 ===== */
-    .options-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
-        margin-top: 10px;
-    }
-
-    .options-grid.single-col {
-        grid-template-columns: 1fr;
-    }
-
-    .option-btn {
-        background: white;
-        border: 3px solid #e5e5e5;
-        border-radius: 14px;
-        padding: 14px 10px;
-        font-size: 1.15rem;
-        font-weight: 700;
-        font-family: inherit;
-        cursor: pointer;
-        transition: all 0.2s;
-        color: #333;
-    }
-
-    .option-btn:hover {
-        border-color: var(--primary);
-        background: #f0fdf4;
-    }
-
-    .option-btn:disabled {
-        cursor: not-allowed;
-    }
-
-    .option-btn.correct {
-        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-        border-color: var(--primary-dark);
-        color: white;
-        animation: correctPop 0.5s ease;
-    }
-
-    .option-btn.wrong {
-        background: linear-gradient(135deg, var(--danger), #dc2626);
-        border-color: #dc2626;
-        color: white;
-        animation: shake 0.5s ease;
-    }
-
-    @keyframes correctPop {
-        0%, 100% { transform: scale(1); }
-        50% { transform: scale(1.05); }
-    }
-
-    @keyframes shake {
-        0%, 100% { transform: translateX(0); }
-        25% { transform: translateX(-6px); }
-        75% { transform: translateX(6px); }
-    }
-
-    /* ===== 拼寫區 ===== */
-    .spelling-area {
-        margin-top: 15px;
-    }
-
-    .spelling-display {
-        display: flex;
-        justify-content: center;
-        gap: 6px;
-        margin-bottom: 15px;
-        flex-wrap: wrap;
-    }
-
-    .letter-box {
-        width: 42px;
-        height: 52px;
-        background: white;
-        border: 3px solid #ddd;
-        border-radius: 10px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.6rem;
-        font-weight: 900;
-        color: var(--english);
-        text-transform: uppercase;
-    }
-
-    .letter-box.filled {
-        border-color: var(--english);
-        background: #eff6ff;
-    }
-
-    .letter-box.correct {
-        border-color: var(--primary);
-        background: var(--primary);
-        color: white;
-    }
-
-    .letter-box.wrong {
-        border-color: var(--danger);
-        background: #fee2e2;
-        color: var(--danger);
-    }
-
-    .keyboard {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 5px;
-    }
-
-    .key-btn {
-        width: 34px;
-        height: 40px;
-        background: white;
-        border: 2px solid #ddd;
-        border-radius: 8px;
-        font-size: 1rem;
-        font-weight: 700;
-        font-family: inherit;
-        cursor: pointer;
-        text-transform: uppercase;
-    }
-
-    .key-btn:hover {
-        background: #eff6ff;
-        border-color: var(--english);
-    }
-
-    .key-btn.backspace {
-        width: 55px;
-        background: #fef3c7;
-        border-color: var(--secondary);
-    }
-
-    /* ===== 完成畫面 ===== */
-    .complete-screen {
-        display: none;
-        text-align: center;
-        padding: 30px 20px;
-    }
-
-    .complete-icon {
-        font-size: 70px;
-        margin-bottom: 12px;
-        animation: bounce 1s ease-in-out infinite;
-    }
-
-    .complete-title {
-        font-size: 1.7rem;
-        font-weight: 900;
-        color: #333;
-        margin-bottom: 8px;
-    }
-
-    .complete-score {
-        font-size: 2.8rem;
-        font-weight: 900;
-        color: var(--primary);
-        margin-bottom: 8px;
-    }
-
-    .complete-msg {
-        font-size: 1rem;
-        color: #666;
-        margin-bottom: 20px;
-    }
-
-    .complete-rewards {
-        display: flex;
-        justify-content: center;
-        gap: 30px;
-        margin-bottom: 25px;
-    }
-
-    .reward-item { text-align: center; }
-    .reward-value { font-size: 1.4rem; font-weight: 800; color: var(--secondary); }
-    .reward-label { font-size: 0.75rem; color: #888; }
-
-    .review-section {
-        background: rgba(255,255,255,0.9);
-        border-radius: 18px;
-        padding: 15px;
-        margin-bottom: 20px;
-        text-align: left;
-        max-height: 200px;
-        overflow-y: auto;
-    }
-
-    .review-title {
-        font-size: 0.95rem;
-        font-weight: 800;
-        color: #333;
-        margin-bottom: 10px;
-    }
-
-    .review-item {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        padding: 10px;
-        background: white;
-        border-radius: 10px;
-        margin-bottom: 8px;
-    }
-
-    .review-item.wrong { border-left: 4px solid var(--danger); }
-    .review-item.correct { border-left: 4px solid var(--primary); }
-
-    .review-emoji { font-size: 1.8rem; }
-    .review-content { flex: 1; }
-    .review-word { font-size: 1rem; font-weight: 700; color: #333; }
-    .review-meaning { font-size: 0.8rem; color: #888; }
-
-    .review-speak {
-        background: var(--secondary);
-        border: none;
-        border-radius: 50%;
-        width: 32px;
-        height: 32px;
-        font-size: 0.9rem;
-        cursor: pointer;
-    }
-
-    .complete-btn {
-        width: 100%;
-        max-width: 300px;
-        padding: 15px;
-        font-size: 1.1rem;
-        font-weight: 800;
-        font-family: inherit;
-        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-        color: white;
-        border: none;
-        border-radius: 14px;
-        cursor: pointer;
-        box-shadow: 0 5px 0 #14532d;
-    }
-
-    /* ===== 慶祝畫面 ===== */
-    .celebration {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0,0,0,0.85);
-        z-index: 2000;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .celebration.show { display: flex; }
-
-    .celebration-box {
-        background: white;
-        border-radius: 30px;
-        padding: 35px 25px;
-        text-align: center;
-        max-width: 340px;
-        margin: 20px;
-        animation: popIn 0.5s ease;
-    }
-
-    @keyframes popIn {
-        0% { transform: scale(0.5); opacity: 0; }
-        100% { transform: scale(1); opacity: 1; }
-    }
-
-    .celeb-icon { font-size: 70px; margin-bottom: 12px; }
-    .celeb-title { font-size: 1.6rem; font-weight: 900; color: #333; margin-bottom: 8px; }
-    .celeb-subtitle { font-size: 0.95rem; color: #666; margin-bottom: 18px; }
-
-    .celeb-streak {
-        background: linear-gradient(135deg, #ff9a56, #ff6b6b);
-        color: white;
-        padding: 12px 20px;
-        border-radius: 18px;
-        margin-bottom: 18px;
-    }
-
-    .celeb-streak-num { font-size: 1.8rem; font-weight: 900; }
-
-    .celeb-btn {
-        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-        color: white;
-        border: none;
-        border-radius: 14px;
-        padding: 14px 35px;
-        font-size: 1.1rem;
-        font-weight: 700;
-        font-family: inherit;
-        cursor: pointer;
-    }
-
-    /* ===== 響應式 ===== */
-    @media (max-width: 380px) {
-        .container { padding: 10px; }
-        .greeting { font-size: 1.3rem; }
-        .q-emoji { font-size: 3.5rem; }
-        .q-text { font-size: 1.2rem; }
-        .math-equation { font-size: 2rem; }
-        .option-btn { padding: 12px 8px; font-size: 1rem; }
-        .letter-box { width: 36px; height: 46px; font-size: 1.4rem; }
-        .key-btn { width: 30px; height: 36px; font-size: 0.9rem; }
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>🐹 小倉鼠魔法學院</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ===== RESET & ROOT ===== */
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --cream:#fdf6e3;
+  --warm:#f5e6c8;
+  --amber:#f59e0b;
+  --amber-dark:#d97706;
+  --amber-deep:#92400e;
+  --green:#22c55e;
+  --green-dark:#16a34a;
+  --green-deep:#14532d;
+  --red:#ef4444;
+  --blue:#3b82f6;
+  --purple:#a855f7;
+  --pink:#ec4899;
+  --shadow-warm:0 8px 32px rgba(180,120,30,0.18);
+  --shadow-card:0 4px 20px rgba(0,0,0,0.10);
+  --radius:22px;
+  --radius-sm:14px;
+  font-family:'Nunito',sans-serif;
+}
+
+/* ===== BODY / PAPER TEXTURE ===== */
+body{
+background-color:#f5e6c8;
+background-image:
+radial-gradient(ellipse at 20% 10%,rgba(255,200,80,0.22) 0%,transparent 55%),
+radial-gradient(ellipse at 80% 90%,rgba(180,230,160,0.18) 0%,transparent 55%),
+url(“data:image/svg+xml,%3Csvg xmlns=‘http://www.w3.org/2000/svg’ width=‘200’ height=‘200’%3E%3Cfilter id=‘n’%3E%3CfeTurbulence type=‘fractalNoise’ baseFrequency=‘0.75’ numOctaves=‘4’ stitchTiles=‘stitch’/%3E%3CfeColorMatrix type=‘saturate’ values=‘0’/%3E%3C/filter%3E%3Crect width=‘200’ height=‘200’ filter=‘url(%23n)’ opacity=‘0.04’/%3E%3C/svg%3E”);
+min-height:100vh;
+overflow-x:hidden;
+}
+
+/* ===== FLOATING PARTICLES BG ===== */
+#bgParticles{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:hidden;}
+.bg-star{position:absolute;opacity:0;animation:bgFloat linear infinite;}
+@keyframes bgFloat{
+0%{opacity:0;transform:translateY(100vh) rotate(0deg);}
+10%{opacity:0.6;}
+90%{opacity:0.4;}
+100%{opacity:0;transform:translateY(-120px) rotate(720deg);}
+}
+
+/* ===== CONTAINER ===== */
+.wrap{position:relative;z-index:1;max-width:520px;margin:0 auto;padding:16px;}
+.hidden{display:none!important;}
+
+/* ===== CARD BASE ===== */
+.card{
+background:rgba(255,252,240,0.97);
+border-radius:var(–radius);
+padding:22px;
+margin-bottom:14px;
+box-shadow:var(–shadow-warm);
+border:2.5px solid rgba(245,158,11,0.18);
+position:relative;
+overflow:hidden;
+}
+.card::before{
+content:’’;position:absolute;top:0;left:0;right:0;height:4px;
+background:linear-gradient(90deg,#fbbf24,#f97316,#ef4444,#ec4899,#a855f7,#3b82f6,#22c55e,#fbbf24);
+background-size:200% 100%;
+animation:rainbowBar 4s linear infinite;
+}
+@keyframes rainbowBar{0%{background-position:0% 0%}100%{background-position:200% 0%}}
+
+/* ===== WELCOME ===== */
+#welcomeScreen{
+min-height:100vh;
+display:flex;flex-direction:column;align-items:center;justify-content:center;
+padding:20px;
+animation:fadeIn 0.8s ease;
+}
+@keyframes fadeIn{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+
+.welcome-cloud{
+background:rgba(255,252,240,0.98);
+border-radius:40px;
+padding:30px 25px;
+width:100%;max-width:460px;
+box-shadow:0 20px 60px rgba(180,120,30,0.22),0 4px 0 #fbbf24 inset;
+border:3px solid #fde68a;
+position:relative;
+overflow:hidden;
+}
+.welcome-cloud::after{
+content:’’;position:absolute;top:-60px;right:-60px;
+width:180px;height:180px;
+background:radial-gradient(circle,rgba(251,191,36,0.12),transparent 70%);
+border-radius:50%;
+}
+
+.hamster-hero{
+font-size:110px;
+display:block;text-align:center;
+animation:hamsterWelcome 2.5s ease-in-out infinite;
+filter:drop-shadow(0 8px 20px rgba(180,120,30,0.3));
+margin-bottom:10px;
+}
+@keyframes hamsterWelcome{
+0%,100%{transform:translateY(0) rotate(-6deg) scale(1);}
+30%{transform:translateY(-22px) rotate(0deg) scale(1.05);}
+60%{transform:translateY(-10px) rotate(6deg) scale(1.02);}
+}
+
+.welcome-title{
+font-size:2.1rem;font-weight:900;
+color:var(–amber-deep);
+text-align:center;
+text-shadow:3px 3px 0 rgba(251,191,36,0.4);
+letter-spacing:1px;
+margin-bottom:4px;
+}
+.welcome-sub{
+font-size:1.1rem;font-weight:700;
+color:var(–amber-dark);
+text-align:center;margin-bottom:20px;
+}
+
+.story-box{
+background:linear-gradient(135deg,#fff7ed,#fffbeb);
+border-radius:18px;padding:18px;margin:16px 0;
+border:2px solid #fed7aa;
+}
+.story-box p{font-size:1.08rem;color:#9a3412;line-height:1.8;margin-bottom:10px;}
+.story-box p:last-child{margin-bottom:0;}
+
+.name-box{
+background:white;border-radius:18px;padding:20px;
+margin:16px 0;border:2.5px solid #fde68a;
+}
+.name-label{font-size:1.15rem;font-weight:800;color:var(–amber-deep);margin-bottom:12px;display:block;}
+.name-input{
+width:100%;padding:15px;font-size:1.5rem;font-weight:800;
+border:3px solid #fde68a;border-radius:13px;
+text-align:center;color:var(–amber-deep);
+font-family:‘Nunito’,sans-serif;
+outline:none;background:#fffbeb;
+transition:border-color 0.2s,box-shadow 0.2s;
+}
+.name-input:focus{border-color:var(–amber);box-shadow:0 0 0 4px rgba(251,191,36,0.2);}
+
+.start-btn{
+width:100%;padding:20px;font-size:1.5rem;font-weight:900;
+background:linear-gradient(135deg,#fb923c,#f97316,#ef4444);
+color:white;border:none;border-radius:18px;cursor:pointer;
+box-shadow:0 6px 0 #c2410c,0 8px 20px rgba(239,68,68,0.3);
+font-family:‘Nunito’,sans-serif;
+letter-spacing:1px;
+transition:transform 0.1s,box-shadow 0.1s;
+position:relative;overflow:hidden;
+}
+.start-btn::after{
+content:’’;position:absolute;top:-50%;left:-50%;width:200%;height:200%;
+background:linear-gradient(rgba(255,255,255,0.15),transparent);
+pointer-events:none;
+}
+.start-btn:active{transform:translateY(5px);box-shadow:0 1px 0 #c2410c;}
+
+/* ===== MAIN SCREEN ===== */
+#mainScreen{animation:slideIn 0.5s ease;}
+@keyframes slideIn{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:translateX(0)}}
+
+/* Player Header */
+.player-card{
+background:linear-gradient(135deg,rgba(255,252,240,0.99),rgba(254,243,199,0.99));
+border:2.5px solid #fde68a;
+}
+.player-top{display:flex;align-items:center;gap:15px;margin-bottom:18px;}
+.player-avatar{
+width:72px;height:72px;
+background:linear-gradient(135deg,#fef3c7,#fde68a,#fbbf24);
+border-radius:50%;
+display:flex;align-items:center;justify-content:center;
+font-size:2.6rem;
+border:4px solid white;
+box-shadow:0 6px 20px rgba(251,191,36,0.35);
+animation:avatarBob 3s ease-in-out infinite;
+flex-shrink:0;
+}
+@keyframes avatarBob{
+0%,100%{transform:rotate(-4deg);}
+50%{transform:rotate(4deg) translateY(-3px);}
+}
+.player-name{font-size:1.65rem;font-weight:900;color:var(–amber-deep);}
+.player-title{font-size:0.95rem;font-weight:700;color:var(–amber-dark);}
+.player-streak{
+font-size:0.9rem;font-weight:700;
+color:#d97706;margin-top:4px;
+display:flex;align-items:center;gap:4px;
+}
+.streak-fire{animation:fireFlicker 0.8s ease-in-out infinite alternate;}
+@keyframes fireFlicker{from{transform:scale(1)}to{transform:scale(1.2) translateY(-1px)}}
+
+/* Badge Grid */
+.badge-area{
+background:linear-gradient(135deg,#fefce8,#fef9c3);
+border-radius:16px;padding:14px;
+border:2px solid #fde047;
+}
+.badge-title{font-size:1rem;font-weight:800;color:#854d0e;margin-bottom:12px;text-align:center;}
+.badge-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+.badge-item{
+text-align:center;padding:10px 5px;
+background:white;border-radius:12px;
+border:2px solid #fde68a;
+transition:transform 0.3s,box-shadow 0.3s;
+}
+.badge-item.earned{
+border-color:var(–amber);
+box-shadow:0 4px 14px rgba(251,191,36,0.3);
+transform:translateY(-2px);
+}
+.badge-icon{font-size:1.9rem;transition:filter 0.3s,transform 0.3s;}
+.badge-item:not(.earned) .badge-icon{filter:grayscale(1);opacity:0.4;}
+.badge-item.earned .badge-icon{animation:badgePulse 2s ease-in-out infinite;}
+@keyframes badgePulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+.badge-count{font-size:1.15rem;font-weight:900;color:var(–amber-deep);}
+.badge-name{font-size:0.72rem;color:#a16207;font-weight:700;}
+
+/* Encourage Card */
+.encourage-card{
+background:linear-gradient(135deg,rgba(236,253,245,0.98),rgba(209,250,229,0.98));
+border:2.5px solid var(–green);
+}
+.enc-head{display:flex;align-items:center;gap:12px;margin-bottom:11px;}
+.enc-avatar{
+width:50px;height:50px;
+background:linear-gradient(135deg,#fef3c7,#fde68a);
+border-radius:50%;
+display:flex;align-items:center;justify-content:center;
+font-size:1.9rem;
+border:2px solid white;
+box-shadow:0 3px 12px rgba(251,191,36,0.3);
+animation:encTalk 2s ease-in-out infinite;
+}
+@keyframes encTalk{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg) scale(1.04)}}
+.enc-name{font-size:1.05rem;font-weight:800;color:#166534;}
+.enc-msg{font-size:1.15rem;color:#166534;line-height:1.85;font-weight:600;}
+.hl{background:linear-gradient(135deg,#fef08a,#fde047);padding:1px 7px;border-radius:6px;font-weight:900;color:#854d0e;}
+
+/* Subject Cards */
+.subject{
+display:flex;align-items:center;gap:14px;
+cursor:pointer;
+border-width:3px;
+transition:transform 0.25s cubic-bezier(.34,1.56,.64,1),box-shadow 0.25s;
+}
+.subject:hover{transform:translateY(-5px) scale(1.015);box-shadow:0 16px 40px rgba(0,0,0,0.14);}
+.subject:active{transform:translateY(-2px);}
+.subject.chinese{border-color:var(–red);background:linear-gradient(135deg,#fff,#fef2f2);}
+.subject.english{border-color:var(–blue);background:linear-gradient(135deg,#fff,#eff6ff);}
+.subject.math{border-color:var(–purple);background:linear-gradient(135deg,#fff,#faf5ff);}
+.subject.done{opacity:0.55;cursor:default;}
+.subject.done:hover{transform:none;box-shadow:var(–shadow-warm);}
+.subj-icon{
+width:68px;height:68px;border-radius:18px;
+display:flex;align-items:center;justify-content:center;
+font-size:2.4rem;flex-shrink:0;
+box-shadow:0 4px 14px rgba(0,0,0,0.12);
+}
+.subject.chinese .subj-icon{background:linear-gradient(135deg,#fecaca,#fca5a5);}
+.subject.english .subj-icon{background:linear-gradient(135deg,#bfdbfe,#93c5fd);}
+.subject.math .subj-icon{background:linear-gradient(135deg,#e9d5ff,#d8b4fe);}
+.subj-info{flex:1;}
+.subj-name{font-size:1.35rem;font-weight:900;}
+.subject.chinese .subj-name{color:var(–red);}
+.subject.english .subj-name{color:var(–blue);}
+.subject.math .subj-name{color:var(–purple);}
+.subj-desc{font-size:0.95rem;color:#888;margin-top:2px;font-weight:600;}
+.subj-badge{
+padding:10px 16px;border-radius:22px;
+font-size:1.05rem;font-weight:800;
+background:linear-gradient(135deg,var(–amber),var(–amber-dark));
+color:white;
+box-shadow:0 3px 10px rgba(245,158,11,0.3);
+white-space:nowrap;
+}
+.done-badge{background:linear-gradient(135deg,var(–green),var(–green-dark))!important;}
+
+/* Exchange */
+.exchange-card{
+background:linear-gradient(135deg,#fefce8,#fef9c3);
+border:2.5px solid #facc15;
+}
+.exch-title{font-size:1.1rem;font-weight:800;color:#854d0e;margin-bottom:13px;text-align:center;}
+.exch-item{
+display:flex;align-items:center;justify-content:space-between;
+padding:12px 14px;background:white;border-radius:12px;
+margin-bottom:9px;border:2px solid #fde68a;
+}
+.exch-info{font-size:1rem;font-weight:700;color:var(–amber-deep);}
+.exch-btn{
+padding:9px 16px;font-size:0.95rem;font-weight:800;
+background:linear-gradient(135deg,var(–green),var(–green-dark));
+color:white;border:none;border-radius:10px;cursor:pointer;
+font-family:‘Nunito’,sans-serif;
+box-shadow:0 3px 8px rgba(34,197,94,0.3);
+transition:transform 0.15s,box-shadow 0.15s;
+}
+.exch-btn:active{transform:translateY(2px);box-shadow:none;}
+.exch-btn:disabled{background:#d1d5db;cursor:not-allowed;box-shadow:none;}
+
+/* ===== LEARN SCREEN ===== */
+#learnScreen{
+position:fixed;top:0;left:0;width:100%;height:100%;
+z-index:1000;overflow-y:auto;
+transition:opacity 0.3s;
+}
+.learn-screen-enter{animation:learnIn 0.4s cubic-bezier(.34,1.56,.64,1);}
+@keyframes learnIn{from{opacity:0;transform:scale(0.95)}to{opacity:1;transform:scale(1)}}
+#learnScreen.chinese-theme{background:linear-gradient(160deg,#fff1f2,#ffe4e6,#fecdd3);}
+#learnScreen.english-theme{background:linear-gradient(160deg,#eff6ff,#dbeafe,#bfdbfe);}
+#learnScreen.math-theme{background:linear-gradient(160deg,#faf5ff,#ede9fe,#ddd6fe);}
+
+.learn-header{
+background:rgba(255,252,240,0.97);
+backdrop-filter:blur(10px);
+padding:13px 18px;
+display:flex;justify-content:space-between;align-items:center;
+box-shadow:0 3px 20px rgba(0,0,0,0.08);
+position:sticky;top:0;z-index:10;
+border-bottom:2px solid rgba(251,191,36,0.2);
+}
+.learn-back{
+background:none;border:none;font-size:2rem;cursor:pointer;
+transition:transform 0.2s;
+line-height:1;
+}
+.learn-back:hover{transform:translateX(-4px);}
+.learn-title{font-size:1.15rem;font-weight:900;color:#333;}
+.learn-score{
+font-size:1.1rem;font-weight:800;color:var(–amber-dark);
+display:flex;align-items:center;gap:4px;
+}
+.score-anim{animation:scorePop 0.4s ease;}
+@keyframes scorePop{0%,100%{transform:scale(1)}50%{transform:scale(1.3) rotate(8deg)}}
+
+.learn-content{padding:18px;max-width:520px;margin:0 auto;}
+
+/* Teach Card */
+.teach-card{
+background:rgba(255,252,240,0.98);
+border-radius:24px;padding:22px;
+box-shadow:0 12px 40px rgba(0,0,0,0.1);
+border:2px solid rgba(251,191,36,0.2);
+animation:cardIn 0.5s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes cardIn{from{opacity:0;transform:translateY(20px) scale(0.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+
+.chapter-intro{
+background:linear-gradient(135deg,#fef3c7,#fde68a);
+border-radius:18px;padding:18px;margin-bottom:22px;
+border:3px solid var(–amber);
+}
+.ch-title{font-size:1.35rem;font-weight:900;color:var(–amber-deep);margin-bottom:9px;}
+.ch-story{font-size:1.1rem;color:#78350f;line-height:1.8;}
+
+/* Hamster Talk */
+.hamster-talk{margin-bottom:22px;}
+.ham-head{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
+.ham-avatar{
+width:56px;height:56px;
+background:linear-gradient(135deg,#fef3c7,#fde68a,#fbbf24);
+border-radius:50%;
+display:flex;align-items:center;justify-content:center;
+font-size:2.1rem;
+border:3px solid white;
+box-shadow:0 5px 16px rgba(251,191,36,0.35);
+animation:hamFloat 2.8s ease-in-out infinite;
+flex-shrink:0;
+}
+@keyframes hamFloat{
+0%,100%{transform:translateY(0) rotate(-4deg);}
+50%{transform:translateY(-10px) rotate(4deg);}
+}
+/* 答對時倉鼠開心跳舞 */
+.ham-avatar.happy{animation:hamDance 0.6s ease infinite!important;}
+@keyframes hamDance{
+0%{transform:rotate(-15deg) scale(1.1);}
+25%{transform:rotate(15deg) scale(1.15) translateY(-5px);}
+50%{transform:rotate(-10deg) scale(1.1);}
+75%{transform:rotate(10deg) scale(1.15) translateY(-5px);}
+100%{transform:rotate(-15deg) scale(1.1);}
+}
+/* 答錯時倉鼠搖頭 */
+.ham-avatar.sad{animation:hamShake 0.5s ease!important;}
+@keyframes hamShake{
+0%,100%{transform:rotate(0)}
+20%{transform:rotate(-15deg)}
+40%{transform:rotate(15deg)}
+60%{transform:rotate(-12deg)}
+80%{transform:rotate(12deg)}
+}
+.ham-label{font-size:1rem;font-weight:800;color:var(–amber-deep);}
+
+.ham-bubble{
+background:linear-gradient(135deg,#ecfdf5,#d1fae5);
+border-radius:18px;padding:18px;
+border:3px solid var(–green);
+margin-left:24px;position:relative;
+}
+.ham-bubble::before{
+content:’’;position:absolute;left:-10px;top:16px;
+border:10px solid transparent;
+border-right-color:var(–green);
+}
+.ham-text{font-size:1.15rem;color:#166534;line-height:1.85;font-weight:600;}
+.char-big{font-size:1.5rem;font-weight:900;color:var(–red);}
+.eng-big{font-size:1.4rem;font-weight:900;color:var(–blue);}
+
+/* Content Display */
+.content-display{text-align:center;margin:22px 0;}
+.big-char{
+font-size:9rem;font-weight:900;color:var(–red);
+text-shadow:5px 5px 0 #fecaca,8px 8px 20px rgba(239,68,68,0.2);
+line-height:1;
+animation:charReveal 0.6s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes charReveal{from{opacity:0;transform:scale(0.3) rotate(-20deg)}to{opacity:1;transform:scale(1) rotate(0)}}
+.big-emoji{
+font-size:7rem;
+filter:drop-shadow(4px 4px 10px rgba(0,0,0,0.15));
+margin:14px 0;
+animation:emojiIn 0.5s ease 0.2s both;
+display:block;
+}
+@keyframes emojiIn{from{opacity:0;transform:scale(0) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.big-letter{
+font-size:10rem;font-weight:900;color:var(–blue);
+text-shadow:5px 5px 0 #bfdbfe,8px 8px 20px rgba(59,130,246,0.2);
+line-height:1;
+animation:charReveal 0.6s cubic-bezier(.34,1.56,.64,1);
+}
+.big-word{
+font-size:3.3rem;font-weight:900;color:var(–blue);
+text-shadow:3px 3px 0 #bfdbfe;
+letter-spacing:3px;margin:12px 0;
+}
+.word-zh{font-size:1.55rem;color:#333;font-weight:700;}
+.pinyin{font-size:1.75rem;color:#666;font-weight:600;margin-top:14px;}
+.meaning{font-size:1.35rem;color:#444;margin-top:8px;font-weight:600;}
+
+.speak-btn{
+background:linear-gradient(135deg,var(–amber),var(–amber-dark));
+border:none;border-radius:50%;
+width:76px;height:76px;font-size:2.5rem;
+cursor:pointer;
+box-shadow:0 6px 20px rgba(245,158,11,0.4),0 0 0 0 rgba(245,158,11,0.4);
+margin:16px 0;
+transition:transform 0.15s;
+animation:speakPulse 2.5s ease-in-out infinite;
+}
+@keyframes speakPulse{
+0%,100%{box-shadow:0 6px 20px rgba(245,158,11,0.4),0 0 0 0 rgba(245,158,11,0.4);}
+50%{box-shadow:0 6px 20px rgba(245,158,11,0.4),0 0 0 10px rgba(245,158,11,0);}
+}
+.speak-btn:active{transform:scale(0.92);}
+.speak-btn.speaking{animation:speakActive 0.3s ease infinite alternate!important;}
+@keyframes speakActive{from{transform:scale(1)}to{transform:scale(0.9) rotate(5deg)}}
+
+.example{
+background:linear-gradient(135deg,#f0f9ff,#e0f2fe);
+border-radius:16px;padding:17px;margin:20px 0;
+border:3px solid #7dd3fc;
+}
+.ex-label{font-size:0.95rem;color:#0369a1;font-weight:800;margin-bottom:7px;}
+.ex-text{font-size:1.3rem;color:#0c4a6e;line-height:1.7;font-weight:600;}
+
+/* Math Visual */
+.math-visual{
+display:flex;justify-content:center;align-items:center;
+gap:12px;margin:22px 0;flex-wrap:wrap;
+}
+.math-group{
+display:flex;flex-wrap:wrap;gap:7px;justify-content:center;
+padding:14px;
+background:linear-gradient(135deg,#fef3c7,#fde68a);
+border-radius:16px;min-width:65px;
+border:3px solid #fbbf24;
+box-shadow:0 4px 12px rgba(251,191,36,0.25);
+}
+.math-item{font-size:2.1rem;}
+.math-op{font-size:3.2rem;font-weight:900;color:var(–purple);}
+.math-result{
+font-size:3.2rem;font-weight:900;color:white;
+padding:11px 24px;
+background:linear-gradient(135deg,var(–green),var(–green-dark));
+border-radius:16px;
+box-shadow:0 5px 15px rgba(34,197,94,0.35);
+animation:resultPop 0.5s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes resultPop{from{transform:scale(0)}to{transform:scale(1)}}
+.math-q{
+font-size:3.2rem;font-weight:900;color:white;
+padding:11px 24px;
+background:linear-gradient(135deg,var(–amber),var(–amber-dark));
+border-radius:16px;
+box-shadow:0 5px 15px rgba(245,158,11,0.35);
+}
+
+/* Practice */
+.practice{margin-top:22px;}
+.practice-q{font-size:1.45rem;font-weight:900;color:#222;margin-bottom:17px;text-align:center;}
+.practice-hint{
+background:linear-gradient(135deg,#fef3c7,#fde68a);
+border-radius:13px;padding:13px 17px;margin-bottom:18px;
+font-size:1.05rem;color:var(–amber-deep);font-weight:700;
+text-align:center;border:2px solid #fbbf24;
+}
+.options{display:grid;grid-template-columns:repeat(2,1fr);gap:11px;}
+.opt-btn{
+background:white;
+border:4px solid #e5e7eb;
+border-radius:18px;
+padding:20px 12px;
+font-size:1.55rem;font-weight:900;
+cursor:pointer;
+transition:all 0.2s cubic-bezier(.34,1.56,.64,1);
+color:#333;
+font-family:‘Nunito’,sans-serif;
+box-shadow:0 3px 10px rgba(0,0,0,0.06);
+position:relative;overflow:hidden;
+}
+.opt-btn::before{
+content:’’;position:absolute;top:0;left:0;right:0;bottom:0;
+background:linear-gradient(135deg,rgba(255,255,255,0.5),transparent);
+pointer-events:none;
+}
+.opt-btn:hover:not(:disabled){
+border-color:var(–green);
+background:#f0fdf4;
+transform:translateY(-4px) scale(1.04);
+box-shadow:0 8px 24px rgba(34,197,94,0.2);
+}
+.opt-btn.correct{
+background:linear-gradient(135deg,var(–green),var(–green-dark));
+border-color:var(–green-dark);color:white;
+animation:correctBounce 0.6s cubic-bezier(.34,1.56,.64,1);
+box-shadow:0 8px 24px rgba(34,197,94,0.4);
+}
+@keyframes correctBounce{
+0%{transform:scale(1)}
+30%{transform:scale(1.15) rotate(-3deg)}
+60%{transform:scale(0.97) rotate(2deg)}
+100%{transform:scale(1)}
+}
+.opt-btn.wrong{
+background:linear-gradient(135deg,#fed7aa,#fdba74);
+border-color:#f97316;color:#9a3412;
+animation:wrongShake 0.5s ease;
+}
+@keyframes wrongShake{
+0%,100%{transform:translateX(0) rotate(0)}
+20%{transform:translateX(-8px) rotate(-3deg)}
+40%{transform:translateX(8px) rotate(3deg)}
+60%{transform:translateX(-6px) rotate(-2deg)}
+80%{transform:translateX(6px) rotate(2deg)}
+}
+
+/* Feedback */
+.feedback{
+padding:20px;border-radius:20px;margin:18px 0;
+animation:fbIn 0.4s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes fbIn{from{opacity:0;transform:translateY(16px) scale(0.95)}to{opacity:1;transform:translateY(0) scale(1)}}
+.feedback.correct{background:linear-gradient(135deg,#dcfce7,#bbf7d0);border:3.5px solid var(–green);}
+.feedback.retry{background:linear-gradient(135deg,#fff7ed,#ffedd5);border:3.5px solid #f97316;}
+.fb-head{display:flex;align-items:center;gap:11px;margin-bottom:9px;}
+.fb-icon{font-size:2.8rem;}
+.fb-title{font-size:1.4rem;font-weight:900;}
+.feedback.correct .fb-title{color:#166534;}
+.feedback.retry .fb-title{color:#9a3412;}
+.fb-msg{font-size:1.1rem;font-weight:700;line-height:1.75;}
+.feedback.correct .fb-msg{color:#15803d;}
+.feedback.retry .fb-msg{color:#c2410c;}
+.fb-ham{
+display:flex;align-items:center;gap:9px;
+margin-top:13px;padding-top:11px;
+border-top:2px dashed rgba(0,0,0,0.1);
+font-size:0.97rem;color:#555;font-style:italic;font-weight:600;
+}
+
+/* Buttons */
+.next-btn{
+width:100%;padding:19px;
+font-size:1.35rem;font-weight:900;
+background:linear-gradient(135deg,var(–green),var(–green-dark));
+color:white;border:none;border-radius:18px;cursor:pointer;
+box-shadow:0 5px 0 var(–green-deep),0 8px 24px rgba(34,197,94,0.3);
+font-family:‘Nunito’,sans-serif;
+margin-top:17px;
+transition:transform 0.1s,box-shadow 0.1s;
+position:relative;overflow:hidden;
+}
+.next-btn::after{
+content:’’;position:absolute;top:0;left:-100%;width:60%;height:100%;
+background:linear-gradient(90deg,transparent,rgba(255,255,255,0.2),transparent);
+animation:btnShine 2.5s ease-in-out infinite;
+}
+@keyframes btnShine{0%,100%{left:-100%}50%{left:150%}}
+.next-btn:active{transform:translateY(4px);box-shadow:0 1px 0 var(–green-deep);}
+.retry-btn{
+width:100%;padding:19px;
+font-size:1.35rem;font-weight:900;
+background:linear-gradient(135deg,#fb923c,#f97316);
+color:white;border:none;border-radius:18px;cursor:pointer;
+box-shadow:0 5px 0 #c2410c,0 8px 24px rgba(249,115,22,0.3);
+font-family:‘Nunito’,sans-serif;
+margin-top:17px;
+transition:transform 0.1s,box-shadow 0.1s;
+}
+.retry-btn:active{transform:translateY(4px);box-shadow:0 1px 0 #c2410c;}
+
+/* Complete */
+.complete{text-align:center;}
+.complete-ham{
+font-size:110px;
+animation:completeDance 1s ease-in-out infinite;
+display:block;filter:drop-shadow(0 10px 25px rgba(180,120,30,0.35));
+}
+@keyframes completeDance{
+0%{transform:translateY(0) rotate(-10deg) scale(1);}
+25%{transform:translateY(-28px) rotate(0deg) scale(1.12);}
+50%{transform:translateY(-8px) rotate(10deg) scale(1.05);}
+75%{transform:translateY(-20px) rotate(0deg) scale(1.1);}
+100%{transform:translateY(0) rotate(-10deg) scale(1);}
+}
+.complete-title{
+font-size:2.3rem;font-weight:900;color:var(–amber-deep);
+margin:14px 0;
+text-shadow:3px 3px 0 rgba(251,191,36,0.4);
+}
+.complete-msg{
+font-size:1.2rem;color:#b45309;line-height:1.8;
+margin-bottom:18px;font-weight:700;
+}
+.complete-badges{
+display:flex;justify-content:center;gap:18px;
+margin:18px 0;flex-wrap:wrap;
+}
+.comp-badge{
+text-align:center;padding:14px 18px;
+background:linear-gradient(135deg,#fef3c7,#fde68a);
+border-radius:16px;border:3px solid #fbbf24;
+box-shadow:0 6px 20px rgba(251,191,36,0.3);
+}
+.comp-b-icon{font-size:2.9rem;animation:badgePulse 1.5s ease infinite;}
+.comp-b-count{font-size:1.45rem;font-weight:900;color:var(–amber-deep);}
+.comp-b-name{font-size:0.88rem;color:#b45309;font-weight:700;}
+
+/* ===== PARTICLES ===== */
+#particles{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9000;}
+.particle{
+position:absolute;
+border-radius:50%;
+animation:particleFly linear forwards;
+}
+@keyframes particleFly{
+0%{opacity:1;transform:translate(0,0) rotate(0deg) scale(1);}
+100%{opacity:0;transform:translate(var(–dx),var(–dy)) rotate(720deg) scale(0);}
+}
+
+/* ===== BADGE POPUP ===== */
+.badge-overlay{
+position:fixed;top:0;left:0;width:100%;height:100%;
+background:rgba(0,0,0,0.65);
+display:flex;align-items:center;justify-content:center;
+z-index:2000;
+backdrop-filter:blur(4px);
+}
+.badge-popup{
+background:linear-gradient(135deg,#fffbeb,#fef3c7);
+border-radius:28px;padding:35px;text-align:center;
+max-width:320px;margin:20px;
+box-shadow:0 30px 80px rgba(180,120,30,0.35),0 0 0 3px #fde68a;
+animation:popIn 0.5s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes popIn{0%{transform:scale(0.4) rotate(-10deg);opacity:0;}70%{transform:scale(1.06) rotate(2deg);}100%{transform:scale(1) rotate(0);opacity:1;}}
+.popup-icon{font-size:7rem;animation:spinIn 0.7s ease;display:block;}
+@keyframes spinIn{from{transform:rotateY(0) scale(0)}to{transform:rotateY(360deg) scale(1)}}
+.popup-title{font-size:1.8rem;font-weight:900;color:var(–amber-deep);margin:10px 0;}
+.popup-desc{font-size:1.1rem;color:#b45309;margin-bottom:18px;font-weight:600;}
+.popup-btn{
+padding:14px 35px;font-size:1.2rem;font-weight:900;
+background:linear-gradient(135deg,var(–green),var(–green-dark));
+color:white;border:none;border-radius:14px;cursor:pointer;
+font-family:‘Nunito’,sans-serif;
+box-shadow:0 5px 0 var(–green-deep);
+transition:transform 0.1s,box-shadow 0.1s;
+}
+.popup-btn:active{transform:translateY(3px);box-shadow:0 2px 0 var(–green-deep);}
+
+/* ===== SOUND TOGGLE ===== */
+.sound-toggle{
+position:fixed;top:14px;right:14px;z-index:500;
+width:44px;height:44px;
+background:rgba(255,252,240,0.95);
+border:2px solid #fde68a;
+border-radius:50%;
+display:flex;align-items:center;justify-content:center;
+font-size:1.4rem;cursor:pointer;
+box-shadow:0 3px 12px rgba(180,120,30,0.2);
+transition:transform 0.2s;
+}
+.sound-toggle:active{transform:scale(0.9);}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:400px){
+.big-char{font-size:7rem;}
+.big-letter{font-size:8rem;}
+.big-emoji{font-size:5.5rem;}
+.opt-btn{padding:16px 9px;font-size:1.35rem;}
+.welcome-title{font-size:1.8rem;}
+}
 </style>
-```
 
 </head>
 <body>
-    <div class="container">
-        <!-- 歡迎畫面 -->
-        <div class="welcome-screen" id="welcomeScreen">
-            <div class="welcome-logo">🦊📚</div>
-            <h1 class="welcome-title">每日學習樂園</h1>
-            <p class="welcome-subtitle">每天進步一點點，學習超有趣！</p>
+
+<!-- 背景粒子 -->
+
+<div id="bgParticles"></div>
+
+<!-- 音效按鈕 -->
+
+<button class="sound-toggle" id="soundToggle" onclick="toggleSound()" title="音效開關">🔊</button>
+
+<div class="wrap">
+
+<!-- ===== 歡迎畫面 ===== -->
+
+<div id="welcomeScreen">
+  <div class="welcome-cloud card">
+    <span class="hamster-hero">🐹</span>
+    <div class="welcome-title">小倉鼠魔法學院</div>
+    <div class="welcome-sub">✨ 阿均的學習成長史 ✨</div>
 
 ```
-        <div class="name-input-box">
-            <label>🌟 請輸入你的名字：</label>
-            <input type="text" id="nameInput" placeholder="阿均" maxlength="10">
-        </div>
-        
-        <button class="start-btn" onclick="startApp()">
-            🚀 開始學習！
-        </button>
-    </div>
-
-    <!-- 主畫面 -->
-    <div class="main-screen" id="mainScreen">
-        <!-- 日期問候 -->
-        <div class="date-card">
-            <div class="today-date" id="todayDate"></div>
-            <h1 class="greeting" id="greeting">早安，<span class="name">阿均</span>！</h1>
-            <p class="motivation" id="motivation">今天也要認真學習喔！💪</p>
-        </div>
-
-        <!-- 連續學習 -->
-        <div class="streak-card">
-            <div class="streak-info">
-                <div class="streak-icon">🔥</div>
-                <div class="streak-text">
-                    <h3>連續學習</h3>
-                    <p>保持每天學習的好習慣！</p>
-                </div>
-            </div>
-            <div class="streak-days">
-                <div class="streak-number" id="streakNum">0</div>
-                <div class="streak-label">天</div>
-            </div>
-        </div>
-
-        <!-- 今日進度 -->
-        <div class="progress-card">
-            <div class="progress-header">
-                <div class="progress-title">📊 今日學習進度</div>
-                <div class="progress-time">⏱️ <span id="todayTime">0</span> 分鐘</div>
-            </div>
-            <div class="progress-bar-bg">
-                <div class="progress-bar-fill" id="progressFill" style="width: 0%"></div>
-            </div>
-            <div class="progress-stats">
-                <span class="progress-done"><span id="completedNum">0</span>/3 科目完成</span>
-                <span class="progress-total">目標：每科5題</span>
-            </div>
-        </div>
-
-        <!-- 週曆 -->
-        <div class="week-calendar">
-            <div class="week-title">📅 本週學習紀錄</div>
-            <div class="week-days" id="weekDays"></div>
-        </div>
-
-        <!-- 科目挑戰 -->
-        <div class="subjects-section">
-            <div class="section-label">📝 今日挑戰</div>
-            
-            <div class="subject-card chinese" onclick="startSubject('chinese')">
-                <div class="subject-icon">📚</div>
-                <div class="subject-info">
-                    <div class="subject-name">國語挑戰</div>
-                    <div class="subject-desc">國字認讀、語詞配對、造句練習</div>
-                </div>
-                <div class="subject-status">
-                    <div class="subject-questions">5題</div>
-                    <span class="subject-badge badge-todo" id="chineseBadge">待完成</span>
-                </div>
-            </div>
-
-            <div class="subject-card english" onclick="startSubject('english')">
-                <div class="subject-icon">🔤</div>
-                <div class="subject-info">
-                    <div class="subject-name">英文挑戰</div>
-                    <div class="subject-desc">字母、單字、聽力、拼寫</div>
-                </div>
-                <div class="subject-status">
-                    <div class="subject-questions">5題</div>
-                    <span class="subject-badge badge-todo" id="englishBadge">待完成</span>
-                </div>
-            </div>
-
-            <div class="subject-card math" onclick="startSubject('math')">
-                <div class="subject-icon">🔢</div>
-                <div class="subject-info">
-                    <div class="subject-name">數學挑戰</div>
-                    <div class="subject-desc">加減法、比大小、數數、填空</div>
-                </div>
-                <div class="subject-status">
-                    <div class="subject-questions">5題</div>
-                    <span class="subject-badge badge-todo" id="mathBadge">待完成</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- 家長專區 -->
-        <div class="parent-section">
-            <div class="parent-header">
-                <div class="parent-title">👨‍👩‍👧 家長專區</div>
-                <button class="parent-toggle" onclick="toggleParent()">查看詳情</button>
-            </div>
-            <div class="parent-content" id="parentContent">
-                <div class="stat-grid">
-                    <div class="stat-card">
-                        <div class="stat-value chinese" id="chineseAcc">0%</div>
-                        <div class="stat-name">國語正確率</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value english" id="englishAcc">0%</div>
-                        <div class="stat-name">英文正確率</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value math" id="mathAcc">0%</div>
-                        <div class="stat-name">數學正確率</div>
-                    </div>
-                </div>
-                <div class="stat-grid">
-                    <div class="stat-card">
-                        <div class="stat-value" id="totalDays" style="color:#333;">0</div>
-                        <div class="stat-name">累計學習天</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value" id="totalMins" style="color:#333;">0</div>
-                        <div class="stat-name">累計分鐘</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value" id="totalQs" style="color:#333;">0</div>
-                        <div class="stat-name">累計答題</div>
-                    </div>
-                </div>
-                <div class="history-title">📜 最近學習紀錄</div>
-                <div class="history-list" id="historyList"></div>
-            </div>
-        </div>
-    </div>
+<div class="story-box">
+  <p>🌟 歡迎來到小倉鼠魔法學院！</p>
+  <p>我是<b>小倉鼠老師</b> 🐹，我會一直陪在你身邊，用最有趣的方式教你學習！</p>
+  <p>在這裡，我們<b>不怕犯錯</b>！答錯了沒關係，我會耐心地再教你一次，直到你真的學會。每一個小進步，我都會為你拍拍手！👏</p>
+  <p>學習中你可以收集<b>倉鼠徽章</b>：<br>🐹迷你倉 → 🐹小倉鼠 → 🐹中倉鼠 → 🐹大倉鼠<br>收集越多，代表你越厲害喔！</p>
 </div>
 
-<!-- 遊戲畫面 -->
-<div class="game-screen" id="gameScreen">
-    <div class="game-header">
-        <button class="game-back" onclick="exitGame()">⬅️</button>
-        <div class="game-title" id="gameTitle">國語挑戰</div>
-        <div class="game-progress-info">
-            <span class="game-num" id="gameNum">1/5</span>
-            <div class="game-hearts" id="gameHearts"></div>
-        </div>
-    </div>
-    <div class="game-content" id="gameContent"></div>
-    
-    <!-- 完成畫面 -->
-    <div class="complete-screen" id="completeScreen">
-        <div class="complete-icon" id="completeIcon">🎉</div>
-        <h2 class="complete-title" id="completeTitle">太棒了！</h2>
-        <div class="complete-score" id="completeScore">5/5</div>
-        <p class="complete-msg" id="completeMsg">全部答對！你好厲害！</p>
-        <div class="complete-rewards">
-            <div class="reward-item">
-                <div class="reward-value" id="rewardExp">⭐ +25</div>
-                <div class="reward-label">經驗值</div>
-            </div>
-        </div>
-        <div class="review-section" id="reviewSection">
-            <div class="review-title">📝 學習複習</div>
-            <div id="reviewList"></div>
-        </div>
-        <button class="complete-btn" onclick="finishSubject()">✓ 完成</button>
-    </div>
+<div class="name-box">
+  <label class="name-label">🐹 告訴我你的名字吧！</label>
+  <input type="text" id="nameInput" class="name-input" placeholder="阿均" maxlength="10">
 </div>
-
-<!-- 每日完成慶祝 -->
-<div class="celebration" id="celebration">
-    <div class="celebration-box">
-        <div class="celeb-icon">🎊</div>
-        <h2 class="celeb-title">今日學習完成！</h2>
-        <p class="celeb-subtitle">太棒了！你完成了所有挑戰！</p>
-        <div class="celeb-streak">
-            <div>🔥 連續學習</div>
-            <div class="celeb-streak-num" id="celebStreak">1 天</div>
-        </div>
-        <button class="celeb-btn" onclick="closeCelebration()">太棒了！👍</button>
-    </div>
-</div>
+<button class="start-btn" onclick="startApp()">🎒 我準備好了！出發！</button>
 ```
+
+  </div>
+</div>
+
+<!-- ===== 主畫面 ===== -->
+
+<div id="mainScreen" class="hidden">
+
+  <div class="card player-card">
+    <div class="player-top">
+      <div class="player-avatar">🐹</div>
+      <div>
+        <div class="player-name" id="displayName">阿均</div>
+        <div class="player-title" id="playerTitle">✨ 學習小新手</div>
+        <div class="player-streak">
+          <span class="streak-fire">🔥</span>
+          連續學習 <span id="streakDays">0</span> 天
+        </div>
+      </div>
+    </div>
+    <div class="badge-area">
+      <div class="badge-title">🏆 我的倉鼠徽章收藏</div>
+      <div class="badge-grid">
+        <div class="badge-item" id="badgeMini">
+          <div class="badge-icon">🐹</div>
+          <div class="badge-count" id="miniCount">0</div>
+          <div class="badge-name">迷你倉</div>
+        </div>
+        <div class="badge-item" id="badgeSmall">
+          <div class="badge-icon">🐹</div>
+          <div class="badge-count" id="smallCount">0</div>
+          <div class="badge-name">小倉鼠</div>
+        </div>
+        <div class="badge-item" id="badgeMedium">
+          <div class="badge-icon">🐹</div>
+          <div class="badge-count" id="mediumCount">0</div>
+          <div class="badge-name">中倉鼠</div>
+        </div>
+        <div class="badge-item" id="badgeLarge">
+          <div class="badge-icon">🐹</div>
+          <div class="badge-count" id="largeCount">0</div>
+          <div class="badge-name">大倉鼠</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card encourage-card">
+    <div class="enc-head">
+      <div class="enc-avatar">🐹</div>
+      <div class="enc-name">小倉鼠老師</div>
+    </div>
+    <div class="enc-msg" id="encourageMsg">早安，<span class="hl">阿均</span>！今天又是學習的好日子！選一個科目開始吧，我相信你一定可以的！💪</div>
+  </div>
+
+  <div class="card subject chinese" onclick="startLesson('chinese')">
+    <div class="subj-icon">📚</div>
+    <div class="subj-info">
+      <div class="subj-name">國語魔法課</div>
+      <div class="subj-desc">認識美麗的中國文字</div>
+    </div>
+    <div class="subj-badge" id="chineseBadge">開始</div>
+  </div>
+
+  <div class="card subject english" onclick="startLesson('english')">
+    <div class="subj-icon">🔤</div>
+    <div class="subj-info">
+      <div class="subj-name">英文探險課</div>
+      <div class="subj-desc">認識字母和單字朋友</div>
+    </div>
+    <div class="subj-badge" id="englishBadge">開始</div>
+  </div>
+
+  <div class="card subject math" onclick="startLesson('math')">
+    <div class="subj-icon">🔢</div>
+    <div class="subj-info">
+      <div class="subj-name">數學遊戲課</div>
+      <div class="subj-desc">數字世界的冒險</div>
+    </div>
+    <div class="subj-badge" id="mathBadge">開始</div>
+  </div>
+
+  <div class="card exchange-card">
+    <div class="exch-title">🎁 徽章升級工坊</div>
+    <div class="exch-item">
+      <div class="exch-info">3個迷你倉 → 1個小倉鼠</div>
+      <button class="exch-btn" id="exSmall" onclick="exchange('small')">升級</button>
+    </div>
+    <div class="exch-item">
+      <div class="exch-info">3個小倉鼠 → 1個中倉鼠</div>
+      <button class="exch-btn" id="exMedium" onclick="exchange('medium')">升級</button>
+    </div>
+    <div class="exch-item">
+      <div class="exch-info">3個中倉鼠 → 1個大倉鼠</div>
+      <button class="exch-btn" id="exLarge" onclick="exchange('large')">升級</button>
+    </div>
+  </div>
+
+</div><!-- /mainScreen -->
+</div><!-- /wrap -->
+
+<!-- ===== 學習畫面 ===== -->
+
+<div id="learnScreen" class="hidden">
+  <div class="learn-header">
+    <button class="learn-back" onclick="exitLesson()">⬅️</button>
+    <div class="learn-title" id="learnTitle">國語魔法課</div>
+    <div class="learn-score">🐹 +<span id="sessionBadges">0</span></div>
+  </div>
+  <div class="learn-content" id="learnContent"></div>
+</div>
+
+<!-- 粒子層 -->
+
+<div id="particles"></div>
+
+<!-- 徽章彈窗 -->
+
+<div id="badgeOverlay" class="badge-overlay hidden">
+  <div class="badge-popup">
+    <span class="popup-icon" id="popupIcon">🐹</span>
+    <div class="popup-title" id="popupTitle">獲得迷你倉徽章！</div>
+    <div class="popup-desc" id="popupDesc">太棒了！繼續加油喔！</div>
+    <button class="popup-btn" onclick="closeBadgePopup()">太棒了！🎉</button>
+  </div>
+</div>
 
 <script>
-// ================================================================
-// 🦊 阿均的每日學習樂園 - 整合版
-// 國語 + 英文 + 數學 三科合一
-// ================================================================
+/* ===================================================
+   AUDIO ENGINE — Web Audio API
+   =================================================== */
+let audioCtx = null;
+let soundOn = true;
 
-// ===== 題庫 =====
-const QUESTIONS = {
-    // ==================== 國語題庫 ====================
-    chinese: {
-        characters: [
-            { emoji: '🌸', answer: '花', options: ['花', '草', '樹', '葉'], hint: '春天會開的，很漂亮' },
-            { emoji: '🌙', answer: '月', options: ['月', '日', '星', '雲'], hint: '晚上出現在天空' },
-            { emoji: '⭐', answer: '星', options: ['星', '月', '日', '光'], hint: '一閃一閃亮晶晶' },
-            { emoji: '🐟', answer: '魚', options: ['魚', '鳥', '蟲', '貓'], hint: '住在水裡會游泳' },
-            { emoji: '🐦', answer: '鳥', options: ['鳥', '魚', '狗', '貓'], hint: '有翅膀會飛' },
-            { emoji: '👀', answer: '眼', options: ['眼', '耳', '口', '鼻'], hint: '用來看東西' },
-            { emoji: '👂', answer: '耳', options: ['耳', '眼', '口', '手'], hint: '用來聽聲音' },
-            { emoji: '🖐️', answer: '手', options: ['手', '腳', '頭', '身'], hint: '用來拿東西' },
-            { emoji: '💧', answer: '水', options: ['水', '火', '土', '木'], hint: '口渴要喝的' },
-            { emoji: '🔥', answer: '火', options: ['火', '水', '土', '風'], hint: '紅紅的會燙' },
-            { emoji: '🌳', answer: '樹', options: ['樹', '花', '草', '山'], hint: '高高的有葉子' },
-            { emoji: '☀️', answer: '日', options: ['日', '月', '星', '雲'], hint: '白天發光發熱' },
-            { emoji: '🏔️', answer: '山', options: ['山', '水', '石', '土'], hint: '高高的可以爬' },
-            { emoji: '🐶', answer: '狗', options: ['狗', '貓', '豬', '牛'], hint: '汪汪叫' },
-            { emoji: '🐱', answer: '貓', options: ['貓', '狗', '鼠', '兔'], hint: '喵喵叫' },
-            { emoji: '🐷', answer: '豬', options: ['豬', '牛', '羊', '馬'], hint: '粉紅色，愛睡覺' },
-            { emoji: '🐮', answer: '牛', options: ['牛', '豬', '羊', '馬'], hint: '會產牛奶' },
-            { emoji: '👦', answer: '男', options: ['男', '女', '子', '人'], hint: '弟弟是...' },
-            { emoji: '👧', answer: '女', options: ['女', '男', '子', '人'], hint: '姊姊是...' },
-            { emoji: '🏠', answer: '家', options: ['家', '房', '屋', '門'], hint: '我們住的地方' }
-        ],
-        words: [
-            { q: '太__', emoji: '☀️', answer: '太陽', options: ['太陽', '太空', '太大', '太好'], hint: '白天發光發熱' },
-            { q: '__亮', emoji: '🌙', answer: '月亮', options: ['月亮', '明亮', '光亮', '閃亮'], hint: '晚上圓圓的' },
-            { q: '花__', emoji: '🌺', answer: '花園', options: ['花園', '花朵', '花瓶', '花香'], hint: '種很多花的地方' },
-            { q: '__校', emoji: '🏫', answer: '學校', options: ['學校', '住校', '回校', '到校'], hint: '上課的地方' },
-            { q: '老__', emoji: '👨‍🏫', answer: '老師', options: ['老師', '老人', '老虎', '老鼠'], hint: '教我們知識的人' },
-            { q: '同__', emoji: '👦👧', answer: '同學', options: ['同學', '同事', '同意', '同樣'], hint: '一起上課的朋友' },
-            { q: '__包', emoji: '🎒', answer: '書包', options: ['書包', '背包', '錢包', '皮包'], hint: '裝課本的袋子' },
-            { q: '鉛__', emoji: '✏️', answer: '鉛筆', options: ['鉛筆', '毛筆', '彩筆', '原筆'], hint: '用來寫字的' },
-            { q: '早__', emoji: '🌅', answer: '早上', options: ['早上', '早安', '早起', '早餐'], hint: '太陽剛出來' },
-            { q: '__上', emoji: '🌃', answer: '晚上', options: ['晚上', '早上', '身上', '路上'], hint: '月亮出來了' },
-            { q: '小__', emoji: '🐶', answer: '小狗', options: ['小狗', '小貓', '小鳥', '小魚'], hint: '汪汪叫的寵物' },
-            { q: '大__', emoji: '🐘', answer: '大象', options: ['大象', '大人', '大樹', '大海'], hint: '有長鼻子' },
-            { q: '飛__', emoji: '✈️', answer: '飛機', options: ['飛機', '飛鳥', '飛走', '飛快'], hint: '在天上飛' },
-            { q: '汽__', emoji: '🚗', answer: '汽車', options: ['汽車', '汽水', '汽油', '汽球'], hint: '在路上跑' },
-            { q: '__果', emoji: '🍎', answer: '蘋果', options: ['蘋果', '水果', '結果', '如果'], hint: '紅紅的水果' }
-        ],
-        sentences: [
-            { correct: '妹妹在看書', wrong: ['妹妹在書看', '看書妹妹在', '書在看妹妹'], emoji: '👧📚', hint: '誰在做什麼' },
-            { correct: '小狗在跑步', wrong: ['跑步小狗在', '小狗跑步在', '在跑步小狗'], emoji: '🐕🏃', hint: '誰在做什麼' },
-            { correct: '弟弟在吃蘋果', wrong: ['蘋果弟弟吃', '吃蘋果弟弟', '弟弟蘋果吃'], emoji: '👦🍎', hint: '誰在吃什麼' },
-            { correct: '小鳥在唱歌', wrong: ['唱歌小鳥在', '在唱歌小鳥', '小鳥唱歌在'], emoji: '🐦🎵', hint: '誰在做什麼' },
-            { correct: '姊姊在畫畫', wrong: ['畫畫姊姊在', '在畫畫姊姊', '姊姊畫畫在'], emoji: '👧🎨', hint: '誰在做什麼' }
-        ]
-    },
-    
-    // ==================== 英文題庫 ====================
-    english: {
-        letters: [
-            { letter: 'A', options: ['A', 'E', 'I', 'O'] },
-            { letter: 'B', options: ['B', 'D', 'P', 'T'] },
-            { letter: 'C', options: ['C', 'S', 'K', 'G'] },
-            { letter: 'D', options: ['D', 'B', 'T', 'P'] },
-            { letter: 'E', options: ['E', 'A', 'I', 'U'] },
-            { letter: 'F', options: ['F', 'S', 'V', 'X'] },
-            { letter: 'G', options: ['G', 'J', 'C', 'Q'] },
-            { letter: 'H', options: ['H', 'A', 'N', 'M'] },
-            { letter: 'I', options: ['I', 'E', 'A', 'Y'] },
-            { letter: 'J', options: ['J', 'G', 'Y', 'I'] },
-            { letter: 'K', options: ['K', 'C', 'Q', 'X'] },
-            { letter: 'L', options: ['L', 'R', 'I', 'J'] },
-            { letter: 'M', options: ['M', 'N', 'W', 'V'] },
-            { letter: 'N', options: ['N', 'M', 'H', 'U'] },
-            { letter: 'O', options: ['O', 'U', 'Q', 'C'] },
-            { letter: 'P', options: ['P', 'B', 'D', 'Q'] },
-            { letter: 'Q', options: ['Q', 'O', 'G', 'P'] },
-            { letter: 'R', options: ['R', 'L', 'P', 'B'] },
-            { letter: 'S', options: ['S', 'C', 'Z', 'X'] },
-            { letter: 'T', options: ['T', 'D', 'P', 'L'] },
-            { letter: 'U', options: ['U', 'V', 'W', 'Y'] },
-            { letter: 'V', options: ['V', 'W', 'U', 'Y'] },
-            { letter: 'W', options: ['W', 'V', 'M', 'N'] },
-            { letter: 'X', options: ['X', 'K', 'Z', 'Y'] },
-            { letter: 'Y', options: ['Y', 'V', 'U', 'I'] },
-            { letter: 'Z', options: ['Z', 'S', 'X', 'N'] }
-        ],
-        words: [
-            { word: 'apple', emoji: '🍎', chinese: '蘋果' },
-            { word: 'banana', emoji: '🍌', chinese: '香蕉' },
-            { word: 'cat', emoji: '🐈', chinese: '貓' },
-            { word: 'dog', emoji: '🐕', chinese: '狗' },
-            { word: 'egg', emoji: '🥚', chinese: '蛋' },
-            { word: 'fish', emoji: '🐟', chinese: '魚' },
-            { word: 'girl', emoji: '👧', chinese: '女孩' },
-            { word: 'hat', emoji: '🎩', chinese: '帽子' },
-            { word: 'ice', emoji: '🧊', chinese: '冰' },
-            { word: 'jump', emoji: '🦘', chinese: '跳' },
-            { word: 'kite', emoji: '🪁', chinese: '風箏' },
-            { word: 'lion', emoji: '🦁', chinese: '獅子' },
-            { word: 'moon', emoji: '🌙', chinese: '月亮' },
-            { word: 'nose', emoji: '👃', chinese: '鼻子' },
-            { word: 'orange', emoji: '🍊', chinese: '橘子' },
-            { word: 'pig', emoji: '🐷', chinese: '豬' },
-            { word: 'queen', emoji: '👸', chinese: '女王' },
-            { word: 'rabbit', emoji: '🐰', chinese: '兔子' },
-            { word: 'sun', emoji: '☀️', chinese: '太陽' },
-            { word: 'tiger', emoji: '🐯', chinese: '老虎' },
-            { word: 'umbrella', emoji: '☂️', chinese: '雨傘' },
-            { word: 'violin', emoji: '🎻', chinese: '小提琴' },
-            { word: 'water', emoji: '💧', chinese: '水' },
-            { word: 'yellow', emoji: '🟡', chinese: '黃色' },
-            { word: 'zebra', emoji: '🦓', chinese: '斑馬' },
-            { word: 'red', emoji: '🔴', chinese: '紅色' },
-            { word: 'blue', emoji: '🔵', chinese: '藍色' },
-            { word: 'green', emoji: '🟢', chinese: '綠色' },
-            { word: 'one', emoji: '1️⃣', chinese: '一' },
-            { word: 'two', emoji: '2️⃣', chinese: '二' },
-            { word: 'three', emoji: '3️⃣', chinese: '三' },
-            { word: 'mom', emoji: '👩', chinese: '媽媽' },
-            { word: 'dad', emoji: '👨', chinese: '爸爸' },
-            { word: 'bird', emoji: '🐦', chinese: '鳥' },
-            { word: 'book', emoji: '📚', chinese: '書' },
-            { word: 'bear', emoji: '🐻', chinese: '熊' },
-            { word: 'ball', emoji: '⚽', chinese: '球' },
-            { word: 'bed', emoji: '🛏️', chinese: '床' },
-            { word: 'cup', emoji: '🥤', chinese: '杯子' },
-            { word: 'bus', emoji: '🚌', chinese: '公車' }
-        ],
-        spelling: [
-            { word: 'cat', emoji: '🐈', chinese: '貓' },
-            { word: 'dog', emoji: '🐕', chinese: '狗' },
-            { word: 'pig', emoji: '🐷', chinese: '豬' },
-            { word: 'sun', emoji: '☀️', chinese: '太陽' },
-            { word: 'red', emoji: '🔴', chinese: '紅色' },
-            { word: 'mom', emoji: '👩', chinese: '媽媽' },
-            { word: 'dad', emoji: '👨', chinese: '爸爸' },
-            { word: 'bed', emoji: '🛏️', chinese: '床' },
-            { word: 'cup', emoji: '🥤', chinese: '杯子' },
-            { word: 'bus', emoji: '🚌', chinese: '公車' },
-            { word: 'hat', emoji: '🎩', chinese: '帽子' },
-            { word: 'egg', emoji: '🥚', chinese: '蛋' },
-            { word: 'one', emoji: '1️⃣', chinese: '一' },
-            { word: 'two', emoji: '2️⃣', chinese: '二' },
-            { word: 'ten', emoji: '🔟', chinese: '十' }
-        ]
-    },
-    
-    // ==================== 數學題庫 ====================
-    math: {
-        addition: () => {
-            const a = randInt(1, 10);
-            const b = randInt(1, 10 - a);
-            const ans = a + b;
-            return {
-                q: `${a} + ${b} = ?`,
-                emoji: '➕',
-                answer: ans,
-                options: genOptions(ans, 1, 20),
-                type: 'addition',
-                hint: '加法：把兩個數合起來'
-            };
-        },
-        subtraction: () => {
-            const a = randInt(5, 18);
-            const b = randInt(1, a - 1);
-            const ans = a - b;
-            return {
-                q: `${a} - ${b} = ?`,
-                emoji: '➖',
-                answer: ans,
-                options: genOptions(ans, 0, 20),
-                type: 'subtraction',
-                hint: '減法：從大數減去小數'
-            };
-        },
-        compare: () => {
-            const a = randInt(1, 20);
-            let b = randInt(1, 20);
-            while (b === a) b = randInt(1, 20);
-            const ans = a > b ? '>' : '<';
-            return {
-                q: `${a} ⬜ ${b}`,
-                emoji: '⚖️',
-                answer: ans,
-                options: ['>', '<'],
-                type: 'compare',
-                hint: '哪個數字比較大？'
-            };
-        },
-        counting: () => {
-            const items = ['🍎', '⭐', '🌸', '🐟', '🦋', '🍊', '🌙', '🐦', '🍀', '💧'];
-            const emoji = items[randInt(0, items.length - 1)];
-            const count = randInt(3, 12);
-            const display = Array(count).fill(emoji).join(' ');
-            return {
-                q: display,
-                emoji: '🔢',
-                answer: count,
-                options: genOptions(count, 1, 15),
-                type: 'counting',
-                hint: '數一數有幾個？'
-            };
-        },
-        sequence: () => {
-            const start = randInt(1, 12);
-            const pos = randInt(1, 3);
-            const seq = [];
-            for (let i = 0; i < 5; i++) {
-                seq.push(i === pos ? '?' : start + i);
-            }
-            const ans = start + pos;
-            return {
-                q: seq.join(', '),
-                emoji: '📝',
-                answer: ans,
-                options: genOptions(ans, 1, 20),
-                type: 'sequence',
-                hint: '?應該填什麼數字？'
-            };
-        },
-        doubles: () => {
-            const n = randInt(1, 10);
-            const ans = n * 2;
-            return {
-                q: `${n} + ${n} = ?`,
-                emoji: '✨',
-                answer: ans,
-                options: genOptions(ans, 2, 20),
-                type: 'doubles',
-                hint: '雙倍加法'
-            };
-        },
-        makesTen: () => {
-            const a = randInt(1, 9);
-            const ans = 10 - a;
-            return {
-                q: `${a} + ? = 10`,
-                emoji: '🔟',
-                answer: ans,
-                options: genOptions(ans, 1, 9),
-                type: 'makesTen',
-                hint: '湊成10'
-            };
-        }
+function getCtx(){
+  if(!audioCtx) audioCtx = new (window.AudioContext||window.webkitAudioContext)();
+  return audioCtx;
+}
+
+function playTone(freq, type, duration, vol=0.3, delay=0){
+  if(!soundOn) return;
+  try{
+    const ctx = getCtx();
+    const o = ctx.createOscillator();
+    const g = ctx.createGain();
+    o.connect(g); g.connect(ctx.destination);
+    o.type = type;
+    o.frequency.setValueAtTime(freq, ctx.currentTime+delay);
+    g.gain.setValueAtTime(0, ctx.currentTime+delay);
+    g.gain.linearRampToValueAtTime(vol, ctx.currentTime+delay+0.01);
+    g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime+delay+duration);
+    o.start(ctx.currentTime+delay);
+    o.stop(ctx.currentTime+delay+duration+0.05);
+  }catch(e){}
+}
+
+// 答對音效 — 歡快上升音階
+function sfxCorrect(){
+  if(!soundOn) return;
+  [[523,0],[659,0.1],[784,0.2],[1047,0.3]].forEach(([f,d])=>playTone(f,'sine',0.25,0.35,d));
+}
+// 答錯音效 — 溫柔低沉提示
+function sfxWrong(){
+  if(!soundOn) return;
+  playTone(330,'triangle',0.3,0.25,0);
+  playTone(277,'triangle',0.3,0.2,0.15);
+}
+// 升級音效 — 勝利旋律
+function sfxLevelUp(){
+  if(!soundOn) return;
+  [[523,0.05],[659,0.15],[784,0.25],[659,0.4],[1047,0.55]].forEach(([f,d])=>playTone(f,'sine',0.35,0.4,d));
+}
+// 按鈕點擊音
+function sfxClick(){
+  if(!soundOn) return;
+  playTone(880,'square',0.08,0.12,0);
+}
+// 開始音效
+function sfxStart(){
+  if(!soundOn) return;
+  [[262,0],[330,0.1],[392,0.2],[523,0.3],[659,0.45]].forEach(([f,d])=>playTone(f,'sine',0.3,0.3,d));
+}
+// 翻頁音
+function sfxFlip(){
+  if(!soundOn) return;
+  playTone(1200,'sine',0.12,0.15,0);
+  playTone(900,'sine',0.1,0.12,0.1);
+}
+
+function toggleSound(){
+  soundOn = !soundOn;
+  document.getElementById('soundToggle').textContent = soundOn ? '🔊' : '🔇';
+  if(soundOn) sfxClick();
+}
+
+/* ===================================================
+   BACKGROUND PARTICLES
+   =================================================== */
+function initBgParticles(){
+  const container = document.getElementById('bgParticles');
+  const icons = ['⭐','🌟','✨','🍀','🌸','💫','🎈','🎀'];
+  for(let i=0;i<18;i++){
+    const el = document.createElement('div');
+    el.className = 'bg-star';
+    el.textContent = icons[Math.floor(Math.random()*icons.length)];
+    el.style.cssText = `
+      left:${Math.random()*100}%;
+      font-size:${14+Math.random()*22}px;
+      animation-duration:${8+Math.random()*16}s;
+      animation-delay:${Math.random()*12}s;
+    `;
+    container.appendChild(el);
+  }
+}
+
+/* ===================================================
+   BURST PARTICLES on correct answer
+   =================================================== */
+function burstParticles(x, y){
+  const container = document.getElementById('particles');
+  const colors=['#fbbf24','#22c55e','#3b82f6','#ef4444','#a855f7','#ec4899','#f97316','#06b6d4'];
+  const shapes=['⭐','🌟','✨','💫','🎉','🎊','🌈','❤️'];
+  for(let i=0;i<36;i++){
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const angle = (i/36)*360;
+    const dist = 80+Math.random()*150;
+    const dx = Math.cos(angle*Math.PI/180)*dist;
+    const dy = Math.sin(angle*Math.PI/180)*dist - 60;
+    const size = 10+Math.random()*18;
+    const dur = 0.6+Math.random()*0.8;
+    if(Math.random()>0.4){
+      p.textContent = shapes[Math.floor(Math.random()*shapes.length)];
+      p.style.fontSize = size+'px';
+    } else {
+      p.style.width = p.style.height = size+'px';
+      p.style.background = colors[Math.floor(Math.random()*colors.length)];
     }
+    p.style.cssText += `
+      left:${x}px; top:${y}px;
+      --dx:${dx}px; --dy:${dy}px;
+      animation-duration:${dur}s;
+      animation-delay:${Math.random()*0.15}s;
+    `;
+    container.appendChild(p);
+    setTimeout(()=>p.remove(), (dur+0.3)*1000);
+  }
+}
+
+function triggerBurst(){
+  // burst from center of screen
+  burstParticles(window.innerWidth/2, window.innerHeight/2);
+}
+
+/* ===================================================
+   COURSES DATA
+   =================================================== */
+const COURSES = {
+  chinese:{
+    title:'📚 國語魔法課',
+    chapter:'🌿 大自然的文字寶貝',
+    story:'阿均，今天我們要一起認識大自然裡常見的東西！每個字都有它的小故事，小倉鼠老師會慢慢教你！',
+    units:[
+      {type:'teach',char:'花',emoji:'🌸',pinyin:'ㄏㄨㄚ',meaning:'植物開出來漂亮的部分',
+       talk:['阿均，我們今天第一個要學的字是「<span class="char-big">花</span>」！','你看過公園裡的花嗎？紅色的、黃色的、粉色的，好漂亮對不對？','「花」上面有個「艹」，代表它是植物喔！按喇叭🔊聽聽看！'],
+       example:'春天來了，公園裡開滿了漂亮的<span class="hl">花</span>。'},
+      {type:'practice',char:'花',q:'下面哪一個是「花」？',hint:'花是植物開出來漂亮的部分，有花瓣的🌸🌺🌷',
+       opts:[{t:'🌸',c:true},{t:'🌳',c:false},{t:'🍎',c:false},{t:'☀️',c:false}],
+       okMsg:'🌸就是花！阿均你記得真清楚！',failMsg:'這個不是花喔～花有漂亮花瓣的，像🌸這樣！'},
+      {type:'teach',char:'草',emoji:'🌿',pinyin:'ㄘㄠˇ',meaning:'綠綠的小植物，長在地上',
+       talk:['接下來認識「<span class="char-big">草</span>」！','草是綠綠的、軟軟的，長在地上。小兔子🐰最喜歡吃草了！','「草」上面也有「艹」，因為它也是植物喔！'],
+       example:'小白兔在草地上吃<span class="hl">草</span>，好開心！'},
+      {type:'practice',char:'草',q:'小白兔🐰最喜歡吃什麼？',hint:'小白兔喜歡吃綠綠的、長在地上的植物～',
+       opts:[{t:'🌿 草',c:true},{t:'🍕 披薩',c:false},{t:'🍦 冰淇淋',c:false},{t:'🍔 漢堡',c:false}],
+       okMsg:'小白兔最愛吃草了！',failMsg:'披薩冰淇淋漢堡是人吃的啦！兔子吃綠綠的植物～'},
+      {type:'teach',char:'樹',emoji:'🌳',pinyin:'ㄕㄨˋ',meaning:'高高的植物，有樹幹和樹葉',
+       talk:['現在來認識「<span class="char-big">樹</span>」！','樹長得很高，有粗粗的樹幹、很多樹枝、滿滿的樹葉！','小鳥🐦喜歡在樹上唱歌喔！'],
+       example:'小鳥在<span class="hl">樹</span>上唱歌。'},
+      {type:'practice',char:'樹',q:'小鳥🐦喜歡在哪裡唱歌？',hint:'小鳥會飛到高高的地方，那裡有樹枝可以站～',
+       opts:[{t:'🌳 樹上',c:true},{t:'💧 水裡',c:false},{t:'🚗 車上',c:false},{t:'📺 電視裡',c:false}],
+       okMsg:'小鳥最喜歡在樹上唱歌了！',failMsg:'水裡是魚的家，車子和電視不是小鳥會去的地方喔！'},
+      {type:'teach',char:'山',emoji:'⛰️',pinyin:'ㄕㄢ',meaning:'地面上高高凸起的地方',
+       talk:['「<span class="char-big">山</span>」這個字很有趣！','你看它三個尖尖的，中間最高，是不是很像真正的山？這叫「象形字」！','台灣有很多美麗的山喔！'],
+       example:'週末我們全家去爬<span class="hl">山</span>。'},
+      {type:'practice',char:'山',q:'「山」這個字的樣子像什麼？',hint:'看看「山」的形狀，三個尖尖的，中間最高⋯⋯',
+       opts:[{t:'⛰️ 像山',c:true},{t:'🌊 像海浪',c:false},{t:'☀️ 像太陽',c:false},{t:'🌙 像月亮',c:false}],
+       okMsg:'「山」就是照著山的樣子畫的！這叫象形字！',failMsg:'再看看「山」的形狀，尖尖的很像高高的山喔！'},
+      {type:'teach',char:'水',emoji:'💧',pinyin:'ㄕㄨㄟˇ',meaning:'透明的液體，我們每天都要喝',
+       talk:['最後認識「<span class="char-big">水</span>」！','水是我們每天都需要的！「水」中間一條線，旁邊有像波浪的曲線！','記得要多喝水保持健康喔！'],
+       example:'天氣好熱，我想喝<span class="hl">水</span>！'},
+      {type:'practice',char:'水',q:'下面哪一個是「水」？',hint:'水是透明的、會流動的、口渴要喝的～',
+       opts:[{t:'💧',c:true},{t:'🔥',c:false},{t:'🌙',c:false},{t:'⭐',c:false}],
+       okMsg:'💧就是水！記得要多喝水喔！',failMsg:'🔥是火、🌙是月亮、⭐是星星，都不是水喔！'},
+      {type:'test',q:'看圖選字：🌸',opts:['花','草','樹','山'],ans:'花',hint:'植物開出來漂亮的部分⋯⋯'},
+      {type:'test',q:'看圖選字：🌿',opts:['花','草','樹','水'],ans:'草',hint:'綠綠的，兔子愛吃⋯⋯'},
+      {type:'test',q:'看圖選字：🌳',opts:['花','草','樹','山'],ans:'樹',hint:'高高的，小鳥在上面唱歌⋯⋯'},
+      {type:'test',q:'看圖選字：⛰️',opts:['山','水','花','草'],ans:'山',hint:'高高凸起的地方⋯⋯'},
+      {type:'test',q:'看圖選字：💧',opts:['水','火','山','花'],ans:'水',hint:'透明的，口渴要喝⋯⋯'}
+    ]
+  },
+  english:{
+    title:'🔤 英文探險課',
+    chapter:'🔤 認識字母朋友 A-D',
+    story:'阿均，英文有26個字母朋友！今天先認識A、B、C、D，每個字母都有自己的名字和單字夥伴！',
+    units:[
+      {type:'teach',letter:'A',word:'Apple',emoji:'🍎',zh:'蘋果',
+       talk:['來認識第一個字母「<span class="eng-big">A</span>」！','A唸「ㄟ」，長得像<span class="hl">帳篷⛺</span>，尖尖的頂！','A的好朋友是<span class="eng-big">Apple</span>（蘋果）🍎！按喇叭聽聽看！']},
+      {type:'practice',letter:'A',q:'🍎 Apple 的開頭字母是？',hint:'Apple開頭是「ㄟ」的聲音，像帳篷的字母⋯⋯',audio:'Apple',
+       opts:[{t:'A',c:true},{t:'B',c:false},{t:'C',c:false},{t:'D',c:false}],
+       okMsg:'Apple的開頭就是A！A for Apple！',failMsg:'Apple開頭是「ㄟ」，像帳篷⛺的是A喔！'},
+      {type:'teach',letter:'B',word:'Bear',emoji:'🐻',zh:'熊',
+       talk:['第二個字母「<span class="eng-big">B</span>」！','B唸「逼」，像<span class="hl">兩個肚子</span>疊在一起！','B的好朋友是<span class="eng-big">Bear</span>（熊）🐻！']},
+      {type:'practice',letter:'B',q:'🐻 Bear 的開頭字母是？',hint:'Bear開頭像「逼」，兩個圓肚子的字母⋯⋯',audio:'Bear',
+       opts:[{t:'B',c:true},{t:'A',c:false},{t:'D',c:false},{t:'P',c:false}],
+       okMsg:'B for Bear！熊是很可愛的動物！',failMsg:'Bear開頭是「逼」，像兩個肚子的是B！'},
+      {type:'teach',letter:'C',word:'Cat',emoji:'🐱',zh:'貓',
+       talk:['第三個字母「<span class="eng-big">C</span>」！','C唸「西」，像<span class="hl">彎彎的月亮🌙</span>！','C的好朋友是<span class="eng-big">Cat</span>（貓）🐱！喵～']},
+      {type:'practice',letter:'C',q:'🐱 Cat 的開頭字母是？',hint:'Cat開頭像「乞」，像月亮🌙的字母⋯⋯',audio:'Cat',
+       opts:[{t:'C',c:true},{t:'K',c:false},{t:'G',c:false},{t:'S',c:false}],
+       okMsg:'C for Cat！貓咪喵喵喵～',failMsg:'Cat從C開始，C像彎月亮🌙！'},
+      {type:'teach',letter:'D',word:'Dog',emoji:'🐕',zh:'狗',
+       talk:['第四個字母「<span class="eng-big">D</span>」！','D唸「低」，像<span class="hl">大肚子貼在牆上</span>！','D的好朋友是<span class="eng-big">Dog</span>（狗）🐕！汪汪！']},
+      {type:'practice',letter:'D',q:'🐕 Dog 的開頭字母是？',hint:'Dog開頭像「的」，大肚子靠牆的字母⋯⋯',audio:'Dog',
+       opts:[{t:'D',c:true},{t:'B',c:false},{t:'G',c:false},{t:'T',c:false}],
+       okMsg:'D for Dog！狗狗汪汪汪～',failMsg:'Dog開頭是「的」，D像大肚子靠牆！'},
+      {type:'test',q:'🍎 這是什麼？',opts:['Apple','Bear','Cat','Dog'],ans:'Apple',hint:'紅紅的水果，A開頭⋯⋯',audio:'Apple'},
+      {type:'test',q:'🐻 這是什麼？',opts:['Apple','Bear','Cat','Dog'],ans:'Bear',hint:'胖胖毛茸茸，B開頭⋯⋯',audio:'Bear'},
+      {type:'test',q:'🐱 這是什麼？',opts:['Apple','Bear','Cat','Dog'],ans:'Cat',hint:'喵喵叫，C開頭⋯⋯',audio:'Cat'},
+      {type:'test',q:'🐕 這是什麼？',opts:['Apple','Bear','Cat','Dog'],ans:'Dog',hint:'汪汪叫，D開頭⋯⋯',audio:'Dog'}
+    ]
+  },
+  math:{
+    title:'🔢 數學遊戲課',
+    chapter:'🔢 數字與加法魔法',
+    story:'阿均，數學其實很好玩！今天學數數和加法，小倉鼠老師會用很多圖片幫你，慢慢來不緊張！',
+    units:[
+      {type:'teach',concept:'counting',
+       talk:['我們先練習<span class="hl">數數</span>！數的時候要一個一個慢慢數！','來數蘋果：🍎🍎🍎🍎🍎<br>用手指點著：1...2...3...4...5！','一共<span class="hl">5</span>個！秘訣就是慢慢來！'],
+       visual:['🍎','🍎','🍎','🍎','🍎'],result:5},
+      {type:'practice',concept:'counting',q:'數一數，有幾顆星星？',hint:'用手指點著數：1、2、3⋯⋯',
+       visual:['⭐','⭐','⭐','⭐'],
+       opts:[{t:'4',c:true},{t:'3',c:false},{t:'5',c:false},{t:'6',c:false}],
+       okMsg:'是4顆！你數得很仔細！',failMsg:'再數一次，慢慢數每一顆！'},
+      {type:'practice',concept:'counting',q:'數一數，有幾朵花？',hint:'一朵一朵慢慢數！',
+       visual:['🌸','🌸','🌸','🌸','🌸','🌸'],
+       opts:[{t:'6',c:true},{t:'5',c:false},{t:'7',c:false},{t:'4',c:false}],
+       okMsg:'是6朵！數得很準！',failMsg:'花比較多，我們一起：1、2、3、4、5、6！'},
+      {type:'teach',concept:'addition',
+       talk:['現在學<span class="hl">加法</span>！加法就是「把東西合在一起」！','這邊2個🍎🍎，那邊又來1個🍎，放一起⋯⋯','合起來<span class="hl">2+1=3</span>個！加法就這麼簡單！'],
+       v1:['🍎','🍎'],v2:['🍎'],eq:'2+1=3',result:3},
+      {type:'practice',concept:'addition',q:'🍎🍎 + 🍎 = ?',hint:'左邊2個，右邊1個，合起來數！',
+       v1:['🍎','🍎'],v2:['🍎'],
+       opts:[{t:'3',c:true},{t:'2',c:false},{t:'4',c:false},{t:'1',c:false}],
+       okMsg:'2+1=3！你會加法了！',failMsg:'左邊2個右邊1個，數數看：1、2、3！'},
+      {type:'teach',concept:'addition2',
+       talk:['再練一個大一點的！','3顆⭐⭐⭐加2顆⭐⭐⋯⋯','合起來<span class="hl">3+2=5</span>顆！'],
+       v1:['⭐','⭐','⭐'],v2:['⭐','⭐'],eq:'3+2=5',result:5},
+      {type:'practice',concept:'addition',q:'⭐⭐⭐ + ⭐⭐ = ?',hint:'3顆加2顆，全部數一數！',
+       v1:['⭐','⭐','⭐'],v2:['⭐','⭐'],
+       opts:[{t:'5',c:true},{t:'4',c:false},{t:'6',c:false},{t:'3',c:false}],
+       okMsg:'3+2=5！你掌握訣竅了！',failMsg:'3加2，數：1、2、3、4、5！是5顆！'},
+      {type:'practice',concept:'addition',q:'1 + 4 = ?',hint:'1個加4個，全部數起來！',
+       v1:['🌙'],v2:['🌙','🌙','🌙','🌙'],
+       opts:[{t:'5',c:true},{t:'4',c:false},{t:'3',c:false},{t:'6',c:false}],
+       okMsg:'1+4=5！太厲害了！',failMsg:'1加4：1、2、3、4、5！是5個！'},
+      {type:'practice',concept:'addition',q:'2 + 2 = ?',hint:'2個加2個，兩邊一樣多！',
+       v1:['🍊','🍊'],v2:['🍊','🍊'],
+       opts:[{t:'4',c:true},{t:'3',c:false},{t:'5',c:false},{t:'2',c:false}],
+       okMsg:'2+2=4！兩邊一樣多！',failMsg:'2加2：1、2、3、4！是4個！'},
+      {type:'test',q:'數一數：🍎🍎🍎🍎🍎🍎🍎',visual:['🍎','🍎','🍎','🍎','🍎','🍎','🍎'],opts:['6','7','8','5'],ans:'7',hint:'慢慢數⋯⋯'},
+      {type:'test',q:'3 + 1 = ?',v1:['🌸','🌸','🌸'],v2:['🌸'],opts:['3','4','5','2'],ans:'4',hint:'3加1⋯⋯'},
+      {type:'test',q:'2 + 3 = ?',v1:['⭐','⭐'],v2:['⭐','⭐','⭐'],opts:['4','5','6','3'],ans:'5',hint:'2加3⋯⋯'}
+    ]
+  }
 };
 
-// ===== 遊戲狀態 =====
-let state = {
-    name: '阿均',
-    streak: 0,
-    lastDate: null,
-    today: {
-        chinese: { done: false, score: 0, time: 0 },
-        english: { done: false, score: 0, time: 0 },
-        math: { done: false, score: 0, time: 0 }
-    },
-    stats: {
-        totalDays: 0,
-        totalTime: 0,
-        totalQs: 0,
-        chinese: { total: 0, correct: 0 },
-        english: { total: 0, correct: 0 },
-        math: { total: 0, correct: 0 }
-    },
-    history: [],
-    weekRecord: {},
-    
-    // 當前遊戲
-    subject: null,
-    questions: [],
-    qIndex: 0,
-    score: 0,
-    hearts: 3,
-    startTime: 0,
-    results: []
+const CHEERS = {
+  ok:['太棒了！🎉','答對了！✨','好厲害！👏','正確！🌟','太厲害了！💪','你好棒！⭐','給自己拍拍手！🎊','超厲害！🏆'],
+  retry:['沒關係，再試一次！💪','不要緊，我陪你！❤️','慢慢來，你可以的！✨','再想想看～🤔','沒事，多練習就會了！📚'],
+  master:['太棒了！你終於做到了！🎉','堅持就是勝利！✨','你沒有放棄，好厲害！🏆']
 };
 
-// ===== 工具函數 =====
-function randInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+/* ===================================================
+   STATE
+   =================================================== */
+let S = {
+  name:'阿均',
+  badges:{mini:0,small:0,medium:0,large:0},
+  subj:null,unit:0,sessionBadges:0,retries:0,
+  today:{chinese:{done:false},english:{done:false},math:{done:false}},
+  stats:{streak:0,lastDate:null,totalRetries:0}
+};
+
+/* ===================================================
+   INIT
+   =================================================== */
+function init(){
+  initBgParticles();
+  load();
+  if(S.stats.lastDate){
+    checkDay();
+    document.getElementById('welcomeScreen').classList.add('hidden');
+    document.getElementById('mainScreen').classList.remove('hidden');
+    updateUI();
+  }
 }
 
-function shuffle(arr) {
-    const a = [...arr];
-    for (let i = a.length - 1; i > 0; i--) {
-        const j = randInt(0, i);
-        [a[i], a[j]] = [a[j], a[i]];
-    }
-    return a;
+function startApp(){
+  sfxStart();
+  S.name = document.getElementById('nameInput').value.trim() || '阿均';
+  checkDay();
+  save();
+  document.getElementById('welcomeScreen').classList.add('hidden');
+  document.getElementById('mainScreen').classList.remove('hidden');
+  updateUI();
+  triggerBurst();
 }
 
-function genOptions(correct, min, max) {
-    let opts = [correct];
-    while (opts.length < 4) {
-        const n = randInt(min, max);
-        if (!opts.includes(n)) opts.push(n);
-    }
-    return shuffle(opts);
+function checkDay(){
+  const today = new Date().toISOString().split('T')[0];
+  if(S.stats.lastDate !== today){
+    const yest = new Date(Date.now()-86400000).toISOString().split('T')[0];
+    if(S.stats.lastDate && S.stats.lastDate !== yest) S.stats.streak = 0;
+    S.today = {chinese:{done:false},english:{done:false},math:{done:false}};
+  }
 }
 
-function getDateStr(d) {
-    return d.toISOString().split('T')[0];
-}
+function updateUI(){
+  document.getElementById('displayName').textContent = S.name;
+  document.getElementById('streakDays').textContent = S.stats.streak;
 
-function speak(text, lang = 'en-US') {
-    if ('speechSynthesis' in window) {
-        speechSynthesis.cancel();
-        const u = new SpeechSynthesisUtterance(text);
-        u.lang = lang;
-        u.rate = 0.8;
-        speechSynthesis.speak(u);
-    }
-}
+  const total = S.badges.mini + S.badges.small*3 + S.badges.medium*9 + S.badges.large*27;
+  const titles=[{n:0,t:'學習小新手'},{n:3,t:'認真小學徒'},{n:6,t:'努力小勇士'},{n:10,t:'聰明小達人'},{n:20,t:'學習小明星'},{n:30,t:'超級學霸'}];
+  let title = titles[0].t;
+  for(const x of titles) if(total>=x.n) title=x.t;
+  document.getElementById('playerTitle').textContent = '✨ '+title;
 
-// ===== 初始化 =====
-function init() {
-    loadGame();
-    
-    if (state.name && state.lastDate) {
-        // 有存檔，檢查日期
-        checkNewDay();
-        showMain();
-    }
-}
+  document.getElementById('miniCount').textContent = S.badges.mini;
+  document.getElementById('smallCount').textContent = S.badges.small;
+  document.getElementById('mediumCount').textContent = S.badges.medium;
+  document.getElementById('largeCount').textContent = S.badges.large;
 
-function startApp() {
-    const name = document.getElementById('nameInput').value.trim() || '阿均';
-    state.name = name;
-    checkNewDay();
-    saveGame();
-    showMain();
-}
+  ['mini','small','medium','large'].forEach(t=>{
+    const el = document.getElementById('badge'+t.charAt(0).toUpperCase()+t.slice(1));
+    el.classList.toggle('earned', S.badges[t]>0);
+  });
 
-function showMain() {
-    document.getElementById('welcomeScreen').style.display = 'none';
-    document.getElementById('mainScreen').style.display = 'block';
-    updateMainUI();
-}
+  document.getElementById('exSmall').disabled = S.badges.mini < 3;
+  document.getElementById('exMedium').disabled = S.badges.small < 3;
+  document.getElementById('exLarge').disabled = S.badges.medium < 3;
 
-function checkNewDay() {
-    const today = getDateStr(new Date());
-    const yesterday = getDateStr(new Date(Date.now() - 86400000));
-    
-    if (state.lastDate !== today) {
-        // 新的一天
-        if (state.lastDate && state.lastDate !== yesterday) {
-            // 中斷連續
-            state.streak = 0;
-        }
-        // 重置今日
-        state.today = {
-            chinese: { done: false, score: 0, time: 0 },
-            english: { done: false, score: 0, time: 0 },
-            math: { done: false, score: 0, time: 0 }
-        };
-    }
-}
+  const hour = new Date().getHours();
+  const greet = hour<12?'早安':hour<18?'午安':'晚安';
+  document.getElementById('encourageMsg').innerHTML =
+    `${greet}，<span class="hl">${S.name}</span>！今天又是學習的好日子！選一個科目開始吧，我相信你一定可以的！💪`;
 
-// ===== 更新主畫面 =====
-function updateMainUI() {
-    // 日期
-    const now = new Date();
-    const opts = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' };
-    document.getElementById('todayDate').textContent = now.toLocaleDateString('zh-TW', opts);
-    
-    // 問候
-    const hour = now.getHours();
-    let greet = '早安';
-    if (hour >= 12 && hour < 18) greet = '午安';
-    else if (hour >= 18) greet = '晚安';
-    document.getElementById('greeting').innerHTML = `${greet}，<span class="name">${state.name}</span>！`;
-    
-    // 激勵語
-    const msgs = ['今天也要認真學習喔！💪', '每天進步一點點！🌟', '你是最棒的！⭐', '加油！🎯'];
-    document.getElementById('motivation').textContent = msgs[randInt(0, msgs.length - 1)];
-    
-    // 連續天數
-    document.getElementById('streakNum').textContent = state.streak;
-    
-    // 今日進度
-    const completed = Object.values(state.today).filter(s => s.done).length;
-    const progress = (completed / 3) * 100;
-    document.getElementById('progressFill').style.width = progress + '%';
-    document.getElementById('completedNum').textContent = completed;
-    
-    const todayTime = Object.values(state.today).reduce((sum, s) => sum + s.time, 0);
-    document.getElementById('todayTime').textContent = Math.round(todayTime / 60);
-    
-    // 科目狀態
-    updateSubjectBadge('chinese');
-    updateSubjectBadge('english');
-    updateSubjectBadge('math');
-    
-    // 週曆
-    renderWeek();
-    
-    // 家長統計
-    updateParentStats();
-}
-
-function updateSubjectBadge(subject) {
-    const card = document.querySelector(`.subject-card.${subject}`);
-    const badge = document.getElementById(`${subject}Badge`);
-    const data = state.today[subject];
-    
-    if (data.done) {
-        card.classList.add('completed');
-        badge.className = 'subject-badge badge-done';
-        badge.textContent = `✓ ${data.score}/5`;
+  ['chinese','english','math'].forEach(s=>{
+    const badge = document.getElementById(s+'Badge');
+    const cards = document.querySelectorAll('.subject.'+s);
+    if(S.today[s].done){
+      badge.textContent='完成✓';
+      badge.classList.add('done-badge');
+      cards.forEach(c=>c.classList.add('done'));
     } else {
-        card.classList.remove('completed');
-        badge.className = 'subject-badge badge-todo';
-        badge.textContent = '待完成';
+      badge.textContent='開始';
+      badge.classList.remove('done-badge');
+      cards.forEach(c=>c.classList.remove('done'));
     }
+  });
 }
 
-function renderWeek() {
-    const container = document.getElementById('weekDays');
-    container.innerHTML = '';
-    
-    const today = new Date();
-    const dayNames = ['日', '一', '二', '三', '四', '五', '六'];
-    const startOfWeek = new Date(today);
-    startOfWeek.setDate(today.getDate() - today.getDay());
-    
-    for (let i = 0; i < 7; i++) {
-        const d = new Date(startOfWeek);
-        d.setDate(startOfWeek.getDate() + i);
-        const dStr = getDateStr(d);
-        const isToday = dStr === getDateStr(today);
-        const isFuture = d > today;
-        const record = state.weekRecord[dStr];
-        
-        let cls = 'day-circle';
-        if (isToday) cls += ' today';
-        else if (isFuture) cls += ' future';
-        else if (record && record.all) cls += ' completed';
-        else if (record) cls += ' missed';
-        else cls += ' future';
-        
-        const el = document.createElement('div');
-        el.className = 'day-item';
-        el.innerHTML = `
-            <div class="day-name">${dayNames[d.getDay()]}</div>
-            <div class="${cls}">${d.getDate()}</div>
-        `;
-        container.appendChild(el);
+function exchange(type){
+  sfxClick();
+  const map={small:['mini',3],medium:['small',3],large:['medium',3]};
+  const [from,cost] = map[type];
+  if(S.badges[from]>=cost){
+    S.badges[from]-=cost;
+    S.badges[type]++;
+    save(); updateUI();
+    sfxLevelUp();
+    showBadgePopup(type);
+    triggerBurst();
+  }
+}
+
+/* ===================================================
+   LESSON
+   =================================================== */
+function startLesson(subj){
+  if(S.today[subj].done){
+    sfxClick();
+    alert(`🐹 ${S.name}，這科今天已經學完囉！明天再來！`);
+    return;
+  }
+  sfxFlip();
+  S.subj=subj; S.unit=0; S.sessionBadges=0; S.retries=0;
+
+  const screen = document.getElementById('learnScreen');
+  screen.className = 'learn-screen learn-screen-enter '+subj+'-theme';
+  screen.classList.remove('hidden');
+  document.getElementById('learnTitle').textContent = COURSES[subj].title;
+  document.getElementById('sessionBadges').textContent='0';
+  renderUnit();
+}
+
+function exitLesson(){
+  sfxClick();
+  document.getElementById('learnScreen').classList.add('hidden');
+  save(); updateUI();
+}
+
+function renderUnit(){
+  const course = COURSES[S.subj];
+  if(S.unit >= course.units.length){ showComplete(); return; }
+  const u = course.units[S.unit];
+  const content = document.getElementById('learnContent');
+  let html = '';
+
+  if(S.unit===0){
+    html += `<div class="teach-card" style="margin-bottom:14px">
+      <div class="chapter-intro">
+        <div class="ch-title">${course.chapter}</div>
+        <div class="ch-story">${course.story}</div>
+      </div>
+    </div>`;
+  }
+
+  html += '<div class="teach-card">';
+  if(u.type==='teach') html += renderTeach(u);
+  else if(u.type==='practice') html += renderPractice(u);
+  else if(u.type==='test') html += renderTest(u);
+  html += '</div>';
+
+  content.innerHTML = html;
+  content.scrollTop = 0;
+
+  // auto speak
+  if(u.audio) setTimeout(()=>speakEn(u.audio), 600);
+}
+
+function hamsterTag(id='main'){
+  return `<div class="hamster-talk">
+    <div class="ham-head">
+      <div class="ham-avatar" id="hamAvatar_${id}">🐹</div>
+      <div class="ham-label">小倉鼠老師</div>
+    </div>`;
+}
+
+function renderTeach(u){
+  let html = hamsterTag()
+    +`<div class="ham-bubble"><div class="ham-text">${u.talk.join('<br><br>')}</div></div></div>`;
+
+  html += '<div class="content-display">';
+  if(S.subj==='chinese'){
+    html += `<div class="big-char">${u.char}</div>
+      <span class="big-emoji">${u.emoji}</span>
+      <div class="pinyin">${u.pinyin}</div>
+      <div class="meaning">${u.meaning}</div>
+      <button class="speak-btn" id="spkBtn" onclick="speakZh('${u.char}');animSpeakBtn()">🔊</button>`;
+    if(u.example) html += `<div class="example"><div class="ex-label">📝 例句</div><div class="ex-text">${u.example}</div></div>`;
+  } else if(S.subj==='english'){
+    html += `<div class="big-letter">${u.letter}</div>
+      <span class="big-emoji">${u.emoji}</span>
+      <div class="big-word">${u.word}</div>
+      <div class="word-zh">${u.zh}</div>
+      <button class="speak-btn" id="spkBtn" onclick="speakEn('${u.word}');animSpeakBtn()">🔊</button>`;
+  } else if(S.subj==='math'){
+    if(u.visual) html += `<div class="math-visual"><div class="math-group">${u.visual.map(x=>`<span class="math-item">${x}</span>`).join('')}</div></div>
+      <div style="font-size:4rem;font-weight:900;color:var(--math)">${u.result}</div>`;
+    if(u.v1&&u.v2) html += mathEq(u.v1,u.v2,u.result,'result');
+  }
+  html += '</div>';
+  html += `<button class="next-btn" onclick="sfxFlip();nextUnit()">我學會了！繼續 ➡️</button>`;
+  return html;
+}
+
+function renderPractice(u){
+  let html = hamsterTag()
+    +`<div class="ham-bubble"><div class="ham-text">來小試身手！💪 ${S.name}一定可以的！慢慢想，不用著急喔！</div></div></div>`;
+  html += '<div class="content-display">';
+  if(u.visual) html += `<div class="math-visual"><div class="math-group">${u.visual.map(x=>`<span class="math-item">${x}</span>`).join('')}</div></div>`;
+  if(u.v1&&u.v2) html += mathEq(u.v1,u.v2,null,'q');
+  if(u.audio) html += `<button class="speak-btn" id="spkBtn" onclick="speakEn('${u.audio}');animSpeakBtn()">🔊</button>`;
+  html += '</div>';
+  html += `<div class="practice">
+    <div class="practice-q">${u.q}</div>
+    <div class="practice-hint">💡 ${u.hint}</div>
+    <div class="options">
+      ${u.opts.map(o=>`<button class="opt-btn" onclick="checkAns(${o.c},this)">${o.t}</button>`).join('')}
+    </div>
+    <div id="feedback"></div><div id="btns"></div>
+  </div>`;
+  return html;
+}
+
+function renderTest(u){
+  let html = hamsterTag()
+    +`<div class="ham-bubble"><div class="ham-text">⭐ 小測驗時間！來看看你記得多少！不用緊張喔！</div></div></div>`;
+  html += '<div class="content-display">';
+  if(u.visual) html += `<div class="math-visual"><div class="math-group">${u.visual.map(x=>`<span class="math-item">${x}</span>`).join('')}</div></div>`;
+  if(u.v1!==undefined) html += mathEq(u.v1||[],u.v2||[],null,'q');
+  if(u.audio) html += `<button class="speak-btn" id="spkBtn" onclick="speakEn('${u.audio}');animSpeakBtn()">🔊</button>`;
+  html += '</div>';
+  html += `<div class="practice">
+    <div class="practice-q">${u.q}</div>
+    <div class="practice-hint">💡 ${u.hint}</div>
+    <div class="options">
+      ${u.opts.map(o=>`<button class="opt-btn" onclick="checkTest(${o===u.ans},this,'${u.ans}')">${o}</button>`).join('')}
+    </div>
+    <div id="feedback"></div><div id="btns"></div>
+  </div>`;
+  return html;
+}
+
+function mathEq(v1,v2,result,type){
+  const rTag = type==='result'
+    ? `<span class="math-result">${result}</span>`
+    : `<span class="math-q">?</span>`;
+  return `<div class="math-visual">
+    <div class="math-group">${v1.map(x=>`<span class="math-item">${x}</span>`).join('')||'<span style="color:#999;font-size:1.5rem">0</span>'}</div>
+    <span class="math-op">+</span>
+    <div class="math-group">${v2.map(x=>`<span class="math-item">${x}</span>`).join('')||'<span style="color:#999;font-size:1.5rem">0</span>'}</div>
+    <span class="math-op">=</span>${rTag}
+  </div>`;
+}
+
+/* ===================================================
+   CHECK ANSWER
+   =================================================== */
+function checkAns(correct, btn){
+  const u = COURSES[S.subj].units[S.unit];
+  document.querySelectorAll('.opt-btn').forEach(b=>b.disabled=true);
+  const ham = document.getElementById('hamAvatar_main');
+
+  if(correct){
+    btn.classList.add('correct');
+    sfxCorrect();
+    if(ham){ ham.classList.remove('sad'); ham.classList.add('happy'); }
+    const isRetry = S.retries>0;
+    const msg = isRetry
+      ? CHEERS.master[Math.floor(Math.random()*CHEERS.master.length)]
+      : CHEERS.ok[Math.floor(Math.random()*CHEERS.ok.length)];
+
+    document.getElementById('feedback').innerHTML = `<div class="feedback correct">
+      <div class="fb-head"><span class="fb-icon">🎉</span><span class="fb-title">${isRetry?'太棒了！終於答對了！':'答對了！'}</span></div>
+      <div class="fb-msg">${u.okMsg}</div>
+      <div class="fb-ham"><span>🐹</span><span>${msg}</span></div>
+    </div>`;
+
+    S.sessionBadges++;
+    S.badges.mini++;
+    const el = document.getElementById('sessionBadges');
+    el.textContent = S.sessionBadges;
+    el.classList.remove('score-anim');
+    void el.offsetWidth;
+    el.classList.add('score-anim');
+    S.retries=0;
+
+    if(S.sessionBadges===1 || S.sessionBadges%3===0){
+      setTimeout(()=>{ sfxLevelUp(); showBadgePopup('mini'); }, 900);
     }
+
+    // burst from button position
+    const r = btn.getBoundingClientRect();
+    burstParticles(r.left+r.width/2, r.top+r.height/2);
+
+    document.getElementById('btns').innerHTML =
+      `<button class="next-btn" onclick="sfxFlip();nextUnit()">繼續學習 ➡️</button>`;
+  } else {
+    btn.classList.add('wrong');
+    sfxWrong();
+    if(ham){ ham.classList.remove('happy'); ham.classList.add('sad'); }
+    S.retries++;
+    S.stats.totalRetries++;
+
+    document.getElementById('feedback').innerHTML = `<div class="feedback retry">
+      <div class="fb-head"><span class="fb-icon">💪</span><span class="fb-title">沒關係，再試一次！</span></div>
+      <div class="fb-msg">${u.failMsg}</div>
+      <div class="fb-ham"><span>🐹</span><span>${CHEERS.retry[Math.floor(Math.random()*CHEERS.retry.length)]}</span></div>
+    </div>`;
+
+    document.getElementById('btns').innerHTML =
+      `<button class="retry-btn" onclick="sfxClick();renderUnit()">再試一次！💪</button>`;
+  }
 }
 
-// ===== 家長專區 =====
-function toggleParent() {
-    document.getElementById('parentContent').classList.toggle('show');
+function checkTest(correct, btn, ans){
+  const u = COURSES[S.subj].units[S.unit];
+  document.querySelectorAll('.opt-btn').forEach(b=>b.disabled=true);
+  const ham = document.getElementById('hamAvatar_main');
+
+  if(correct){
+    btn.classList.add('correct');
+    sfxCorrect();
+    if(ham){ ham.classList.remove('sad'); ham.classList.add('happy'); }
+
+    document.getElementById('feedback').innerHTML = `<div class="feedback correct">
+      <div class="fb-head"><span class="fb-icon">🎉</span><span class="fb-title">答對了！</span></div>
+      <div class="fb-msg">太厲害了！你記得很清楚！</div>
+      <div class="fb-ham"><span>🐹</span><span>${CHEERS.ok[Math.floor(Math.random()*CHEERS.ok.length)]}</span></div>
+    </div>`;
+
+    S.sessionBadges++;
+    S.badges.mini++;
+    const el = document.getElementById('sessionBadges');
+    el.textContent = S.sessionBadges;
+    el.classList.remove('score-anim');
+    void el.offsetWidth;
+    el.classList.add('score-anim');
+    S.retries=0;
+
+    const r = btn.getBoundingClientRect();
+    burstParticles(r.left+r.width/2, r.top+r.height/2);
+
+    document.getElementById('btns').innerHTML =
+      `<button class="next-btn" onclick="sfxFlip();nextUnit()">繼續 ➡️</button>`;
+  } else {
+    btn.classList.add('wrong');
+    sfxWrong();
+    if(ham){ ham.classList.remove('happy'); ham.classList.add('sad'); }
+    S.retries++;
+    S.stats.totalRetries++;
+
+    document.getElementById('feedback').innerHTML = `<div class="feedback retry">
+      <div class="fb-head"><span class="fb-icon">💪</span><span class="fb-title">再想想看～</span></div>
+      <div class="fb-msg">正確答案是「${ans}」喔！讓我們記住它，再試一次！</div>
+      <div class="fb-ham"><span>🐹</span><span>沒關係，多練習就記住了！</span></div>
+    </div>`;
+
+    document.getElementById('btns').innerHTML =
+      `<button class="retry-btn" onclick="sfxClick();renderUnit()">再試一次！💪</button>`;
+  }
 }
 
-function updateParentStats() {
-    const calcAcc = (subj) => {
-        const d = state.stats[subj];
-        return d.total > 0 ? Math.round((d.correct / d.total) * 100) : 0;
-    };
-    
-    document.getElementById('chineseAcc').textContent = calcAcc('chinese') + '%';
-    document.getElementById('englishAcc').textContent = calcAcc('english') + '%';
-    document.getElementById('mathAcc').textContent = calcAcc('math') + '%';
-    document.getElementById('totalDays').textContent = state.stats.totalDays;
-    document.getElementById('totalMins').textContent = Math.round(state.stats.totalTime / 60);
-    document.getElementById('totalQs').textContent = state.stats.totalQs;
-    
-    // 歷史
-    const list = document.getElementById('historyList');
-    list.innerHTML = '';
-    state.history.slice(0, 10).forEach(r => {
-        const total = r.chinese + r.english + r.math;
-        const passed = total >= 9;
-        const el = document.createElement('div');
-        el.className = 'history-item';
-        el.innerHTML = `
-            <span class="history-date">${r.date}</span>
-            <span class="history-scores">國${r.chinese} 英${r.english} 數${r.math}</span>
-            <span class="history-result ${passed ? 'pass' : 'fail'}">${passed ? '✓' : '△'}</span>
-        `;
-        list.appendChild(el);
-    });
+function nextUnit(){ S.unit++; renderUnit(); }
+
+/* ===================================================
+   COMPLETE
+   =================================================== */
+function showComplete(){
+  S.today[S.subj].done = true;
+  const today = new Date().toISOString().split('T')[0];
+  if(S.stats.lastDate !== today){ S.stats.streak++; S.stats.lastDate=today; }
+  save();
+  sfxLevelUp();
+  triggerBurst();
+  setTimeout(triggerBurst, 800);
+
+  document.getElementById('learnContent').innerHTML = `
+    <div class="teach-card complete">
+      <span class="complete-ham">🐹</span>
+      <div class="complete-title">太厲害了！${S.name}！</div>
+      <div class="complete-msg">
+        今天的${COURSES[S.subj].title}全部完成了！<br>
+        你收集了 ${S.sessionBadges} 個迷你倉徽章！<br>
+        繼續加油，你會越來越厲害的！✨
+      </div>
+      <div class="complete-badges">
+        <div class="comp-badge">
+          <div class="comp-b-icon">🐹</div>
+          <div class="comp-b-count">+${S.sessionBadges}</div>
+          <div class="comp-b-name">迷你倉</div>
+        </div>
+        <div class="comp-badge">
+          <div class="comp-b-icon">🔥</div>
+          <div class="comp-b-count">${S.stats.streak}</div>
+          <div class="comp-b-name">連續天數</div>
+        </div>
+      </div>
+      <button class="next-btn" onclick="sfxClick();exitLesson()">🏠 回到主畫面</button>
+    </div>`;
 }
 
-// ===== 開始科目 =====
-function startSubject(subject) {
-    if (state.today[subject].done) {
-        alert('這個科目今天已經完成囉！明天再來挑戰吧！');
-        return;
-    }
-    
-    state.subject = subject;
-    state.qIndex = 0;
-    state.score = 0;
-    state.hearts = 3;
-    state.startTime = Date.now();
-    state.results = [];
-    
-    prepareQuestions(subject);
-    
-    const gameScreen = document.getElementById('gameScreen');
-    gameScreen.style.display = 'block';
-    gameScreen.className = `game-screen ${subject}-theme`;
-    document.getElementById('completeScreen').style.display = 'none';
-    document.getElementById('gameContent').style.display = 'block';
-    
-    const titles = { chinese: '📚 國語挑戰', english: '🔤 英文挑戰', math: '🔢 數學挑戰' };
-    document.getElementById('gameTitle').textContent = titles[subject];
-    
-    showQuestion();
+/* ===================================================
+   SPEECH
+   =================================================== */
+function speakZh(text){
+  if('speechSynthesis' in window){
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang='zh-TW'; u.rate=0.8; u.pitch=1.1;
+    window.speechSynthesis.speak(u);
+  }
+}
+function speakEn(text){
+  if('speechSynthesis' in window){
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang='en-US'; u.rate=0.8; u.pitch=1.1;
+    window.speechSynthesis.speak(u);
+  }
+}
+function animSpeakBtn(){
+  const btn = document.getElementById('spkBtn');
+  if(btn){
+    btn.classList.add('speaking');
+    setTimeout(()=>btn.classList.remove('speaking'),1000);
+  }
 }
 
-function prepareQuestions(subject) {
-    let qs = [];
-    
-    if (subject === 'chinese') {
-        const chars = shuffle([...QUESTIONS.chinese.characters]).slice(0, 2);
-        const words = shuffle([...QUESTIONS.chinese.words]).slice(0, 2);
-        const sents = shuffle([...QUESTIONS.chinese.sentences]).slice(0, 1);
-        qs = shuffle([
-            ...chars.map(q => ({ ...q, type: 'char' })),
-            ...words.map(q => ({ ...q, type: 'word' })),
-            ...sents.map(q => ({ ...q, type: 'sentence' }))
-        ]);
-    } else if (subject === 'english') {
-        const letters = shuffle([...QUESTIONS.english.letters]).slice(0, 2);
-        const words = shuffle([...QUESTIONS.english.words]).slice(0, 2);
-        const spell = shuffle([...QUESTIONS.english.spelling]).slice(0, 1);
-        qs = shuffle([
-            ...letters.map(q => ({ ...q, type: 'letter' })),
-            ...words.map(q => ({ ...q, type: 'vocab' })),
-            ...spell.map(q => ({ ...q, type: 'spelling' }))
-        ]);
-    } else if (subject === 'math') {
-        const types = ['addition', 'subtraction', 'compare', 'counting', 'sequence'];
-        qs = shuffle(types).slice(0, 5).map(t => QUESTIONS.math[t]());
-    }
-    
-    state.questions = qs;
+/* ===================================================
+   BADGE POPUP
+   =================================================== */
+function showBadgePopup(type){
+  const names={mini:'迷你倉',small:'小倉鼠',medium:'中倉鼠',large:'大倉鼠'};
+  const descs={mini:'太棒了！你又收集到一個徽章！',small:'哇！升級成小倉鼠了！繼續加油！',medium:'厲害！中倉鼠徽章到手！',large:'傳說中的大倉鼠！你是最棒的！'};
+  document.getElementById('popupIcon').textContent='🐹';
+  document.getElementById('popupTitle').textContent=`獲得${names[type]}徽章！`;
+  document.getElementById('popupDesc').textContent=descs[type];
+  document.getElementById('badgeOverlay').classList.remove('hidden');
+}
+function closeBadgePopup(){
+  sfxClick();
+  document.getElementById('badgeOverlay').classList.add('hidden');
 }
 
-// ===== 顯示題目 =====
-function showQuestion() {
-    const q = state.questions[state.qIndex];
-    const subj = state.subject;
-    const content = document.getElementById('gameContent');
-    
-    document.getElementById('gameNum').textContent = `${state.qIndex + 1}/5`;
-    updateHearts();
-    
-    let html = '<div class="question-card">';
-    
-    if (subj === 'chinese') {
-        if (q.type === 'char') {
-            html += `
-                <span class="q-type-badge chinese">國字認讀</span>
-                <div class="q-emoji">${q.emoji}</div>
-                <div class="q-text">這是什麼字？</div>
-                <div class="q-hint">💡 ${q.hint}</div>
-                <div class="options-grid">
-                    ${q.options.map(o => `<button class="option-btn" onclick="checkAns('${q.answer}','${o}',this)">${o}</button>`).join('')}
-                </div>
-            `;
-        } else if (q.type === 'word') {
-            html += `
-                <span class="q-type-badge chinese">語詞配對</span>
-                <div class="q-emoji">${q.emoji}</div>
-                <div class="q-text">${q.q}</div>
-                <div class="q-hint">💡 ${q.hint}</div>
-                <div class="options-grid">
-                    ${q.options.map(o => `<button class="option-btn" onclick="checkAns('${q.answer}','${o}',this)">${o}</button>`).join('')}
-                </div>
-            `;
-        } else if (q.type === 'sentence') {
-            const opts = shuffle([q.correct, ...q.wrong]);
-            html += `
-                <span class="q-type-badge chinese">造句練習</span>
-                <div class="q-emoji">${q.emoji}</div>
-                <div class="q-text">哪個句子是對的？</div>
-                <div class="q-hint">💡 ${q.hint}</div>
-                <div class="options-grid single-col">
-                    ${opts.map(o => `<button class="option-btn" onclick="checkAns('${q.correct}','${o}',this)">${o}</button>`).join('')}
-                </div>
-            `;
-        }
-    } else if (subj === 'english') {
-        if (q.type === 'letter') {
-            html += `
-                <span class="q-type-badge english">字母聽力</span>
-                <div class="q-text">聽聽看是哪個字母？</div>
-                <button class="speak-btn" onclick="speak('${q.letter}')">🔊</button>
-                <div class="options-grid">
-                    ${q.options.map(o => `<button class="option-btn" onclick="checkAns('${q.letter}','${o}',this)">${o}</button>`).join('')}
-                </div>
-            `;
-            setTimeout(() => speak(q.letter), 400);
-        } else if (q.type === 'vocab') {
-            const opts = genWordOptions(q.word);
-            html += `
-                <span class="q-type-badge english">單字認讀</span>
-                <div class="q-emoji">${q.emoji}</div>
-                <div class="q-text">${q.chinese}</div>
-                <button class="speak-btn" onclick="speak('${q.word}')">🔊</button>
-                <div class="options-grid">
-                    ${opts.map(o => `<button class="option-btn" onclick="checkAns('${q.word}','${o}',this)">${o}</button>`).join('')}
-                </div>
-            `;
-        } else if (q.type === 'spelling') {
-            const word = q.word.toUpperCase();
-            const letters = word.split('');
-            let keys = [...new Set(letters)];
-            const all = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
-            while (keys.length < 10) {
-                const r = all[randInt(0, 25)];
-                if (!keys.includes(r)) keys.push(r);
-            }
-            keys = shuffle(keys);
-            
-            html += `
-                <span class="q-type-badge english">拼寫練習</span>
-                <div class="q-emoji">${q.emoji}</div>
-                <div class="q-text">拼出：${q.chinese}</div>
-                <button class="speak-btn" onclick="speak('${q.word}')">🔊</button>
-                <div class="spelling-area">
-                    <div class="spelling-display" id="spellDisplay">
-                        ${letters.map((_, i) => `<div class="letter-box" data-i="${i}"></div>`).join('')}
-                    </div>
-                    <div class="keyboard" id="keyboard">
-                        ${keys.map(k => `<button class="key-btn" onclick="typeLetter('${k}')">${k}</button>`).join('')}
-                        <button class="key-btn backspace" onclick="deleteLetter()">⌫</button>
-                    </div>
-                </div>
-            `;
-            content.innerHTML = html + '</div>';
-            content.dataset.answer = word;
-            content.dataset.input = '';
-            return;
-        }
-    } else if (subj === 'math') {
-        const typeLabels = {
-            addition: '➕ 加法',
-            subtraction: '➖ 減法',
-            compare: '⚖️ 比大小',
-            counting: '🔢 數數',
-            sequence: '📝 填空',
-            doubles: '✨ 雙倍',
-            makesTen: '🔟 湊十'
-        };
-        
-        html += `<span class="q-type-badge math">${typeLabels[q.type]}</span>`;
-        
-        if (q.type === 'counting') {
-            html += `
-                <div class="q-emoji">${q.emoji}</div>
-                <div class="counting-display">${q.q}</div>
-                <div class="q-hint">💡 ${q.hint}</div>
-            `;
-        } else {
-            html += `
-                <div class="q-emoji">${q.emoji}</div>
-                <div class="math-equation">${q.q}</div>
-                ${q.hint ? `<div class="q-hint">💡 ${q.hint}</div>` : ''}
-            `;
-        }
-        
-        html += `
-            <div class="options-grid">
-                ${q.options.map(o => `<button class="option-btn" onclick="checkAns('${q.answer}','${o}',this)">${o}</button>`).join('')}
-            </div>
-        `;
-    }
-    
-    html += '</div>';
-    content.innerHTML = html;
+/* ===================================================
+   SAVE / LOAD
+   =================================================== */
+function save(){ localStorage.setItem('hamsterAcademy_v2', JSON.stringify(S)); }
+function load(){
+  const d = localStorage.getItem('hamsterAcademy_v2');
+  if(d){ try{ S={...S,...JSON.parse(d)}; }catch(e){} }
 }
 
-function genWordOptions(correct) {
-    const all = QUESTIONS.english.words;
-    let opts = [correct];
-    while (opts.length < 4) {
-        const w = all[randInt(0, all.length - 1)].word;
-        if (!opts.includes(w)) opts.push(w);
-    }
-    return shuffle(opts);
-}
-
-// ===== 拼寫功能 =====
-function typeLetter(letter) {
-    const content = document.getElementById('gameContent');
-    const display = document.getElementById('spellDisplay');
-    const boxes = display.querySelectorAll('.letter-box');
-    let input = content.dataset.input || '';
-    
-    if (input.length >= boxes.length) return;
-    
-    input += letter;
-    content.dataset.input = input;
-    
-    boxes.forEach((box, i) => {
-        if (i < input.length) {
-            box.textContent = input[i];
-            box.classList.add('filled');
-        }
-    });
-    
-    if (input.length === boxes.length) {
-        checkSpelling(input, content.dataset.answer);
-    }
-}
-
-function deleteLetter() {
-    const content = document.getElementById('gameContent');
-    const display = document.getElementById('spellDisplay');
-    const boxes = display.querySelectorAll('.letter-box');
-    let input = content.dataset.input || '';
-    
-    if (input.length === 0) return;
-    
-    input = input.slice(0, -1);
-    content.dataset.input = input;
-    
-    boxes.forEach((box, i) => {
-        if (i >= input.length) {
-            box.textContent = '';
-            box.classList.remove('filled');
-        }
-    });
-}
-
-function checkSpelling(input, answer) {
-    const display = document.getElementById('spellDisplay');
-    const boxes = display.querySelectorAll('.letter-box');
-    const q = state.questions[state.qIndex];
-    const correct = input === answer;
-    
-    boxes.forEach((box, i) => {
-        box.classList.add(input[i] === answer[i] ? 'correct' : 'wrong');
-    });
-    
-    recordResult(q, input, correct);
-    
-    if (correct) {
-        state.score++;
-        speak('Good job!');
-    } else {
-        state.hearts--;
-        speak(answer.toLowerCase());
-    }
-    
-    setTimeout(nextQuestion, 1300);
-}
-
-// ===== 檢查答案 =====
-function checkAns(correct, selected, btn) {
-    const btns = btn.parentElement.querySelectorAll('.option-btn');
-    btns.forEach(b => b.disabled = true);
-    
-    const q = state.questions[state.qIndex];
-    const isCorrect = String(correct) === String(selected);
-    
-    recordResult(q, selected, isCorrect);
-    
-    if (isCorrect) {
-        btn.classList.add('correct');
-        state.score++;
-        if (state.subject === 'english') speak('Good!');
-    } else {
-        btn.classList.add('wrong');
-        state.hearts--;
-        btns.forEach(b => {
-            if (b.textContent.trim() === String(correct)) b.classList.add('correct');
-        });
-    }
-    
-    updateHearts();
-    setTimeout(nextQuestion, 1200);
-}
-
-function recordResult(q, answer, correct) {
-    state.results.push({ q, answer, correct });
-    state.stats[state.subject].total++;
-    if (correct) state.stats[state.subject].correct++;
-    state.stats.totalQs++;
-}
-
-function nextQuestion() {
-    state.qIndex++;
-    if (state.qIndex >= state.questions.length || state.hearts <= 0) {
-        showComplete();
-    } else {
-        showQuestion();
-    }
-}
-
-function updateHearts() {
-    const container = document.getElementById('gameHearts');
-    container.innerHTML = '';
-    for (let i = 0; i < 3; i++) {
-        const h = document.createElement('span');
-        h.className = 'heart' + (i >= state.hearts ? ' lost' : '');
-        h.textContent = '❤️';
-        container.appendChild(h);
-    }
-}
-
-// ===== 完成畫面 =====
-function showComplete() {
-    const subj = state.subject;
-    const score = state.score;
-    const time = Math.floor((Date.now() - state.startTime) / 1000);
-    
-    state.today[subj] = { done: true, score, time };
-    state.stats.totalTime += time;
-    
-    document.getElementById('gameContent').style.display = 'none';
-    document.getElementById('completeScreen').style.display = 'block';
-    
-    const passed = score >= 3;
-    document.getElementById('completeIcon').textContent = passed ? '🎉' : '💪';
-    document.getElementById('completeTitle').textContent = passed ? '太棒了！' : '再加油！';
-    document.getElementById('completeScore').textContent = `${score}/5`;
-    document.getElementById('completeMsg').textContent = passed 
-        ? `${state.name}好厲害！` : '多練習就會進步！';
-    document.getElementById('rewardExp').textContent = `⭐ +${score * 5}`;
-    
-    // 複習列表
-    renderReview();
-    
-    saveGame();
-}
-
-function renderReview() {
-    const list = document.getElementById('reviewList');
-    list.innerHTML = '';
-    
-    state.results.forEach(r => {
-        const q = r.q;
-        const el = document.createElement('div');
-        el.className = `review-item ${r.correct ? 'correct' : 'wrong'}`;
-        
-        const emoji = q.emoji || '';
-        const word = q.word || q.letter || q.answer || q.correct || '';
-        const meaning = q.chinese || q.hint || '';
-        
-        el.innerHTML = `
-            <div class="review-emoji">${emoji}</div>
-            <div class="review-content">
-                <div class="review-word">${word}</div>
-                <div class="review-meaning">${meaning}</div>
-            </div>
-            ${q.word || q.letter ? `<button class="review-speak" onclick="speak('${q.word || q.letter}')">🔊</button>` : ''}
-        `;
-        list.appendChild(el);
-    });
-}
-
-function finishSubject() {
-    document.getElementById('gameScreen').style.display = 'none';
-    updateMainUI();
-    
-    // 檢查今日全部完成
-    const allDone = Object.values(state.today).every(s => s.done);
-    if (allDone) {
-        completeDailyChallenge();
-    }
-}
-
-function completeDailyChallenge() {
-    const today = getDateStr(new Date());
-    
-    if (state.lastDate !== today) {
-        state.streak++;
-        state.stats.totalDays++;
-        state.lastDate = today;
-        
-        state.weekRecord[today] = {
-            all: true,
-            chinese: state.today.chinese.score,
-            english: state.today.english.score,
-            math: state.today.math.score
-        };
-        
-        state.history.unshift({
-            date: today,
-            chinese: state.today.chinese.score,
-            english: state.today.english.score,
-            math: state.today.math.score,
-            time: Object.values(state.today).reduce((s, t) => s + t.time, 0)
-        });
-        
-        if (state.history.length > 30) state.history = state.history.slice(0, 30);
-    }
-    
-    saveGame();
-    
-    document.getElementById('celebStreak').textContent = `${state.streak} 天`;
-    document.getElementById('celebration').classList.add('show');
-}
-
-function closeCelebration() {
-    document.getElementById('celebration').classList.remove('show');
-    renderWeek();
-}
-
-function exitGame() {
-    if (confirm('確定要離開嗎？進度不會保存。')) {
-        document.getElementById('gameScreen').style.display = 'none';
-    }
-}
-
-// ===== 存檔/讀檔 =====
-function saveGame() {
-    localStorage.setItem('ajunDailyLearning', JSON.stringify({
-        name: state.name,
-        streak: state.streak,
-        lastDate: state.lastDate,
-        today: state.today,
-        stats: state.stats,
-        history: state.history,
-        weekRecord: state.weekRecord
-    }));
-}
-
-function loadGame() {
-    const saved = localStorage.getItem('ajunDailyLearning');
-    if (saved) {
-        const data = JSON.parse(saved);
-        Object.assign(state, data);
-    }
-}
-
-// ===== 啟動 =====
+// ===== BOOT =====
 init();
 </script>
 
