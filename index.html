@@ -1,10 +1,10 @@
 <!DOCTYPE html>
+
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>阿均的國語魔法森林</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>🦊 阿均的每日學習樂園</title>
     <style>
         * {
             margin: 0;
@@ -12,2070 +12,2110 @@
             box-sizing: border-box;
         }
 
-        body {
-            font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Microsoft JhengHei', sans-serif;
-            min-height: 100vh;
-            background: linear-gradient(180deg, #87CEEB 0%, #98FB98 50%, #228B22 100%);
-            overflow-x: hidden;
-            position: relative;
-        }
-
-        /* 森林背景裝飾 */
-        .forest-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-            overflow: hidden;
-        }
-
-        .tree {
-            position: absolute;
-            bottom: 0;
-            font-size: 4rem;
-            opacity: 0.3;
-            animation: sway 4s ease-in-out infinite;
-        }
-
-        .tree:nth-child(1) { left: 5%; animation-delay: 0s; }
-        .tree:nth-child(2) { left: 15%; animation-delay: 0.5s; font-size: 5rem; }
-        .tree:nth-child(3) { left: 25%; animation-delay: 1s; }
-        .tree:nth-child(4) { right: 25%; animation-delay: 1.5s; font-size: 5rem; }
-        .tree:nth-child(5) { right: 15%; animation-delay: 2s; }
-        .tree:nth-child(6) { right: 5%; animation-delay: 2.5s; font-size: 4.5rem; }
-
-        @keyframes sway {
-            0%, 100% { transform: rotate(-2deg); }
-            50% { transform: rotate(2deg); }
-        }
-
-        /* 飄落樹葉 */
-        .leaf {
-            position: absolute;
-            font-size: 1.5rem;
-            animation: falling linear infinite;
-            opacity: 0.7;
-        }
-
-        @keyframes falling {
-            0% {
-                transform: translateY(-100px) rotate(0deg);
-                opacity: 0;
-            }
-            10% { opacity: 0.7; }
-            90% { opacity: 0.7; }
-            100% {
-                transform: translateY(100vh) rotate(720deg);
-                opacity: 0;
-            }
-        }
-
-        /* 漂浮動物 */
-        .floating-animal {
-            position: absolute;
-            font-size: 2rem;
-            animation: float 6s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0) translateX(0); }
-            25% { transform: translateY(-20px) translateX(10px); }
-            50% { transform: translateY(-10px) translateX(-5px); }
-            75% { transform: translateY(-25px) translateX(5px); }
-        }
-
-        /* 主容器 */
-        .container {
-            position: relative;
-            z-index: 1;
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 20px;
-            min-height: 100vh;
-        }
-
-        /* 音效按鈕 */
-        .sound-btn {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 100;
-            background: rgba(255,255,255,0.9);
-            border: none;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            font-size: 1.5rem;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            transition: all 0.3s;
-        }
-
-        .sound-btn:hover {
-            transform: scale(1.1);
-        }
-
-        /* 歡迎畫面 */
-        .welcome-screen {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 80vh;
-            text-align: center;
-            animation: fadeIn 1s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .welcome-mascot {
-            font-size: 6rem;
-            margin-bottom: 20px;
-            animation: bounce 2s ease-in-out infinite;
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-        }
-
-        .welcome-title {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: #15803d;
-            text-shadow: 2px 2px 4px rgba(255,255,255,0.8);
-            margin-bottom: 10px;
-        }
-
-        .welcome-subtitle {
-            font-size: 1.3rem;
-            color: #166534;
-            margin-bottom: 30px;
-        }
-
-        .welcome-card {
-            background: rgba(255,255,255,0.95);
-            padding: 40px;
-            border-radius: 30px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
-            max-width: 400px;
-            width: 100%;
-        }
-
-        .welcome-message {
-            font-size: 1.2rem;
-            color: #374151;
-            margin-bottom: 25px;
-            line-height: 1.8;
-        }
-
-        .name-input {
-            width: 100%;
-            padding: 15px 20px;
-            font-size: 1.2rem;
-            border: 3px solid #86efac;
-            border-radius: 15px;
-            margin-bottom: 20px;
-            text-align: center;
-            font-family: inherit;
-            transition: all 0.3s;
-        }
-
-        .name-input:focus {
-            outline: none;
-            border-color: #22c55e;
-            box-shadow: 0 0 15px rgba(34,197,94,0.3);
-        }
-
-        .start-btn {
-            width: 100%;
-            padding: 18px 30px;
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: white;
-            background: linear-gradient(135deg, #22c55e, #16a34a);
-            border: none;
-            border-radius: 15px;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 6px 20px rgba(34,197,94,0.4);
-        }
-
-        .start-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(34,197,94,0.5);
-        }
-
-        .start-btn:active {
-            transform: translateY(0);
-        }
-
-        /* 主選單 */
-        .main-menu {
-            display: none;
-            animation: fadeIn 0.5s ease;
-        }
-
-        /* 玩家資訊卡 */
-        .player-card {
-            background: rgba(255,255,255,0.95);
-            padding: 20px 30px;
-            border-radius: 20px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-        }
-
-        .player-avatar {
-            font-size: 3.5rem;
-            background: linear-gradient(135deg, #fef3c7, #fcd34d);
-            padding: 15px;
-            border-radius: 50%;
-            box-shadow: 0 4px 15px rgba(251,191,36,0.3);
-            animation: wiggle 2s ease-in-out infinite;
-        }
-
-        @keyframes wiggle {
-            0%, 100% { transform: rotate(-3deg); }
-            50% { transform: rotate(3deg); }
-        }
-
-        .player-info {
-            flex: 1;
-            min-width: 150px;
-        }
-
-        .player-name {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #374151;
-        }
-
-        .player-title {
-            font-size: 0.95rem;
-            color: #16a34a;
-            font-weight: 600;
-            background: #dcfce7;
-            padding: 4px 12px;
-            border-radius: 20px;
-            display: inline-block;
-            margin-top: 5px;
-        }
-
-        .player-stats {
-            display: flex;
-            gap: 25px;
-            flex-wrap: wrap;
-        }
-
-        .stat-item {
-            text-align: center;
-        }
-
-        .stat-icon {
-            font-size: 1.8rem;
-        }
-
-        .stat-value {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: #374151;
-        }
-
-        .stat-label {
-            font-size: 0.8rem;
-            color: #6b7280;
-        }
-
-        /* 經驗值進度條 */
-        .exp-bar-container {
-            width: 100%;
-            margin-top: 15px;
-            padding-top: 15px;
-            border-top: 1px solid #e5e7eb;
-        }
-
-        .exp-bar-label {
-            font-size: 0.85rem;
-            color: #6b7280;
-            margin-bottom: 8px;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .exp-bar {
-            height: 12px;
-            background: #e5e7eb;
-            border-radius: 10px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .exp-bar-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #22c55e, #86efac);
-            border-radius: 10px;
-            transition: width 0.5s ease;
-            position: relative;
-        }
-
-        .exp-bar-fill::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-            animation: shine 2s infinite;
-        }
-
-        @keyframes shine {
-            from { transform: translateX(-100%); }
-            to { transform: translateX(100%); }
-        }
-
-        /* 關卡選擇區 */
-        .levels-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #15803d;
-            text-align: center;
-            margin-bottom: 25px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .levels-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 20px;
-        }
-
-        .level-card {
-            background: rgba(255,255,255,0.95);
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 6px 25px rgba(0,0,0,0.1);
-            cursor: pointer;
-            transition: all 0.3s;
-            position: relative;
-        }
-
-        .level-card:hover:not(.locked) {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
-        }
-
-        .level-card.locked {
-            cursor: not-allowed;
-            opacity: 0.7;
-        }
-
-        .level-header {
-            height: 8px;
-        }
-
-        .level-header.mushroom { background: linear-gradient(90deg, #ef4444, #f97316); }
-        .level-header.oak { background: linear-gradient(90deg, #22c55e, #84cc16); }
-        .level-header.firefly { background: linear-gradient(90deg, #eab308, #facc15); }
-        .level-header.treehouse { background: linear-gradient(90deg, #8b5cf6, #a855f7); }
-        .level-header.rainbow { background: linear-gradient(90deg, #ec4899, #f43f5e, #f97316, #eab308, #22c55e, #06b6d4, #8b5cf6); }
-        .level-header.synonym { background: linear-gradient(90deg, #06b6d4, #0ea5e9); }
-        .level-header.antonym { background: linear-gradient(90deg, #ec4899, #d946ef); }
-        .level-header.radical { background: linear-gradient(90deg, #f97316, #fb923c); }
-        .level-header.measure { background: linear-gradient(90deg, #c026d3, #d946ef); }
-        .level-header.hamster { background: linear-gradient(90deg, #fbbf24, #f59e0b, #f97316); }
-        .level-header.adjective { background: linear-gradient(90deg, #10b981, #059669); }
-        .level-header.verb { background: linear-gradient(90deg, #3b82f6, #2563eb); }
-        .level-header.poetry { background: linear-gradient(90deg, #7c3aed, #6d28d9); }
-        .level-header.number { background: linear-gradient(90deg, #dc2626, #b91c1c); }
-        .level-header.color { background: linear-gradient(90deg, #ec4899, #f97316, #eab308, #22c55e, #06b6d4, #8b5cf6); }
-        .level-header.punctuation { background: linear-gradient(90deg, #f59e0b, #d97706); }
-        .level-header.opposite { background: linear-gradient(90deg, #14b8a6, #0d9488); }
-        .level-header.sound { background: linear-gradient(90deg, #8b5cf6, #7c3aed); }
-        .level-header.metaphor { background: linear-gradient(90deg, #ec4899, #db2777); }
-        .level-header.master { background: linear-gradient(90deg, #fbbf24, #f59e0b, #f97316, #ec4899, #8b5cf6); }
-
-        .level-content {
-            padding: 25px 15px;
-            text-align: center;
-        }
-
-        .level-icon {
-            font-size: 3rem;
-            margin-bottom: 10px;
-        }
-
-        .level-name {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: #374151;
-            margin-bottom: 5px;
-        }
-
-        .level-desc {
-            font-size: 0.85rem;
-            color: #6b7280;
-            margin-bottom: 12px;
-        }
-
-        .level-progress {
-            height: 6px;
-            background: #e5e7eb;
-            border-radius: 5px;
-            overflow: hidden;
-            margin-bottom: 8px;
-        }
-
-        .level-progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #22c55e, #86efac);
-            border-radius: 5px;
-            transition: width 0.5s ease;
-        }
-
-        .level-score {
-            font-size: 0.8rem;
-            color: #9ca3af;
-        }
-
-        .level-lock-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            border-radius: 20px;
-        }
-
-        .lock-icon {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-        }
-
-        .lock-text {
-            font-size: 0.85rem;
-            font-weight: 600;
-        }
-
-        /* 遊戲畫面 */
-        .game-screen {
-            display: none;
-            animation: fadeIn 0.5s ease;
-        }
-
-        .game-header {
-            background: rgba(255,255,255,0.95);
-            padding: 15px 25px;
-            border-radius: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-
-        .game-level-name {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: #15803d;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .game-progress {
-            font-size: 1rem;
-            color: #6b7280;
-            font-weight: 600;
-        }
-
-        .game-hearts {
-            display: flex;
-            gap: 8px;
-            font-size: 1.8rem;
-        }
-
-        .heart {
-            transition: all 0.3s;
-        }
-
-        .heart.lost {
-            filter: grayscale(100%);
-            opacity: 0.4;
-            transform: scale(0.9);
-        }
-
-        .back-btn {
-            padding: 10px 20px;
-            font-size: 1rem;
-            font-weight: 600;
-            color: #6b7280;
-            background: #f3f4f6;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .back-btn:hover {
-            background: #e5e7eb;
-            color: #374151;
-        }
-
-        /* 題目區 */
-        .question-area {
-            background: rgba(255,255,255,0.95);
-            padding: 40px;
-            border-radius: 30px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-            text-align: center;
-        }
-
-        .question-image {
-            font-size: 5rem;
-            margin-bottom: 20px;
-            animation: pulse 2s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        .question-text {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #374151;
-            margin-bottom: 15px;
-        }
-
-        .question-hint {
-            font-size: 1rem;
-            color: #6b7280;
-            margin-bottom: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        /* 答案按鈕 */
-        .answers-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            max-width: 500px;
-            margin: 0 auto;
-        }
-
-        .answer-btn {
-            padding: 20px;
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: #374151;
-            background: white;
-            border: 3px solid #e5e7eb;
-            border-radius: 15px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-family: inherit;
-        }
-
-        .answer-btn:hover:not(:disabled) {
-            border-color: #22c55e;
-            background: #f0fdf4;
-            transform: translateY(-3px);
-        }
-
-        .answer-btn.correct {
-            background: #dcfce7;
-            border-color: #22c55e;
-            color: #15803d;
-            animation: correct 0.5s ease;
-        }
-
-        @keyframes correct {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.08); }
-        }
-
-        .answer-btn.wrong {
-            background: #fee2e2;
-            border-color: #ef4444;
-            color: #dc2626;
-            animation: wrong 0.5s ease;
-        }
-
-        @keyframes wrong {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-10px); }
-            75% { transform: translateX(10px); }
-        }
-
-        .answer-btn:disabled {
-            cursor: not-allowed;
-            opacity: 0.7;
-        }
-
-        /* 學習提示彈窗 */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.6);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            padding: 20px;
-        }
-
-        .modal-overlay.show {
-            display: flex;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .modal-content {
-            background: white;
-            padding: 40px;
-            border-radius: 30px;
-            max-width: 450px;
-            width: 100%;
-            text-align: center;
-            animation: modalSlide 0.3s ease;
-        }
-
-        @keyframes modalSlide {
-            from { transform: translateY(50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        .modal-icon {
-            font-size: 4rem;
-            margin-bottom: 15px;
-        }
-
-        .modal-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #374151;
-            margin-bottom: 20px;
-        }
-
-        .modal-answer {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: #15803d;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-        }
-
-        .speak-btn {
-            background: linear-gradient(135deg, #22c55e, #16a34a);
-            border: none;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            font-size: 1.5rem;
-            color: white;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .speak-btn:hover {
-            transform: scale(1.1);
-        }
-
-        .modal-hint {
-            font-size: 1rem;
-            color: #6b7280;
-            margin-bottom: 15px;
-            padding: 15px;
-            background: #f3f4f6;
-            border-radius: 15px;
-        }
-
-        .modal-your-answer {
-            font-size: 0.9rem;
-            color: #ef4444;
-            margin-bottom: 25px;
-        }
-
-        .modal-btn {
-            padding: 15px 40px;
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: white;
-            background: linear-gradient(135deg, #22c55e, #16a34a);
-            border: none;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .modal-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(34,197,94,0.4);
-        }
-
-        /* 結果畫面 */
-        .result-screen {
-            display: none;
-            animation: fadeIn 0.5s ease;
-        }
-
-        .result-card {
-            background: rgba(255,255,255,0.95);
-            padding: 40px;
-            border-radius: 30px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .result-icon {
-            font-size: 5rem;
-            margin-bottom: 20px;
-        }
-
-        .result-title {
-            font-size: 2rem;
-            font-weight: 800;
-            margin-bottom: 15px;
-        }
-
-        .result-title.success { color: #15803d; }
-        .result-title.retry { color: #f97316; }
-
-        .result-message {
-            font-size: 1.1rem;
-            color: #6b7280;
-            margin-bottom: 25px;
-        }
-
-        .result-stats {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-        }
-
-        .result-stat {
-            text-align: center;
-        }
-
-        .result-stat-value {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: #22c55e;
-        }
-
-        .result-stat-label {
-            font-size: 0.9rem;
-            color: #6b7280;
-        }
-
-        .result-buttons {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .result-btn {
-            padding: 15px 30px;
-            font-size: 1.1rem;
-            font-weight: 700;
-            border: none;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .result-btn.primary {
-            color: white;
-            background: linear-gradient(135deg, #22c55e, #16a34a);
-        }
-
-        .result-btn.secondary {
-            color: #6b7280;
-            background: #f3f4f6;
-        }
-
-        .result-btn:hover {
-            transform: translateY(-3px);
-        }
-
-        /* 複習區域 */
-        .review-section {
-            background: rgba(255,255,255,0.95);
-            padding: 30px;
-            border-radius: 25px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
-        }
-
-        .review-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: #374151;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .review-subtitle {
-            font-size: 1rem;
-            font-weight: 600;
-            color: #ef4444;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #fee2e2;
-        }
-
-        .review-subtitle.correct {
-            color: #22c55e;
-            border-color: #dcfce7;
-            margin-top: 25px;
-        }
-
-        .review-items {
-            display: grid;
-            gap: 15px;
-        }
-
-        .review-item {
-            background: #f9fafb;
-            padding: 20px;
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-
-        .review-item.wrong {
-            background: #fef2f2;
-            border-left: 4px solid #ef4444;
-        }
-
-        .review-item.right {
-            background: #f0fdf4;
-            border-left: 4px solid #22c55e;
-        }
-
-        .review-emoji {
-            font-size: 2.5rem;
-        }
-
-        .review-content {
-            flex: 1;
-            min-width: 150px;
-        }
-
-        .review-answer {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: #374151;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .review-hint {
-            font-size: 0.9rem;
-            color: #6b7280;
-            margin-top: 5px;
-        }
-
-        .review-wrong-answer {
-            font-size: 0.85rem;
-            color: #ef4444;
-            margin-top: 5px;
-        }
-
-        .review-speak-btn {
-            background: #22c55e;
-            border: none;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            font-size: 1.2rem;
-            color: white;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .review-speak-btn:hover {
-            transform: scale(1.1);
-            background: #16a34a;
-        }
-
-        /* 響應式設計 */
-        @media (max-width: 768px) {
-            .welcome-title {
-                font-size: 1.8rem;
-            }
-
-            .welcome-mascot {
-                font-size: 4rem;
-            }
-
-            .welcome-card {
-                padding: 30px 20px;
-            }
-
-            .player-card {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .player-stats {
-                justify-content: center;
-            }
-
-            .levels-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .answers-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .question-image {
-                font-size: 4rem;
-            }
-
-            .question-text {
-                font-size: 1.2rem;
-            }
-
-            .answer-btn {
-                padding: 18px;
-                font-size: 1.2rem;
-            }
-
-            .modal-content {
-                padding: 30px 20px;
-            }
-
-            .result-stats {
-                gap: 25px;
-            }
-        }
-
-        /* 隱藏類別 */
-        .hidden {
-            display: none !important;
-        }
-    </style>
+```
+    :root {
+        --primary: #22c55e;
+        --primary-dark: #16a34a;
+        --secondary: #fbbf24;
+        --danger: #ef4444;
+        --chinese: #ef4444;
+        --english: #3b82f6;
+        --math: #a855f7;
+    }
+
+    body {
+        font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Microsoft JhengHei', sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+        min-height: 100vh;
+    }
+
+    .container {
+        max-width: 500px;
+        margin: 0 auto;
+        padding: 15px;
+        min-height: 100vh;
+    }
+
+    /* ===== 歡迎畫面 ===== */
+    .welcome-screen {
+        text-align: center;
+        padding: 40px 20px;
+    }
+
+    .welcome-logo {
+        font-size: 80px;
+        margin-bottom: 15px;
+        animation: bounce 2s ease-in-out infinite;
+    }
+
+    @keyframes bounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-15px); }
+    }
+
+    .welcome-title {
+        font-size: 2rem;
+        font-weight: 900;
+        color: white;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        margin-bottom: 10px;
+    }
+
+    .welcome-subtitle {
+        font-size: 1rem;
+        color: rgba(255,255,255,0.9);
+        margin-bottom: 30px;
+    }
+
+    .name-input-box {
+        background: rgba(255,255,255,0.95);
+        border-radius: 20px;
+        padding: 25px;
+        margin-bottom: 20px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    }
+
+    .name-input-box label {
+        display: block;
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 10px;
+        font-size: 1.1rem;
+    }
+
+    .name-input-box input {
+        width: 100%;
+        padding: 15px;
+        font-size: 1.2rem;
+        border: 3px solid #e5e5e5;
+        border-radius: 12px;
+        outline: none;
+        font-family: inherit;
+        text-align: center;
+    }
+
+    .name-input-box input:focus {
+        border-color: var(--primary);
+    }
+
+    .start-btn {
+        width: 100%;
+        padding: 18px;
+        font-size: 1.3rem;
+        font-weight: 800;
+        font-family: inherit;
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        color: white;
+        border: none;
+        border-radius: 15px;
+        cursor: pointer;
+        box-shadow: 0 6px 0 #14532d, 0 8px 20px rgba(0,0,0,0.3);
+        transition: all 0.2s;
+    }
+
+    .start-btn:hover {
+        transform: translateY(-2px);
+    }
+
+    .start-btn:active {
+        transform: translateY(4px);
+        box-shadow: 0 2px 0 #14532d;
+    }
+
+    /* ===== 主畫面 ===== */
+    .main-screen {
+        display: none;
+    }
+
+    .date-card {
+        background: rgba(255,255,255,0.95);
+        border-radius: 20px;
+        padding: 20px;
+        text-align: center;
+        margin-bottom: 15px;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+    }
+
+    .today-date {
+        font-size: 0.85rem;
+        color: #888;
+        margin-bottom: 5px;
+    }
+
+    .greeting {
+        font-size: 1.5rem;
+        font-weight: 900;
+        color: #333;
+    }
+
+    .greeting .name { color: var(--primary); }
+
+    .motivation {
+        font-size: 0.9rem;
+        color: #666;
+        margin-top: 5px;
+    }
+
+    /* ===== 連續學習 ===== */
+    .streak-card {
+        background: linear-gradient(135deg, #ff9a56 0%, #ff6b6b 100%);
+        border-radius: 16px;
+        padding: 15px 20px;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: white;
+        box-shadow: 0 6px 20px rgba(255,107,107,0.4);
+    }
+
+    .streak-info {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .streak-icon { font-size: 2.2rem; }
+    .streak-text h3 { font-size: 1rem; font-weight: 800; }
+    .streak-text p { font-size: 0.75rem; opacity: 0.9; }
+
+    .streak-days {
+        text-align: center;
+    }
+
+    .streak-number {
+        font-size: 2.2rem;
+        font-weight: 900;
+        line-height: 1;
+    }
+
+    .streak-label { font-size: 0.7rem; }
+
+    /* ===== 今日進度 ===== */
+    .progress-card {
+        background: rgba(255,255,255,0.95);
+        border-radius: 20px;
+        padding: 20px;
+        margin-bottom: 15px;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+    }
+
+    .progress-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 12px;
+    }
+
+    .progress-title {
+        font-size: 1rem;
+        font-weight: 800;
+        color: #333;
+    }
+
+    .progress-time {
+        font-size: 0.85rem;
+        color: #888;
+    }
+
+    .progress-bar-bg {
+        height: 14px;
+        background: #e5e5e5;
+        border-radius: 7px;
+        overflow: hidden;
+        margin-bottom: 10px;
+    }
+
+    .progress-bar-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--primary), #4ade80);
+        border-radius: 7px;
+        transition: width 0.5s ease;
+        position: relative;
+    }
+
+    .progress-bar-fill::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+        animation: shine 2s infinite;
+    }
+
+    @keyframes shine {
+        0% { transform: translateX(-100%); }
+        100% { transform: translateX(100%); }
+    }
+
+    .progress-stats {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.8rem;
+    }
+
+    .progress-done { color: var(--primary); font-weight: 700; }
+    .progress-total { color: #888; }
+
+    /* ===== 週曆 ===== */
+    .week-calendar {
+        background: rgba(255,255,255,0.95);
+        border-radius: 20px;
+        padding: 15px 20px;
+        margin-bottom: 15px;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+    }
+
+    .week-title {
+        font-size: 0.9rem;
+        font-weight: 800;
+        color: #333;
+        margin-bottom: 12px;
+        text-align: center;
+    }
+
+    .week-days {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .day-item { text-align: center; flex: 1; }
+    .day-name { font-size: 0.7rem; color: #888; margin-bottom: 6px; }
+
+    .day-circle {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+        font-size: 0.85rem;
+        font-weight: 700;
+    }
+
+    .day-circle.completed {
+        background: linear-gradient(135deg, var(--primary), #4ade80);
+        color: white;
+        box-shadow: 0 3px 10px rgba(34,197,94,0.4);
+    }
+
+    .day-circle.today {
+        background: linear-gradient(135deg, var(--secondary), #f59e0b);
+        color: white;
+        box-shadow: 0 3px 10px rgba(251,191,36,0.4);
+        animation: todayPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes todayPulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.1); }
+    }
+
+    .day-circle.future { background: #f3f4f6; color: #9ca3af; }
+    .day-circle.missed { background: #fee2e2; color: #ef4444; }
+
+    /* ===== 科目卡片 ===== */
+    .subjects-section {
+        margin-bottom: 15px;
+    }
+
+    .section-label {
+        font-size: 0.9rem;
+        font-weight: 700;
+        color: rgba(255,255,255,0.9);
+        margin-bottom: 10px;
+        padding-left: 5px;
+    }
+
+    .subject-card {
+        background: white;
+        border-radius: 18px;
+        padding: 16px;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        cursor: pointer;
+        transition: all 0.3s;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .subject-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 5px;
+        height: 100%;
+    }
+
+    .subject-card.chinese::before { background: var(--chinese); }
+    .subject-card.english::before { background: var(--english); }
+    .subject-card.math::before { background: var(--math); }
+
+    .subject-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+    }
+
+    .subject-card.completed {
+        opacity: 0.7;
+        background: #f0fdf4;
+    }
+
+    .subject-card.completed:hover {
+        transform: none;
+    }
+
+    .subject-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.6rem;
+    }
+
+    .subject-card.chinese .subject-icon { background: linear-gradient(135deg, #fee2e2, #fecaca); }
+    .subject-card.english .subject-icon { background: linear-gradient(135deg, #dbeafe, #bfdbfe); }
+    .subject-card.math .subject-icon { background: linear-gradient(135deg, #f3e8ff, #e9d5ff); }
+
+    .subject-info { flex: 1; }
+    .subject-name { font-size: 1.05rem; font-weight: 800; color: #333; }
+    .subject-desc { font-size: 0.75rem; color: #888; margin-top: 2px; }
+
+    .subject-status {
+        text-align: right;
+    }
+
+    .subject-questions {
+        font-size: 0.7rem;
+        color: #888;
+        margin-bottom: 4px;
+    }
+
+    .subject-badge {
+        display: inline-block;
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-size: 0.7rem;
+        font-weight: 700;
+    }
+
+    .badge-todo { background: #fef3c7; color: #b45309; }
+    .badge-done { background: #dcfce7; color: #16a34a; }
+
+    /* ===== 家長專區 ===== */
+    .parent-section {
+        background: rgba(255,255,255,0.95);
+        border-radius: 20px;
+        padding: 18px;
+        margin-bottom: 15px;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+    }
+
+    .parent-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 12px;
+    }
+
+    .parent-title {
+        font-size: 0.95rem;
+        font-weight: 800;
+        color: #333;
+    }
+
+    .parent-toggle {
+        background: none;
+        border: 2px solid #ddd;
+        border-radius: 8px;
+        padding: 5px 12px;
+        font-size: 0.75rem;
+        cursor: pointer;
+        font-family: inherit;
+    }
+
+    .parent-content { display: none; }
+    .parent-content.show { display: block; }
+
+    .stat-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+        margin-bottom: 12px;
+    }
+
+    .stat-card {
+        background: #f9fafb;
+        border-radius: 10px;
+        padding: 10px 8px;
+        text-align: center;
+    }
+
+    .stat-value {
+        font-size: 1.2rem;
+        font-weight: 800;
+    }
+
+    .stat-value.chinese { color: var(--chinese); }
+    .stat-value.english { color: var(--english); }
+    .stat-value.math { color: var(--math); }
+
+    .stat-name {
+        font-size: 0.65rem;
+        color: #888;
+        margin-top: 2px;
+    }
+
+    .history-title {
+        font-size: 0.85rem;
+        font-weight: 700;
+        color: #333;
+        margin: 12px 0 8px;
+    }
+
+    .history-list {
+        max-height: 180px;
+        overflow-y: auto;
+    }
+
+    .history-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 10px;
+        background: #f9fafb;
+        border-radius: 8px;
+        margin-bottom: 6px;
+        font-size: 0.8rem;
+    }
+
+    .history-date { color: #888; }
+    .history-scores { font-weight: 600; }
+    .history-result { font-weight: 700; }
+    .history-result.pass { color: var(--primary); }
+    .history-result.fail { color: var(--danger); }
+
+    /* ===== 遊戲畫面 ===== */
+    .game-screen {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1000;
+        overflow-y: auto;
+    }
+
+    .game-screen.chinese-theme {
+        background: linear-gradient(180deg, #fef2f2 0%, #fecaca 50%, #fca5a5 100%);
+    }
+
+    .game-screen.english-theme {
+        background: linear-gradient(180deg, #eff6ff 0%, #bfdbfe 50%, #93c5fd 100%);
+    }
+
+    .game-screen.math-theme {
+        background: linear-gradient(180deg, #faf5ff 0%, #e9d5ff 50%, #d8b4fe 100%);
+    }
+
+    .game-header {
+        background: rgba(255,255,255,0.95);
+        padding: 12px 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        position: sticky;
+        top: 0;
+        z-index: 10;
+    }
+
+    .game-back {
+        background: none;
+        border: none;
+        font-size: 1.4rem;
+        cursor: pointer;
+        padding: 5px;
+    }
+
+    .game-title {
+        font-size: 1rem;
+        font-weight: 800;
+        color: #333;
+    }
+
+    .game-progress-info {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .game-num {
+        background: var(--primary);
+        color: white;
+        padding: 4px 10px;
+        border-radius: 15px;
+        font-weight: 700;
+        font-size: 0.8rem;
+    }
+
+    .game-hearts {
+        display: flex;
+        gap: 2px;
+    }
+
+    .heart {
+        font-size: 1.1rem;
+        transition: all 0.3s;
+    }
+
+    .heart.lost {
+        filter: grayscale(1);
+        opacity: 0.3;
+    }
+
+    .game-content {
+        padding: 20px 15px;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+
+    /* ===== 題目卡片 ===== */
+    .question-card {
+        background: rgba(255,255,255,0.97);
+        border-radius: 25px;
+        padding: 25px 20px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        text-align: center;
+    }
+
+    .q-type-badge {
+        display: inline-block;
+        padding: 5px 14px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: white;
+        margin-bottom: 15px;
+    }
+
+    .q-type-badge.chinese { background: var(--chinese); }
+    .q-type-badge.english { background: var(--english); }
+    .q-type-badge.math { background: var(--math); }
+
+    .q-emoji {
+        font-size: 4.5rem;
+        margin-bottom: 15px;
+        filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.1));
+    }
+
+    .q-text {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 8px;
+        line-height: 1.4;
+    }
+
+    .q-hint {
+        font-size: 0.9rem;
+        color: #888;
+        margin-bottom: 15px;
+    }
+
+    .speak-btn {
+        background: linear-gradient(135deg, var(--secondary), #f59e0b);
+        border: none;
+        border-radius: 50%;
+        width: 55px;
+        height: 55px;
+        font-size: 1.5rem;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(251,191,36,0.4);
+        margin-bottom: 15px;
+        transition: transform 0.2s;
+    }
+
+    .speak-btn:hover { transform: scale(1.1); }
+
+    .speak-btn.speaking {
+        animation: pulse 0.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.15); }
+    }
+
+    /* ===== 數學專用 ===== */
+    .math-equation {
+        font-size: 2.5rem;
+        font-weight: 900;
+        color: var(--math);
+        margin: 15px 0 20px;
+        letter-spacing: 3px;
+    }
+
+    .counting-display {
+        font-size: 2rem;
+        line-height: 1.8;
+        margin: 10px 0 15px;
+        word-break: break-all;
+    }
+
+    /* ===== 選項按鈕 ===== */
+    .options-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    .options-grid.single-col {
+        grid-template-columns: 1fr;
+    }
+
+    .option-btn {
+        background: white;
+        border: 3px solid #e5e5e5;
+        border-radius: 14px;
+        padding: 14px 10px;
+        font-size: 1.15rem;
+        font-weight: 700;
+        font-family: inherit;
+        cursor: pointer;
+        transition: all 0.2s;
+        color: #333;
+    }
+
+    .option-btn:hover {
+        border-color: var(--primary);
+        background: #f0fdf4;
+    }
+
+    .option-btn:disabled {
+        cursor: not-allowed;
+    }
+
+    .option-btn.correct {
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        border-color: var(--primary-dark);
+        color: white;
+        animation: correctPop 0.5s ease;
+    }
+
+    .option-btn.wrong {
+        background: linear-gradient(135deg, var(--danger), #dc2626);
+        border-color: #dc2626;
+        color: white;
+        animation: shake 0.5s ease;
+    }
+
+    @keyframes correctPop {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+    }
+
+    @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        25% { transform: translateX(-6px); }
+        75% { transform: translateX(6px); }
+    }
+
+    /* ===== 拼寫區 ===== */
+    .spelling-area {
+        margin-top: 15px;
+    }
+
+    .spelling-display {
+        display: flex;
+        justify-content: center;
+        gap: 6px;
+        margin-bottom: 15px;
+        flex-wrap: wrap;
+    }
+
+    .letter-box {
+        width: 42px;
+        height: 52px;
+        background: white;
+        border: 3px solid #ddd;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.6rem;
+        font-weight: 900;
+        color: var(--english);
+        text-transform: uppercase;
+    }
+
+    .letter-box.filled {
+        border-color: var(--english);
+        background: #eff6ff;
+    }
+
+    .letter-box.correct {
+        border-color: var(--primary);
+        background: var(--primary);
+        color: white;
+    }
+
+    .letter-box.wrong {
+        border-color: var(--danger);
+        background: #fee2e2;
+        color: var(--danger);
+    }
+
+    .keyboard {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 5px;
+    }
+
+    .key-btn {
+        width: 34px;
+        height: 40px;
+        background: white;
+        border: 2px solid #ddd;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 700;
+        font-family: inherit;
+        cursor: pointer;
+        text-transform: uppercase;
+    }
+
+    .key-btn:hover {
+        background: #eff6ff;
+        border-color: var(--english);
+    }
+
+    .key-btn.backspace {
+        width: 55px;
+        background: #fef3c7;
+        border-color: var(--secondary);
+    }
+
+    /* ===== 完成畫面 ===== */
+    .complete-screen {
+        display: none;
+        text-align: center;
+        padding: 30px 20px;
+    }
+
+    .complete-icon {
+        font-size: 70px;
+        margin-bottom: 12px;
+        animation: bounce 1s ease-in-out infinite;
+    }
+
+    .complete-title {
+        font-size: 1.7rem;
+        font-weight: 900;
+        color: #333;
+        margin-bottom: 8px;
+    }
+
+    .complete-score {
+        font-size: 2.8rem;
+        font-weight: 900;
+        color: var(--primary);
+        margin-bottom: 8px;
+    }
+
+    .complete-msg {
+        font-size: 1rem;
+        color: #666;
+        margin-bottom: 20px;
+    }
+
+    .complete-rewards {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        margin-bottom: 25px;
+    }
+
+    .reward-item { text-align: center; }
+    .reward-value { font-size: 1.4rem; font-weight: 800; color: var(--secondary); }
+    .reward-label { font-size: 0.75rem; color: #888; }
+
+    .review-section {
+        background: rgba(255,255,255,0.9);
+        border-radius: 18px;
+        padding: 15px;
+        margin-bottom: 20px;
+        text-align: left;
+        max-height: 200px;
+        overflow-y: auto;
+    }
+
+    .review-title {
+        font-size: 0.95rem;
+        font-weight: 800;
+        color: #333;
+        margin-bottom: 10px;
+    }
+
+    .review-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px;
+        background: white;
+        border-radius: 10px;
+        margin-bottom: 8px;
+    }
+
+    .review-item.wrong { border-left: 4px solid var(--danger); }
+    .review-item.correct { border-left: 4px solid var(--primary); }
+
+    .review-emoji { font-size: 1.8rem; }
+    .review-content { flex: 1; }
+    .review-word { font-size: 1rem; font-weight: 700; color: #333; }
+    .review-meaning { font-size: 0.8rem; color: #888; }
+
+    .review-speak {
+        background: var(--secondary);
+        border: none;
+        border-radius: 50%;
+        width: 32px;
+        height: 32px;
+        font-size: 0.9rem;
+        cursor: pointer;
+    }
+
+    .complete-btn {
+        width: 100%;
+        max-width: 300px;
+        padding: 15px;
+        font-size: 1.1rem;
+        font-weight: 800;
+        font-family: inherit;
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        color: white;
+        border: none;
+        border-radius: 14px;
+        cursor: pointer;
+        box-shadow: 0 5px 0 #14532d;
+    }
+
+    /* ===== 慶祝畫面 ===== */
+    .celebration {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.85);
+        z-index: 2000;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .celebration.show { display: flex; }
+
+    .celebration-box {
+        background: white;
+        border-radius: 30px;
+        padding: 35px 25px;
+        text-align: center;
+        max-width: 340px;
+        margin: 20px;
+        animation: popIn 0.5s ease;
+    }
+
+    @keyframes popIn {
+        0% { transform: scale(0.5); opacity: 0; }
+        100% { transform: scale(1); opacity: 1; }
+    }
+
+    .celeb-icon { font-size: 70px; margin-bottom: 12px; }
+    .celeb-title { font-size: 1.6rem; font-weight: 900; color: #333; margin-bottom: 8px; }
+    .celeb-subtitle { font-size: 0.95rem; color: #666; margin-bottom: 18px; }
+
+    .celeb-streak {
+        background: linear-gradient(135deg, #ff9a56, #ff6b6b);
+        color: white;
+        padding: 12px 20px;
+        border-radius: 18px;
+        margin-bottom: 18px;
+    }
+
+    .celeb-streak-num { font-size: 1.8rem; font-weight: 900; }
+
+    .celeb-btn {
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        color: white;
+        border: none;
+        border-radius: 14px;
+        padding: 14px 35px;
+        font-size: 1.1rem;
+        font-weight: 700;
+        font-family: inherit;
+        cursor: pointer;
+    }
+
+    /* ===== 響應式 ===== */
+    @media (max-width: 380px) {
+        .container { padding: 10px; }
+        .greeting { font-size: 1.3rem; }
+        .q-emoji { font-size: 3.5rem; }
+        .q-text { font-size: 1.2rem; }
+        .math-equation { font-size: 2rem; }
+        .option-btn { padding: 12px 8px; font-size: 1rem; }
+        .letter-box { width: 36px; height: 46px; font-size: 1.4rem; }
+        .key-btn { width: 30px; height: 36px; font-size: 0.9rem; }
+    }
+</style>
+```
+
 </head>
 <body>
-    <!-- 森林背景 -->
-    <div class="forest-bg">
-        <div class="tree">🌲</div>
-        <div class="tree">🌳</div>
-        <div class="tree">🌲</div>
-        <div class="tree">🌳</div>
-        <div class="tree">🌲</div>
-        <div class="tree">🌳</div>
-    </div>
-
-    <!-- 飄落樹葉 (由 JS 動態生成) -->
-    <div id="leaves-container"></div>
-
-    <!-- 漂浮動物 -->
-    <div class="floating-animal" style="top: 15%; left: 10%;">🦋</div>
-    <div class="floating-animal" style="top: 25%; right: 8%; animation-delay: 1s;">🐿️</div>
-    <div class="floating-animal" style="top: 60%; left: 5%; animation-delay: 2s;">🐰</div>
-    <div class="floating-animal" style="top: 70%; right: 12%; animation-delay: 3s;">🦔</div>
-
-    <!-- 音效開關 -->
-    <button class="sound-btn" id="soundBtn" onclick="toggleSound()">🔊</button>
-
     <div class="container">
         <!-- 歡迎畫面 -->
         <div class="welcome-screen" id="welcomeScreen">
-            <div class="welcome-mascot">🐹</div>
-            <h1 class="welcome-title">阿均的國語魔法森林 2.0</h1>
-            <p class="welcome-subtitle">和可愛的小倉鼠一起學國語！</p>
+            <div class="welcome-logo">🦊📚</div>
+            <h1 class="welcome-title">每日學習樂園</h1>
+            <p class="welcome-subtitle">每天進步一點點，學習超有趣！</p>
+
+```
+        <div class="name-input-box">
+            <label>🌟 請輸入你的名字：</label>
+            <input type="text" id="nameInput" placeholder="阿均" maxlength="10">
+        </div>
+        
+        <button class="start-btn" onclick="startApp()">
+            🚀 開始學習！
+        </button>
+    </div>
+
+    <!-- 主畫面 -->
+    <div class="main-screen" id="mainScreen">
+        <!-- 日期問候 -->
+        <div class="date-card">
+            <div class="today-date" id="todayDate"></div>
+            <h1 class="greeting" id="greeting">早安，<span class="name">阿均</span>！</h1>
+            <p class="motivation" id="motivation">今天也要認真學習喔！💪</p>
+        </div>
+
+        <!-- 連續學習 -->
+        <div class="streak-card">
+            <div class="streak-info">
+                <div class="streak-icon">🔥</div>
+                <div class="streak-text">
+                    <h3>連續學習</h3>
+                    <p>保持每天學習的好習慣！</p>
+                </div>
+            </div>
+            <div class="streak-days">
+                <div class="streak-number" id="streakNum">0</div>
+                <div class="streak-label">天</div>
+            </div>
+        </div>
+
+        <!-- 今日進度 -->
+        <div class="progress-card">
+            <div class="progress-header">
+                <div class="progress-title">📊 今日學習進度</div>
+                <div class="progress-time">⏱️ <span id="todayTime">0</span> 分鐘</div>
+            </div>
+            <div class="progress-bar-bg">
+                <div class="progress-bar-fill" id="progressFill" style="width: 0%"></div>
+            </div>
+            <div class="progress-stats">
+                <span class="progress-done"><span id="completedNum">0</span>/3 科目完成</span>
+                <span class="progress-total">目標：每科5題</span>
+            </div>
+        </div>
+
+        <!-- 週曆 -->
+        <div class="week-calendar">
+            <div class="week-title">📅 本週學習紀錄</div>
+            <div class="week-days" id="weekDays"></div>
+        </div>
+
+        <!-- 科目挑戰 -->
+        <div class="subjects-section">
+            <div class="section-label">📝 今日挑戰</div>
             
-            <div class="welcome-card">
-                <p class="welcome-message">
-                    🐹 歡迎來到魔法森林！<br>
-                    準備好了嗎？<br>
-                    跟著可愛的小倉鼠一起學國語吧！
-                </p>
-                <input type="text" class="name-input" id="nameInput" placeholder="請輸入你的名字" maxlength="10" value="阿均">
-                <button class="start-btn" onclick="startGame()">出發探險！🌲</button>
-            </div>
-        </div>
-
-        <!-- 主選單 -->
-        <div class="main-menu" id="mainMenu">
-            <!-- 玩家資訊卡 -->
-            <div class="player-card">
-                <div class="player-avatar">🐹</div>
-                <div class="player-info">
-                    <div class="player-name" id="playerName">阿均</div>
-                    <div class="player-title" id="playerTitle">Lv.1 森林新手</div>
+            <div class="subject-card chinese" onclick="startSubject('chinese')">
+                <div class="subject-icon">📚</div>
+                <div class="subject-info">
+                    <div class="subject-name">國語挑戰</div>
+                    <div class="subject-desc">國字認讀、語詞配對、造句練習</div>
                 </div>
-                <div class="player-stats">
-                    <div class="stat-item">
-                        <div class="stat-icon">🪙</div>
-                        <div class="stat-value" id="goldDisplay">0</div>
-                        <div class="stat-label">金幣</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-icon">⭐</div>
-                        <div class="stat-value" id="expDisplay">0</div>
-                        <div class="stat-label">經驗值</div>
-                    </div>
-                </div>
-                <div class="exp-bar-container">
-                    <div class="exp-bar-label">
-                        <span>升級進度</span>
-                        <span id="expProgress">0/100</span>
-                    </div>
-                    <div class="exp-bar">
-                        <div class="exp-bar-fill" id="expBarFill" style="width: 0%"></div>
-                    </div>
+                <div class="subject-status">
+                    <div class="subject-questions">5題</div>
+                    <span class="subject-badge badge-todo" id="chineseBadge">待完成</span>
                 </div>
             </div>
 
-            <!-- 關卡選擇 -->
-            <h2 class="levels-title">🌲 選擇關卡 🌲</h2>
-            <div class="levels-grid" id="levelsGrid">
-                <!-- 關卡卡片由 JS 動態生成 -->
-            </div>
-        </div>
-
-        <!-- 遊戲畫面 -->
-        <div class="game-screen" id="gameScreen">
-            <div class="game-header">
-                <button class="back-btn" onclick="backToMenu()">← 返回</button>
-                <div class="game-level-name" id="gameLevelName">🍄 蘑菇新手村</div>
-                <div class="game-progress" id="gameProgress">第 1/10 題</div>
-                <div class="game-hearts" id="gameHearts">
-                    <span class="heart">❤️</span>
-                    <span class="heart">❤️</span>
-                    <span class="heart">❤️</span>
+            <div class="subject-card english" onclick="startSubject('english')">
+                <div class="subject-icon">🔤</div>
+                <div class="subject-info">
+                    <div class="subject-name">英文挑戰</div>
+                    <div class="subject-desc">字母、單字、聽力、拼寫</div>
+                </div>
+                <div class="subject-status">
+                    <div class="subject-questions">5題</div>
+                    <span class="subject-badge badge-todo" id="englishBadge">待完成</span>
                 </div>
             </div>
 
-            <div class="question-area">
-                <div class="question-image" id="questionImage">🌸</div>
-                <div class="question-text" id="questionText">這是什麼？</div>
-                <div class="question-hint">💡 <span id="questionHint">春天會開的，有很多顏色</span></div>
-                
-                <div class="answers-grid" id="answersGrid">
-                    <!-- 答案按鈕由 JS 動態生成 -->
+            <div class="subject-card math" onclick="startSubject('math')">
+                <div class="subject-icon">🔢</div>
+                <div class="subject-info">
+                    <div class="subject-name">數學挑戰</div>
+                    <div class="subject-desc">加減法、比大小、數數、填空</div>
+                </div>
+                <div class="subject-status">
+                    <div class="subject-questions">5題</div>
+                    <span class="subject-badge badge-todo" id="mathBadge">待完成</span>
                 </div>
             </div>
         </div>
 
-        <!-- 結果畫面 -->
-        <div class="result-screen" id="resultScreen">
-            <div class="result-card">
-                <div class="result-icon" id="resultIcon">🎉</div>
-                <h2 class="result-title" id="resultTitle">好棒！</h2>
-                <p class="result-message" id="resultMessage">你完成了這個關卡！</p>
-                
-                <div class="result-stats">
-                    <div class="result-stat">
-                        <div class="result-stat-value" id="resultScore">8/10</div>
-                        <div class="result-stat-label">答對題數</div>
-                    </div>
-                    <div class="result-stat">
-                        <div class="result-stat-value" id="resultExp">+40</div>
-                        <div class="result-stat-label">獲得經驗</div>
-                    </div>
-                    <div class="result-stat">
-                        <div class="result-stat-value" id="resultGold">+80</div>
-                        <div class="result-stat-label">獲得金幣</div>
-                    </div>
-                </div>
-
-                <div class="result-buttons">
-                    <button class="result-btn secondary" onclick="backToMenu()">返回選單</button>
-                    <button class="result-btn primary" id="retryBtn" onclick="retryLevel()">再玩一次</button>
-                </div>
+        <!-- 家長專區 -->
+        <div class="parent-section">
+            <div class="parent-header">
+                <div class="parent-title">👨‍👩‍👧 家長專區</div>
+                <button class="parent-toggle" onclick="toggleParent()">查看詳情</button>
             </div>
-
-            <!-- 複習區域 -->
-            <div class="review-section" id="reviewSection">
-                <h3 class="review-title">📚 學習複習</h3>
-                <div id="reviewContent">
-                    <!-- 複習內容由 JS 動態生成 -->
+            <div class="parent-content" id="parentContent">
+                <div class="stat-grid">
+                    <div class="stat-card">
+                        <div class="stat-value chinese" id="chineseAcc">0%</div>
+                        <div class="stat-name">國語正確率</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value english" id="englishAcc">0%</div>
+                        <div class="stat-name">英文正確率</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value math" id="mathAcc">0%</div>
+                        <div class="stat-name">數學正確率</div>
+                    </div>
                 </div>
+                <div class="stat-grid">
+                    <div class="stat-card">
+                        <div class="stat-value" id="totalDays" style="color:#333;">0</div>
+                        <div class="stat-name">累計學習天</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="totalMins" style="color:#333;">0</div>
+                        <div class="stat-name">累計分鐘</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="totalQs" style="color:#333;">0</div>
+                        <div class="stat-name">累計答題</div>
+                    </div>
+                </div>
+                <div class="history-title">📜 最近學習紀錄</div>
+                <div class="history-list" id="historyList"></div>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- 學習提示彈窗 -->
-    <div class="modal-overlay" id="learnModal">
-        <div class="modal-content">
-            <div class="modal-icon">😢</div>
-            <h3 class="modal-title">沒關係，我們來學習！</h3>
-            <div class="modal-answer">
-                <span id="modalAnswer">花</span>
-                <button class="speak-btn" onclick="speakAnswer()">🔊</button>
-            </div>
-            <div class="modal-hint">
-                💡 <span id="modalHint">春天會開的，有很多顏色</span>
-            </div>
-            <div class="modal-your-answer">
-                你的答案：<span id="modalYourAnswer">草</span>
-            </div>
-            <button class="modal-btn" onclick="closeLearnModal()">我記住了！</button>
+<!-- 遊戲畫面 -->
+<div class="game-screen" id="gameScreen">
+    <div class="game-header">
+        <button class="game-back" onclick="exitGame()">⬅️</button>
+        <div class="game-title" id="gameTitle">國語挑戰</div>
+        <div class="game-progress-info">
+            <span class="game-num" id="gameNum">1/5</span>
+            <div class="game-hearts" id="gameHearts"></div>
         </div>
     </div>
+    <div class="game-content" id="gameContent"></div>
+    
+    <!-- 完成畫面 -->
+    <div class="complete-screen" id="completeScreen">
+        <div class="complete-icon" id="completeIcon">🎉</div>
+        <h2 class="complete-title" id="completeTitle">太棒了！</h2>
+        <div class="complete-score" id="completeScore">5/5</div>
+        <p class="complete-msg" id="completeMsg">全部答對！你好厲害！</p>
+        <div class="complete-rewards">
+            <div class="reward-item">
+                <div class="reward-value" id="rewardExp">⭐ +25</div>
+                <div class="reward-label">經驗值</div>
+            </div>
+        </div>
+        <div class="review-section" id="reviewSection">
+            <div class="review-title">📝 學習複習</div>
+            <div id="reviewList"></div>
+        </div>
+        <button class="complete-btn" onclick="finishSubject()">✓ 完成</button>
+    </div>
+</div>
 
-    <script>
-        // ===============================
-        // 題庫資料
-        // ===============================
-        const questionBank = {
-            // 第一關：蘑菇新手村（國字認讀）
-            mushroom: [
-                { emoji: '🌸', question: '這是什麼？', answer: '花', options: ['花', '草', '樹', '葉'], hint: '春天會開的，有很多顏色' },
-                { emoji: '🌙', question: '這是什麼？', answer: '月', options: ['日', '月', '星', '雲'], hint: '晚上出現在天空' },
-                { emoji: '⭐', question: '這是什麼？', answer: '星', options: ['星', '月', '日', '光'], hint: '一閃一閃亮晶晶' },
-                { emoji: '🐟', question: '這是什麼？', answer: '魚', options: ['魚', '鳥', '蟲', '貓'], hint: '住在水裡會游泳' },
-                { emoji: '🐦', question: '這是什麼？', answer: '鳥', options: ['鳥', '魚', '狗', '貓'], hint: '有翅膀會飛' },
-                { emoji: '👀', question: '這是什麼？', answer: '眼', options: ['眼', '耳', '口', '鼻'], hint: '用來看東西' },
-                { emoji: '👂', question: '這是什麼？', answer: '耳', options: ['耳', '眼', '口', '手'], hint: '用來聽聲音' },
-                { emoji: '🖐️', question: '這是什麼？', answer: '手', options: ['手', '腳', '頭', '身'], hint: '用來拿東西' },
-                { emoji: '🦶', question: '這是什麼？', answer: '腳', options: ['腳', '手', '頭', '肚'], hint: '用來走路' },
-                { emoji: '💧', question: '這是什麼？', answer: '水', options: ['水', '火', '土', '木'], hint: '口渴要喝的' }
-            ],
-            
-            // 第二關：橡樹小徑（語詞配對）
-            oak: [
-                { emoji: '☀️', question: '「太」要配什麼字變成天上的東西？', answer: '太陽', options: ['太陽', '太空', '太大', '太好'], hint: '白天會發光發熱' },
-                { emoji: '🌙', question: '「＿亮」，哪個詞是對的？', answer: '月亮', options: ['月亮', '明亮', '光亮', '閃亮'], hint: '晚上圓圓的' },
-                { emoji: '🌺', question: '「花＿」，種很多花的地方叫什麼？', answer: '花園', options: ['花園', '花朵', '花瓶', '花香'], hint: '種很多花的地方' },
-                { emoji: '🏫', question: '「＿校」，我們去上課的地方？', answer: '學校', options: ['學校', '住校', '回校', '到校'], hint: '我們去上課的地方' },
-                { emoji: '👨‍🏫', question: '「老＿」，教我們知識的人？', answer: '老師', options: ['老師', '老人', '老虎', '老鼠'], hint: '教我們知識的人' },
-                { emoji: '👦👧', question: '「同＿」，一起上課的朋友？', answer: '同學', options: ['同學', '同事', '同意', '同樣'], hint: '一起上課的朋友' },
-                { emoji: '🎒', question: '「＿包」，裝課本的袋子？', answer: '書包', options: ['書包', '背包', '錢包', '皮包'], hint: '裝課本的袋子' },
-                { emoji: '✏️', question: '「鉛＿」，用來寫字的？', answer: '鉛筆', options: ['鉛筆', '毛筆', '彩筆', '原筆'], hint: '用來寫字的' },
-                { emoji: '🌅', question: '「早＿」，太陽剛出來的時候？', answer: '早上', options: ['早上', '早安', '早起', '早餐'], hint: '太陽剛出來' },
-                { emoji: '🌃', question: '「＿上」，月亮出來的時候？', answer: '晚上', options: ['晚上', '早上', '身上', '路上'], hint: '月亮出來了' }
-            ],
-            
-            // 第三關：螢火蟲池塘（造句練習）
-            firefly: [
-                { emoji: '👧📚', question: '哪個句子是對的？', answer: '妹妹在看書', options: ['妹妹在看書', '妹妹在書看', '看書妹妹在', '書在看妹妹'], hint: '誰在做什麼事' },
-                { emoji: '🐕🏃', question: '哪個句子是對的？', answer: '小狗在跑步', options: ['小狗在跑步', '跑步小狗在', '小狗跑步在', '在跑步小狗'], hint: '小動物在運動' },
-                { emoji: '🐱😴', question: '哪個句子是對的？', answer: '小貓在睡覺', options: ['小貓在睡覺', '睡覺小貓在', '在睡覺小貓', '小貓睡覺在'], hint: '小動物在休息' },
-                { emoji: '👦🍎', question: '哪個句子是對的？', answer: '弟弟在吃蘋果', options: ['弟弟在吃蘋果', '蘋果弟弟吃', '吃蘋果弟弟', '弟弟蘋果吃'], hint: '誰在吃什麼' },
-                { emoji: '🌧️☔', question: '哪個句子是對的？', answer: '外面在下雨', options: ['外面在下雨', '下雨外面在', '在下雨外面', '外面下雨在'], hint: '天氣怎麼了' },
-                { emoji: '🐦🎵', question: '哪個句子是對的？', answer: '小鳥在唱歌', options: ['小鳥在唱歌', '唱歌小鳥在', '在唱歌小鳥', '小鳥唱歌在'], hint: '誰在發出聲音' },
-                { emoji: '👨‍👩‍👧🍽️', question: '哪個句子是對的？', answer: '全家在吃飯', options: ['全家在吃飯', '吃飯全家在', '在吃飯全家', '全家吃飯在'], hint: '大家一起做什麼' },
-                { emoji: '👧🎨', question: '哪個句子是對的？', answer: '姊姊在畫畫', options: ['姊姊在畫畫', '畫畫姊姊在', '在畫畫姊姊', '姊姊畫畫在'], hint: '誰在創作' },
-                { emoji: '🌻☀️', question: '哪個句子是對的？', answer: '向日葵在曬太陽', options: ['向日葵在曬太陽', '曬太陽向日葵', '向日葵曬太陽在', '在曬太陽向日葵'], hint: '植物在做什麼' },
-                { emoji: '🐸💦', question: '哪個句子是對的？', answer: '青蛙在跳水', options: ['青蛙在跳水', '跳水青蛙在', '在跳水青蛙', '青蛙跳水在'], hint: '小動物在玩水' }
-            ],
-            
-            // 第四關：智慧樹屋（成語學習）
-            treehouse: [
-                { emoji: '🐢🐇🏃', question: '這是什麼成語？', answer: '龜兔賽跑', options: ['龜兔賽跑', '狐假虎威', '守株待兔', '井底之蛙'], hint: '烏龜和兔子比賽跑步' },
-                { emoji: '🦊🐯😤', question: '這是什麼成語？', answer: '狐假虎威', options: ['狐假虎威', '龜兔賽跑', '守株待兔', '畫蛇添足'], hint: '狐狸借老虎的威風' },
-                { emoji: '🐸⭕', question: '這是什麼成語？', answer: '井底之蛙', options: ['井底之蛙', '狐假虎威', '龜兔賽跑', '守株待兔'], hint: '青蛙只看到小小的天空' },
-                { emoji: '🌳🐇⏳', question: '這是什麼成語？', answer: '守株待兔', options: ['守株待兔', '龜兔賽跑', '狐假虎威', '井底之蛙'], hint: '傻傻等兔子撞樹' },
-                { emoji: '🌸🌺🌷', question: '這是什麼成語？', answer: '百花齊放', options: ['百花齊放', '春暖花開', '花好月圓', '鳥語花香'], hint: '很多花一起開' },
-                { emoji: '📚💪', question: '這是什麼成語？', answer: '用功讀書', options: ['用功讀書', '專心一意', '勤勞努力', '認真學習'], hint: '很認真的學習' },
-                { emoji: '🤝😊', question: '這是什麼成語？', answer: '互相幫助', options: ['互相幫助', '團結合作', '友愛和平', '同心協力'], hint: '大家一起幫忙' },
-                { emoji: '😄😄😄', question: '這是什麼成語？', answer: '笑口常開', options: ['笑口常開', '開開心心', '快快樂樂', '喜氣洋洋'], hint: '常常保持笑容' },
-                { emoji: '☀️🌤️', question: '這是什麼成語？', answer: '風和日麗', options: ['風和日麗', '晴空萬里', '萬里無雲', '春暖花開'], hint: '天氣非常好' },
-                { emoji: '👀📖', question: '這是什麼成語？', answer: '專心一意', options: ['專心一意', '用功讀書', '全神貫注', '聚精會神'], hint: '很專心做一件事' }
-            ],
-            
-            // 新關卡1：同義詞關卡
-            synonym: [
-                { emoji: '😊😄', question: '哪個詞和「快樂」意思最像？', answer: '高興', options: ['高興', '傷心', '生氣', '害怕'], hint: '開心的感覺' },
-                { emoji: '🏃💨', question: '哪個詞和「快速」意思最像？', answer: '迅速', options: ['迅速', '緩慢', '停止', '休息'], hint: '很快的樣子' },
-                { emoji: '💪🦸', question: '哪個詞和「勇敢」意思最像？', answer: '膽大', options: ['膽大', '膽小', '害怕', '躲藏'], hint: '不怕危險' },
-                { emoji: '🏠🏡', question: '哪個詞和「房子」意思最像？', answer: '住宅', options: ['住宅', '馬路', '公園', '商店'], hint: '住的地方' },
-                { emoji: '🍎🥗', question: '哪個詞和「食物」意思最像？', answer: '食品', options: ['食品', '玩具', '衣服', '書本'], hint: '可以吃的東西' },
-                { emoji: '👩‍🏫📚', question: '哪個詞和「教導」意思最像？', answer: '教學', options: ['教學', '玩耍', '睡覺', '吃飯'], hint: '老師做的事' },
-                { emoji: '🌟✨', question: '哪個詞和「美麗」意思最像？', answer: '漂亮', options: ['漂亮', '醜陋', '骯髒', '破舊'], hint: '好看的樣子' },
-                { emoji: '📖📚', question: '哪個詞和「閱讀」意思最像？', answer: '看書', options: ['看書', '寫字', '畫畫', '唱歌'], hint: '看書的動作' },
-                { emoji: '🎁🎉', question: '哪個詞和「禮物」意思最像？', answer: '贈品', options: ['贈品', '垃圾', '工具', '食物'], hint: '送人的東西' },
-                { emoji: '🌧️💧', question: '哪個詞和「潮濕」意思最像？', answer: '濕潤', options: ['濕潤', '乾燥', '炎熱', '寒冷'], hint: '有水分的樣子' }
-            ],
-            
-            // 新關卡2：反義詞關卡
-            antonym: [
-                { emoji: '☀️🌙', question: '「白天」的相反是什麼？', answer: '黑夜', options: ['黑夜', '中午', '早晨', '傍晚'], hint: '太陽下山後' },
-                { emoji: '😊😢', question: '「快樂」的相反是什麼？', answer: '悲傷', options: ['悲傷', '高興', '開心', '愉快'], hint: '不開心的感覺' },
-                { emoji: '🔥❄️', question: '「炎熱」的相反是什麼？', answer: '寒冷', options: ['寒冷', '溫暖', '舒適', '涼爽'], hint: '很冷的天氣' },
-                { emoji: '⬆️⬇️', question: '「向上」的相反是什麼？', answer: '向下', options: ['向下', '向前', '向後', '旁邊'], hint: '往地面的方向' },
-                { emoji: '🐘🐭', question: '「巨大」的相反是什麼？', answer: '渺小', options: ['渺小', '龐大', '寬廣', '高大'], hint: '很小的樣子' },
-                { emoji: '🏃🐌', question: '「快速」的相反是什麼？', answer: '緩慢', options: ['緩慢', '迅速', '急促', '飛快'], hint: '慢吞吞的' },
-                { emoji: '➕➖', question: '「增加」的相反是什麼？', answer: '減少', options: ['減少', '增多', '累積', '堆積'], hint: '變得更少' },
-                { emoji: '😴😃', question: '「疲倦」的相反是什麼？', answer: '精神', options: ['精神', '勞累', '睏倦', '無力'], hint: '充滿活力' },
-                { emoji: '🔊🔇', question: '「安靜」的相反是什麼？', answer: '吵鬧', options: ['吵鬧', '寧靜', '平和', '沉默'], hint: '很大聲音' },
-                { emoji: '🌈🌧️', question: '「晴朗」的相反是什麼？', answer: '陰雨', options: ['陰雨', '清澈', '明亮', '燦爛'], hint: '下雨的天氣' }
-            ],
-            
-            // 新關卡3：部首關卡
-            radical: [
-                { emoji: '🌊💧', question: '「海、河、池」都有什麼部首？', answer: '水', options: ['水', '木', '火', '土'], hint: '都和水有關' },
-                { emoji: '🌳🌲', question: '「樹、林、森」都有什麼部首？', answer: '木', options: ['木', '水', '人', '口'], hint: '都和樹木有關' },
-                { emoji: '👫👨', question: '「他、你、們」都有什麼部首？', answer: '人', options: ['人', '口', '手', '心'], hint: '都和人有關' },
-                { emoji: '👄💬', question: '「吃、吹、吸」都有什麼部首？', answer: '口', options: ['口', '手', '目', '耳'], hint: '都用嘴巴做的' },
-                { emoji: '❤️💭', question: '「想、思、念」都有什麼部首？', answer: '心', options: ['心', '口', '目', '手'], hint: '都和心情思考有關' },
-                { emoji: '🖐️✋', question: '「拿、打、抓」都有什麼部首？', answer: '手', options: ['手', '口', '足', '目'], hint: '都用手做的' },
-                { emoji: '👀👁️', question: '「看、眼、睛」都有什麼部首？', answer: '目', options: ['目', '口', '耳', '手'], hint: '都和眼睛有關' },
-                { emoji: '🦶👟', question: '「跑、跳、踢」都有什麼部首？', answer: '足', options: ['足', '手', '口', '目'], hint: '都用腳做的' },
-                { emoji: '☀️🌅', question: '「明、晴、晚」都有什麼部首？', answer: '日', options: ['日', '月', '火', '水'], hint: '都和太陽有關' },
-                { emoji: '🌾🌱', question: '「花、草、葉」都有什麼部首？', answer: '艸', options: ['艸', '木', '竹', '米'], hint: '都是植物' }
-            ],
-            
-            // 新關卡4：量詞關卡
-            measure: [
-                { emoji: '🍎', question: '一__蘋果，應該用哪個量詞？', answer: '顆', options: ['顆', '條', '隻', '本'], hint: '圓圓的水果' },
-                { emoji: '🐕', question: '一__狗，應該用哪個量詞？', answer: '隻', options: ['隻', '顆', '本', '朵'], hint: '動物用的' },
-                { emoji: '📖', question: '一__書，應該用哪個量詞？', answer: '本', options: ['本', '隻', '顆', '朵'], hint: '書本、課本' },
-                { emoji: '🌸', question: '一__花，應該用哪個量詞？', answer: '朵', options: ['朵', '本', '隻', '顆'], hint: '花朵、雲朵' },
-                { emoji: '🚗', question: '一__車，應該用哪個量詞？', answer: '輛', options: ['輛', '隻', '本', '顆'], hint: '交通工具' },
-                { emoji: '🐟', question: '一__魚，應該用哪個量詞？', answer: '條', options: ['條', '顆', '本', '朵'], hint: '長長的形狀' },
-                { emoji: '🍚', question: '一__飯，應該用哪個量詞？', answer: '碗', options: ['碗', '本', '隻', '顆'], hint: '裝在容器裡' },
-                { emoji: '👕', question: '一__衣服，應該用哪個量詞？', answer: '件', options: ['件', '隻', '本', '朵'], hint: '穿的東西' },
-                { emoji: '✏️', question: '一__筆，應該用哪個量詞？', answer: '支', options: ['支', '本', '隻', '顆'], hint: '長條狀工具' },
-                { emoji: '🏠', question: '一__房子，應該用哪個量詞？', answer: '棟', options: ['棟', '本', '隻', '朵'], hint: '建築物' }
-            ],
-            
-            // 新關卡5：倉鼠特別關(阿均最愛！)
-            hamster: [
-                { emoji: '🐹❤️', question: '小倉鼠最愛吃什麼？', answer: '瓜子', options: ['瓜子', '青菜', '魚', '肉'], hint: '小小的種子' },
-                { emoji: '🐹🏠', question: '小倉鼠住在哪裡？', answer: '籠子', options: ['籠子', '樹上', '水裡', '天空'], hint: '有鐵絲的房子' },
-                { emoji: '🐹😴', question: '小倉鼠白天喜歡做什麼？', answer: '睡覺', options: ['睡覺', '跑步', '游泳', '飛翔'], hint: '閉上眼睛休息' },
-                { emoji: '🐹🎡', question: '小倉鼠最愛玩什麼玩具？', answer: '滾輪', options: ['滾輪', '積木', '球', '娃娃'], hint: '可以一直跑的圓圓的' },
-                { emoji: '🐹👄', question: '小倉鼠的腮幫子可以做什麼？', answer: '藏食物', options: ['藏食物', '喝水', '唱歌', '呼吸'], hint: '把食物裝在嘴巴裡' },
-                { emoji: '🐹🌙', question: '小倉鼠什麼時候最活潑？', answer: '晚上', options: ['晚上', '早上', '中午', '下午'], hint: '太陽下山後' },
-                { emoji: '🐹🦷', question: '小倉鼠的牙齒有什麼特別？', answer: '一直長', options: ['一直長', '會掉', '很軟', '沒有'], hint: '需要常常磨牙' },
-                { emoji: '🐹👃', question: '小倉鼠用什麼來認識朋友？', answer: '鼻子', options: ['鼻子', '眼睛', '耳朵', '尾巴'], hint: '聞一聞的器官' },
-                { emoji: '🐹💛', question: '小倉鼠最常見的顏色是？', answer: '黃色', options: ['黃色', '藍色', '綠色', '紫色'], hint: '像金子的顏色' },
-                { emoji: '🐹🤲', question: '小倉鼠拿東西用什麼？', answer: '前腳', options: ['前腳', '嘴巴', '尾巴', '耳朵'], hint: '像手一樣的小爪子' }
-            ],
-            
-            // 新關卡6：形容詞王國
-            adjective: [
-                { emoji: '🌸🌺', question: '什麼形容詞形容花很多？', answer: '繽紛', options: ['繽紛', '稀少', '單調', '暗淡'], hint: '五顏六色很熱鬧' },
-                { emoji: '🏔️❄️', question: '什麼形容詞形容山很高？', answer: '巍峨', options: ['巍峨', '低矮', '平坦', '狹窄'], hint: '又高又大的樣子' },
-                { emoji: '🌊🌊', question: '什麼形容詞形容水很清？', answer: '清澈', options: ['清澈', '混濁', '骯髒', '乾涸'], hint: '乾淨透明看得見底' },
-                { emoji: '🌙✨', question: '什麼形容詞形容月亮很亮？', answer: '皎潔', options: ['皎潔', '昏暗', '模糊', '黯淡'], hint: '又白又亮的樣子' },
-                { emoji: '🎵🎶', question: '什麼形容詞形容聲音很好聽？', answer: '悅耳', options: ['悅耳', '刺耳', '嘈雜', '沙啞'], hint: '聽起來很舒服' },
-                { emoji: '🍎🍊', question: '什麼形容詞形容水果很新鮮？', answer: '鮮嫩', options: ['鮮嫩', '腐爛', '乾枯', '發霉'], hint: '又新鮮又嫩' },
-                { emoji: '🏃💨', question: '什麼形容詞形容跑得很快？', answer: '迅速', options: ['迅速', '緩慢', '笨重', '遲鈍'], hint: '速度非常快' },
-                { emoji: '💪🦸', question: '什麼形容詞形容人很勇敢？', answer: '英勇', options: ['英勇', '膽小', '懦弱', '害怕'], hint: '像英雄一樣勇敢' },
-                { emoji: '🌈☀️', question: '什麼形容詞形容天氣很好？', answer: '晴朗', options: ['晴朗', '陰雨', '灰暗', '潮濕'], hint: '陽光普照' },
-                { emoji: '🎨🖼️', question: '什麼形容詞形容畫很美？', answer: '精美', options: ['精美', '粗糙', '醜陋', '簡陋'], hint: '又精緻又美麗' }
-            ],
-            
-            // 新關卡7：動詞遊樂園
-            verb: [
-                { emoji: '🐦🎵', question: '小鳥在做什麼？', answer: '歌唱', options: ['歌唱', '睡覺', '游泳', '跑步'], hint: '發出美妙的聲音' },
-                { emoji: '🐟💦', question: '魚在水裡做什麼？', answer: '游動', options: ['游動', '飛翔', '奔跑', '爬行'], hint: '在水中移動' },
-                { emoji: '🦋🌸', question: '蝴蝶在花間做什麼？', answer: '飛舞', options: ['飛舞', '跳躍', '爬行', '游泳'], hint: '在空中翩翩起舞' },
-                { emoji: '🌱🌿', question: '種子在土裡會做什麼？', answer: '發芽', options: ['發芽', '枯萎', '腐爛', '睡覺'], hint: '長出新芽' },
-                { emoji: '🌧️☔', question: '下雨天雨水會做什麼？', answer: '滴落', options: ['滴落', '上升', '蒸發', '凝結'], hint: '一滴一滴掉下來' },
-                { emoji: '🔥🕯️', question: '蠟燭的火焰會做什麼？', answer: '燃燒', options: ['燃燒', '熄滅', '結冰', '發霉'], hint: '持續發光發熱' },
-                { emoji: '🌪️💨', question: '風會做什麼？', answer: '吹拂', options: ['吹拂', '靜止', '下沉', '凝固'], hint: '輕輕地吹過' },
-                { emoji: '🌅🌄', question: '太陽早上會做什麼？', answer: '升起', options: ['升起', '下降', '消失', '休息'], hint: '從東方出現' },
-                { emoji: '🍂🍃', question: '秋天的樹葉會做什麼？', answer: '飄落', options: ['飄落', '生長', '開花', '發芽'], hint: '慢慢掉下來' },
-                { emoji: '📚✍️', question: '學生在課堂上會做什麼？', answer: '學習', options: ['學習', '睡覺', '玩耍', '吃飯'], hint: '認真讀書' }
-            ],
-            
-            // 新關卡8：詩詞花園
-            poetry: [
-                { emoji: '🌕💭', question: '「舉頭望明月」下一句是？', answer: '低頭思故鄉', options: ['低頭思故鄉', '床前明月光', '疑是地上霜', '千里共嬋娟'], hint: '想念家鄉' },
-                { emoji: '🌧️🌦️', question: '「春眠不覺曉」下一句是？', answer: '處處聞啼鳥', options: ['處處聞啼鳥', '夜來風雨聲', '花落知多少', '春天到處叫'], hint: '聽到鳥叫聲' },
-                { emoji: '🌾👨‍🌾', question: '「鋤禾日當午」下一句是？', answer: '汗滴禾下土', options: ['汗滴禾下土', '粒粒皆辛苦', '農夫很辛苦', '誰知盤中飧'], hint: '農夫流汗工作' },
-                { emoji: '🦢🦢', question: '「鵝鵝鵝」下一句是？', answer: '曲項向天歌', options: ['曲項向天歌', '白毛浮綠水', '紅掌撥清波', '天鵝在唱歌'], hint: '鵝抬頭唱歌' },
-                { emoji: '🌸🌺', question: '「兩個黃鸝鳴翠柳」下一句是？', answer: '一行白鷺上青天', options: ['一行白鷺上青天', '萬紫千紅總是春', '春色滿園關不住', '鳥兒飛上天'], hint: '白鷺飛上天' },
-                { emoji: '🏔️☁️', question: '「白日依山盡」下一句是？', answer: '黃河入海流', options: ['黃河入海流', '長江東流去', '大海無邊際', '河水流入海'], hint: '河流流向大海' },
-                { emoji: '🌿🔥', question: '「野火燒不盡」下一句是？', answer: '春風吹又生', options: ['春風吹又生', '秋天葉又綠', '夏日草又長', '冬雪蓋不住'], hint: '春天又長出來' },
-                { emoji: '⛰️🏠', question: '「遠上寒山石徑斜」下一句是？', answer: '白雲生處有人家', options: ['白雲生處有人家', '山中有人住', '雲裡有房子', '霧中見村莊'], hint: '雲中有房子' },
-                { emoji: '🌊🌊', question: '「長江後浪推前浪」下一句是？', answer: '世上新人換舊人', options: ['世上新人換舊人', '江水永不停', '海浪一直來', '波濤洶湧急'], hint: '新人取代舊人' },
-                { emoji: '🌙⭕', question: '「小時不識月」下一句是？', answer: '呼作白玉盤', options: ['呼作白玉盤', '以為是太陽', '誤認成圓盤', '叫它大銀盤'], hint: '叫做白玉盤' }
-            ],
-            
-            // 新關卡9：數字樂園
-            number: [
-                { emoji: '1️⃣❤️', question: '「一心一意」是什麼意思？', answer: '專心', options: ['專心', '分心', '三心', '沒心'], hint: '很專注的樣子' },
-                { emoji: '2️⃣🐯', question: '「兩虎相爭」會怎樣？', answer: '必有一傷', options: ['必有一傷', '都會贏', '都會輸', '變朋友'], hint: '一定有人受傷' },
-                { emoji: '3️⃣🦁', question: '「三隻小豬」遇到什麼？', answer: '大野狼', options: ['大野狼', '小綿羊', '小白兔', '大老虎'], hint: '很兇的動物' },
-                { emoji: '4️⃣🌍', question: '「四面八方」是指？', answer: '到處', options: ['到處', '一個地方', '兩個地方', '沒地方'], hint: '各個方向' },
-                { emoji: '5️⃣🎨', question: '「五顏六色」形容什麼？', answer: '顏色多', options: ['顏色多', '只有一色', '沒有顏色', '黑白的'], hint: '很多種顏色' },
-                { emoji: '6️⃣🍀', question: '「六六大順」是什麼意思？', answer: '順利', options: ['順利', '不順', '困難', '失敗'], hint: '事情很順利' },
-                { emoji: '7️⃣⬆️⬇️', question: '「七上八下」形容什麼？', answer: '不安', options: ['不安', '平靜', '開心', '興奮'], hint: '心裡忐忑' },
-                { emoji: '8️⃣🌟', question: '「八仙過海」各顯什麼？', answer: '神通', options: ['神通', '本事', '能力', '神通'], hint: '展現本領' },
-                { emoji: '9️⃣🐂', question: '「九牛一毛」是什麼意思？', answer: '很少', options: ['很少', '很多', '剛好', '不多不少'], hint: '微不足道' },
-                { emoji: '🔟💯', question: '「十全十美」是什麼意思？', answer: '完美', options: ['完美', '不完美', '有缺點', '還可以'], hint: '沒有缺點' }
-            ],
-            
-            // 新關卡10：顏色世界
-            color: [
-                { emoji: '🔴🍎', question: '「紅」色的東西有哪些？', answer: '蘋果', options: ['蘋果', '香蕉', '葡萄', '奇異果'], hint: '紅紅的水果' },
-                { emoji: '🟡🌻', question: '「黃」色的花是什麼？', answer: '向日葵', options: ['向日葵', '玫瑰', '百合', '櫻花'], hint: '跟著太陽轉' },
-                { emoji: '🔵🌊', question: '「藍」色的是什麼？', answer: '大海', options: ['大海', '草地', '森林', '土地'], hint: '一望無際的水' },
-                { emoji: '🟢🌿', question: '「綠」色的是什麼？', answer: '樹葉', options: ['樹葉', '太陽', '月亮', '星星'], hint: '樹上長的' },
-                { emoji: '🟣🍇', question: '「紫」色的水果是什麼？', answer: '葡萄', options: ['葡萄', '蘋果', '香蕉', '橘子'], hint: '一串一串的' },
-                { emoji: '🟠🍊', question: '「橙」色的水果是什麼？', answer: '橘子', options: ['橘子', '草莓', '芭樂', '火龍果'], hint: '酸酸甜甜的' },
-                { emoji: '⚪☁️', question: '「白」色的是什麼？', answer: '雲朵', options: ['雲朵', '草地', '大海', '泥土'], hint: '天上飄的' },
-                { emoji: '⚫🌑', question: '「黑」色的是什麼？', answer: '夜晚', options: ['夜晚', '白天', '中午', '黃昏'], hint: '天黑的時候' },
-                { emoji: '🟤🐻', question: '「棕」色的動物是什麼？', answer: '熊', options: ['熊', '兔子', '綿羊', '北極熊'], hint: '很強壯的動物' },
-                { emoji: '🩷🌸', question: '「粉紅」色的花是什麼？', answer: '櫻花', options: ['櫻花', '向日葵', '玫瑰', '百合'], hint: '春天開的花' }
-            ],
-            
-            // 新關卡11：標點符號島
-            punctuation: [
-                { emoji: '❓🤔', question: '問問題要用什麼符號？', answer: '？', options: ['？', '！', '。', '，'], hint: '表示疑問' },
-                { emoji: '❗😲', question: '很驚訝要用什麼符號？', answer: '！', options: ['！', '？', '。', '，'], hint: '表示驚嘆' },
-                { emoji: '⏸️📖', question: '句子結束要用什麼符號？', answer: '。', options: ['。', '，', '？', '！'], hint: '句號' },
-                { emoji: '🔗📝', question: '停頓一下要用什麼符號？', answer: '，', options: ['，', '。', '；', '：'], hint: '逗號' },
-                { emoji: '💬🗣️', question: '有人說話要用什麼符號？', answer: '「」', options: ['「」', '（）', '【】', '《》'], hint: '引號' },
-                { emoji: '📋📌', question: '列舉事物要用什麼符號？', answer: '、', options: ['、', '，', '。', '；'], hint: '頓號' },
-                { emoji: '🎯💭', question: '說明原因要用什麼符號？', answer: '：', options: ['：', '；', '，', '。'], hint: '冒號' },
-                { emoji: '📚📖', question: '書名要用什麼符號？', answer: '《》', options: ['《》', '「」', '（）', '【】'], hint: '書名號' },
-                { emoji: '🔢📊', question: '補充說明要用什麼符號？', answer: '（）', options: ['（）', '「」', '《》', '【】'], hint: '括號' },
-                { emoji: '➡️⏭️', question: '話沒說完要用什麼符號？', answer: '……', options: ['……', '。。。', '---', '~~~'], hint: '刪節號' }
-            ],
-            
-            // 新關卡12：反義字配對
-            opposite: [
-                { emoji: '☀️🌙', question: '「明」的相反是？', answer: '暗', options: ['暗', '亮', '光', '閃'], hint: '沒有光線' },
-                { emoji: '⬆️⬇️', question: '「高」的相反是？', answer: '低', options: ['低', '矮', '短', '小'], hint: '不高的' },
-                { emoji: '💪😴', question: '「強」的相反是？', answer: '弱', options: ['弱', '小', '少', '輕'], hint: '沒力氣的' },
-                { emoji: '😊😢', question: '「笑」的相反是？', answer: '哭', options: ['哭', '怒', '鬧', '叫'], hint: '流眼淚' },
-                { emoji: '👍👎', question: '「好」的相反是？', answer: '壞', options: ['壞', '差', '醜', '爛'], hint: '不好的' },
-                { emoji: '🏃🛑', question: '「動」的相反是？', answer: '靜', options: ['靜', '停', '坐', '站'], hint: '不動的' },
-                { emoji: '🎁🗑️', question: '「新」的相反是？', answer: '舊', options: ['舊', '老', '破', '爛'], hint: '用過的' },
-                { emoji: '📈📉', question: '「多」的相反是？', answer: '少', options: ['少', '小', '無', '空'], hint: '數量不多' },
-                { emoji: '🔥❄️', question: '「冷」的相反是？', answer: '熱', options: ['熱', '暖', '溫', '燙'], hint: '溫度高' },
-                { emoji: '🌅🌆', question: '「早」的相反是？', answer: '晚', options: ['晚', '遲', '慢', '後'], hint: '不早的' }
-            ],
-            
-            // 新關卡13：聲音世界
-            sound: [
-                { emoji: '🐶🗣️', question: '狗狗會發出什麼聲音？', answer: '汪汪', options: ['汪汪', '喵喵', '咩咩', '哞哞'], hint: '狗叫聲' },
-                { emoji: '🐱🎵', question: '貓咪會發出什麼聲音？', answer: '喵喵', options: ['喵喵', '汪汪', '嘰嘰', '呱呱'], hint: '貓叫聲' },
-                { emoji: '🐮🔔', question: '牛會發出什麼聲音？', answer: '哞哞', options: ['哞哞', '咩咩', '汪汪', '嘰嘰'], hint: '牛叫聲' },
-                { emoji: '🐑🌾', question: '羊會發出什麼聲音？', answer: '咩咩', options: ['咩咩', '哞哞', '汪汪', '喵喵'], hint: '羊叫聲' },
-                { emoji: '🐔🌅', question: '公雞會發出什麼聲音？', answer: '咕咕', options: ['咕咕', '嘰嘰', '喳喳', '呱呱'], hint: '公雞啼叫' },
-                { emoji: '🐸💧', question: '青蛙會發出什麼聲音？', answer: '呱呱', options: ['呱呱', '嘰嘰', '咕咕', '喳喳'], hint: '青蛙叫聲' },
-                { emoji: '🐦🌳', question: '小鳥會發出什麼聲音？', answer: '嘰嘰', options: ['嘰嘰', '呱呱', '汪汪', '咩咩'], hint: '鳥叫聲' },
-                { emoji: '🚗📢', question: '汽車會發出什麼聲音？', answer: '叭叭', options: ['叭叭', '轟轟', '咚咚', '叮叮'], hint: '按喇叭' },
-                { emoji: '🔔⏰', question: '鈴鐺會發出什麼聲音？', answer: '叮叮', options: ['叮叮', '咚咚', '啪啪', '砰砰'], hint: '清脆的聲音' },
-                { emoji: '🥁🎵', question: '打鼓會發出什麼聲音？', answer: '咚咚', options: ['咚咚', '叮叮', '叭叭', '嘰嘰'], hint: '鼓聲' }
-            ],
-            
-            // 新關卡14：比喻句練習
-            metaphor: [
-                { emoji: '🌙💛', question: '月亮像什麼？', answer: '玉盤', options: ['玉盤', '太陽', '星星', '燈泡'], hint: '圓圓的盤子' },
-                { emoji: '👧🌸', question: '妹妹的臉像什麼？', answer: '蘋果', options: ['蘋果', '西瓜', '香蕉', '芭樂'], hint: '紅紅的水果' },
-                { emoji: '🌟💎', question: '星星像什麼？', answer: '鑽石', options: ['鑽石', '石頭', '珍珠', '玻璃'], hint: '會閃閃發光' },
-                { emoji: '☁️🐑', question: '白雲像什麼？', answer: '棉花', options: ['棉花', '雪花', '雨滴', '冰塊'], hint: '軟軟白白的' },
-                { emoji: '🌈🌉', question: '彩虹像什麼？', answer: '橋', options: ['橋', '路', '門', '窗'], hint: '天上的橋' },
-                { emoji: '🦋🌸', question: '蝴蝶像什麼？', answer: '花朵', options: ['花朵', '樹葉', '小鳥', '蜜蜂'], hint: '會飛的花' },
-                { emoji: '📖🌊', question: '書本像什麼？', answer: '海洋', options: ['海洋', '河流', '池塘', '湖泊'], hint: '知識的海洋' },
-                { emoji: '💪🦁', question: '勇敢的人像什麼？', answer: '獅子', options: ['獅子', '兔子', '綿羊', '小鹿'], hint: '森林之王' },
-                { emoji: '⏰⌛', question: '時間像什麼？', answer: '流水', options: ['流水', '石頭', '樹木', '高山'], hint: '一去不回' },
-                { emoji: '💡🌟', question: '好主意像什麼？', answer: '燈泡', options: ['燈泡', '蠟燭', '火把', '星星'], hint: '突然亮起來' }
-            ],
-            
-            // 新關卡15：終極大挑戰
-            master: [
-                { emoji: '📚🎓', question: '「學而時習之」下一句是？', answer: '不亦說乎', options: ['不亦說乎', '溫故知新', '三人行', '有朋來'], hint: '很高興的意思' },
-                { emoji: '🤝👥', question: '「有朋自遠方來」下一句是？', answer: '不亦樂乎', options: ['不亦樂乎', '不亦說乎', '何不為', '豈不美'], hint: '很快樂' },
-                { emoji: '🏔️⛰️', question: '「會當凌絕頂」下一句是？', answer: '一覽眾山小', options: ['一覽眾山小', '眾山皆渺小', '天下無敵手', '萬里看天下'], hint: '站在高處看' },
-                { emoji: '🌊🚣', question: '「欲窮千里目」下一句是？', answer: '更上一層樓', options: ['更上一層樓', '再上高山頂', '直上青雲端', '飛上九重天'], hint: '爬得更高' },
-                { emoji: '💧🌊', question: '「問渠那得清如許」下一句是？', answer: '為有源頭活水來', options: ['為有源頭活水來', '因為泉水清', '只因山泉甜', '都是活水流'], hint: '因為有源頭' },
-                { emoji: '🌸🌺', question: '「等閒識得東風面」下一句是？', answer: '萬紫千紅總是春', options: ['萬紫千紅總是春', '百花齊放春', '春色滿園中', '花開遍地紅'], hint: '很多顏色的花' },
-                { emoji: '🎋🌾', question: '「千磨萬擊還堅勁」下一句是？', answer: '任爾東西南北風', options: ['任爾東西南北風', '不怕風雨來', '依然挺且直', '永遠不倒下'], hint: '不怕風吹' },
-                { emoji: '🐎💨', question: '「老驥伏櫪」下一句是？', answer: '志在千里', options: ['志在千里', '心向遠方', '夢在天涯', '想要飛翔'], hint: '有遠大志向' },
-                { emoji: '📖✍️', question: '「讀書破萬卷」下一句是？', answer: '下筆如有神', options: ['下筆如有神', '寫字很厲害', '作文超級棒', '文章寫得好'], hint: '寫作很厲害' },
-                { emoji: '🌅🌄', question: '「不識廬山真面目」下一句是？', answer: '只緣身在此山中', options: ['只緣身在此山中', '因為站太近', '都怪霧太濃', '只因在山裡'], hint: '因為在山中' }
-            ]
-        };
+<!-- 每日完成慶祝 -->
+<div class="celebration" id="celebration">
+    <div class="celebration-box">
+        <div class="celeb-icon">🎊</div>
+        <h2 class="celeb-title">今日學習完成！</h2>
+        <p class="celeb-subtitle">太棒了！你完成了所有挑戰！</p>
+        <div class="celeb-streak">
+            <div>🔥 連續學習</div>
+            <div class="celeb-streak-num" id="celebStreak">1 天</div>
+        </div>
+        <button class="celeb-btn" onclick="closeCelebration()">太棒了！👍</button>
+    </div>
+</div>
+```
 
-        // 關卡資訊
-        const levelInfo = {
-            mushroom: { name: '蘑菇新手村', icon: '🍄', desc: '基礎國字認讀', requiredExp: 0 },
-            oak: { name: '橡樹小徑', icon: '🌳', desc: '語詞配對', requiredExp: 50 },
-            firefly: { name: '螢火蟲池塘', icon: '✨', desc: '造句練習', requiredExp: 150 },
-            treehouse: { name: '智慧樹屋', icon: '🏠', desc: '成語學習', requiredExp: 300 },
-            rainbow: { name: '彩虹山頂', icon: '🌈', desc: '綜合挑戰', requiredExp: 500 },
-            synonym: { name: '同義詞森林', icon: '🤝', desc: '相似詞彙', requiredExp: 600 },
-            antonym: { name: '反義詞山谷', icon: '⚡', desc: '相反詞彙', requiredExp: 700 },
-            radical: { name: '部首王國', icon: '🏰', desc: '認識部首', requiredExp: 800 },
-            measure: { name: '量詞寶庫', icon: '📏', desc: '量詞使用', requiredExp: 900 },
-            hamster: { name: '小倉鼠樂園', icon: '🐹', desc: '阿均最愛！', requiredExp: 1000 },
-            adjective: { name: '形容詞王國', icon: '🌟', desc: '學習形容詞', requiredExp: 1150 },
-            verb: { name: '動詞遊樂園', icon: '🎬', desc: '學習動詞', requiredExp: 1300 },
-            poetry: { name: '詩詞花園', icon: '📜', desc: '古詩背誦', requiredExp: 1450 },
-            number: { name: '數字樂園', icon: '🔢', desc: '數字成語', requiredExp: 1600 },
-            color: { name: '顏色世界', icon: '🎨', desc: '認識顏色', requiredExp: 1750 },
-            punctuation: { name: '標點符號島', icon: '❓', desc: '標點符號', requiredExp: 1900 },
-            opposite: { name: '反義字配對', icon: '🔄', desc: '相反的字', requiredExp: 2050 },
-            sound: { name: '聲音世界', icon: '🔊', desc: '擬聲詞', requiredExp: 2200 },
-            metaphor: { name: '比喻句練習', icon: '💭', desc: '像什麼', requiredExp: 2350 },
-            master: { name: '終極大挑戰', icon: '👑', desc: '國語之王', requiredExp: 2500 }
-        };
+<script>
+// ================================================================
+// 🦊 阿均的每日學習樂園 - 整合版
+// 國語 + 英文 + 數學 三科合一
+// ================================================================
 
-        // 等級稱號
-        const levelTitles = {
-            1: '森林新手',
-            2: '蘑菇採集者',
-            3: '橡樹守護者',
-            4: '螢火蟲朋友',
-            5: '智慧學徒',
-            6: '國語小達人',
-            7: '倉鼠好朋友',
-            8: '詞彙學者',
-            9: '語文高手',
-            10: '國語大師',
-            12: '詩詞愛好者',
-            14: '文字探險家',
-            16: '成語專家',
-            18: '語文博士',
-            20: '傳奇學者'
-        };
-
-        // ===============================
-        // 遊戲狀態
-        // ===============================
-        let gameState = {
-            playerName: '阿均',
-            gold: 0,
-            exp: 0,
-            level: 1,
-            levelProgress: {
-                mushroom: 0,
-                oak: 0,
-                firefly: 0,
-                treehouse: 0,
-                rainbow: 0,
-                synonym: 0,
-                antonym: 0,
-                radical: 0,
-                measure: 0,
-                hamster: 0,
-                adjective: 0,
-                verb: 0,
-                poetry: 0,
-                number: 0,
-                color: 0,
-                punctuation: 0,
-                opposite: 0,
-                sound: 0,
-                metaphor: 0,
-                master: 0
-            },
-            records: [],
-            soundOn: true
-        };
-
-        // 當前遊戲狀態
-        let currentGame = {
-            levelKey: '',
-            questions: [],
-            currentIndex: 0,
-            score: 0,
-            hearts: 3,
-            results: []
-        };
-
-        // 音效上下文
-        let audioContext = null;
-
-        // ===============================
-        // 初始化
-        // ===============================
-        function init() {
-            loadGameState();
-            createLeaves();
-            
-            // 如果已有存檔，直接進入主選單
-            if (localStorage.getItem('magicForestGameV2')) {
-                document.getElementById('nameInput').value = gameState.playerName;
-            }
-        }
-
-        // 創建飄落樹葉
-        function createLeaves() {
-            const container = document.getElementById('leaves-container');
-            const leaves = ['🍃', '🍂', '🌿', '☘️'];
-            
-            for (let i = 0; i < 15; i++) {
-                const leaf = document.createElement('div');
-                leaf.className = 'leaf';
-                leaf.textContent = leaves[Math.floor(Math.random() * leaves.length)];
-                leaf.style.left = Math.random() * 100 + '%';
-                leaf.style.animationDuration = (5 + Math.random() * 5) + 's';
-                leaf.style.animationDelay = Math.random() * 10 + 's';
-                container.appendChild(leaf);
-            }
-        }
-
-        // ===============================
-        // 資料儲存
-        // ===============================
-        function saveGameState() {
-            localStorage.setItem('magicForestGameV2', JSON.stringify(gameState));
-        }
-
-        function loadGameState() {
-            const saved = localStorage.getItem('magicForestGameV2');
-            if (saved) {
-                gameState = { ...gameState, ...JSON.parse(saved) };
-            }
-        }
-
-        // ===============================
-        // 音效系統
-        // ===============================
-        function initAudio() {
-            if (!audioContext) {
-                audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            }
-        }
-
-        function playSound(type) {
-            if (!gameState.soundOn) return;
-            
-            try {
-                initAudio();
-                
-                const oscillator = audioContext.createOscillator();
-                const gainNode = audioContext.createGain();
-                
-                oscillator.connect(gainNode);
-                gainNode.connect(audioContext.destination);
-
-                const now = audioContext.currentTime;
-
-                switch(type) {
-                    case 'start':
-                        // 歡樂上升音階
-                        playMelody([262, 330, 392, 523], 0.15);
-                        return;
-                    case 'correct':
-                        // 開心叮咚聲
-                        oscillator.frequency.setValueAtTime(880, now);
-                        oscillator.frequency.setValueAtTime(1100, now + 0.1);
-                        gainNode.gain.setValueAtTime(0.3, now);
-                        gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
-                        oscillator.start(now);
-                        oscillator.stop(now + 0.3);
-                        break;
-                    case 'wrong':
-                        // 輕柔提示音
-                        oscillator.frequency.setValueAtTime(300, now);
-                        oscillator.frequency.setValueAtTime(250, now + 0.1);
-                        gainNode.gain.setValueAtTime(0.2, now);
-                        gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
-                        oscillator.start(now);
-                        oscillator.stop(now + 0.3);
-                        break;
-                    case 'success':
-                        // 勝利旋律
-                        playMelody([262, 294, 330, 349, 392, 440, 494, 523], 0.12);
-                        return;
-                    case 'click':
-                        // 點擊聲
-                        oscillator.frequency.setValueAtTime(600, now);
-                        gainNode.gain.setValueAtTime(0.1, now);
-                        gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
-                        oscillator.start(now);
-                        oscillator.stop(now + 0.1);
-                        break;
-                }
-            } catch (e) {
-                console.log('音效播放失敗:', e);
-            }
-        }
-
-        function playMelody(notes, duration) {
-            try {
-                notes.forEach((freq, i) => {
-                    const osc = audioContext.createOscillator();
-                    const gain = audioContext.createGain();
-                    osc.connect(gain);
-                    gain.connect(audioContext.destination);
-                    
-                    const startTime = audioContext.currentTime + i * duration;
-                    const endTime = audioContext.currentTime + (i + 1) * duration;
-                    
-                    osc.frequency.setValueAtTime(freq, startTime);
-                    gain.gain.setValueAtTime(0.2, startTime);
-                    gain.gain.exponentialRampToValueAtTime(0.01, endTime);
-                    osc.start(startTime);
-                    osc.stop(endTime);
-                });
-            } catch (e) {
-                console.log('旋律播放失敗:', e);
-            }
-        }
-
-        function toggleSound() {
-            gameState.soundOn = !gameState.soundOn;
-            document.getElementById('soundBtn').textContent = gameState.soundOn ? '🔊' : '🔇';
-            saveGameState();
-        }
-
-        // ===============================
-        // 語音朗讀
-        // ===============================
-        function speakChinese(text) {
-            if ('speechSynthesis' in window) {
-                window.speechSynthesis.cancel();
-                const utterance = new SpeechSynthesisUtterance(text);
-                utterance.lang = 'zh-TW';
-                utterance.rate = 0.8;
-                utterance.pitch = 1.1;
-                window.speechSynthesis.speak(utterance);
-            }
-        }
-
-        function speakAnswer() {
-            const answer = document.getElementById('modalAnswer').textContent;
-            speakChinese(answer);
-        }
-
-        // ===============================
-        // 畫面切換
-        // ===============================
-        function showScreen(screenId) {
-            document.getElementById('welcomeScreen').classList.add('hidden');
-            document.getElementById('mainMenu').classList.add('hidden');
-            document.getElementById('gameScreen').classList.add('hidden');
-            document.getElementById('resultScreen').classList.add('hidden');
-            
-            document.getElementById(screenId).classList.remove('hidden');
-            document.getElementById(screenId).style.display = screenId === 'welcomeScreen' ? 'flex' : 'block';
-        }
-
-        // ===============================
-        // 遊戲開始
-        // ===============================
-        function startGame() {
-            const name = document.getElementById('nameInput').value.trim();
-            if (!name) {
-                alert('請輸入你的名字！');
-                return;
-            }
-            
-            gameState.playerName = name;
-            saveGameState();
-            
-            playSound('start');
-            showScreen('mainMenu');
-            updatePlayerCard();
-            renderLevelCards();
-        }
-
-        // ===============================
-        // 玩家資訊更新
-        // ===============================
-        function updatePlayerCard() {
-            document.getElementById('playerName').textContent = gameState.playerName;
-            document.getElementById('goldDisplay').textContent = gameState.gold;
-            document.getElementById('expDisplay').textContent = gameState.exp;
-            
-            // 計算等級
-            gameState.level = Math.floor(gameState.exp / 100) + 1;
-            const titleLevel = Math.min(gameState.level, 6);
-            document.getElementById('playerTitle').textContent = `Lv.${gameState.level} ${levelTitles[titleLevel] || '國語小達人'}`;
-            
-            // 經驗值進度條
-            const expInLevel = gameState.exp % 100;
-            document.getElementById('expProgress').textContent = `${expInLevel}/100`;
-            document.getElementById('expBarFill').style.width = `${expInLevel}%`;
-        }
-
-        // ===============================
-        // 關卡卡片渲染
-        // ===============================
-        function renderLevelCards() {
-            const grid = document.getElementById('levelsGrid');
-            grid.innerHTML = '';
-            
-            // 使用所有定義的關卡
-            const levelKeys = Object.keys(levelInfo);
-            
-            levelKeys.forEach(key => {
-                const info = levelInfo[key];
-                const isLocked = gameState.exp < info.requiredExp;
-                const progress = gameState.levelProgress[key] || 0;
-                
-                const card = document.createElement('div');
-                card.className = `level-card ${isLocked ? 'locked' : ''}`;
-                card.innerHTML = `
-                    <div class="level-header ${key}"></div>
-                    <div class="level-content">
-                        <div class="level-icon">${info.icon}</div>
-                        <div class="level-name">${info.name}</div>
-                        <div class="level-desc">${info.desc}</div>
-                        <div class="level-progress">
-                            <div class="level-progress-fill" style="width: ${progress * 10}%"></div>
-                        </div>
-                        <div class="level-score">最高：${progress}/10</div>
-                    </div>
-                    ${isLocked ? `
-                        <div class="level-lock-overlay">
-                            <div class="lock-icon">🔒</div>
-                            <div class="lock-text">需要 ${info.requiredExp} 經驗值</div>
-                        </div>
-                    ` : ''}
-                `;
-                
-                if (!isLocked) {
-                    card.onclick = () => startLevel(key);
-                }
-                
-                grid.appendChild(card);
-            });
-        }
-
-        // ===============================
-        // 開始關卡
-        // ===============================
-        function startLevel(levelKey) {
-            playSound('click');
-            
-            currentGame = {
-                levelKey: levelKey,
-                questions: [],
-                currentIndex: 0,
-                score: 0,
-                hearts: 3,
-                results: []
+// ===== 題庫 =====
+const QUESTIONS = {
+    // ==================== 國語題庫 ====================
+    chinese: {
+        characters: [
+            { emoji: '🌸', answer: '花', options: ['花', '草', '樹', '葉'], hint: '春天會開的，很漂亮' },
+            { emoji: '🌙', answer: '月', options: ['月', '日', '星', '雲'], hint: '晚上出現在天空' },
+            { emoji: '⭐', answer: '星', options: ['星', '月', '日', '光'], hint: '一閃一閃亮晶晶' },
+            { emoji: '🐟', answer: '魚', options: ['魚', '鳥', '蟲', '貓'], hint: '住在水裡會游泳' },
+            { emoji: '🐦', answer: '鳥', options: ['鳥', '魚', '狗', '貓'], hint: '有翅膀會飛' },
+            { emoji: '👀', answer: '眼', options: ['眼', '耳', '口', '鼻'], hint: '用來看東西' },
+            { emoji: '👂', answer: '耳', options: ['耳', '眼', '口', '手'], hint: '用來聽聲音' },
+            { emoji: '🖐️', answer: '手', options: ['手', '腳', '頭', '身'], hint: '用來拿東西' },
+            { emoji: '💧', answer: '水', options: ['水', '火', '土', '木'], hint: '口渴要喝的' },
+            { emoji: '🔥', answer: '火', options: ['火', '水', '土', '風'], hint: '紅紅的會燙' },
+            { emoji: '🌳', answer: '樹', options: ['樹', '花', '草', '山'], hint: '高高的有葉子' },
+            { emoji: '☀️', answer: '日', options: ['日', '月', '星', '雲'], hint: '白天發光發熱' },
+            { emoji: '🏔️', answer: '山', options: ['山', '水', '石', '土'], hint: '高高的可以爬' },
+            { emoji: '🐶', answer: '狗', options: ['狗', '貓', '豬', '牛'], hint: '汪汪叫' },
+            { emoji: '🐱', answer: '貓', options: ['貓', '狗', '鼠', '兔'], hint: '喵喵叫' },
+            { emoji: '🐷', answer: '豬', options: ['豬', '牛', '羊', '馬'], hint: '粉紅色，愛睡覺' },
+            { emoji: '🐮', answer: '牛', options: ['牛', '豬', '羊', '馬'], hint: '會產牛奶' },
+            { emoji: '👦', answer: '男', options: ['男', '女', '子', '人'], hint: '弟弟是...' },
+            { emoji: '👧', answer: '女', options: ['女', '男', '子', '人'], hint: '姊姊是...' },
+            { emoji: '🏠', answer: '家', options: ['家', '房', '屋', '門'], hint: '我們住的地方' }
+        ],
+        words: [
+            { q: '太__', emoji: '☀️', answer: '太陽', options: ['太陽', '太空', '太大', '太好'], hint: '白天發光發熱' },
+            { q: '__亮', emoji: '🌙', answer: '月亮', options: ['月亮', '明亮', '光亮', '閃亮'], hint: '晚上圓圓的' },
+            { q: '花__', emoji: '🌺', answer: '花園', options: ['花園', '花朵', '花瓶', '花香'], hint: '種很多花的地方' },
+            { q: '__校', emoji: '🏫', answer: '學校', options: ['學校', '住校', '回校', '到校'], hint: '上課的地方' },
+            { q: '老__', emoji: '👨‍🏫', answer: '老師', options: ['老師', '老人', '老虎', '老鼠'], hint: '教我們知識的人' },
+            { q: '同__', emoji: '👦👧', answer: '同學', options: ['同學', '同事', '同意', '同樣'], hint: '一起上課的朋友' },
+            { q: '__包', emoji: '🎒', answer: '書包', options: ['書包', '背包', '錢包', '皮包'], hint: '裝課本的袋子' },
+            { q: '鉛__', emoji: '✏️', answer: '鉛筆', options: ['鉛筆', '毛筆', '彩筆', '原筆'], hint: '用來寫字的' },
+            { q: '早__', emoji: '🌅', answer: '早上', options: ['早上', '早安', '早起', '早餐'], hint: '太陽剛出來' },
+            { q: '__上', emoji: '🌃', answer: '晚上', options: ['晚上', '早上', '身上', '路上'], hint: '月亮出來了' },
+            { q: '小__', emoji: '🐶', answer: '小狗', options: ['小狗', '小貓', '小鳥', '小魚'], hint: '汪汪叫的寵物' },
+            { q: '大__', emoji: '🐘', answer: '大象', options: ['大象', '大人', '大樹', '大海'], hint: '有長鼻子' },
+            { q: '飛__', emoji: '✈️', answer: '飛機', options: ['飛機', '飛鳥', '飛走', '飛快'], hint: '在天上飛' },
+            { q: '汽__', emoji: '🚗', answer: '汽車', options: ['汽車', '汽水', '汽油', '汽球'], hint: '在路上跑' },
+            { q: '__果', emoji: '🍎', answer: '蘋果', options: ['蘋果', '水果', '結果', '如果'], hint: '紅紅的水果' }
+        ],
+        sentences: [
+            { correct: '妹妹在看書', wrong: ['妹妹在書看', '看書妹妹在', '書在看妹妹'], emoji: '👧📚', hint: '誰在做什麼' },
+            { correct: '小狗在跑步', wrong: ['跑步小狗在', '小狗跑步在', '在跑步小狗'], emoji: '🐕🏃', hint: '誰在做什麼' },
+            { correct: '弟弟在吃蘋果', wrong: ['蘋果弟弟吃', '吃蘋果弟弟', '弟弟蘋果吃'], emoji: '👦🍎', hint: '誰在吃什麼' },
+            { correct: '小鳥在唱歌', wrong: ['唱歌小鳥在', '在唱歌小鳥', '小鳥唱歌在'], emoji: '🐦🎵', hint: '誰在做什麼' },
+            { correct: '姊姊在畫畫', wrong: ['畫畫姊姊在', '在畫畫姊姊', '姊姊畫畫在'], emoji: '👧🎨', hint: '誰在做什麼' }
+        ]
+    },
+    
+    // ==================== 英文題庫 ====================
+    english: {
+        letters: [
+            { letter: 'A', options: ['A', 'E', 'I', 'O'] },
+            { letter: 'B', options: ['B', 'D', 'P', 'T'] },
+            { letter: 'C', options: ['C', 'S', 'K', 'G'] },
+            { letter: 'D', options: ['D', 'B', 'T', 'P'] },
+            { letter: 'E', options: ['E', 'A', 'I', 'U'] },
+            { letter: 'F', options: ['F', 'S', 'V', 'X'] },
+            { letter: 'G', options: ['G', 'J', 'C', 'Q'] },
+            { letter: 'H', options: ['H', 'A', 'N', 'M'] },
+            { letter: 'I', options: ['I', 'E', 'A', 'Y'] },
+            { letter: 'J', options: ['J', 'G', 'Y', 'I'] },
+            { letter: 'K', options: ['K', 'C', 'Q', 'X'] },
+            { letter: 'L', options: ['L', 'R', 'I', 'J'] },
+            { letter: 'M', options: ['M', 'N', 'W', 'V'] },
+            { letter: 'N', options: ['N', 'M', 'H', 'U'] },
+            { letter: 'O', options: ['O', 'U', 'Q', 'C'] },
+            { letter: 'P', options: ['P', 'B', 'D', 'Q'] },
+            { letter: 'Q', options: ['Q', 'O', 'G', 'P'] },
+            { letter: 'R', options: ['R', 'L', 'P', 'B'] },
+            { letter: 'S', options: ['S', 'C', 'Z', 'X'] },
+            { letter: 'T', options: ['T', 'D', 'P', 'L'] },
+            { letter: 'U', options: ['U', 'V', 'W', 'Y'] },
+            { letter: 'V', options: ['V', 'W', 'U', 'Y'] },
+            { letter: 'W', options: ['W', 'V', 'M', 'N'] },
+            { letter: 'X', options: ['X', 'K', 'Z', 'Y'] },
+            { letter: 'Y', options: ['Y', 'V', 'U', 'I'] },
+            { letter: 'Z', options: ['Z', 'S', 'X', 'N'] }
+        ],
+        words: [
+            { word: 'apple', emoji: '🍎', chinese: '蘋果' },
+            { word: 'banana', emoji: '🍌', chinese: '香蕉' },
+            { word: 'cat', emoji: '🐈', chinese: '貓' },
+            { word: 'dog', emoji: '🐕', chinese: '狗' },
+            { word: 'egg', emoji: '🥚', chinese: '蛋' },
+            { word: 'fish', emoji: '🐟', chinese: '魚' },
+            { word: 'girl', emoji: '👧', chinese: '女孩' },
+            { word: 'hat', emoji: '🎩', chinese: '帽子' },
+            { word: 'ice', emoji: '🧊', chinese: '冰' },
+            { word: 'jump', emoji: '🦘', chinese: '跳' },
+            { word: 'kite', emoji: '🪁', chinese: '風箏' },
+            { word: 'lion', emoji: '🦁', chinese: '獅子' },
+            { word: 'moon', emoji: '🌙', chinese: '月亮' },
+            { word: 'nose', emoji: '👃', chinese: '鼻子' },
+            { word: 'orange', emoji: '🍊', chinese: '橘子' },
+            { word: 'pig', emoji: '🐷', chinese: '豬' },
+            { word: 'queen', emoji: '👸', chinese: '女王' },
+            { word: 'rabbit', emoji: '🐰', chinese: '兔子' },
+            { word: 'sun', emoji: '☀️', chinese: '太陽' },
+            { word: 'tiger', emoji: '🐯', chinese: '老虎' },
+            { word: 'umbrella', emoji: '☂️', chinese: '雨傘' },
+            { word: 'violin', emoji: '🎻', chinese: '小提琴' },
+            { word: 'water', emoji: '💧', chinese: '水' },
+            { word: 'yellow', emoji: '🟡', chinese: '黃色' },
+            { word: 'zebra', emoji: '🦓', chinese: '斑馬' },
+            { word: 'red', emoji: '🔴', chinese: '紅色' },
+            { word: 'blue', emoji: '🔵', chinese: '藍色' },
+            { word: 'green', emoji: '🟢', chinese: '綠色' },
+            { word: 'one', emoji: '1️⃣', chinese: '一' },
+            { word: 'two', emoji: '2️⃣', chinese: '二' },
+            { word: 'three', emoji: '3️⃣', chinese: '三' },
+            { word: 'mom', emoji: '👩', chinese: '媽媽' },
+            { word: 'dad', emoji: '👨', chinese: '爸爸' },
+            { word: 'bird', emoji: '🐦', chinese: '鳥' },
+            { word: 'book', emoji: '📚', chinese: '書' },
+            { word: 'bear', emoji: '🐻', chinese: '熊' },
+            { word: 'ball', emoji: '⚽', chinese: '球' },
+            { word: 'bed', emoji: '🛏️', chinese: '床' },
+            { word: 'cup', emoji: '🥤', chinese: '杯子' },
+            { word: 'bus', emoji: '🚌', chinese: '公車' }
+        ],
+        spelling: [
+            { word: 'cat', emoji: '🐈', chinese: '貓' },
+            { word: 'dog', emoji: '🐕', chinese: '狗' },
+            { word: 'pig', emoji: '🐷', chinese: '豬' },
+            { word: 'sun', emoji: '☀️', chinese: '太陽' },
+            { word: 'red', emoji: '🔴', chinese: '紅色' },
+            { word: 'mom', emoji: '👩', chinese: '媽媽' },
+            { word: 'dad', emoji: '👨', chinese: '爸爸' },
+            { word: 'bed', emoji: '🛏️', chinese: '床' },
+            { word: 'cup', emoji: '🥤', chinese: '杯子' },
+            { word: 'bus', emoji: '🚌', chinese: '公車' },
+            { word: 'hat', emoji: '🎩', chinese: '帽子' },
+            { word: 'egg', emoji: '🥚', chinese: '蛋' },
+            { word: 'one', emoji: '1️⃣', chinese: '一' },
+            { word: 'two', emoji: '2️⃣', chinese: '二' },
+            { word: 'ten', emoji: '🔟', chinese: '十' }
+        ]
+    },
+    
+    // ==================== 數學題庫 ====================
+    math: {
+        addition: () => {
+            const a = randInt(1, 10);
+            const b = randInt(1, 10 - a);
+            const ans = a + b;
+            return {
+                q: `${a} + ${b} = ?`,
+                emoji: '➕',
+                answer: ans,
+                options: genOptions(ans, 1, 20),
+                type: 'addition',
+                hint: '加法：把兩個數合起來'
             };
-            
-            // 準備題目
-            if (levelKey === 'rainbow') {
-                // 彩虹山頂：綜合挑戰
-                const allQuestions = [];
-                // 3題國字
-                allQuestions.push(...shuffleArray(questionBank.mushroom).slice(0, 3));
-                // 3題語詞
-                allQuestions.push(...shuffleArray(questionBank.oak).slice(0, 3));
-                // 2題造句
-                allQuestions.push(...shuffleArray(questionBank.firefly).slice(0, 2));
-                // 2題成語
-                allQuestions.push(...shuffleArray(questionBank.treehouse).slice(0, 2));
-                currentGame.questions = shuffleArray(allQuestions);
-            } else {
-                currentGame.questions = shuffleArray([...questionBank[levelKey]]);
+        },
+        subtraction: () => {
+            const a = randInt(5, 18);
+            const b = randInt(1, a - 1);
+            const ans = a - b;
+            return {
+                q: `${a} - ${b} = ?`,
+                emoji: '➖',
+                answer: ans,
+                options: genOptions(ans, 0, 20),
+                type: 'subtraction',
+                hint: '減法：從大數減去小數'
+            };
+        },
+        compare: () => {
+            const a = randInt(1, 20);
+            let b = randInt(1, 20);
+            while (b === a) b = randInt(1, 20);
+            const ans = a > b ? '>' : '<';
+            return {
+                q: `${a} ⬜ ${b}`,
+                emoji: '⚖️',
+                answer: ans,
+                options: ['>', '<'],
+                type: 'compare',
+                hint: '哪個數字比較大？'
+            };
+        },
+        counting: () => {
+            const items = ['🍎', '⭐', '🌸', '🐟', '🦋', '🍊', '🌙', '🐦', '🍀', '💧'];
+            const emoji = items[randInt(0, items.length - 1)];
+            const count = randInt(3, 12);
+            const display = Array(count).fill(emoji).join(' ');
+            return {
+                q: display,
+                emoji: '🔢',
+                answer: count,
+                options: genOptions(count, 1, 15),
+                type: 'counting',
+                hint: '數一數有幾個？'
+            };
+        },
+        sequence: () => {
+            const start = randInt(1, 12);
+            const pos = randInt(1, 3);
+            const seq = [];
+            for (let i = 0; i < 5; i++) {
+                seq.push(i === pos ? '?' : start + i);
             }
-            
-            showScreen('gameScreen');
-            updateGameHeader();
-            showQuestion();
+            const ans = start + pos;
+            return {
+                q: seq.join(', '),
+                emoji: '📝',
+                answer: ans,
+                options: genOptions(ans, 1, 20),
+                type: 'sequence',
+                hint: '?應該填什麼數字？'
+            };
+        },
+        doubles: () => {
+            const n = randInt(1, 10);
+            const ans = n * 2;
+            return {
+                q: `${n} + ${n} = ?`,
+                emoji: '✨',
+                answer: ans,
+                options: genOptions(ans, 2, 20),
+                type: 'doubles',
+                hint: '雙倍加法'
+            };
+        },
+        makesTen: () => {
+            const a = randInt(1, 9);
+            const ans = 10 - a;
+            return {
+                q: `${a} + ? = 10`,
+                emoji: '🔟',
+                answer: ans,
+                options: genOptions(ans, 1, 9),
+                type: 'makesTen',
+                hint: '湊成10'
+            };
         }
+    }
+};
 
-        // 洗牌函數
-        function shuffleArray(array) {
-            const newArray = [...array];
-            for (let i = newArray.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
-            }
-            return newArray;
+// ===== 遊戲狀態 =====
+let state = {
+    name: '阿均',
+    streak: 0,
+    lastDate: null,
+    today: {
+        chinese: { done: false, score: 0, time: 0 },
+        english: { done: false, score: 0, time: 0 },
+        math: { done: false, score: 0, time: 0 }
+    },
+    stats: {
+        totalDays: 0,
+        totalTime: 0,
+        totalQs: 0,
+        chinese: { total: 0, correct: 0 },
+        english: { total: 0, correct: 0 },
+        math: { total: 0, correct: 0 }
+    },
+    history: [],
+    weekRecord: {},
+    
+    // 當前遊戲
+    subject: null,
+    questions: [],
+    qIndex: 0,
+    score: 0,
+    hearts: 3,
+    startTime: 0,
+    results: []
+};
+
+// ===== 工具函數 =====
+function randInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function shuffle(arr) {
+    const a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) {
+        const j = randInt(0, i);
+        [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+}
+
+function genOptions(correct, min, max) {
+    let opts = [correct];
+    while (opts.length < 4) {
+        const n = randInt(min, max);
+        if (!opts.includes(n)) opts.push(n);
+    }
+    return shuffle(opts);
+}
+
+function getDateStr(d) {
+    return d.toISOString().split('T')[0];
+}
+
+function speak(text, lang = 'en-US') {
+    if ('speechSynthesis' in window) {
+        speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(text);
+        u.lang = lang;
+        u.rate = 0.8;
+        speechSynthesis.speak(u);
+    }
+}
+
+// ===== 初始化 =====
+function init() {
+    loadGame();
+    
+    if (state.name && state.lastDate) {
+        // 有存檔，檢查日期
+        checkNewDay();
+        showMain();
+    }
+}
+
+function startApp() {
+    const name = document.getElementById('nameInput').value.trim() || '阿均';
+    state.name = name;
+    checkNewDay();
+    saveGame();
+    showMain();
+}
+
+function showMain() {
+    document.getElementById('welcomeScreen').style.display = 'none';
+    document.getElementById('mainScreen').style.display = 'block';
+    updateMainUI();
+}
+
+function checkNewDay() {
+    const today = getDateStr(new Date());
+    const yesterday = getDateStr(new Date(Date.now() - 86400000));
+    
+    if (state.lastDate !== today) {
+        // 新的一天
+        if (state.lastDate && state.lastDate !== yesterday) {
+            // 中斷連續
+            state.streak = 0;
         }
+        // 重置今日
+        state.today = {
+            chinese: { done: false, score: 0, time: 0 },
+            english: { done: false, score: 0, time: 0 },
+            math: { done: false, score: 0, time: 0 }
+        };
+    }
+}
 
-        // ===============================
-        // 遊戲畫面更新
-        // ===============================
-        function updateGameHeader() {
-            const info = levelInfo[currentGame.levelKey];
-            document.getElementById('gameLevelName').innerHTML = `${info.icon} ${info.name}`;
-            document.getElementById('gameProgress').textContent = `第 ${currentGame.currentIndex + 1}/10 題`;
-            
-            // 更新愛心
-            const heartsContainer = document.getElementById('gameHearts');
-            heartsContainer.innerHTML = '';
-            for (let i = 0; i < 3; i++) {
-                const heart = document.createElement('span');
-                heart.className = 'heart' + (i >= currentGame.hearts ? ' lost' : '');
-                heart.textContent = '❤️';
-                heartsContainer.appendChild(heart);
-            }
-        }
+// ===== 更新主畫面 =====
+function updateMainUI() {
+    // 日期
+    const now = new Date();
+    const opts = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' };
+    document.getElementById('todayDate').textContent = now.toLocaleDateString('zh-TW', opts);
+    
+    // 問候
+    const hour = now.getHours();
+    let greet = '早安';
+    if (hour >= 12 && hour < 18) greet = '午安';
+    else if (hour >= 18) greet = '晚安';
+    document.getElementById('greeting').innerHTML = `${greet}，<span class="name">${state.name}</span>！`;
+    
+    // 激勵語
+    const msgs = ['今天也要認真學習喔！💪', '每天進步一點點！🌟', '你是最棒的！⭐', '加油！🎯'];
+    document.getElementById('motivation').textContent = msgs[randInt(0, msgs.length - 1)];
+    
+    // 連續天數
+    document.getElementById('streakNum').textContent = state.streak;
+    
+    // 今日進度
+    const completed = Object.values(state.today).filter(s => s.done).length;
+    const progress = (completed / 3) * 100;
+    document.getElementById('progressFill').style.width = progress + '%';
+    document.getElementById('completedNum').textContent = completed;
+    
+    const todayTime = Object.values(state.today).reduce((sum, s) => sum + s.time, 0);
+    document.getElementById('todayTime').textContent = Math.round(todayTime / 60);
+    
+    // 科目狀態
+    updateSubjectBadge('chinese');
+    updateSubjectBadge('english');
+    updateSubjectBadge('math');
+    
+    // 週曆
+    renderWeek();
+    
+    // 家長統計
+    updateParentStats();
+}
 
-        function showQuestion() {
-            const question = currentGame.questions[currentGame.currentIndex];
-            
-            document.getElementById('questionImage').textContent = question.emoji;
-            document.getElementById('questionText').textContent = question.question;
-            document.getElementById('questionHint').textContent = question.hint;
-            
-            // 隨機排列選項
-            const shuffledOptions = shuffleArray([...question.options]);
-            
-            const grid = document.getElementById('answersGrid');
-            grid.innerHTML = '';
-            
-            shuffledOptions.forEach(option => {
-                const btn = document.createElement('button');
-                btn.className = 'answer-btn';
-                btn.textContent = option;
-                btn.onclick = () => checkAnswer(option);
-                grid.appendChild(btn);
-            });
-        }
+function updateSubjectBadge(subject) {
+    const card = document.querySelector(`.subject-card.${subject}`);
+    const badge = document.getElementById(`${subject}Badge`);
+    const data = state.today[subject];
+    
+    if (data.done) {
+        card.classList.add('completed');
+        badge.className = 'subject-badge badge-done';
+        badge.textContent = `✓ ${data.score}/5`;
+    } else {
+        card.classList.remove('completed');
+        badge.className = 'subject-badge badge-todo';
+        badge.textContent = '待完成';
+    }
+}
 
-        // ===============================
-        // 檢查答案
-        // ===============================
-        function checkAnswer(selected) {
-            const question = currentGame.questions[currentGame.currentIndex];
-            const isCorrect = selected === question.answer;
-            
-            // 禁用所有按鈕
-            const buttons = document.querySelectorAll('.answer-btn');
-            buttons.forEach(btn => {
-                btn.disabled = true;
-                if (btn.textContent === question.answer) {
-                    btn.classList.add('correct');
-                } else if (btn.textContent === selected && !isCorrect) {
-                    btn.classList.add('wrong');
-                }
-            });
-            
-            // 記錄結果
-            currentGame.results.push({
-                question: question,
-                userAnswer: selected,
-                correct: isCorrect
-            });
-            
-            if (isCorrect) {
-                currentGame.score++;
-                playSound('correct');
-                
-                setTimeout(() => {
-                    nextQuestion();
-                }, 800);
-            } else {
-                currentGame.hearts--;
-                playSound('wrong');
-                updateGameHeader();
-                
-                // 顯示學習提示
-                setTimeout(() => {
-                    showLearnModal(question, selected);
-                }, 800);
-            }
-        }
+function renderWeek() {
+    const container = document.getElementById('weekDays');
+    container.innerHTML = '';
+    
+    const today = new Date();
+    const dayNames = ['日', '一', '二', '三', '四', '五', '六'];
+    const startOfWeek = new Date(today);
+    startOfWeek.setDate(today.getDate() - today.getDay());
+    
+    for (let i = 0; i < 7; i++) {
+        const d = new Date(startOfWeek);
+        d.setDate(startOfWeek.getDate() + i);
+        const dStr = getDateStr(d);
+        const isToday = dStr === getDateStr(today);
+        const isFuture = d > today;
+        const record = state.weekRecord[dStr];
+        
+        let cls = 'day-circle';
+        if (isToday) cls += ' today';
+        else if (isFuture) cls += ' future';
+        else if (record && record.all) cls += ' completed';
+        else if (record) cls += ' missed';
+        else cls += ' future';
+        
+        const el = document.createElement('div');
+        el.className = 'day-item';
+        el.innerHTML = `
+            <div class="day-name">${dayNames[d.getDay()]}</div>
+            <div class="${cls}">${d.getDate()}</div>
+        `;
+        container.appendChild(el);
+    }
+}
 
-        // ===============================
-        // 學習提示彈窗
-        // ===============================
-        function showLearnModal(question, userAnswer) {
-            document.getElementById('modalAnswer').textContent = question.answer;
-            document.getElementById('modalHint').textContent = question.hint;
-            document.getElementById('modalYourAnswer').textContent = userAnswer;
-            document.getElementById('learnModal').classList.add('show');
-            
-            // 自動朗讀正確答案
-            setTimeout(() => {
-                speakChinese(question.answer);
-            }, 500);
-        }
+// ===== 家長專區 =====
+function toggleParent() {
+    document.getElementById('parentContent').classList.toggle('show');
+}
 
-        function closeLearnModal() {
-            document.getElementById('learnModal').classList.remove('show');
-            nextQuestion();
-        }
+function updateParentStats() {
+    const calcAcc = (subj) => {
+        const d = state.stats[subj];
+        return d.total > 0 ? Math.round((d.correct / d.total) * 100) : 0;
+    };
+    
+    document.getElementById('chineseAcc').textContent = calcAcc('chinese') + '%';
+    document.getElementById('englishAcc').textContent = calcAcc('english') + '%';
+    document.getElementById('mathAcc').textContent = calcAcc('math') + '%';
+    document.getElementById('totalDays').textContent = state.stats.totalDays;
+    document.getElementById('totalMins').textContent = Math.round(state.stats.totalTime / 60);
+    document.getElementById('totalQs').textContent = state.stats.totalQs;
+    
+    // 歷史
+    const list = document.getElementById('historyList');
+    list.innerHTML = '';
+    state.history.slice(0, 10).forEach(r => {
+        const total = r.chinese + r.english + r.math;
+        const passed = total >= 9;
+        const el = document.createElement('div');
+        el.className = 'history-item';
+        el.innerHTML = `
+            <span class="history-date">${r.date}</span>
+            <span class="history-scores">國${r.chinese} 英${r.english} 數${r.math}</span>
+            <span class="history-result ${passed ? 'pass' : 'fail'}">${passed ? '✓' : '△'}</span>
+        `;
+        list.appendChild(el);
+    });
+}
 
-        // ===============================
-        // 下一題
-        // ===============================
-        function nextQuestion() {
-            currentGame.currentIndex++;
-            
-            // 檢查是否遊戲結束
-            if (currentGame.currentIndex >= 10 || currentGame.hearts <= 0) {
-                endGame();
-                return;
-            }
-            
-            updateGameHeader();
-            showQuestion();
-        }
+// ===== 開始科目 =====
+function startSubject(subject) {
+    if (state.today[subject].done) {
+        alert('這個科目今天已經完成囉！明天再來挑戰吧！');
+        return;
+    }
+    
+    state.subject = subject;
+    state.qIndex = 0;
+    state.score = 0;
+    state.hearts = 3;
+    state.startTime = Date.now();
+    state.results = [];
+    
+    prepareQuestions(subject);
+    
+    const gameScreen = document.getElementById('gameScreen');
+    gameScreen.style.display = 'block';
+    gameScreen.className = `game-screen ${subject}-theme`;
+    document.getElementById('completeScreen').style.display = 'none';
+    document.getElementById('gameContent').style.display = 'block';
+    
+    const titles = { chinese: '📚 國語挑戰', english: '🔤 英文挑戰', math: '🔢 數學挑戰' };
+    document.getElementById('gameTitle').textContent = titles[subject];
+    
+    showQuestion();
+}
 
-        // ===============================
-        // 遊戲結束
-        // ===============================
-        function endGame() {
-            const passed = currentGame.score >= 6;
-            const earnedExp = currentGame.score * 5;
-            const earnedGold = currentGame.score * 10;
-            
-            // 更新遊戲狀態
-            gameState.exp += earnedExp;
-            gameState.gold += earnedGold;
-            
-            // 更新關卡最高分
-            if (currentGame.score > gameState.levelProgress[currentGame.levelKey]) {
-                gameState.levelProgress[currentGame.levelKey] = currentGame.score;
-            }
-            
-            // 記錄
-            gameState.records.push({
-                level: currentGame.levelKey,
-                score: currentGame.score,
-                passed: passed,
-                date: new Date().toLocaleDateString('zh-TW')
-            });
-            
-            saveGameState();
-            
-            // 音效
-            playSound(passed ? 'success' : 'wrong');
-            
-            // 顯示結果
-            showResultScreen(passed, earnedExp, earnedGold);
-        }
+function prepareQuestions(subject) {
+    let qs = [];
+    
+    if (subject === 'chinese') {
+        const chars = shuffle([...QUESTIONS.chinese.characters]).slice(0, 2);
+        const words = shuffle([...QUESTIONS.chinese.words]).slice(0, 2);
+        const sents = shuffle([...QUESTIONS.chinese.sentences]).slice(0, 1);
+        qs = shuffle([
+            ...chars.map(q => ({ ...q, type: 'char' })),
+            ...words.map(q => ({ ...q, type: 'word' })),
+            ...sents.map(q => ({ ...q, type: 'sentence' }))
+        ]);
+    } else if (subject === 'english') {
+        const letters = shuffle([...QUESTIONS.english.letters]).slice(0, 2);
+        const words = shuffle([...QUESTIONS.english.words]).slice(0, 2);
+        const spell = shuffle([...QUESTIONS.english.spelling]).slice(0, 1);
+        qs = shuffle([
+            ...letters.map(q => ({ ...q, type: 'letter' })),
+            ...words.map(q => ({ ...q, type: 'vocab' })),
+            ...spell.map(q => ({ ...q, type: 'spelling' }))
+        ]);
+    } else if (subject === 'math') {
+        const types = ['addition', 'subtraction', 'compare', 'counting', 'sequence'];
+        qs = shuffle(types).slice(0, 5).map(t => QUESTIONS.math[t]());
+    }
+    
+    state.questions = qs;
+}
 
-        function showResultScreen(passed, earnedExp, earnedGold) {
-            showScreen('resultScreen');
-            
-            if (passed) {
-                document.getElementById('resultIcon').textContent = '🎉';
-                document.getElementById('resultTitle').textContent = `${gameState.playerName}好棒！`;
-                document.getElementById('resultTitle').className = 'result-title success';
-                document.getElementById('resultMessage').textContent = '你又學會了好多國字！繼續加油，成為國語小達人！';
-            } else {
-                document.getElementById('resultIcon').textContent = '🦊';
-                document.getElementById('resultTitle').textContent = '沒關係！';
-                document.getElementById('resultTitle').className = 'result-title retry';
-                document.getElementById('resultMessage').textContent = `多練習幾次，${gameState.playerName}一定可以的！我們再試一次吧！`;
-            }
-            
-            document.getElementById('resultScore').textContent = `${currentGame.score}/10`;
-            document.getElementById('resultExp').textContent = `+${earnedExp}`;
-            document.getElementById('resultGold').textContent = `+${earnedGold}`;
-            
-            // 渲染複習區域
-            renderReview();
-        }
-
-        // ===============================
-        // 複習區域
-        // ===============================
-        function renderReview() {
-            const container = document.getElementById('reviewContent');
-            container.innerHTML = '';
-            
-            // 分類：答錯和答對
-            const wrongAnswers = currentGame.results.filter(r => !r.correct);
-            const rightAnswers = currentGame.results.filter(r => r.correct);
-            
-            // 答錯的題目（需要加強）
-            if (wrongAnswers.length > 0) {
-                const wrongSection = document.createElement('div');
-                wrongSection.innerHTML = `<div class="review-subtitle">❌ 需要加強複習</div>`;
-                
-                const wrongItems = document.createElement('div');
-                wrongItems.className = 'review-items';
-                
-                wrongAnswers.forEach(result => {
-                    wrongItems.appendChild(createReviewItem(result, true));
-                });
-                
-                wrongSection.appendChild(wrongItems);
-                container.appendChild(wrongSection);
-            }
-            
-            // 答對的題目
-            if (rightAnswers.length > 0) {
-                const rightSection = document.createElement('div');
-                rightSection.innerHTML = `<div class="review-subtitle correct">✅ 答對的題目</div>`;
-                
-                const rightItems = document.createElement('div');
-                rightItems.className = 'review-items';
-                
-                rightAnswers.forEach(result => {
-                    rightItems.appendChild(createReviewItem(result, false));
-                });
-                
-                rightSection.appendChild(rightItems);
-                container.appendChild(rightSection);
-            }
-        }
-
-        function createReviewItem(result, isWrong) {
-            const item = document.createElement('div');
-            item.className = `review-item ${isWrong ? 'wrong' : 'right'}`;
-            
-            item.innerHTML = `
-                <div class="review-emoji">${result.question.emoji}</div>
-                <div class="review-content">
-                    <div class="review-answer">
-                        ${isWrong ? '' : '⭐ '}${result.question.answer}
-                    </div>
-                    <div class="review-hint">💡 ${result.question.hint}</div>
-                    ${isWrong ? `<div class="review-wrong-answer">你的答案：${result.userAnswer}</div>` : ''}
+// ===== 顯示題目 =====
+function showQuestion() {
+    const q = state.questions[state.qIndex];
+    const subj = state.subject;
+    const content = document.getElementById('gameContent');
+    
+    document.getElementById('gameNum').textContent = `${state.qIndex + 1}/5`;
+    updateHearts();
+    
+    let html = '<div class="question-card">';
+    
+    if (subj === 'chinese') {
+        if (q.type === 'char') {
+            html += `
+                <span class="q-type-badge chinese">國字認讀</span>
+                <div class="q-emoji">${q.emoji}</div>
+                <div class="q-text">這是什麼字？</div>
+                <div class="q-hint">💡 ${q.hint}</div>
+                <div class="options-grid">
+                    ${q.options.map(o => `<button class="option-btn" onclick="checkAns('${q.answer}','${o}',this)">${o}</button>`).join('')}
                 </div>
-                <button class="review-speak-btn" onclick="speakChinese('${result.question.answer}')">🔊</button>
             `;
+        } else if (q.type === 'word') {
+            html += `
+                <span class="q-type-badge chinese">語詞配對</span>
+                <div class="q-emoji">${q.emoji}</div>
+                <div class="q-text">${q.q}</div>
+                <div class="q-hint">💡 ${q.hint}</div>
+                <div class="options-grid">
+                    ${q.options.map(o => `<button class="option-btn" onclick="checkAns('${q.answer}','${o}',this)">${o}</button>`).join('')}
+                </div>
+            `;
+        } else if (q.type === 'sentence') {
+            const opts = shuffle([q.correct, ...q.wrong]);
+            html += `
+                <span class="q-type-badge chinese">造句練習</span>
+                <div class="q-emoji">${q.emoji}</div>
+                <div class="q-text">哪個句子是對的？</div>
+                <div class="q-hint">💡 ${q.hint}</div>
+                <div class="options-grid single-col">
+                    ${opts.map(o => `<button class="option-btn" onclick="checkAns('${q.correct}','${o}',this)">${o}</button>`).join('')}
+                </div>
+            `;
+        }
+    } else if (subj === 'english') {
+        if (q.type === 'letter') {
+            html += `
+                <span class="q-type-badge english">字母聽力</span>
+                <div class="q-text">聽聽看是哪個字母？</div>
+                <button class="speak-btn" onclick="speak('${q.letter}')">🔊</button>
+                <div class="options-grid">
+                    ${q.options.map(o => `<button class="option-btn" onclick="checkAns('${q.letter}','${o}',this)">${o}</button>`).join('')}
+                </div>
+            `;
+            setTimeout(() => speak(q.letter), 400);
+        } else if (q.type === 'vocab') {
+            const opts = genWordOptions(q.word);
+            html += `
+                <span class="q-type-badge english">單字認讀</span>
+                <div class="q-emoji">${q.emoji}</div>
+                <div class="q-text">${q.chinese}</div>
+                <button class="speak-btn" onclick="speak('${q.word}')">🔊</button>
+                <div class="options-grid">
+                    ${opts.map(o => `<button class="option-btn" onclick="checkAns('${q.word}','${o}',this)">${o}</button>`).join('')}
+                </div>
+            `;
+        } else if (q.type === 'spelling') {
+            const word = q.word.toUpperCase();
+            const letters = word.split('');
+            let keys = [...new Set(letters)];
+            const all = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+            while (keys.length < 10) {
+                const r = all[randInt(0, 25)];
+                if (!keys.includes(r)) keys.push(r);
+            }
+            keys = shuffle(keys);
             
-            return item;
+            html += `
+                <span class="q-type-badge english">拼寫練習</span>
+                <div class="q-emoji">${q.emoji}</div>
+                <div class="q-text">拼出：${q.chinese}</div>
+                <button class="speak-btn" onclick="speak('${q.word}')">🔊</button>
+                <div class="spelling-area">
+                    <div class="spelling-display" id="spellDisplay">
+                        ${letters.map((_, i) => `<div class="letter-box" data-i="${i}"></div>`).join('')}
+                    </div>
+                    <div class="keyboard" id="keyboard">
+                        ${keys.map(k => `<button class="key-btn" onclick="typeLetter('${k}')">${k}</button>`).join('')}
+                        <button class="key-btn backspace" onclick="deleteLetter()">⌫</button>
+                    </div>
+                </div>
+            `;
+            content.innerHTML = html + '</div>';
+            content.dataset.answer = word;
+            content.dataset.input = '';
+            return;
         }
-
-        // ===============================
-        // 返回與重試
-        // ===============================
-        function backToMenu() {
-            playSound('click');
-            showScreen('mainMenu');
-            updatePlayerCard();
-            renderLevelCards();
+    } else if (subj === 'math') {
+        const typeLabels = {
+            addition: '➕ 加法',
+            subtraction: '➖ 減法',
+            compare: '⚖️ 比大小',
+            counting: '🔢 數數',
+            sequence: '📝 填空',
+            doubles: '✨ 雙倍',
+            makesTen: '🔟 湊十'
+        };
+        
+        html += `<span class="q-type-badge math">${typeLabels[q.type]}</span>`;
+        
+        if (q.type === 'counting') {
+            html += `
+                <div class="q-emoji">${q.emoji}</div>
+                <div class="counting-display">${q.q}</div>
+                <div class="q-hint">💡 ${q.hint}</div>
+            `;
+        } else {
+            html += `
+                <div class="q-emoji">${q.emoji}</div>
+                <div class="math-equation">${q.q}</div>
+                ${q.hint ? `<div class="q-hint">💡 ${q.hint}</div>` : ''}
+            `;
         }
+        
+        html += `
+            <div class="options-grid">
+                ${q.options.map(o => `<button class="option-btn" onclick="checkAns('${q.answer}','${o}',this)">${o}</button>`).join('')}
+            </div>
+        `;
+    }
+    
+    html += '</div>';
+    content.innerHTML = html;
+}
 
-        function retryLevel() {
-            playSound('click');
-            startLevel(currentGame.levelKey);
+function genWordOptions(correct) {
+    const all = QUESTIONS.english.words;
+    let opts = [correct];
+    while (opts.length < 4) {
+        const w = all[randInt(0, all.length - 1)].word;
+        if (!opts.includes(w)) opts.push(w);
+    }
+    return shuffle(opts);
+}
+
+// ===== 拼寫功能 =====
+function typeLetter(letter) {
+    const content = document.getElementById('gameContent');
+    const display = document.getElementById('spellDisplay');
+    const boxes = display.querySelectorAll('.letter-box');
+    let input = content.dataset.input || '';
+    
+    if (input.length >= boxes.length) return;
+    
+    input += letter;
+    content.dataset.input = input;
+    
+    boxes.forEach((box, i) => {
+        if (i < input.length) {
+            box.textContent = input[i];
+            box.classList.add('filled');
         }
+    });
+    
+    if (input.length === boxes.length) {
+        checkSpelling(input, content.dataset.answer);
+    }
+}
 
-        // ===============================
-        // 頁面載入
-        // ===============================
-        window.onload = init;
-    </script>
+function deleteLetter() {
+    const content = document.getElementById('gameContent');
+    const display = document.getElementById('spellDisplay');
+    const boxes = display.querySelectorAll('.letter-box');
+    let input = content.dataset.input || '';
+    
+    if (input.length === 0) return;
+    
+    input = input.slice(0, -1);
+    content.dataset.input = input;
+    
+    boxes.forEach((box, i) => {
+        if (i >= input.length) {
+            box.textContent = '';
+            box.classList.remove('filled');
+        }
+    });
+}
+
+function checkSpelling(input, answer) {
+    const display = document.getElementById('spellDisplay');
+    const boxes = display.querySelectorAll('.letter-box');
+    const q = state.questions[state.qIndex];
+    const correct = input === answer;
+    
+    boxes.forEach((box, i) => {
+        box.classList.add(input[i] === answer[i] ? 'correct' : 'wrong');
+    });
+    
+    recordResult(q, input, correct);
+    
+    if (correct) {
+        state.score++;
+        speak('Good job!');
+    } else {
+        state.hearts--;
+        speak(answer.toLowerCase());
+    }
+    
+    setTimeout(nextQuestion, 1300);
+}
+
+// ===== 檢查答案 =====
+function checkAns(correct, selected, btn) {
+    const btns = btn.parentElement.querySelectorAll('.option-btn');
+    btns.forEach(b => b.disabled = true);
+    
+    const q = state.questions[state.qIndex];
+    const isCorrect = String(correct) === String(selected);
+    
+    recordResult(q, selected, isCorrect);
+    
+    if (isCorrect) {
+        btn.classList.add('correct');
+        state.score++;
+        if (state.subject === 'english') speak('Good!');
+    } else {
+        btn.classList.add('wrong');
+        state.hearts--;
+        btns.forEach(b => {
+            if (b.textContent.trim() === String(correct)) b.classList.add('correct');
+        });
+    }
+    
+    updateHearts();
+    setTimeout(nextQuestion, 1200);
+}
+
+function recordResult(q, answer, correct) {
+    state.results.push({ q, answer, correct });
+    state.stats[state.subject].total++;
+    if (correct) state.stats[state.subject].correct++;
+    state.stats.totalQs++;
+}
+
+function nextQuestion() {
+    state.qIndex++;
+    if (state.qIndex >= state.questions.length || state.hearts <= 0) {
+        showComplete();
+    } else {
+        showQuestion();
+    }
+}
+
+function updateHearts() {
+    const container = document.getElementById('gameHearts');
+    container.innerHTML = '';
+    for (let i = 0; i < 3; i++) {
+        const h = document.createElement('span');
+        h.className = 'heart' + (i >= state.hearts ? ' lost' : '');
+        h.textContent = '❤️';
+        container.appendChild(h);
+    }
+}
+
+// ===== 完成畫面 =====
+function showComplete() {
+    const subj = state.subject;
+    const score = state.score;
+    const time = Math.floor((Date.now() - state.startTime) / 1000);
+    
+    state.today[subj] = { done: true, score, time };
+    state.stats.totalTime += time;
+    
+    document.getElementById('gameContent').style.display = 'none';
+    document.getElementById('completeScreen').style.display = 'block';
+    
+    const passed = score >= 3;
+    document.getElementById('completeIcon').textContent = passed ? '🎉' : '💪';
+    document.getElementById('completeTitle').textContent = passed ? '太棒了！' : '再加油！';
+    document.getElementById('completeScore').textContent = `${score}/5`;
+    document.getElementById('completeMsg').textContent = passed 
+        ? `${state.name}好厲害！` : '多練習就會進步！';
+    document.getElementById('rewardExp').textContent = `⭐ +${score * 5}`;
+    
+    // 複習列表
+    renderReview();
+    
+    saveGame();
+}
+
+function renderReview() {
+    const list = document.getElementById('reviewList');
+    list.innerHTML = '';
+    
+    state.results.forEach(r => {
+        const q = r.q;
+        const el = document.createElement('div');
+        el.className = `review-item ${r.correct ? 'correct' : 'wrong'}`;
+        
+        const emoji = q.emoji || '';
+        const word = q.word || q.letter || q.answer || q.correct || '';
+        const meaning = q.chinese || q.hint || '';
+        
+        el.innerHTML = `
+            <div class="review-emoji">${emoji}</div>
+            <div class="review-content">
+                <div class="review-word">${word}</div>
+                <div class="review-meaning">${meaning}</div>
+            </div>
+            ${q.word || q.letter ? `<button class="review-speak" onclick="speak('${q.word || q.letter}')">🔊</button>` : ''}
+        `;
+        list.appendChild(el);
+    });
+}
+
+function finishSubject() {
+    document.getElementById('gameScreen').style.display = 'none';
+    updateMainUI();
+    
+    // 檢查今日全部完成
+    const allDone = Object.values(state.today).every(s => s.done);
+    if (allDone) {
+        completeDailyChallenge();
+    }
+}
+
+function completeDailyChallenge() {
+    const today = getDateStr(new Date());
+    
+    if (state.lastDate !== today) {
+        state.streak++;
+        state.stats.totalDays++;
+        state.lastDate = today;
+        
+        state.weekRecord[today] = {
+            all: true,
+            chinese: state.today.chinese.score,
+            english: state.today.english.score,
+            math: state.today.math.score
+        };
+        
+        state.history.unshift({
+            date: today,
+            chinese: state.today.chinese.score,
+            english: state.today.english.score,
+            math: state.today.math.score,
+            time: Object.values(state.today).reduce((s, t) => s + t.time, 0)
+        });
+        
+        if (state.history.length > 30) state.history = state.history.slice(0, 30);
+    }
+    
+    saveGame();
+    
+    document.getElementById('celebStreak').textContent = `${state.streak} 天`;
+    document.getElementById('celebration').classList.add('show');
+}
+
+function closeCelebration() {
+    document.getElementById('celebration').classList.remove('show');
+    renderWeek();
+}
+
+function exitGame() {
+    if (confirm('確定要離開嗎？進度不會保存。')) {
+        document.getElementById('gameScreen').style.display = 'none';
+    }
+}
+
+// ===== 存檔/讀檔 =====
+function saveGame() {
+    localStorage.setItem('ajunDailyLearning', JSON.stringify({
+        name: state.name,
+        streak: state.streak,
+        lastDate: state.lastDate,
+        today: state.today,
+        stats: state.stats,
+        history: state.history,
+        weekRecord: state.weekRecord
+    }));
+}
+
+function loadGame() {
+    const saved = localStorage.getItem('ajunDailyLearning');
+    if (saved) {
+        const data = JSON.parse(saved);
+        Object.assign(state, data);
+    }
+}
+
+// ===== 啟動 =====
+init();
+</script>
+
 </body>
 </html>
