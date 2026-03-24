@@ -714,11 +714,52 @@ transition:transform 0.2s;
 }
 .sound-toggle:active{transform:scale(0.9);}
 
+/* ===== PHONICS 自然拼音 CSS ===== */
+.phonics-sound-box{
+display:flex;align-items:center;justify-content:center;
+background:linear-gradient(135deg,#eff6ff,#dbeafe);
+border:3px solid #93c5fd;border-radius:18px;
+padding:16px 20px;margin:14px auto;gap:12px;
+}
+.phonics-letter{font-size:5.5rem;font-weight:900;line-height:1;}
+.phonics-letter.vowel{color:#ef4444;text-shadow:4px 4px 0 #fecaca;}
+.phonics-letter.consonant{color:#3b82f6;text-shadow:4px 4px 0 #bfdbfe;}
+.phonics-slash{font-size:2rem;color:#6b7280;font-weight:900;}
+.phonics-sound{font-size:2rem;font-weight:900;color:#1d4ed8;}
+.phonics-sound-zh{font-size:1rem;color:#6b7280;font-weight:700;margin-top:3px;}
+
+.phonics-blend-display{
+display:flex;align-items:center;justify-content:center;
+gap:7px;margin:18px 0;flex-wrap:wrap;
+}
+.blend-part{padding:9px 13px;border-radius:12px;font-size:1.75rem;font-weight:900;border:3px solid;}
+.blend-part.vowel{background:#fef2f2;border-color:#fca5a5;color:#dc2626;}
+.blend-part.consonant{background:#eff6ff;border-color:#93c5fd;color:#2563eb;}
+.blend-part.family{background:#f0fdf4;border-color:#86efac;color:#16a34a;font-size:2rem;}
+.blend-plus{font-size:1.8rem;font-weight:900;color:#9ca3af;}
+.blend-eq{font-size:1.8rem;font-weight:900;color:#6b7280;}
+.blend-result{
+padding:9px 16px;border-radius:12px;font-size:1.9rem;font-weight:900;
+background:linear-gradient(135deg,#fef3c7,#fde68a);
+border:3px solid #fbbf24;color:#92400e;
+}
+.family-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:16px 0;}
+.family-word{
+background:white;border-radius:14px;padding:12px;
+border:2.5px solid #bbf7d0;text-align:center;cursor:pointer;
+transition:transform 0.2s;
+}
+.family-word:active{transform:scale(0.95);}
+.family-emoji{font-size:2rem;}
+.family-word-text{font-size:1.3rem;font-weight:900;color:#166534;margin-top:4px;}
+.family-blend{font-size:0.82rem;color:#6b7280;font-weight:700;}
+.family-sound{font-size:0.78rem;color:#16a34a;font-weight:700;margin-top:2px;}
+.phonics-legend{display:flex;gap:9px;justify-content:center;margin:10px 0;flex-wrap:wrap;}
+.legend-item{display:flex;align-items:center;gap:5px;font-size:0.82rem;font-weight:800;padding:4px 10px;border-radius:8px;}
+.legend-item.vowel{background:#fef2f2;color:#dc2626;border:1.5px solid #fca5a5;}
+.legend-item.consonant{background:#eff6ff;color:#2563eb;border:1.5px solid #93c5fd;}
+
 /* ===== GUIDE PULSE — 引導動畫 ===== */
-.subject.next-up{
-border-width:3.5px!important;
-box-shadow:0 0 0 0 rgba(99,102,241,0.5);
-animation:subjectPulse 1.8s ease-in-out infinite!important;
 }
 .subject.chinese.next-up{box-shadow:0 0 0 0 rgba(239,68,68,0.5);animation:subjectPulseRed 1.8s ease-in-out infinite!important;}
 .subject.english.next-up{box-shadow:0 0 0 0 rgba(59,130,246,0.5);animation:subjectPulseBlue 1.8s ease-in-out infinite!important;}
@@ -1427,34 +1468,112 @@ const COURSES = {
     ]
   },
   english:{
-    title:'🔤 英文探險課',
-    chapter:'🔤 認識字母朋友 A-D',
-    story:'阿均，英文有26個字母朋友！今天先認識A、B、C、D，每個字母都有自己的名字和單字夥伴！',
+    title:'🔤 英文自然拼音課',
+    chapter:'🔤 自然拼音大冒險！',
+    story:'阿均，自然拼音是英文的超級秘密武器！學會每個字母的「真實發音」，就能自己把單字拼出來！小倉鼠老師帶你一起來！',
     units:[
-      {type:'teach',letter:'A',word:'Apple',emoji:'🍎',zh:'蘋果',
-       talk:['來認識第一個字母「<span class="eng-big">A</span>」！','A唸「ㄟ」，長得像<span class="hl">帳篷⛺</span>，尖尖的頂！','A的好朋友是<span class="eng-big">Apple</span>（蘋果）🍎！按喇叭聽聽看！']},
-      {type:'practice',letter:'A',q:'🍎 Apple 的開頭字母是？',hint:'Apple開頭是「ㄟ」的聲音，像帳篷的字母⋯⋯',audio:'Apple',
-       opts:[{t:'A',c:true},{t:'B',c:false},{t:'C',c:false},{t:'D',c:false}],
-       okMsg:'Apple的開頭就是A！A for Apple！',failMsg:'Apple開頭是「ㄟ」，像帳篷⛺的是A喔！'},
-      {type:'teach',letter:'B',word:'Bear',emoji:'🐻',zh:'熊',
-       talk:['第二個字母「<span class="eng-big">B</span>」！','B唸「逼」，像<span class="hl">兩個肚子</span>疊在一起！','B的好朋友是<span class="eng-big">Bear</span>（熊）🐻！']},
-      {type:'practice',letter:'B',q:'🐻 Bear 的開頭字母是？',hint:'Bear開頭像「逼」，兩個圓肚子的字母⋯⋯',audio:'Bear',
-       opts:[{t:'B',c:true},{t:'A',c:false},{t:'D',c:false},{t:'P',c:false}],
-       okMsg:'B for Bear！熊是很可愛的動物！',failMsg:'Bear開頭是「逼」，像兩個肚子的是B！'},
-      {type:'teach',letter:'C',word:'Cat',emoji:'🐱',zh:'貓',
-       talk:['第三個字母「<span class="eng-big">C</span>」！','C唸「西」，像<span class="hl">彎彎的月亮🌙</span>！','C的好朋友是<span class="eng-big">Cat</span>（貓）🐱！喵～']},
-      {type:'practice',letter:'C',q:'🐱 Cat 的開頭字母是？',hint:'Cat開頭像「乞」，像月亮🌙的字母⋯⋯',audio:'Cat',
-       opts:[{t:'C',c:true},{t:'K',c:false},{t:'G',c:false},{t:'S',c:false}],
-       okMsg:'C for Cat！貓咪喵喵喵～',failMsg:'Cat從C開始，C像彎月亮🌙！'},
-      {type:'teach',letter:'D',word:'Dog',emoji:'🐕',zh:'狗',
-       talk:['第四個字母「<span class="eng-big">D</span>」！','D唸「低」，像<span class="hl">大肚子貼在牆上</span>！','D的好朋友是<span class="eng-big">Dog</span>（狗）🐕！汪汪！']},
-      {type:'practice',letter:'D',q:'🐕 Dog 的開頭字母是？',hint:'Dog開頭像「的」，大肚子靠牆的字母⋯⋯',audio:'Dog',
-       opts:[{t:'D',c:true},{t:'B',c:false},{t:'G',c:false},{t:'T',c:false}],
-       okMsg:'D for Dog！狗狗汪汪汪～',failMsg:'Dog開頭是「的」，D像大肚子靠牆！'},
-      {type:'test',q:'🍎 這是什麼？',opts:['Apple','Bear','Cat','Dog'],ans:'Apple',hint:'紅紅的水果，A開頭⋯⋯',audio:'Apple'},
-      {type:'test',q:'🐻 這是什麼？',opts:['Apple','Bear','Cat','Dog'],ans:'Bear',hint:'胖胖毛茸茸，B開頭⋯⋯',audio:'Bear'},
-      {type:'test',q:'🐱 這是什麼？',opts:['Apple','Bear','Cat','Dog'],ans:'Cat',hint:'喵喵叫，C開頭⋯⋯',audio:'Cat'},
-      {type:'test',q:'🐕 這是什麼？',opts:['Apple','Bear','Cat','Dog'],ans:'Dog',hint:'汪汪叫，D開頭⋯⋯',audio:'Dog'}
+
+      // ── 第一關：母音 A 的短音 /æ/ ──
+      {type:'phonics_teach',
+       letter:'a', sound:'/æ/', soundZh:'短促的「阿」',
+       emoji:'🍎', word:'apple', wordBreak:'a-p-p-l-e',
+       color:'vowel',
+       talk:[
+         '自然拼音第一課！每個字母都有自己的<span class="hl">真實聲音</span>！',
+         '小寫 <span class="eng-big">a</span> 的聲音是短促的<span class="hl">「阿」/æ/</span>，嘴巴張大張快！',
+         '試試看：<span class="eng-big">a</span>…<span class="eng-big">a</span>…<span class="eng-big">a</span>！<br>就像 <span class="eng-big">apple</span> 蘋果🍎 的開頭！'
+       ],
+       audio:'a',audioWord:'apple'},
+      {type:'phonics_blend',
+       q:'聽到 /æ/ 的聲音，哪個字從 <b>a</b> 開始？',
+       hint:'「阿」的聲音，嘴巴張大～',
+       opts:[{t:'🍎 apple',w:'apple',c:true},{t:'🐝 bee',w:'bee',c:false},{t:'🐱 cat',w:'cat',c:false},{t:'🐶 dog',w:'dog',c:false}],
+       okMsg:'Apple！a-p-p-l-e！a 的聲音「阿」！',failMsg:'Apple 才是 a 開頭喔！試試按喇叭聽聽看！',
+       audio:'apple'},
+
+      // ── 第二關：子音 B /b/ ──
+      {type:'phonics_teach',
+       letter:'b', sound:'/b/', soundZh:'嘴唇彈開的「逼」',
+       emoji:'🐝', word:'bee', wordBreak:'b-ee',
+       color:'consonant',
+       talk:[
+         '子音 <span class="eng-big">b</span> 的聲音是<span class="hl">「逼」/b/</span>！',
+         '嘴唇先閉起來，然後突然<span class="hl">彈開</span>！<br>b… b… b！',
+         '<span class="eng-big">bee</span> 蜜蜂🐝 就是從 b 開始的！'
+       ],
+       audio:'b',audioWord:'bee'},
+      {type:'phonics_blend',
+       q:'哪個單字從子音 <b>b</b>「逼」開始？',
+       hint:'嘴唇彈開的「逼」聲～b…b…b！',
+       opts:[{t:'🐝 bee',w:'bee',c:true},{t:'🍎 apple',w:'apple',c:false},{t:'🐱 cat',w:'cat',c:false},{t:'🐟 fish',w:'fish',c:false}],
+       okMsg:'Bee！b-ee！b 的聲音「逼」！',failMsg:'Bee 才是 b 開頭！嘴唇彈開的聲音～',
+       audio:'bee'},
+
+      // ── 第三關：子音 C /k/ ──
+      {type:'phonics_teach',
+       letter:'c', sound:'/k/', soundZh:'喉嚨的「克」',
+       emoji:'🐱', word:'cat', wordBreak:'c-a-t',
+       color:'consonant',
+       talk:[
+         '子音 <span class="eng-big">c</span> 的聲音是<span class="hl">「克」/k/</span>！',
+         '從喉嚨深處發出<span class="hl">「克」</span>的聲音！<br>c… c… c！',
+         '<span class="eng-big">cat</span> 貓咪🐱 就是 c-a-t！三個音拼在一起！'
+       ],
+       audio:'c',audioWord:'cat'},
+      {type:'phonics_blend',
+       q:'把 <b>c</b>「克」＋ <b>a</b>「阿」＋ <b>t</b>「特」拼起來是什麼？',
+       hint:'克…阿…特，快快拼在一起！',
+       opts:[{t:'🐱 cat',w:'cat',c:true},{t:'🐝 bat',w:'bat',c:false},{t:'🎩 hat',w:'hat',c:false},{t:'🐀 rat',w:'rat',c:false}],
+       okMsg:'Cat！c-a-t！「克阿特」= cat！你學會拼音了！',failMsg:'c+a+t 拼起來是 cat！貓咪🐱！',
+       audio:'cat'},
+
+      // ── 第四關：子音 D /d/ ──
+      {type:'phonics_teach',
+       letter:'d', sound:'/d/', soundZh:'舌尖彈的「得」',
+       emoji:'🐶', word:'dog', wordBreak:'d-o-g',
+       color:'consonant',
+       talk:[
+         '子音 <span class="eng-big">d</span> 的聲音是<span class="hl">「得」/d/</span>！',
+         '舌尖輕輕碰上面牙齦，然後<span class="hl">彈開</span>！<br>d… d… d！',
+         '<span class="eng-big">dog</span> 狗狗🐶 就是 d-o-g！'
+       ],
+       audio:'d',audioWord:'dog'},
+      {type:'phonics_blend',
+       q:'哪個單字從 <b>d</b>「得」開始？',
+       hint:'舌尖彈開的「得」聲～d…d…d！',
+       opts:[{t:'🐶 dog',w:'dog',c:true},{t:'🐱 cat',w:'cat',c:false},{t:'🐝 bee',w:'bee',c:false},{t:'🍎 apple',w:'apple',c:false}],
+       okMsg:'Dog！d-o-g！汪汪！d 的聲音「得」！',failMsg:'Dog 才是 d 開頭！舌尖彈開的聲音！',
+       audio:'dog'},
+
+      // ── 第五關：拼讀 at 家族 ──
+      {type:'phonics_family',
+       family:'at', familyZh:'at 家族',
+       emoji:'🎯',
+       members:[
+         {word:'cat',emoji:'🐱',blend:'c + at',sound:'克-阿特'},
+         {word:'bat',emoji:'🦇',blend:'b + at',sound:'逼-阿特'},
+         {word:'hat',emoji:'🎩',blend:'h + at',sound:'黑-阿特'},
+         {word:'rat',emoji:'🐀',blend:'r + at',sound:'瑞-阿特'},
+       ],
+       talk:[
+         '超厲害的發現！<span class="hl">-at</span> 結尾的字都是「at家族」！',
+         '只要換開頭的子音，就能變出好多新單字！',
+         '<span class="eng-big">c</span>+at = cat🐱，<span class="eng-big">b</span>+at = bat🦇<br><span class="eng-big">h</span>+at = hat🎩，<span class="eng-big">r</span>+at = rat🐀'
+       ],
+       audio:'cat'},
+      {type:'phonics_blend',
+       q:'<b>b</b>「逼」＋ <b>at</b>「阿特」= ？',
+       hint:'逼…阿特，快點合在一起！',
+       opts:[{t:'🦇 bat',w:'bat',c:true},{t:'🐱 cat',w:'cat',c:false},{t:'🎩 hat',w:'hat',c:false},{t:'🐀 rat',w:'rat',c:false}],
+       okMsg:'Bat！b+at=bat！蝙蝠🦇！你會自然拼音了！',failMsg:'b+at 念起來是 bat 蝙蝠！',
+       audio:'bat'},
+
+      // ── 複習測驗 ──
+      {type:'phonics_test',q:'哪個字是 🐱 貓咪？',opts:['cat','bat','hat','rat'],ans:'cat',hint:'貓咪…克-阿-特…',audio:'cat'},
+      {type:'phonics_test',q:'哪個字是 🐶 狗狗？',opts:['dog','log','fog','hog'],ans:'dog',hint:'狗狗…得-喔-格…',audio:'dog'},
+      {type:'phonics_test',q:'哪個字是 🐝 蜜蜂？',opts:['bee','see','fee','tree'],ans:'bee',hint:'蜜蜂…逼…',audio:'bee'},
+      {type:'phonics_test',q:'<b>h</b> + <b>at</b> = ？',opts:['hat','cat','bat','mat'],ans:'hat',hint:'黑…阿特…',audio:'hat'},
+      {type:'phonics_test',q:'🍎 蘋果的開頭音是？',opts:['/æ/ a','/b/ b','/k/ c','/d/ d'],ans:'/æ/ a',hint:'Apple…阿…嘴巴張大！',audio:'apple'},
     ]
   },
   math:{
@@ -1684,16 +1803,194 @@ function renderUnit(){
   }
 
   html += '<div class="teach-card">';
-  if(u.type==='teach') html += renderTeach(u);
-  else if(u.type==='practice') html += renderPractice(u);
-  else if(u.type==='test') html += renderTest(u);
+  // 自然拼音專用類型
+  if(u.type==='phonics_teach')  html += renderPhonicsTeach(u);
+  else if(u.type==='phonics_blend')  html += renderPhonicsBlend(u);
+  else if(u.type==='phonics_family') html += renderPhonicsFamily(u);
+  else if(u.type==='phonics_test')   html += renderPhonicsTest(u);
+  else if(u.type==='teach')     html += renderTeach(u);
+  else if(u.type==='practice')  html += renderPractice(u);
+  else if(u.type==='test')      html += renderTest(u);
   html += '</div>';
 
   content.innerHTML = html;
   content.scrollTop = 0;
-
-  // auto speak
   if(u.audio) setTimeout(()=>speakEn(u.audio), 600);
+}
+
+// ── 自然拼音：字母音教學 ──
+function renderPhonicsTeach(u){
+  const colorClass = u.color || 'consonant';
+  let html = hamsterTag()
+    +`<div class="ham-bubble"><div class="ham-text">${u.talk.join('<br><br>')}</div></div></div>`;
+
+  // 色碼說明
+  html += `<div class="phonics-legend">
+    <div class="legend-item vowel">🔴 母音（紅色）</div>
+    <div class="legend-item consonant">🔵 子音（藍色）</div>
+  </div>`;
+
+  // 字母音大展示
+  html += `<div class="content-display">
+    <div class="phonics-sound-box">
+      <div>
+        <div class="phonics-letter ${colorClass}">${u.letter}</div>
+      </div>
+      <div style="font-size:2rem;color:#9ca3af;">→</div>
+      <div>
+        <div class="phonics-slash">${u.sound}</div>
+        <div class="phonics-sound-zh">${u.soundZh}</div>
+      </div>
+    </div>
+    <span class="big-emoji">${u.emoji}</span>`;
+
+  // 單字拆解
+  const letters = u.wordBreak.split('-');
+  html += `<div class="phonics-blend-display">`;
+  letters.forEach((l,i)=>{
+    const isVowel = 'aeiou'.includes(l[0]);
+    html += `<div class="blend-part ${isVowel?'vowel':'consonant'}">${l}</div>`;
+    if(i < letters.length-1) html += `<div class="blend-plus">-</div>`;
+  });
+  html += `<div class="blend-eq">=</div><div class="blend-result">${u.word}</div></div>`;
+
+  html += `<button class="speak-btn" id="spkBtn" onclick="speakEn('${u.audioWord||u.word}');animSpeakBtn()">🔊</button>`;
+  html += `</div>`;
+  html += `<button class="next-btn" onclick="sfxFlip();nextUnit()">我聽到了！繼續 ➡️</button>`;
+  return html;
+}
+
+// ── 自然拼音：拼讀練習 ──
+function renderPhonicsBlend(u){
+  let html = hamsterTag()
+    +`<div class="ham-bubble"><div class="ham-text">來練習拼讀！把聲音合在一起！💪 慢慢來，你可以的！</div></div></div>`;
+  html += `<div class="content-display">`;
+  if(u.audio) html += `<button class="speak-btn" id="spkBtn" onclick="speakEn('${u.audio}');animSpeakBtn()">🔊 聽聽看</button>`;
+  html += `</div>`;
+  html += `<div class="practice">
+    <div class="practice-q">${u.q}</div>
+    <div class="practice-hint">💡 ${u.hint}</div>
+    <div class="options">
+      ${u.opts.map(o=>`<button class="opt-btn" onclick="checkPhonicsBlend(${o.c},this,'${o.w||''}')">${o.t}</button>`).join('')}
+    </div>
+    <div id="feedback"></div><div id="btns"></div>
+  </div>`;
+  return html;
+}
+
+// ── 自然拼音：家族教學 ──
+function renderPhonicsFamily(u){
+  let html = hamsterTag()
+    +`<div class="ham-bubble"><div class="ham-text">${u.talk.join('<br><br>')}</div></div></div>`;
+  html += `<div class="content-display"><span class="big-emoji">${u.emoji}</span>
+    <div style="font-size:1.5rem;font-weight:900;color:#166534;margin:8px 0;">-${u.family} 家族</div>
+    <div class="family-grid">`;
+  u.members.forEach(m=>{
+    html += `<div class="family-word" onclick="speakEn('${m.word}')">
+      <div class="family-emoji">${m.emoji}</div>
+      <div class="family-word-text">${m.word}</div>
+      <div class="family-blend">${m.blend}</div>
+      <div class="family-sound">${m.sound}</div>
+    </div>`;
+  });
+  html += `</div>
+    <div style="font-size:0.9rem;color:#6b7280;font-weight:700;margin-top:8px;">👆 點每個單字可以聽發音！</div>
+    <button class="speak-btn" id="spkBtn" onclick="speakEn('${u.audio}');animSpeakBtn()">🔊</button>
+  </div>`;
+  html += `<button class="next-btn" onclick="sfxFlip();nextUnit()">我記住了！繼續 ➡️</button>`;
+  return html;
+}
+
+// ── 自然拼音：測驗 ──
+function renderPhonicsTest(u){
+  let html = hamsterTag()
+    +`<div class="ham-bubble"><div class="ham-text">⭐ 自然拼音小測驗！把學到的拼讀出來！</div></div></div>`;
+  html += `<div class="content-display">`;
+  if(u.audio) html += `<button class="speak-btn" id="spkBtn" onclick="speakEn('${u.audio}');animSpeakBtn()">🔊 聽一次</button>`;
+  html += `</div>`;
+  html += `<div class="practice">
+    <div class="practice-q">${u.q}</div>
+    <div class="practice-hint">💡 ${u.hint}</div>
+    <div class="options">
+      ${u.opts.map(o=>{
+        const isAns = o===u.ans;
+        return `<button class="opt-btn" onclick="checkPhonicsTest(${isAns},this,'${u.ans}','${u.audio||''}')">${o}</button>`;
+      }).join('')}
+    </div>
+    <div id="feedback"></div><div id="btns"></div>
+  </div>`;
+  return html;
+}
+
+// ── 自然拼音答題檢查 ──
+function checkPhonicsBlend(correct, btn, word){
+  document.querySelectorAll('.opt-btn').forEach(b=>b.disabled=true);
+  const ham = document.getElementById('hamAvatar_main');
+  if(correct){
+    btn.classList.add('correct');
+    sfxCorrect();
+    if(ham){ ham.classList.remove('sad'); ham.classList.add('happy'); }
+    if(word) speakEn(word);
+    const u = COURSES[S.subj].units[S.unit];
+    document.getElementById('feedback').innerHTML = `<div class="feedback correct">
+      <div class="fb-head"><span class="fb-icon">🎉</span><span class="fb-title">拼對了！</span></div>
+      <div class="fb-msg">${u.okMsg}</div>
+      <div class="fb-ham"><span>🐹</span><span>${CHEERS.ok[Math.floor(Math.random()*CHEERS.ok.length)]}</span></div>
+    </div>`;
+    S.sessionBadges++; S.badges.mini++;
+    const el = document.getElementById('sessionBadges');
+    el.textContent=S.sessionBadges;
+    el.classList.remove('score-anim'); void el.offsetWidth; el.classList.add('score-anim');
+    S.retries=0;
+    logChallengeCorrect();
+    const r = btn.getBoundingClientRect();
+    burstParticles(r.left+r.width/2, r.top+r.height/2);
+    document.getElementById('btns').innerHTML=`<button class="next-btn" onclick="sfxFlip();nextUnit()">繼續 ➡️</button>`;
+  } else {
+    btn.classList.add('wrong'); sfxWrong();
+    if(ham){ ham.classList.remove('happy'); ham.classList.add('sad'); }
+    S.retries++; S.stats.totalRetries++;
+    const u = COURSES[S.subj].units[S.unit];
+    document.getElementById('feedback').innerHTML = `<div class="feedback retry">
+      <div class="fb-head"><span class="fb-icon">💪</span><span class="fb-title">再試一次！</span></div>
+      <div class="fb-msg">${u.failMsg}</div>
+      <div class="fb-ham"><span>🐹</span><span>${CHEERS.retry[Math.floor(Math.random()*CHEERS.retry.length)]}</span></div>
+    </div>`;
+    document.getElementById('btns').innerHTML=`<button class="retry-btn" onclick="sfxClick();renderUnit()">再試一次！💪</button>`;
+  }
+}
+
+function checkPhonicsTest(correct, btn, ans, audio){
+  document.querySelectorAll('.opt-btn').forEach(b=>b.disabled=true);
+  const ham = document.getElementById('hamAvatar_main');
+  if(correct){
+    btn.classList.add('correct'); sfxCorrect();
+    if(ham){ ham.classList.remove('sad'); ham.classList.add('happy'); }
+    if(audio) speakEn(audio);
+    document.getElementById('feedback').innerHTML = `<div class="feedback correct">
+      <div class="fb-head"><span class="fb-icon">🎉</span><span class="fb-title">答對了！</span></div>
+      <div class="fb-msg">太棒了！你記住了！</div>
+      <div class="fb-ham"><span>🐹</span><span>${CHEERS.ok[Math.floor(Math.random()*CHEERS.ok.length)]}</span></div>
+    </div>`;
+    S.sessionBadges++; S.badges.mini++;
+    const el = document.getElementById('sessionBadges');
+    el.textContent=S.sessionBadges;
+    el.classList.remove('score-anim'); void el.offsetWidth; el.classList.add('score-anim');
+    S.retries=0; logChallengeCorrect();
+    const r = btn.getBoundingClientRect();
+    burstParticles(r.left+r.width/2, r.top+r.height/2);
+    document.getElementById('btns').innerHTML=`<button class="next-btn" onclick="sfxFlip();nextUnit()">繼續 ➡️</button>`;
+  } else {
+    btn.classList.add('wrong'); sfxWrong();
+    if(ham){ ham.classList.remove('happy'); ham.classList.add('sad'); }
+    S.retries++; S.stats.totalRetries++;
+    document.getElementById('feedback').innerHTML = `<div class="feedback retry">
+      <div class="fb-head"><span class="fb-icon">💪</span><span class="fb-title">再想想看～</span></div>
+      <div class="fb-msg">正確答案是「${ans}」喔！再試一次！</div>
+      <div class="fb-ham"><span>🐹</span><span>沒關係，拼音要多練習！</span></div>
+    </div>`;
+    document.getElementById('btns').innerHTML=`<button class="retry-btn" onclick="sfxClick();renderUnit()">再試一次！💪</button>`;
+  }
 }
 
 function hamsterTag(id='main'){
