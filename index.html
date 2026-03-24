@@ -1408,6 +1408,25 @@ position:sticky;top:56px;z-index:9;
           <div class="badge-name">超級波比</div>
         </div>
       </div>
+      <!-- 神秘禮物提示 -->
+      <div id="superRewardHint" style="
+        margin-top:14px;
+        background:linear-gradient(135deg,#fef3c7,#fde68a);
+        border:2px solid #f59e0b;
+        border-radius:16px;
+        padding:12px 14px;
+        display:flex;align-items:center;gap:10px;
+      ">
+        <div style="font-size:1.8rem;flex-shrink:0;">🎁</div>
+        <div>
+          <div style="font-size:0.88rem;font-weight:900;color:#92400e;margin-bottom:3px;">
+            集滿 1 個🌈超級波比
+          </div>
+          <div style="font-size:0.82rem;font-weight:700;color:#b45309;line-height:1.5;">
+            爸爸媽媽有一份<b>神秘小禮物</b>等著你！<br>努力學習，波比陪你一起加油！💪
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -2546,6 +2565,25 @@ function updateUI(){
   document.getElementById('mediumCount').textContent = S.badges.medium;
   document.getElementById('largeCount').textContent = S.badges.large;
   document.getElementById('superCount').textContent = S.badges.super;
+
+  // 超級波比神秘禮物提示
+  const rewardHint = document.getElementById('superRewardHint');
+  if(rewardHint){
+    if(S.badges.super >= 1){
+      rewardHint.style.background = 'linear-gradient(135deg,#d1fae5,#a7f3d0)';
+      rewardHint.style.borderColor = '#10b981';
+      rewardHint.innerHTML = `
+        <div style="font-size:1.8rem;flex-shrink:0;">🎉</div>
+        <div>
+          <div style="font-size:0.88rem;font-weight:900;color:#065f46;margin-bottom:3px;">
+            🌈 超級波比達成！
+          </div>
+          <div style="font-size:0.82rem;font-weight:700;color:#047857;line-height:1.5;">
+            去找爸爸媽媽領取<b>神秘小禮物</b>！<br>阿均真的好厲害！🏆
+          </div>
+        </div>`;
+    }
+  }
 
   ['mini','small','medium','large','super'].forEach(t=>{
     const el = document.getElementById('badge'+t.charAt(0).toUpperCase()+t.slice(1));
