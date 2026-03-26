@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
@@ -31,23 +30,23 @@
 
 /* ===== BODY / PAPER TEXTURE ===== */
 body{
-background-color:#f5e6c8;
-background-image:
-radial-gradient(ellipse at 20% 10%,rgba(255,200,80,0.22) 0%,transparent 55%),
-radial-gradient(ellipse at 80% 90%,rgba(180,230,160,0.18) 0%,transparent 55%),
-url(“data:image/svg+xml,%3Csvg xmlns=‘http://www.w3.org/2000/svg’ width=‘200’ height=‘200’%3E%3Cfilter id=‘n’%3E%3CfeTurbulence type=‘fractalNoise’ baseFrequency=‘0.75’ numOctaves=‘4’ stitchTiles=‘stitch’/%3E%3CfeColorMatrix type=‘saturate’ values=‘0’/%3E%3C/filter%3E%3Crect width=‘200’ height=‘200’ filter=‘url(%23n)’ opacity=‘0.04’/%3E%3C/svg%3E”);
-min-height:100vh;
-overflow-x:hidden;
+  background-color:#f5e6c8;
+  background-image:
+    radial-gradient(ellipse at 20% 10%,rgba(255,200,80,0.22) 0%,transparent 55%),
+    radial-gradient(ellipse at 80% 90%,rgba(180,230,160,0.18) 0%,transparent 55%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  min-height:100vh;
+  overflow-x:hidden;
 }
 
 /* ===== FLOATING PARTICLES BG ===== */
 #bgParticles{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:hidden;}
 .bg-star{position:absolute;opacity:0;animation:bgFloat linear infinite;}
 @keyframes bgFloat{
-0%{opacity:0;transform:translateY(100vh) rotate(0deg);}
-10%{opacity:0.6;}
-90%{opacity:0.4;}
-100%{opacity:0;transform:translateY(-120px) rotate(720deg);}
+  0%{opacity:0;transform:translateY(100vh) rotate(0deg);}
+  10%{opacity:0.6;}
+  90%{opacity:0.4;}
+  100%{opacity:0;transform:translateY(-120px) rotate(720deg);}
 }
 
 /* ===== CONTAINER ===== */
@@ -56,113 +55,113 @@ overflow-x:hidden;
 
 /* ===== CARD BASE ===== */
 .card{
-background:rgba(255,252,240,0.97);
-border-radius:var(–radius);
-padding:22px;
-margin-bottom:14px;
-box-shadow:var(–shadow-warm);
-border:2.5px solid rgba(245,158,11,0.18);
-position:relative;
-overflow:hidden;
+  background:rgba(255,252,240,0.97);
+  border-radius:var(--radius);
+  padding:22px;
+  margin-bottom:14px;
+  box-shadow:var(--shadow-warm);
+  border:2.5px solid rgba(245,158,11,0.18);
+  position:relative;
+  overflow:hidden;
 }
 .card::before{
-content:’’;position:absolute;top:0;left:0;right:0;height:4px;
-background:linear-gradient(90deg,#fbbf24,#f97316,#ef4444,#ec4899,#a855f7,#3b82f6,#22c55e,#fbbf24);
-background-size:200% 100%;
-animation:rainbowBar 4s linear infinite;
+  content:'';position:absolute;top:0;left:0;right:0;height:4px;
+  background:linear-gradient(90deg,#fbbf24,#f97316,#ef4444,#ec4899,#a855f7,#3b82f6,#22c55e,#fbbf24);
+  background-size:200% 100%;
+  animation:rainbowBar 4s linear infinite;
 }
 @keyframes rainbowBar{0%{background-position:0% 0%}100%{background-position:200% 0%}}
 
 /* ===== WELCOME ===== */
 #welcomeScreen{
-min-height:100vh;
-display:flex;flex-direction:column;align-items:center;justify-content:center;
-padding:20px;
-animation:fadeIn 0.8s ease;
+  min-height:100vh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:20px;
+  animation:fadeIn 0.8s ease;
 }
 @keyframes fadeIn{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
 
 .welcome-cloud{
-background:rgba(255,252,240,0.98);
-border-radius:40px;
-padding:30px 25px;
-width:100%;max-width:460px;
-box-shadow:0 20px 60px rgba(180,120,30,0.22),0 4px 0 #fbbf24 inset;
-border:3px solid #fde68a;
-position:relative;
-overflow:hidden;
+  background:rgba(255,252,240,0.98);
+  border-radius:40px;
+  padding:30px 25px;
+  width:100%;max-width:460px;
+  box-shadow:0 20px 60px rgba(180,120,30,0.22),0 4px 0 #fbbf24 inset;
+  border:3px solid #fde68a;
+  position:relative;
+  overflow:hidden;
 }
 .welcome-cloud::after{
-content:’’;position:absolute;top:-60px;right:-60px;
-width:180px;height:180px;
-background:radial-gradient(circle,rgba(251,191,36,0.12),transparent 70%);
-border-radius:50%;
+  content:'';position:absolute;top:-60px;right:-60px;
+  width:180px;height:180px;
+  background:radial-gradient(circle,rgba(251,191,36,0.12),transparent 70%);
+  border-radius:50%;
 }
 
 .hamster-hero{
-font-size:110px;
-display:block;text-align:center;
-animation:hamsterWelcome 2.5s ease-in-out infinite;
-filter:drop-shadow(0 8px 20px rgba(180,120,30,0.3));
-margin-bottom:10px;
+  font-size:110px;
+  display:block;text-align:center;
+  animation:hamsterWelcome 2.5s ease-in-out infinite;
+  filter:drop-shadow(0 8px 20px rgba(180,120,30,0.3));
+  margin-bottom:10px;
 }
 @keyframes hamsterWelcome{
-0%,100%{transform:translateY(0) rotate(-6deg) scale(1);}
-30%{transform:translateY(-22px) rotate(0deg) scale(1.05);}
-60%{transform:translateY(-10px) rotate(6deg) scale(1.02);}
+  0%,100%{transform:translateY(0) rotate(-6deg) scale(1);}
+  30%{transform:translateY(-22px) rotate(0deg) scale(1.05);}
+  60%{transform:translateY(-10px) rotate(6deg) scale(1.02);}
 }
 
 .welcome-title{
-font-size:2.1rem;font-weight:900;
-color:var(–amber-deep);
-text-align:center;
-text-shadow:3px 3px 0 rgba(251,191,36,0.4);
-letter-spacing:1px;
-margin-bottom:4px;
+  font-size:2.1rem;font-weight:900;
+  color:var(--amber-deep);
+  text-align:center;
+  text-shadow:3px 3px 0 rgba(251,191,36,0.4);
+  letter-spacing:1px;
+  margin-bottom:4px;
 }
 .welcome-sub{
-font-size:1.1rem;font-weight:700;
-color:var(–amber-dark);
-text-align:center;margin-bottom:20px;
+  font-size:1.1rem;font-weight:700;
+  color:var(--amber-dark);
+  text-align:center;margin-bottom:20px;
 }
 
 .story-box{
-background:linear-gradient(135deg,#fff7ed,#fffbeb);
-border-radius:18px;padding:18px;margin:16px 0;
-border:2px solid #fed7aa;
+  background:linear-gradient(135deg,#fff7ed,#fffbeb);
+  border-radius:18px;padding:18px;margin:16px 0;
+  border:2px solid #fed7aa;
 }
 .story-box p{font-size:1.08rem;color:#9a3412;line-height:1.8;margin-bottom:10px;}
 .story-box p:last-child{margin-bottom:0;}
 
 .name-box{
-background:white;border-radius:18px;padding:20px;
-margin:16px 0;border:2.5px solid #fde68a;
+  background:white;border-radius:18px;padding:20px;
+  margin:16px 0;border:2.5px solid #fde68a;
 }
-.name-label{font-size:1.15rem;font-weight:800;color:var(–amber-deep);margin-bottom:12px;display:block;}
+.name-label{font-size:1.15rem;font-weight:800;color:var(--amber-deep);margin-bottom:12px;display:block;}
 .name-input{
-width:100%;padding:15px;font-size:1.5rem;font-weight:800;
-border:3px solid #fde68a;border-radius:13px;
-text-align:center;color:var(–amber-deep);
-font-family:‘Nunito’,sans-serif;
-outline:none;background:#fffbeb;
-transition:border-color 0.2s,box-shadow 0.2s;
+  width:100%;padding:15px;font-size:1.5rem;font-weight:800;
+  border:3px solid #fde68a;border-radius:13px;
+  text-align:center;color:var(--amber-deep);
+  font-family:'Nunito',sans-serif;
+  outline:none;background:#fffbeb;
+  transition:border-color 0.2s,box-shadow 0.2s;
 }
-.name-input:focus{border-color:var(–amber);box-shadow:0 0 0 4px rgba(251,191,36,0.2);}
+.name-input:focus{border-color:var(--amber);box-shadow:0 0 0 4px rgba(251,191,36,0.2);}
 
 .start-btn{
-width:100%;padding:20px;font-size:1.5rem;font-weight:900;
-background:linear-gradient(135deg,#fb923c,#f97316,#ef4444);
-color:white;border:none;border-radius:18px;cursor:pointer;
-box-shadow:0 6px 0 #c2410c,0 8px 20px rgba(239,68,68,0.3);
-font-family:‘Nunito’,sans-serif;
-letter-spacing:1px;
-transition:transform 0.1s,box-shadow 0.1s;
-position:relative;overflow:hidden;
+  width:100%;padding:20px;font-size:1.5rem;font-weight:900;
+  background:linear-gradient(135deg,#fb923c,#f97316,#ef4444);
+  color:white;border:none;border-radius:18px;cursor:pointer;
+  box-shadow:0 6px 0 #c2410c,0 8px 20px rgba(239,68,68,0.3);
+  font-family:'Nunito',sans-serif;
+  letter-spacing:1px;
+  transition:transform 0.1s,box-shadow 0.1s;
+  position:relative;overflow:hidden;
 }
 .start-btn::after{
-content:’’;position:absolute;top:-50%;left:-50%;width:200%;height:200%;
-background:linear-gradient(rgba(255,255,255,0.15),transparent);
-pointer-events:none;
+  content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;
+  background:linear-gradient(rgba(255,255,255,0.15),transparent);
+  pointer-events:none;
 }
 .start-btn:active{transform:translateY(5px);box-shadow:0 1px 0 #c2410c;}
 
@@ -172,76 +171,76 @@ pointer-events:none;
 
 /* Player Header */
 .player-card{
-background:linear-gradient(135deg,rgba(255,252,240,0.99),rgba(254,243,199,0.99));
-border:2.5px solid #fde68a;
+  background:linear-gradient(135deg,rgba(255,252,240,0.99),rgba(254,243,199,0.99));
+  border:2.5px solid #fde68a;
 }
 .player-top{display:flex;align-items:center;gap:15px;margin-bottom:18px;}
 .player-avatar{
-width:72px;height:72px;
-background:linear-gradient(135deg,#fef3c7,#fde68a,#fbbf24);
-border-radius:50%;
-display:flex;align-items:center;justify-content:center;
-font-size:2.6rem;
-border:4px solid white;
-box-shadow:0 6px 20px rgba(251,191,36,0.35);
-animation:avatarBob 3s ease-in-out infinite;
-flex-shrink:0;
+  width:72px;height:72px;
+  background:linear-gradient(135deg,#fef3c7,#fde68a,#fbbf24);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:2.6rem;
+  border:4px solid white;
+  box-shadow:0 6px 20px rgba(251,191,36,0.35);
+  animation:avatarBob 3s ease-in-out infinite;
+  flex-shrink:0;
 }
 @keyframes avatarBob{
-0%,100%{transform:rotate(-4deg);}
-50%{transform:rotate(4deg) translateY(-3px);}
+  0%,100%{transform:rotate(-4deg);}
+  50%{transform:rotate(4deg) translateY(-3px);}
 }
-.player-name{font-size:1.65rem;font-weight:900;color:var(–amber-deep);}
-.player-title{font-size:0.95rem;font-weight:700;color:var(–amber-dark);}
+.player-name{font-size:1.65rem;font-weight:900;color:var(--amber-deep);}
+.player-title{font-size:0.95rem;font-weight:700;color:var(--amber-dark);}
 .player-streak{
-font-size:0.9rem;font-weight:700;
-color:#d97706;margin-top:4px;
-display:flex;align-items:center;gap:4px;
+  font-size:0.9rem;font-weight:700;
+  color:#d97706;margin-top:4px;
+  display:flex;align-items:center;gap:4px;
 }
 .streak-fire{animation:fireFlicker 0.8s ease-in-out infinite alternate;}
 @keyframes fireFlicker{from{transform:scale(1)}to{transform:scale(1.2) translateY(-1px)}}
 
 /* Badge Grid */
 .badge-area{
-background:linear-gradient(135deg,#fefce8,#fef9c3);
-border-radius:16px;padding:14px;
-border:2px solid #fde047;
+  background:linear-gradient(135deg,#fefce8,#fef9c3);
+  border-radius:16px;padding:14px;
+  border:2px solid #fde047;
 }
 .badge-title{font-size:1rem;font-weight:800;color:#854d0e;margin-bottom:12px;text-align:center;}
 .badge-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
 .badge-item{
-text-align:center;padding:10px 5px;
-background:white;border-radius:12px;
-border:2px solid #fde68a;
-transition:transform 0.3s,box-shadow 0.3s;
+  text-align:center;padding:10px 5px;
+  background:white;border-radius:12px;
+  border:2px solid #fde68a;
+  transition:transform 0.3s,box-shadow 0.3s;
 }
 .badge-item.earned{
-border-color:var(–amber);
-box-shadow:0 4px 14px rgba(251,191,36,0.3);
-transform:translateY(-2px);
+  border-color:var(--amber);
+  box-shadow:0 4px 14px rgba(251,191,36,0.3);
+  transform:translateY(-2px);
 }
 .badge-icon{font-size:1.9rem;transition:filter 0.3s,transform 0.3s;}
 .badge-item:not(.earned) .badge-icon{filter:grayscale(1);opacity:0.4;}
 .badge-item.earned .badge-icon{animation:badgePulse 2s ease-in-out infinite;}
 @keyframes badgePulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
-.badge-count{font-size:1.15rem;font-weight:900;color:var(–amber-deep);}
+.badge-count{font-size:1.15rem;font-weight:900;color:var(--amber-deep);}
 .badge-name{font-size:0.72rem;color:#a16207;font-weight:700;}
 
 /* Encourage Card */
 .encourage-card{
-background:linear-gradient(135deg,rgba(236,253,245,0.98),rgba(209,250,229,0.98));
-border:2.5px solid var(–green);
+  background:linear-gradient(135deg,rgba(236,253,245,0.98),rgba(209,250,229,0.98));
+  border:2.5px solid var(--green);
 }
 .enc-head{display:flex;align-items:center;gap:12px;margin-bottom:11px;}
 .enc-avatar{
-width:50px;height:50px;
-background:linear-gradient(135deg,#fef3c7,#fde68a);
-border-radius:50%;
-display:flex;align-items:center;justify-content:center;
-font-size:1.9rem;
-border:2px solid white;
-box-shadow:0 3px 12px rgba(251,191,36,0.3);
-animation:encTalk 2s ease-in-out infinite;
+  width:50px;height:50px;
+  background:linear-gradient(135deg,#fef3c7,#fde68a);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.9rem;
+  border:2px solid white;
+  box-shadow:0 3px 12px rgba(251,191,36,0.3);
+  animation:encTalk 2s ease-in-out infinite;
 }
 @keyframes encTalk{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg) scale(1.04)}}
 .enc-name{font-size:1.05rem;font-weight:800;color:#166534;}
@@ -250,71 +249,71 @@ animation:encTalk 2s ease-in-out infinite;
 
 /* Subject Cards */
 .subject{
-display:flex;align-items:center;gap:14px;
-cursor:pointer;
-border-width:3px;
-transition:transform 0.25s cubic-bezier(.34,1.56,.64,1),box-shadow 0.25s;
+  display:flex;align-items:center;gap:14px;
+  cursor:pointer;
+  border-width:3px;
+  transition:transform 0.25s cubic-bezier(.34,1.56,.64,1),box-shadow 0.25s;
 }
 .subject:hover{transform:translateY(-5px) scale(1.015);box-shadow:0 16px 40px rgba(0,0,0,0.14);}
 .subject:active{transform:translateY(-2px);}
-.subject.chinese{border-color:var(–red);background:linear-gradient(135deg,#fff,#fef2f2);}
-.subject.english{border-color:var(–blue);background:linear-gradient(135deg,#fff,#eff6ff);}
-.subject.math{border-color:var(–purple);background:linear-gradient(135deg,#fff,#faf5ff);}
+.subject.chinese{border-color:var(--red);background:linear-gradient(135deg,#fff,#fef2f2);}
+.subject.english{border-color:var(--blue);background:linear-gradient(135deg,#fff,#eff6ff);}
+.subject.math{border-color:var(--purple);background:linear-gradient(135deg,#fff,#faf5ff);}
 .subject.done{opacity:0.55;cursor:default;}
-.subject.done:hover{transform:none;box-shadow:var(–shadow-warm);}
+.subject.done:hover{transform:none;box-shadow:var(--shadow-warm);}
 .subj-icon{
-width:68px;height:68px;border-radius:18px;
-display:flex;align-items:center;justify-content:center;
-font-size:2.4rem;flex-shrink:0;
-box-shadow:0 4px 14px rgba(0,0,0,0.12);
+  width:68px;height:68px;border-radius:18px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:2.4rem;flex-shrink:0;
+  box-shadow:0 4px 14px rgba(0,0,0,0.12);
 }
 .subject.chinese .subj-icon{background:linear-gradient(135deg,#fecaca,#fca5a5);}
 .subject.english .subj-icon{background:linear-gradient(135deg,#bfdbfe,#93c5fd);}
 .subject.math .subj-icon{background:linear-gradient(135deg,#e9d5ff,#d8b4fe);}
 .subj-info{flex:1;}
 .subj-name{font-size:1.35rem;font-weight:900;}
-.subject.chinese .subj-name{color:var(–red);}
-.subject.english .subj-name{color:var(–blue);}
-.subject.math .subj-name{color:var(–purple);}
+.subject.chinese .subj-name{color:var(--red);}
+.subject.english .subj-name{color:var(--blue);}
+.subject.math .subj-name{color:var(--purple);}
 .subj-desc{font-size:0.95rem;color:#888;margin-top:2px;font-weight:600;}
 .subj-badge{
-padding:10px 16px;border-radius:22px;
-font-size:1.05rem;font-weight:800;
-background:linear-gradient(135deg,var(–amber),var(–amber-dark));
-color:white;
-box-shadow:0 3px 10px rgba(245,158,11,0.3);
-white-space:nowrap;
+  padding:10px 16px;border-radius:22px;
+  font-size:1.05rem;font-weight:800;
+  background:linear-gradient(135deg,var(--amber),var(--amber-dark));
+  color:white;
+  box-shadow:0 3px 10px rgba(245,158,11,0.3);
+  white-space:nowrap;
 }
-.done-badge{background:linear-gradient(135deg,var(–green),var(–green-dark))!important;}
+.done-badge{background:linear-gradient(135deg,var(--green),var(--green-dark))!important;}
 
 /* Exchange */
 .exchange-card{
-background:linear-gradient(135deg,#fefce8,#fef9c3);
-border:2.5px solid #facc15;
+  background:linear-gradient(135deg,#fefce8,#fef9c3);
+  border:2.5px solid #facc15;
 }
 .exch-title{font-size:1.1rem;font-weight:800;color:#854d0e;margin-bottom:13px;text-align:center;}
 .exch-item{
-display:flex;align-items:center;justify-content:space-between;
-padding:12px 14px;background:white;border-radius:12px;
-margin-bottom:9px;border:2px solid #fde68a;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 14px;background:white;border-radius:12px;
+  margin-bottom:9px;border:2px solid #fde68a;
 }
-.exch-info{font-size:1rem;font-weight:700;color:var(–amber-deep);}
+.exch-info{font-size:1rem;font-weight:700;color:var(--amber-deep);}
 .exch-btn{
-padding:9px 16px;font-size:0.95rem;font-weight:800;
-background:linear-gradient(135deg,var(–green),var(–green-dark));
-color:white;border:none;border-radius:10px;cursor:pointer;
-font-family:‘Nunito’,sans-serif;
-box-shadow:0 3px 8px rgba(34,197,94,0.3);
-transition:transform 0.15s,box-shadow 0.15s;
+  padding:9px 16px;font-size:0.95rem;font-weight:800;
+  background:linear-gradient(135deg,var(--green),var(--green-dark));
+  color:white;border:none;border-radius:10px;cursor:pointer;
+  font-family:'Nunito',sans-serif;
+  box-shadow:0 3px 8px rgba(34,197,94,0.3);
+  transition:transform 0.15s,box-shadow 0.15s;
 }
 .exch-btn:active{transform:translateY(2px);box-shadow:none;}
 .exch-btn:disabled{background:#d1d5db;cursor:not-allowed;box-shadow:none;}
 
 /* ===== LEARN SCREEN ===== */
 #learnScreen{
-position:fixed;top:0;left:0;width:100%;height:100%;
-z-index:1000;overflow-y:auto;
-transition:opacity 0.3s;
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  z-index:1000;overflow-y:auto;
+  transition:opacity 0.3s;
 }
 .learn-screen-enter{animation:learnIn 0.4s cubic-bezier(.34,1.56,.64,1);}
 @keyframes learnIn{from{opacity:0;transform:scale(0.95)}to{opacity:1;transform:scale(1)}}
@@ -323,24 +322,24 @@ transition:opacity 0.3s;
 #learnScreen.math-theme{background:linear-gradient(160deg,#faf5ff,#ede9fe,#ddd6fe);}
 
 .learn-header{
-background:rgba(255,252,240,0.97);
-backdrop-filter:blur(10px);
-padding:13px 18px;
-display:flex;justify-content:space-between;align-items:center;
-box-shadow:0 3px 20px rgba(0,0,0,0.08);
-position:sticky;top:0;z-index:10;
-border-bottom:2px solid rgba(251,191,36,0.2);
+  background:rgba(255,252,240,0.97);
+  backdrop-filter:blur(10px);
+  padding:13px 18px;
+  display:flex;justify-content:space-between;align-items:center;
+  box-shadow:0 3px 20px rgba(0,0,0,0.08);
+  position:sticky;top:0;z-index:10;
+  border-bottom:2px solid rgba(251,191,36,0.2);
 }
 .learn-back{
-background:none;border:none;font-size:2rem;cursor:pointer;
-transition:transform 0.2s;
-line-height:1;
+  background:none;border:none;font-size:2rem;cursor:pointer;
+  transition:transform 0.2s;
+  line-height:1;
 }
 .learn-back:hover{transform:translateX(-4px);}
 .learn-title{font-size:1.15rem;font-weight:900;color:#333;}
 .learn-score{
-font-size:1.1rem;font-weight:800;color:var(–amber-dark);
-display:flex;align-items:center;gap:4px;
+  font-size:1.1rem;font-weight:800;color:var(--amber-dark);
+  display:flex;align-items:center;gap:4px;
 }
 .score-anim{animation:scorePop 0.4s ease;}
 @keyframes scorePop{0%,100%{transform:scale(1)}50%{transform:scale(1.3) rotate(8deg)}}
@@ -349,231 +348,231 @@ display:flex;align-items:center;gap:4px;
 
 /* Teach Card */
 .teach-card{
-background:rgba(255,252,240,0.98);
-border-radius:24px;padding:22px;
-box-shadow:0 12px 40px rgba(0,0,0,0.1);
-border:2px solid rgba(251,191,36,0.2);
-animation:cardIn 0.5s cubic-bezier(.34,1.56,.64,1);
+  background:rgba(255,252,240,0.98);
+  border-radius:24px;padding:22px;
+  box-shadow:0 12px 40px rgba(0,0,0,0.1);
+  border:2px solid rgba(251,191,36,0.2);
+  animation:cardIn 0.5s cubic-bezier(.34,1.56,.64,1);
 }
 @keyframes cardIn{from{opacity:0;transform:translateY(20px) scale(0.97)}to{opacity:1;transform:translateY(0) scale(1)}}
 
 .chapter-intro{
-background:linear-gradient(135deg,#fef3c7,#fde68a);
-border-radius:18px;padding:18px;margin-bottom:22px;
-border:3px solid var(–amber);
+  background:linear-gradient(135deg,#fef3c7,#fde68a);
+  border-radius:18px;padding:18px;margin-bottom:22px;
+  border:3px solid var(--amber);
 }
-.ch-title{font-size:1.35rem;font-weight:900;color:var(–amber-deep);margin-bottom:9px;}
+.ch-title{font-size:1.35rem;font-weight:900;color:var(--amber-deep);margin-bottom:9px;}
 .ch-story{font-size:1.1rem;color:#78350f;line-height:1.8;}
 
 /* Hamster Talk */
 .hamster-talk{margin-bottom:22px;}
 .ham-head{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
 .ham-avatar{
-width:56px;height:56px;
-background:linear-gradient(135deg,#fef3c7,#fde68a,#fbbf24);
-border-radius:50%;
-display:flex;align-items:center;justify-content:center;
-font-size:2.1rem;
-border:3px solid white;
-box-shadow:0 5px 16px rgba(251,191,36,0.35);
-animation:hamFloat 2.8s ease-in-out infinite;
-flex-shrink:0;
+  width:56px;height:56px;
+  background:linear-gradient(135deg,#fef3c7,#fde68a,#fbbf24);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:2.1rem;
+  border:3px solid white;
+  box-shadow:0 5px 16px rgba(251,191,36,0.35);
+  animation:hamFloat 2.8s ease-in-out infinite;
+  flex-shrink:0;
 }
 @keyframes hamFloat{
-0%,100%{transform:translateY(0) rotate(-4deg);}
-50%{transform:translateY(-10px) rotate(4deg);}
+  0%,100%{transform:translateY(0) rotate(-4deg);}
+  50%{transform:translateY(-10px) rotate(4deg);}
 }
 /* 答對時倉鼠開心跳舞 */
 .ham-avatar.happy{animation:hamDance 0.6s ease infinite!important;}
 @keyframes hamDance{
-0%{transform:rotate(-15deg) scale(1.1);}
-25%{transform:rotate(15deg) scale(1.15) translateY(-5px);}
-50%{transform:rotate(-10deg) scale(1.1);}
-75%{transform:rotate(10deg) scale(1.15) translateY(-5px);}
-100%{transform:rotate(-15deg) scale(1.1);}
+  0%{transform:rotate(-15deg) scale(1.1);}
+  25%{transform:rotate(15deg) scale(1.15) translateY(-5px);}
+  50%{transform:rotate(-10deg) scale(1.1);}
+  75%{transform:rotate(10deg) scale(1.15) translateY(-5px);}
+  100%{transform:rotate(-15deg) scale(1.1);}
 }
 /* 答錯時倉鼠搖頭 */
 .ham-avatar.sad{animation:hamShake 0.5s ease!important;}
 @keyframes hamShake{
-0%,100%{transform:rotate(0)}
-20%{transform:rotate(-15deg)}
-40%{transform:rotate(15deg)}
-60%{transform:rotate(-12deg)}
-80%{transform:rotate(12deg)}
+  0%,100%{transform:rotate(0)}
+  20%{transform:rotate(-15deg)}
+  40%{transform:rotate(15deg)}
+  60%{transform:rotate(-12deg)}
+  80%{transform:rotate(12deg)}
 }
-.ham-label{font-size:1rem;font-weight:800;color:var(–amber-deep);}
+.ham-label{font-size:1rem;font-weight:800;color:var(--amber-deep);}
 
 .ham-bubble{
-background:linear-gradient(135deg,#ecfdf5,#d1fae5);
-border-radius:18px;padding:18px;
-border:3px solid var(–green);
-margin-left:24px;position:relative;
+  background:linear-gradient(135deg,#ecfdf5,#d1fae5);
+  border-radius:18px;padding:18px;
+  border:3px solid var(--green);
+  margin-left:24px;position:relative;
 }
 .ham-bubble::before{
-content:’’;position:absolute;left:-10px;top:16px;
-border:10px solid transparent;
-border-right-color:var(–green);
+  content:'';position:absolute;left:-10px;top:16px;
+  border:10px solid transparent;
+  border-right-color:var(--green);
 }
 .ham-text{font-size:1.15rem;color:#166534;line-height:1.85;font-weight:600;}
-.char-big{font-size:1.5rem;font-weight:900;color:var(–red);}
-.eng-big{font-size:1.4rem;font-weight:900;color:var(–blue);}
+.char-big{font-size:1.5rem;font-weight:900;color:var(--red);}
+.eng-big{font-size:1.4rem;font-weight:900;color:var(--blue);}
 
 /* Content Display */
 .content-display{text-align:center;margin:22px 0;}
 .big-char{
-font-size:9rem;font-weight:900;color:var(–red);
-text-shadow:5px 5px 0 #fecaca,8px 8px 20px rgba(239,68,68,0.2);
-line-height:1;
-animation:charReveal 0.6s cubic-bezier(.34,1.56,.64,1);
+  font-size:9rem;font-weight:900;color:var(--red);
+  text-shadow:5px 5px 0 #fecaca,8px 8px 20px rgba(239,68,68,0.2);
+  line-height:1;
+  animation:charReveal 0.6s cubic-bezier(.34,1.56,.64,1);
 }
 @keyframes charReveal{from{opacity:0;transform:scale(0.3) rotate(-20deg)}to{opacity:1;transform:scale(1) rotate(0)}}
 .big-emoji{
-font-size:7rem;
-filter:drop-shadow(4px 4px 10px rgba(0,0,0,0.15));
-margin:14px 0;
-animation:emojiIn 0.5s ease 0.2s both;
-display:block;
+  font-size:7rem;
+  filter:drop-shadow(4px 4px 10px rgba(0,0,0,0.15));
+  margin:14px 0;
+  animation:emojiIn 0.5s ease 0.2s both;
+  display:block;
 }
 @keyframes emojiIn{from{opacity:0;transform:scale(0) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
 .big-letter{
-font-size:10rem;font-weight:900;color:var(–blue);
-text-shadow:5px 5px 0 #bfdbfe,8px 8px 20px rgba(59,130,246,0.2);
-line-height:1;
-animation:charReveal 0.6s cubic-bezier(.34,1.56,.64,1);
+  font-size:10rem;font-weight:900;color:var(--blue);
+  text-shadow:5px 5px 0 #bfdbfe,8px 8px 20px rgba(59,130,246,0.2);
+  line-height:1;
+  animation:charReveal 0.6s cubic-bezier(.34,1.56,.64,1);
 }
 .big-word{
-font-size:3.3rem;font-weight:900;color:var(–blue);
-text-shadow:3px 3px 0 #bfdbfe;
-letter-spacing:3px;margin:12px 0;
+  font-size:3.3rem;font-weight:900;color:var(--blue);
+  text-shadow:3px 3px 0 #bfdbfe;
+  letter-spacing:3px;margin:12px 0;
 }
 .word-zh{font-size:1.55rem;color:#333;font-weight:700;}
 .pinyin{font-size:1.75rem;color:#666;font-weight:600;margin-top:14px;}
 .meaning{font-size:1.35rem;color:#444;margin-top:8px;font-weight:600;}
 
 .speak-btn{
-background:linear-gradient(135deg,var(–amber),var(–amber-dark));
-border:none;border-radius:50%;
-width:76px;height:76px;font-size:2.5rem;
-cursor:pointer;
-box-shadow:0 6px 20px rgba(245,158,11,0.4),0 0 0 0 rgba(245,158,11,0.4);
-margin:16px 0;
-transition:transform 0.15s;
-animation:speakPulse 2.5s ease-in-out infinite;
+  background:linear-gradient(135deg,var(--amber),var(--amber-dark));
+  border:none;border-radius:50%;
+  width:76px;height:76px;font-size:2.5rem;
+  cursor:pointer;
+  box-shadow:0 6px 20px rgba(245,158,11,0.4),0 0 0 0 rgba(245,158,11,0.4);
+  margin:16px 0;
+  transition:transform 0.15s;
+  animation:speakPulse 2.5s ease-in-out infinite;
 }
 @keyframes speakPulse{
-0%,100%{box-shadow:0 6px 20px rgba(245,158,11,0.4),0 0 0 0 rgba(245,158,11,0.4);}
-50%{box-shadow:0 6px 20px rgba(245,158,11,0.4),0 0 0 10px rgba(245,158,11,0);}
+  0%,100%{box-shadow:0 6px 20px rgba(245,158,11,0.4),0 0 0 0 rgba(245,158,11,0.4);}
+  50%{box-shadow:0 6px 20px rgba(245,158,11,0.4),0 0 0 10px rgba(245,158,11,0);}
 }
 .speak-btn:active{transform:scale(0.92);}
 .speak-btn.speaking{animation:speakActive 0.3s ease infinite alternate!important;}
 @keyframes speakActive{from{transform:scale(1)}to{transform:scale(0.9) rotate(5deg)}}
 
 .example{
-background:linear-gradient(135deg,#f0f9ff,#e0f2fe);
-border-radius:16px;padding:17px;margin:20px 0;
-border:3px solid #7dd3fc;
+  background:linear-gradient(135deg,#f0f9ff,#e0f2fe);
+  border-radius:16px;padding:17px;margin:20px 0;
+  border:3px solid #7dd3fc;
 }
 .ex-label{font-size:0.95rem;color:#0369a1;font-weight:800;margin-bottom:7px;}
 .ex-text{font-size:1.3rem;color:#0c4a6e;line-height:1.7;font-weight:600;}
 
 /* Math Visual */
 .math-visual{
-display:flex;justify-content:center;align-items:center;
-gap:12px;margin:22px 0;flex-wrap:wrap;
+  display:flex;justify-content:center;align-items:center;
+  gap:12px;margin:22px 0;flex-wrap:wrap;
 }
 .math-group{
-display:flex;flex-wrap:wrap;gap:7px;justify-content:center;
-padding:14px;
-background:linear-gradient(135deg,#fef3c7,#fde68a);
-border-radius:16px;min-width:65px;
-border:3px solid #fbbf24;
-box-shadow:0 4px 12px rgba(251,191,36,0.25);
+  display:flex;flex-wrap:wrap;gap:7px;justify-content:center;
+  padding:14px;
+  background:linear-gradient(135deg,#fef3c7,#fde68a);
+  border-radius:16px;min-width:65px;
+  border:3px solid #fbbf24;
+  box-shadow:0 4px 12px rgba(251,191,36,0.25);
 }
 .math-item{font-size:2.1rem;}
-.math-op{font-size:3.2rem;font-weight:900;color:var(–purple);}
+.math-op{font-size:3.2rem;font-weight:900;color:var(--purple);}
 .math-result{
-font-size:3.2rem;font-weight:900;color:white;
-padding:11px 24px;
-background:linear-gradient(135deg,var(–green),var(–green-dark));
-border-radius:16px;
-box-shadow:0 5px 15px rgba(34,197,94,0.35);
-animation:resultPop 0.5s cubic-bezier(.34,1.56,.64,1);
+  font-size:3.2rem;font-weight:900;color:white;
+  padding:11px 24px;
+  background:linear-gradient(135deg,var(--green),var(--green-dark));
+  border-radius:16px;
+  box-shadow:0 5px 15px rgba(34,197,94,0.35);
+  animation:resultPop 0.5s cubic-bezier(.34,1.56,.64,1);
 }
 @keyframes resultPop{from{transform:scale(0)}to{transform:scale(1)}}
 .math-q{
-font-size:3.2rem;font-weight:900;color:white;
-padding:11px 24px;
-background:linear-gradient(135deg,var(–amber),var(–amber-dark));
-border-radius:16px;
-box-shadow:0 5px 15px rgba(245,158,11,0.35);
+  font-size:3.2rem;font-weight:900;color:white;
+  padding:11px 24px;
+  background:linear-gradient(135deg,var(--amber),var(--amber-dark));
+  border-radius:16px;
+  box-shadow:0 5px 15px rgba(245,158,11,0.35);
 }
 
 /* Practice */
 .practice{margin-top:22px;}
 .practice-q{font-size:1.45rem;font-weight:900;color:#222;margin-bottom:17px;text-align:center;}
 .practice-hint{
-background:linear-gradient(135deg,#fef3c7,#fde68a);
-border-radius:13px;padding:13px 17px;margin-bottom:18px;
-font-size:1.05rem;color:var(–amber-deep);font-weight:700;
-text-align:center;border:2px solid #fbbf24;
+  background:linear-gradient(135deg,#fef3c7,#fde68a);
+  border-radius:13px;padding:13px 17px;margin-bottom:18px;
+  font-size:1.05rem;color:var(--amber-deep);font-weight:700;
+  text-align:center;border:2px solid #fbbf24;
 }
 .options{display:grid;grid-template-columns:repeat(2,1fr);gap:11px;}
 .opt-btn{
-background:white;
-border:4px solid #e5e7eb;
-border-radius:18px;
-padding:20px 12px;
-font-size:1.55rem;font-weight:900;
-cursor:pointer;
-transition:all 0.2s cubic-bezier(.34,1.56,.64,1);
-color:#333;
-font-family:‘Nunito’,sans-serif;
-box-shadow:0 3px 10px rgba(0,0,0,0.06);
-position:relative;overflow:hidden;
+  background:white;
+  border:4px solid #e5e7eb;
+  border-radius:18px;
+  padding:20px 12px;
+  font-size:1.55rem;font-weight:900;
+  cursor:pointer;
+  transition:all 0.2s cubic-bezier(.34,1.56,.64,1);
+  color:#333;
+  font-family:'Nunito',sans-serif;
+  box-shadow:0 3px 10px rgba(0,0,0,0.06);
+  position:relative;overflow:hidden;
 }
 .opt-btn::before{
-content:’’;position:absolute;top:0;left:0;right:0;bottom:0;
-background:linear-gradient(135deg,rgba(255,255,255,0.5),transparent);
-pointer-events:none;
+  content:'';position:absolute;top:0;left:0;right:0;bottom:0;
+  background:linear-gradient(135deg,rgba(255,255,255,0.5),transparent);
+  pointer-events:none;
 }
 .opt-btn:hover:not(:disabled){
-border-color:var(–green);
-background:#f0fdf4;
-transform:translateY(-4px) scale(1.04);
-box-shadow:0 8px 24px rgba(34,197,94,0.2);
+  border-color:var(--green);
+  background:#f0fdf4;
+  transform:translateY(-4px) scale(1.04);
+  box-shadow:0 8px 24px rgba(34,197,94,0.2);
 }
 .opt-btn.correct{
-background:linear-gradient(135deg,var(–green),var(–green-dark));
-border-color:var(–green-dark);color:white;
-animation:correctBounce 0.6s cubic-bezier(.34,1.56,.64,1);
-box-shadow:0 8px 24px rgba(34,197,94,0.4);
+  background:linear-gradient(135deg,var(--green),var(--green-dark));
+  border-color:var(--green-dark);color:white;
+  animation:correctBounce 0.6s cubic-bezier(.34,1.56,.64,1);
+  box-shadow:0 8px 24px rgba(34,197,94,0.4);
 }
 @keyframes correctBounce{
-0%{transform:scale(1)}
-30%{transform:scale(1.15) rotate(-3deg)}
-60%{transform:scale(0.97) rotate(2deg)}
-100%{transform:scale(1)}
+  0%{transform:scale(1)}
+  30%{transform:scale(1.15) rotate(-3deg)}
+  60%{transform:scale(0.97) rotate(2deg)}
+  100%{transform:scale(1)}
 }
 .opt-btn.wrong{
-background:linear-gradient(135deg,#fed7aa,#fdba74);
-border-color:#f97316;color:#9a3412;
-animation:wrongShake 0.5s ease;
+  background:linear-gradient(135deg,#fed7aa,#fdba74);
+  border-color:#f97316;color:#9a3412;
+  animation:wrongShake 0.5s ease;
 }
 @keyframes wrongShake{
-0%,100%{transform:translateX(0) rotate(0)}
-20%{transform:translateX(-8px) rotate(-3deg)}
-40%{transform:translateX(8px) rotate(3deg)}
-60%{transform:translateX(-6px) rotate(-2deg)}
-80%{transform:translateX(6px) rotate(2deg)}
+  0%,100%{transform:translateX(0) rotate(0)}
+  20%{transform:translateX(-8px) rotate(-3deg)}
+  40%{transform:translateX(8px) rotate(3deg)}
+  60%{transform:translateX(-6px) rotate(-2deg)}
+  80%{transform:translateX(6px) rotate(2deg)}
 }
 
 /* Feedback */
 .feedback{
-padding:20px;border-radius:20px;margin:18px 0;
-animation:fbIn 0.4s cubic-bezier(.34,1.56,.64,1);
+  padding:20px;border-radius:20px;margin:18px 0;
+  animation:fbIn 0.4s cubic-bezier(.34,1.56,.64,1);
 }
 @keyframes fbIn{from{opacity:0;transform:translateY(16px) scale(0.95)}to{opacity:1;transform:translateY(0) scale(1)}}
-.feedback.correct{background:linear-gradient(135deg,#dcfce7,#bbf7d0);border:3.5px solid var(–green);}
+.feedback.correct{background:linear-gradient(135deg,#dcfce7,#bbf7d0);border:3.5px solid var(--green);}
 .feedback.retry{background:linear-gradient(135deg,#fff7ed,#ffedd5);border:3.5px solid #f97316;}
 .fb-head{display:flex;align-items:center;gap:11px;margin-bottom:9px;}
 .fb-icon{font-size:2.8rem;}
@@ -584,140 +583,140 @@ animation:fbIn 0.4s cubic-bezier(.34,1.56,.64,1);
 .feedback.correct .fb-msg{color:#15803d;}
 .feedback.retry .fb-msg{color:#c2410c;}
 .fb-boppy{
-display:inline-flex;align-items:center;justify-content:center;
-width:32px;height:32px;border-radius:50%;
-font-size:1.1rem;flex-shrink:0;
-background:linear-gradient(135deg,#fce4ec,#f48fb1);
-border:2px solid white;
-box-shadow:0 2px 8px rgba(233,30,99,0.2);
+  display:inline-flex;align-items:center;justify-content:center;
+  width:32px;height:32px;border-radius:50%;
+  font-size:1.1rem;flex-shrink:0;
+  background:linear-gradient(135deg,#fce4ec,#f48fb1);
+  border:2px solid white;
+  box-shadow:0 2px 8px rgba(233,30,99,0.2);
 }
 .fb-ham{
-display:flex;align-items:center;gap:9px;
-margin-top:13px;padding-top:11px;
-border-top:2px dashed rgba(0,0,0,0.1);
-font-size:0.97rem;color:#555;font-style:italic;font-weight:600;
+  display:flex;align-items:center;gap:9px;
+  margin-top:13px;padding-top:11px;
+  border-top:2px dashed rgba(0,0,0,0.1);
+  font-size:0.97rem;color:#555;font-style:italic;font-weight:600;
 }
 
 /* Buttons */
 .next-btn{
-width:100%;padding:19px;
-font-size:1.35rem;font-weight:900;
-background:linear-gradient(135deg,var(–green),var(–green-dark));
-color:white;border:none;border-radius:18px;cursor:pointer;
-box-shadow:0 5px 0 var(–green-deep),0 8px 24px rgba(34,197,94,0.3);
-font-family:‘Nunito’,sans-serif;
-margin-top:17px;
-transition:transform 0.1s,box-shadow 0.1s;
-position:relative;overflow:hidden;
+  width:100%;padding:19px;
+  font-size:1.35rem;font-weight:900;
+  background:linear-gradient(135deg,var(--green),var(--green-dark));
+  color:white;border:none;border-radius:18px;cursor:pointer;
+  box-shadow:0 5px 0 var(--green-deep),0 8px 24px rgba(34,197,94,0.3);
+  font-family:'Nunito',sans-serif;
+  margin-top:17px;
+  transition:transform 0.1s,box-shadow 0.1s;
+  position:relative;overflow:hidden;
 }
 .next-btn::after{
-content:’’;position:absolute;top:0;left:-100%;width:60%;height:100%;
-background:linear-gradient(90deg,transparent,rgba(255,255,255,0.2),transparent);
-animation:btnShine 2.5s ease-in-out infinite;
+  content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,0.2),transparent);
+  animation:btnShine 2.5s ease-in-out infinite;
 }
 @keyframes btnShine{0%,100%{left:-100%}50%{left:150%}}
-.next-btn:active{transform:translateY(4px);box-shadow:0 1px 0 var(–green-deep);}
+.next-btn:active{transform:translateY(4px);box-shadow:0 1px 0 var(--green-deep);}
 .retry-btn{
-width:100%;padding:19px;
-font-size:1.35rem;font-weight:900;
-background:linear-gradient(135deg,#fb923c,#f97316);
-color:white;border:none;border-radius:18px;cursor:pointer;
-box-shadow:0 5px 0 #c2410c,0 8px 24px rgba(249,115,22,0.3);
-font-family:‘Nunito’,sans-serif;
-margin-top:17px;
-transition:transform 0.1s,box-shadow 0.1s;
+  width:100%;padding:19px;
+  font-size:1.35rem;font-weight:900;
+  background:linear-gradient(135deg,#fb923c,#f97316);
+  color:white;border:none;border-radius:18px;cursor:pointer;
+  box-shadow:0 5px 0 #c2410c,0 8px 24px rgba(249,115,22,0.3);
+  font-family:'Nunito',sans-serif;
+  margin-top:17px;
+  transition:transform 0.1s,box-shadow 0.1s;
 }
 .retry-btn:active{transform:translateY(4px);box-shadow:0 1px 0 #c2410c;}
 
 /* Complete */
 .complete{text-align:center;}
 .complete-ham{
-font-size:110px;
-animation:completeDance 1s ease-in-out infinite;
-display:block;filter:drop-shadow(0 10px 25px rgba(180,120,30,0.35));
+  font-size:110px;
+  animation:completeDance 1s ease-in-out infinite;
+  display:block;filter:drop-shadow(0 10px 25px rgba(180,120,30,0.35));
 }
 @keyframes completeDance{
-0%{transform:translateY(0) rotate(-10deg) scale(1);}
-25%{transform:translateY(-28px) rotate(0deg) scale(1.12);}
-50%{transform:translateY(-8px) rotate(10deg) scale(1.05);}
-75%{transform:translateY(-20px) rotate(0deg) scale(1.1);}
-100%{transform:translateY(0) rotate(-10deg) scale(1);}
+  0%{transform:translateY(0) rotate(-10deg) scale(1);}
+  25%{transform:translateY(-28px) rotate(0deg) scale(1.12);}
+  50%{transform:translateY(-8px) rotate(10deg) scale(1.05);}
+  75%{transform:translateY(-20px) rotate(0deg) scale(1.1);}
+  100%{transform:translateY(0) rotate(-10deg) scale(1);}
 }
 .complete-title{
-font-size:2.3rem;font-weight:900;color:var(–amber-deep);
-margin:14px 0;
-text-shadow:3px 3px 0 rgba(251,191,36,0.4);
+  font-size:2.3rem;font-weight:900;color:var(--amber-deep);
+  margin:14px 0;
+  text-shadow:3px 3px 0 rgba(251,191,36,0.4);
 }
 .complete-msg{
-font-size:1.2rem;color:#b45309;line-height:1.8;
-margin-bottom:18px;font-weight:700;
+  font-size:1.2rem;color:#b45309;line-height:1.8;
+  margin-bottom:18px;font-weight:700;
 }
 .complete-badges{
-display:flex;justify-content:center;gap:18px;
-margin:18px 0;flex-wrap:wrap;
+  display:flex;justify-content:center;gap:18px;
+  margin:18px 0;flex-wrap:wrap;
 }
 .comp-badge{
-text-align:center;padding:14px 18px;
-background:linear-gradient(135deg,#fef3c7,#fde68a);
-border-radius:16px;border:3px solid #fbbf24;
-box-shadow:0 6px 20px rgba(251,191,36,0.3);
+  text-align:center;padding:14px 18px;
+  background:linear-gradient(135deg,#fef3c7,#fde68a);
+  border-radius:16px;border:3px solid #fbbf24;
+  box-shadow:0 6px 20px rgba(251,191,36,0.3);
 }
 .comp-b-icon{font-size:2.9rem;animation:badgePulse 1.5s ease infinite;}
-.comp-b-count{font-size:1.45rem;font-weight:900;color:var(–amber-deep);}
+.comp-b-count{font-size:1.45rem;font-weight:900;color:var(--amber-deep);}
 .comp-b-name{font-size:0.88rem;color:#b45309;font-weight:700;}
 
 /* ===== PARTICLES ===== */
 
 /* ===== BADGE POPUP ===== */
 .badge-overlay{
-position:fixed;top:0;left:0;width:100%;height:100%;
-background:rgba(0,0,0,0.65);
-display:flex;align-items:center;justify-content:center;
-z-index:2000;
-backdrop-filter:blur(4px);
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  background:rgba(0,0,0,0.65);
+  display:flex;align-items:center;justify-content:center;
+  z-index:2000;
+  backdrop-filter:blur(4px);
 }
 .badge-popup{
-background:linear-gradient(135deg,#fffbeb,#fef3c7);
-border-radius:28px;padding:35px;text-align:center;
-max-width:320px;margin:20px;
-box-shadow:0 30px 80px rgba(180,120,30,0.35),0 0 0 3px #fde68a;
-animation:popIn 0.5s cubic-bezier(.34,1.56,.64,1);
+  background:linear-gradient(135deg,#fffbeb,#fef3c7);
+  border-radius:28px;padding:35px;text-align:center;
+  max-width:320px;margin:20px;
+  box-shadow:0 30px 80px rgba(180,120,30,0.35),0 0 0 3px #fde68a;
+  animation:popIn 0.5s cubic-bezier(.34,1.56,.64,1);
 }
 @keyframes popIn{0%{transform:scale(0.4) rotate(-10deg);opacity:0;}70%{transform:scale(1.06) rotate(2deg);}100%{transform:scale(1) rotate(0);opacity:1;}}
 .popup-icon{font-size:7rem;animation:spinIn 0.7s ease;display:block;}
 @keyframes spinIn{from{transform:rotateY(0) scale(0)}to{transform:rotateY(360deg) scale(1)}}
-.popup-title{font-size:1.8rem;font-weight:900;color:var(–amber-deep);margin:10px 0;}
+.popup-title{font-size:1.8rem;font-weight:900;color:var(--amber-deep);margin:10px 0;}
 .popup-desc{font-size:1.1rem;color:#b45309;margin-bottom:18px;font-weight:600;}
 .popup-btn{
-padding:14px 35px;font-size:1.2rem;font-weight:900;
-background:linear-gradient(135deg,var(–green),var(–green-dark));
-color:white;border:none;border-radius:14px;cursor:pointer;
-font-family:‘Nunito’,sans-serif;
-box-shadow:0 5px 0 var(–green-deep);
-transition:transform 0.1s,box-shadow 0.1s;
+  padding:14px 35px;font-size:1.2rem;font-weight:900;
+  background:linear-gradient(135deg,var(--green),var(--green-dark));
+  color:white;border:none;border-radius:14px;cursor:pointer;
+  font-family:'Nunito',sans-serif;
+  box-shadow:0 5px 0 var(--green-deep);
+  transition:transform 0.1s,box-shadow 0.1s;
 }
-.popup-btn:active{transform:translateY(3px);box-shadow:0 2px 0 var(–green-deep);}
+.popup-btn:active{transform:translateY(3px);box-shadow:0 2px 0 var(--green-deep);}
 
 /* ===== SOUND TOGGLE ===== */
 .sound-toggle{
-position:fixed;top:14px;right:14px;z-index:500;
-width:44px;height:44px;
-background:rgba(255,252,240,0.95);
-border:2px solid #fde68a;
-border-radius:50%;
-display:flex;align-items:center;justify-content:center;
-font-size:1.4rem;cursor:pointer;
-box-shadow:0 3px 12px rgba(180,120,30,0.2);
-transition:transform 0.2s;
+  position:fixed;top:14px;right:14px;z-index:500;
+  width:44px;height:44px;
+  background:rgba(255,252,240,0.95);
+  border:2px solid #fde68a;
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.4rem;cursor:pointer;
+  box-shadow:0 3px 12px rgba(180,120,30,0.2);
+  transition:transform 0.2s;
 }
 .sound-toggle:active{transform:scale(0.9);}
 
 /* ===== PHONICS 自然拼音 CSS ===== */
 .phonics-sound-box{
-display:flex;align-items:center;justify-content:center;
-background:linear-gradient(135deg,#eff6ff,#dbeafe);
-border:3px solid #93c5fd;border-radius:18px;
-padding:16px 20px;margin:14px auto;gap:12px;
+  display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,#eff6ff,#dbeafe);
+  border:3px solid #93c5fd;border-radius:18px;
+  padding:16px 20px;margin:14px auto;gap:12px;
 }
 .phonics-letter{font-size:5.5rem;font-weight:900;line-height:1;}
 .phonics-letter.vowel{color:#ef4444;text-shadow:4px 4px 0 #fecaca;}
@@ -727,8 +726,8 @@ padding:16px 20px;margin:14px auto;gap:12px;
 .phonics-sound-zh{font-size:1rem;color:#6b7280;font-weight:700;margin-top:3px;}
 
 .phonics-blend-display{
-display:flex;align-items:center;justify-content:center;
-gap:7px;margin:18px 0;flex-wrap:wrap;
+  display:flex;align-items:center;justify-content:center;
+  gap:7px;margin:18px 0;flex-wrap:wrap;
 }
 .blend-part{padding:9px 13px;border-radius:12px;font-size:1.75rem;font-weight:900;border:3px solid;}
 .blend-part.vowel{background:#fef2f2;border-color:#fca5a5;color:#dc2626;}
@@ -737,15 +736,15 @@ gap:7px;margin:18px 0;flex-wrap:wrap;
 .blend-plus{font-size:1.8rem;font-weight:900;color:#9ca3af;}
 .blend-eq{font-size:1.8rem;font-weight:900;color:#6b7280;}
 .blend-result{
-padding:9px 16px;border-radius:12px;font-size:1.9rem;font-weight:900;
-background:linear-gradient(135deg,#fef3c7,#fde68a);
-border:3px solid #fbbf24;color:#92400e;
+  padding:9px 16px;border-radius:12px;font-size:1.9rem;font-weight:900;
+  background:linear-gradient(135deg,#fef3c7,#fde68a);
+  border:3px solid #fbbf24;color:#92400e;
 }
 .family-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:16px 0;}
 .family-word{
-background:white;border-radius:14px;padding:12px;
-border:2.5px solid #bbf7d0;text-align:center;cursor:pointer;
-transition:transform 0.2s;
+  background:white;border-radius:14px;padding:12px;
+  border:2.5px solid #bbf7d0;text-align:center;cursor:pointer;
+  transition:transform 0.2s;
 }
 .family-word:active{transform:scale(0.95);}
 .family-emoji{font-size:2rem;}
@@ -768,10 +767,10 @@ transition:transform 0.2s;
 
 /* 科目卡「現在去上！」箭頭標籤 */
 .subject-arrow{
-display:none;
-padding:10px 14px;border-radius:22px;
-font-size:1rem;font-weight:900;color:white;
-white-space:nowrap;
+  display:none;
+  padding:10px 14px;border-radius:22px;
+  font-size:1rem;font-weight:900;color:white;
+  white-space:nowrap;
 }
 .subject.next-up .subject-arrow{display:block;animation:arrowBounce 0.7s ease-in-out infinite alternate;}
 .subject.next-up .subj-badge{display:none;}
@@ -782,15 +781,15 @@ white-space:nowrap;
 
 /* 任務卡「點我去上課」按鈕 */
 .mission-go-btn{
-display:inline-block;
-margin-top:6px;
-padding:6px 14px;
-font-size:0.85rem;font-weight:900;
-color:white;border:none;border-radius:10px;
-cursor:pointer;font-family:‘Nunito’,sans-serif;
-box-shadow:0 3px 8px rgba(0,0,0,0.15);
-transition:transform 0.15s;
-animation:btnGlow 1.5s ease-in-out infinite alternate;
+  display:inline-block;
+  margin-top:6px;
+  padding:6px 14px;
+  font-size:0.85rem;font-weight:900;
+  color:white;border:none;border-radius:10px;
+  cursor:pointer;font-family:'Nunito',sans-serif;
+  box-shadow:0 3px 8px rgba(0,0,0,0.15);
+  transition:transform 0.15s;
+  animation:btnGlow 1.5s ease-in-out infinite alternate;
 }
 .mission-go-btn:active{transform:scale(0.95);}
 .mission-go-btn.go-chinese{background:linear-gradient(135deg,#ef4444,#dc2626);}
@@ -817,11 +816,11 @@ animation:btnGlow 1.5s ease-in-out infinite alternate;
 @keyframes arrowBounce{from{transform:scale(1) translateX(0);}to{transform:scale(1.08) translateX(5px);}}
 
 .mission-go-btn{
-display:inline-block;margin-top:6px;padding:7px 15px;
-font-size:0.85rem;font-weight:900;color:white;
-border:none;border-radius:10px;cursor:pointer;
-font-family:‘Nunito’,sans-serif;
-animation:missionBtnGlow 1.5s ease-in-out infinite alternate;
+  display:inline-block;margin-top:6px;padding:7px 15px;
+  font-size:0.85rem;font-weight:900;color:white;
+  border:none;border-radius:10px;cursor:pointer;
+  font-family:'Nunito',sans-serif;
+  animation:missionBtnGlow 1.5s ease-in-out infinite alternate;
 }
 .mission-go-btn:active{transform:scale(0.95);}
 .mission-go-btn.go-chinese{background:linear-gradient(135deg,#ef4444,#dc2626);box-shadow:0 3px 10px rgba(239,68,68,0.35);}
@@ -832,45 +831,45 @@ animation:missionBtnGlow 1.5s ease-in-out infinite alternate;
 
 /* ===== DAILY MISSION CARD ===== */
 .mission-card{
-background:linear-gradient(135deg,rgba(238,242,255,0.99),rgba(224,231,255,0.99));
-border:2.5px solid #818cf8;
+  background:linear-gradient(135deg,rgba(238,242,255,0.99),rgba(224,231,255,0.99));
+  border:2.5px solid #818cf8;
 }
 .mission-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
 .mission-title-wrap{display:flex;align-items:center;gap:9px;}
 .mission-title{font-size:1.1rem;font-weight:900;color:#3730a3;}
 .mission-day-badge{
-background:linear-gradient(135deg,#6366f1,#4f46e5);
-color:white;font-size:0.85rem;font-weight:800;
-padding:4px 11px;border-radius:20px;
-box-shadow:0 3px 8px rgba(99,102,241,0.35);
+  background:linear-gradient(135deg,#6366f1,#4f46e5);
+  color:white;font-size:0.85rem;font-weight:800;
+  padding:4px 11px;border-radius:20px;
+  box-shadow:0 3px 8px rgba(99,102,241,0.35);
 }
 .mission-week-tag{
-font-size:0.82rem;font-weight:800;
-padding:4px 10px;border-radius:12px;
-background:linear-gradient(135deg,#fef3c7,#fde68a);
-color:#92400e;border:1.5px solid #fbbf24;
+  font-size:0.82rem;font-weight:800;
+  padding:4px 10px;border-radius:12px;
+  background:linear-gradient(135deg,#fef3c7,#fde68a);
+  color:#92400e;border:1.5px solid #fbbf24;
 }
 
 /* 任務項目 */
 .mission-item{
-display:flex;align-items:center;gap:12px;
-padding:13px 14px;
-background:white;border-radius:14px;
-margin-bottom:9px;
-border:2px solid #e0e7ff;
-transition:all 0.35s cubic-bezier(.34,1.56,.64,1);
-position:relative;overflow:hidden;
+  display:flex;align-items:center;gap:12px;
+  padding:13px 14px;
+  background:white;border-radius:14px;
+  margin-bottom:9px;
+  border:2px solid #e0e7ff;
+  transition:all 0.35s cubic-bezier(.34,1.56,.64,1);
+  position:relative;overflow:hidden;
 }
 .mission-item.done{
-background:linear-gradient(135deg,#f0fdf4,#dcfce7);
-border-color:#86efac;
+  background:linear-gradient(135deg,#f0fdf4,#dcfce7);
+  border-color:#86efac;
 }
 .mission-item::before{
-content:’’;position:absolute;left:0;top:0;bottom:0;width:4px;
-background:linear-gradient(180deg,#6366f1,#818cf8);
-border-radius:4px 0 0 4px;
+  content:'';position:absolute;left:0;top:0;bottom:0;width:4px;
+  background:linear-gradient(180deg,#6366f1,#818cf8);
+  border-radius:4px 0 0 4px;
 }
-.mission-item.done::before{background:linear-gradient(180deg,var(–green),var(–green-dark));}
+.mission-item.done::before{background:linear-gradient(180deg,var(--green),var(--green-dark));}
 .mission-item.special::before{background:linear-gradient(180deg,#f59e0b,#fbbf24);}
 .mission-item.holiday::before{background:linear-gradient(180deg,#ec4899,#f472b6);}
 
@@ -883,49 +882,49 @@ border-radius:4px 0 0 4px;
 
 /* 任務狀態標籤 — 取代灰色 checkbox */
 .mission-status{
-display:flex;flex-direction:column;align-items:center;gap:4px;
-flex-shrink:0;
+  display:flex;flex-direction:column;align-items:center;gap:4px;
+  flex-shrink:0;
 }
 .mission-reward{
-display:flex;flex-direction:column;align-items:center;
-font-size:0.78rem;font-weight:800;color:#92400e;
-background:linear-gradient(135deg,#fef3c7,#fde68a);
-padding:5px 9px;border-radius:10px;
-border:1.5px solid #fbbf24;
+  display:flex;flex-direction:column;align-items:center;
+  font-size:0.78rem;font-weight:800;color:#92400e;
+  background:linear-gradient(135deg,#fef3c7,#fde68a);
+  padding:5px 9px;border-radius:10px;
+  border:1.5px solid #fbbf24;
 }
 .mission-reward-icon{font-size:1.15rem;}
 
 /* 未完成：顯示「去完成 →」引導箭頭 */
 .mission-goto{
-font-size:0.72rem;font-weight:800;
-color:#6366f1;
-background:#eef2ff;
-padding:3px 8px;border-radius:8px;
-border:1.5px solid #c7d2fe;
-white-space:nowrap;
+  font-size:0.72rem;font-weight:800;
+  color:#6366f1;
+  background:#eef2ff;
+  padding:3px 8px;border-radius:8px;
+  border:1.5px solid #c7d2fe;
+  white-space:nowrap;
 }
 .mission-item.special .mission-goto{color:#d97706;background:#fffbeb;border-color:#fde68a;}
 .mission-item.holiday .mission-goto{color:#db2777;background:#fdf2f8;border-color:#fbcfe8;}
 
 /* 完成：大綠勾動畫 */
 .mission-done-check{
-font-size:2rem;
-animation:checkPop 0.5s cubic-bezier(.34,1.56,.64,1);
+  font-size:2rem;
+  animation:checkPop 0.5s cubic-bezier(.34,1.56,.64,1);
 }
 @keyframes checkPop{
-0%{transform:scale(0) rotate(-30deg);}
-60%{transform:scale(1.3) rotate(5deg);}
-100%{transform:scale(1) rotate(0);}
+  0%{transform:scale(0) rotate(-30deg);}
+  60%{transform:scale(1.3) rotate(5deg);}
+  100%{transform:scale(1) rotate(0);}
 }
 
 /* 今日全部完成橫幅 */
 .all-done-banner{
-background:linear-gradient(135deg,#fef3c7,#fde68a,#fbbf24);
-border-radius:16px;padding:16px;
-text-align:center;margin-top:10px;
-border:3px solid #f59e0b;
-box-shadow:0 6px 20px rgba(251,191,36,0.3);
-animation:bannerPop 0.5s cubic-bezier(.34,1.56,.64,1);
+  background:linear-gradient(135deg,#fef3c7,#fde68a,#fbbf24);
+  border-radius:16px;padding:16px;
+  text-align:center;margin-top:10px;
+  border:3px solid #f59e0b;
+  box-shadow:0 6px 20px rgba(251,191,36,0.3);
+  animation:bannerPop 0.5s cubic-bezier(.34,1.56,.64,1);
 }
 @keyframes bannerPop{from{opacity:0;transform:scale(0.85)}to{opacity:1;transform:scale(1)}}
 .all-done-text{font-size:1.15rem;font-weight:900;color:#92400e;}
@@ -933,19 +932,19 @@ animation:bannerPop 0.5s cubic-bezier(.34,1.56,.64,1);
 
 /* 連續天數里程碑 */
 .streak-milestones{
-display:flex;gap:7px;margin-top:12px;flex-wrap:wrap;
+  display:flex;gap:7px;margin-top:12px;flex-wrap:wrap;
 }
 .streak-ms{
-flex:1;min-width:55px;
-text-align:center;padding:9px 5px;
-background:white;border-radius:12px;
-border:2px solid #e0e7ff;
-transition:all 0.3s;
+  flex:1;min-width:55px;
+  text-align:center;padding:9px 5px;
+  background:white;border-radius:12px;
+  border:2px solid #e0e7ff;
+  transition:all 0.3s;
 }
 .streak-ms.reached{
-background:linear-gradient(135deg,#fef3c7,#fde68a);
-border-color:#fbbf24;
-box-shadow:0 3px 10px rgba(251,191,36,0.3);
+  background:linear-gradient(135deg,#fef3c7,#fde68a);
+  border-color:#fbbf24;
+  box-shadow:0 3px 10px rgba(251,191,36,0.3);
 }
 .streak-ms-icon{font-size:1.5rem;filter:grayscale(1);opacity:0.4;transition:all 0.3s;}
 .streak-ms.reached .streak-ms-icon{filter:grayscale(0);opacity:1;animation:badgePulse 2s infinite;}
@@ -954,28 +953,28 @@ box-shadow:0 3px 10px rgba(251,191,36,0.3);
 
 /* ===== HAMSTER COSTUME COLLECTION ===== */
 .costume-card{
-background:linear-gradient(135deg,rgba(255,241,242,0.99),rgba(254,205,211,0.99));
-border:2.5px solid #fb7185;
+  background:linear-gradient(135deg,rgba(255,241,242,0.99),rgba(254,205,211,0.99));
+  border:2.5px solid #fb7185;
 }
 .costume-title{font-size:1.1rem;font-weight:900;color:#9f1239;margin-bottom:13px;text-align:center;}
 .costume-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;}
 .costume-item{
-text-align:center;padding:12px 6px;
-background:white;border-radius:14px;
-border:2px solid #fecdd3;
-transition:all 0.3s;
-cursor:default;
-position:relative;
+  text-align:center;padding:12px 6px;
+  background:white;border-radius:14px;
+  border:2px solid #fecdd3;
+  transition:all 0.3s;
+  cursor:default;
+  position:relative;
 }
 .costume-item.unlocked{
-border-color:#fb7185;
-box-shadow:0 4px 14px rgba(251,113,133,0.25);
-cursor:pointer;
+  border-color:#fb7185;
+  box-shadow:0 4px 14px rgba(251,113,133,0.25);
+  cursor:pointer;
 }
 .costume-item.active{
-background:linear-gradient(135deg,#fff1f2,#fecdd3);
-border-color:#f43f5e;
-box-shadow:0 6px 18px rgba(244,63,94,0.3);
+  background:linear-gradient(135deg,#fff1f2,#fecdd3);
+  border-color:#f43f5e;
+  box-shadow:0 6px 18px rgba(244,63,94,0.3);
 }
 .costume-ham-wrap{position:relative;display:inline-block;margin:4px 0;}
 .costume-ham{font-size:2rem;filter:grayscale(1);opacity:0.3;transition:all 0.3s;display:block;line-height:1;}
@@ -985,8 +984,8 @@ box-shadow:0 6px 18px rgba(244,63,94,0.3);
 .costume-item.active .costume-ham{animation:hamDance 0.8s ease infinite!important;}
 .costume-item.active .costume-badge-icon{animation:badgePulse 1s ease infinite;}
 .costume-lock{
-position:absolute;top:5px;right:5px;
-font-size:0.8rem;opacity:0.5;
+  position:absolute;top:5px;right:5px;
+  font-size:0.8rem;opacity:0.5;
 }
 .costume-item.unlocked .costume-lock{display:none;}
 .costume-name{font-size:0.7rem;color:#be185d;font-weight:800;margin-top:5px;}
@@ -995,24 +994,24 @@ font-size:0.8rem;opacity:0.5;
 
 /* ===== MONTHLY PROGRESS ===== */
 .monthly-card{
-background:linear-gradient(135deg,rgba(240,253,244,0.99),rgba(209,250,229,0.99));
-border:2.5px solid #4ade80;
+  background:linear-gradient(135deg,rgba(240,253,244,0.99),rgba(209,250,229,0.99));
+  border:2.5px solid #4ade80;
 }
 .monthly-title{font-size:1.1rem;font-weight:900;color:#14532d;margin-bottom:12px;text-align:center;}
 .cal-grid{
-display:grid;grid-template-columns:repeat(7,1fr);gap:5px;
+  display:grid;grid-template-columns:repeat(7,1fr);gap:5px;
 }
 .cal-day{
-aspect-ratio:1;border-radius:9px;
-display:flex;align-items:center;justify-content:center;
-font-size:0.75rem;font-weight:800;
-background:white;border:1.5px solid #bbf7d0;
-color:#6b7280;
-transition:all 0.3s;
+  aspect-ratio:1;border-radius:9px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.75rem;font-weight:800;
+  background:white;border:1.5px solid #bbf7d0;
+  color:#6b7280;
+  transition:all 0.3s;
 }
 .cal-day.today{border-color:#22c55e;color:#166534;background:#f0fdf4;box-shadow:0 0 0 2px #86efac;}
 .cal-day.done{background:linear-gradient(135deg,#22c55e,#16a34a);color:white;border-color:#16a34a;box-shadow:0 2px 6px rgba(34,197,94,0.3);}
-.cal-day.done::after{content:‘✓’;position:absolute;font-size:0.6rem;}
+.cal-day.done::after{content:'✓';position:absolute;font-size:0.6rem;}
 .cal-day.future{opacity:0.35;}
 .cal-day.special{background:linear-gradient(135deg,#fbbf24,#f59e0b);color:white;border-color:#d97706;}
 .cal-day.holiday{background:linear-gradient(135deg,#ec4899,#db2777);color:white;border-color:#be185d;}
@@ -1021,74 +1020,69 @@ transition:all 0.3s;
 
 /* ===== UNLOCK POPUP ===== */
 .unlock-overlay{
-position:fixed;top:0;left:0;width:100%;height:100%;
-background:rgba(0,0,0,0.75);
-display:flex;align-items:center;justify-content:center;
-z-index:3000;
-backdrop-filter:blur(6px);
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  background:rgba(0,0,0,0.75);
+  display:flex;align-items:center;justify-content:center;
+  z-index:3000;
+  backdrop-filter:blur(6px);
 }
 .unlock-popup{
-background:linear-gradient(135deg,#fff1f2,#fce7f3,#fdf2f8);
-border-radius:30px;padding:35px 28px;text-align:center;
-max-width:320px;margin:20px;
-box-shadow:0 30px 80px rgba(244,63,94,0.35),0 0 0 3px #fecdd3;
-animation:popIn 0.6s cubic-bezier(.34,1.56,.64,1);
+  background:linear-gradient(135deg,#fff1f2,#fce7f3,#fdf2f8);
+  border-radius:30px;padding:35px 28px;text-align:center;
+  max-width:320px;margin:20px;
+  box-shadow:0 30px 80px rgba(244,63,94,0.35),0 0 0 3px #fecdd3;
+  animation:popIn 0.6s cubic-bezier(.34,1.56,.64,1);
 }
 .unlock-sparkles{font-size:2rem;letter-spacing:5px;animation:sparkleRow 1s ease-in-out infinite alternate;}
 @keyframes sparkleRow{from{transform:scale(1)}to{transform:scale(1.1) rotate(5deg)}}
 .unlock-costume{
-font-size:7rem;margin:10px 0;
-animation:unlockSpin 0.8s cubic-bezier(.34,1.56,.64,1);
-display:block;
-filter:drop-shadow(0 8px 20px rgba(244,63,94,0.4));
+  font-size:7rem;margin:10px 0;
+  animation:unlockSpin 0.8s cubic-bezier(.34,1.56,.64,1);
+  display:block;
+  filter:drop-shadow(0 8px 20px rgba(244,63,94,0.4));
 }
 @keyframes unlockSpin{
-0%{transform:scale(0) rotate(-180deg);}
-60%{transform:scale(1.15) rotate(10deg);}
-100%{transform:scale(1) rotate(0);}
+  0%{transform:scale(0) rotate(-180deg);}
+  60%{transform:scale(1.15) rotate(10deg);}
+  100%{transform:scale(1) rotate(0);}
 }
 .unlock-title{font-size:1.6rem;font-weight:900;color:#9f1239;margin-bottom:6px;}
 .unlock-name{font-size:1.35rem;font-weight:900;color:#be185d;margin-bottom:8px;}
 .unlock-desc{font-size:1rem;color:#db2777;margin-bottom:20px;font-weight:600;line-height:1.6;}
 .unlock-btn{
-padding:14px 35px;font-size:1.15rem;font-weight:900;
-background:linear-gradient(135deg,#f43f5e,#e11d48);
-color:white;border:none;border-radius:14px;cursor:pointer;
-font-family:‘Nunito’,sans-serif;
-box-shadow:0 5px 0 #9f1239;
-transition:transform 0.1s,box-shadow 0.1s;
+  padding:14px 35px;font-size:1.15rem;font-weight:900;
+  background:linear-gradient(135deg,#f43f5e,#e11d48);
+  color:white;border:none;border-radius:14px;cursor:pointer;
+  font-family:'Nunito',sans-serif;
+  box-shadow:0 5px 0 #9f1239;
+  transition:transform 0.1s,box-shadow 0.1s;
 }
 .unlock-btn:active{transform:translateY(3px);box-shadow:0 2px 0 #9f1239;}
 
 /* ===== 羽球遊戲內嵌 CSS ===== */
 /* 羽球 overlay 內部元素樣式 */
 #btGameWrap{
-position:relative;z-index:5;
-width:100%;max-width:520px;flex:1;
-display:flex;flex-direction:column;
-padding:0 8px;
-}
-#btGameCanvas{
-width:100%;border-radius:20px;
-box-shadow:0 8px 40px rgba(0,0,0,0.4);
-display:block;
+  position:relative;z-index:5;
+  width:100%;max-width:520px;flex:1;
+  display:flex;flex-direction:column;
+  padding:0 8px;
 }
 .bt-hud{
-position:relative;z-index:10;
-width:100%;max-width:520px;
-display:flex;align-items:center;justify-content:space-between;
-padding:12px 16px 8px;
+  position:relative;z-index:10;
+  width:100%;max-width:520px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 16px 8px;
 }
 .bt-hud-back{
-background:rgba(255,255,255,0.15);border:none;
-border-radius:50%;width:42px;height:42px;
-font-size:1.4rem;cursor:pointer;color:white;
-display:flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,0.15);border:none;
+  border-radius:50%;width:42px;height:42px;
+  font-size:1.4rem;cursor:pointer;color:white;
+  display:flex;align-items:center;justify-content:center;
 }
 .bt-hud-title{font-size:1.1rem;font-weight:900;color:white;}
 .bt-hud-score{
-background:rgba(255,215,0,0.15);border:2px solid rgba(255,215,0,0.4);
-border-radius:20px;padding:6px 14px;font-size:1.1rem;font-weight:900;color:#ffd700;
+  background:rgba(255,215,0,0.15);border:2px solid rgba(255,215,0,0.4);
+  border-radius:20px;padding:6px 14px;font-size:1.1rem;font-weight:900;color:#ffd700;
 }
 .bt-courage-wrap{width:100%;max-width:520px;padding:0 16px 8px;}
 .bt-courage-label{display:flex;align-items:center;gap:6px;font-size:0.82rem;font-weight:800;color:#f48fb1;margin-bottom:5px;}
@@ -1096,196 +1090,233 @@ border-radius:20px;padding:6px 14px;font-size:1.1rem;font-weight:900;color:#ffd7
 .bt-courage-fill{height:100%;border-radius:10px;background:linear-gradient(90deg,#e91e63,#f48fb1,#ffd700);transition:width 0.5s;}
 .ctrl-row{display:flex;gap:12px;padding:10px 8px;justify-content:space-between;align-items:center;}
 .ctrl-btn{
-flex:1;height:64px;border:none;border-radius:18px;
-font-size:1.5rem;font-weight:900;cursor:pointer;color:white;
-display:flex;align-items:center;justify-content:center;gap:6px;
--webkit-user-select:none;user-select:none;
+  flex:1;height:64px;border:none;border-radius:18px;
+  font-size:1.5rem;font-weight:900;cursor:pointer;color:white;
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  -webkit-user-select:none;user-select:none;
 }
 .ctrl-left{background:linear-gradient(135deg,#3b82f6,#1d4ed8);box-shadow:0 5px 0 #1e3a8a;}
 .ctrl-right{background:linear-gradient(135deg,#ec4899,#be185d);box-shadow:0 5px 0 #9d174d;}
 .ctrl-btn:active{transform:translateY(4px);box-shadow:none;}
 .ctrl-smash{
-flex:0 0 80px;height:64px;border:none;border-radius:18px;
-font-size:1.3rem;cursor:pointer;font-weight:900;
-background:linear-gradient(135deg,#ffd700,#f59e0b);box-shadow:0 5px 0 #d97706;color:#92400e;
-display:flex;align-items:center;justify-content:center;flex-direction:column;gap:2px;
--webkit-user-select:none;user-select:none;
+  flex:0 0 80px;height:64px;border:none;border-radius:18px;
+  font-size:1.3rem;cursor:pointer;font-weight:900;
+  background:linear-gradient(135deg,#ffd700,#f59e0b);box-shadow:0 5px 0 #d97706;color:#92400e;
+  display:flex;align-items:center;justify-content:center;flex-direction:column;gap:2px;
+  -webkit-user-select:none;user-select:none;
 }
 .ctrl-smash:active{transform:translateY(4px);box-shadow:none;}
 .ctrl-smash span{font-size:0.62rem;font-weight:900;}
 .bt-overlay-card{
-background:linear-gradient(135deg,rgba(252,228,236,0.97),rgba(252,243,199,0.97));
-border-radius:30px;padding:28px 22px;text-align:center;
-max-width:340px;width:calc(100% - 40px);
-box-shadow:0 20px 60px rgba(0,0,0,0.4),0 0 0 3px #f48fb1;
+  background:linear-gradient(135deg,rgba(252,228,236,0.97),rgba(252,243,199,0.97));
+  border-radius:30px;padding:28px 22px;text-align:center;
+  max-width:340px;width:calc(100% - 40px);
+  box-shadow:0 20px 60px rgba(0,0,0,0.4),0 0 0 3px #f48fb1;
 }
 .bt-overlay-title{font-size:1.8rem;font-weight:900;color:#880e4f;margin-bottom:6px;}
 .bt-overlay-score{font-size:2.8rem;font-weight:900;color:#e91e63;margin:10px 0;}
 .bt-overlay-msg{font-size:0.95rem;color:#ad1457;font-weight:700;margin-bottom:18px;line-height:1.6;}
 .bt-overlay-btn{
-width:100%;padding:16px;font-size:1.2rem;font-weight:900;
-background:linear-gradient(135deg,#e91e63,#c2185b);color:white;
-border:none;border-radius:16px;cursor:pointer;box-shadow:0 5px 0 #880e4f;
-font-family:‘Nunito’,sans-serif;margin-top:8px;
+  width:100%;padding:16px;font-size:1.2rem;font-weight:900;
+  background:linear-gradient(135deg,#e91e63,#c2185b);color:white;
+  border:none;border-radius:16px;cursor:pointer;box-shadow:0 5px 0 #880e4f;
+  font-family:'Nunito',sans-serif;margin-top:8px;
 }
 .bt-overlay-btn.secondary{background:linear-gradient(135deg,#9c27b0,#6a1b9a);box-shadow:0 5px 0 #4a148c;}
 
+
+/* ===== 羽球 DOM 遊戲 ===== */
+#btField{
+  position:relative;
+  width:100%;max-width:520px;
+  background:linear-gradient(180deg,#0d1b4b 0%,#1a3a6b 60%,#1b5e20 100%);
+  border-radius:16px;overflow:hidden;
+  margin:0 auto;flex-shrink:0;
+  border:2px solid rgba(244,143,177,0.2);
+}
+#btBall{
+  position:absolute;
+  width:24px;height:24px;border-radius:50%;
+  background:radial-gradient(circle at 35% 35%,white,#e0e0e0);
+  border:2px solid #bdbdbd;
+  pointer-events:none;
+  transition:none;
+}
+#btPaddle{
+  position:absolute;bottom:10%;
+  height:14px;border-radius:8px;
+  background:linear-gradient(to bottom,#fce4ec,#f48fb1);
+  border:2px solid #e91e63;
+  pointer-events:none;
+}
+#btLives{
+  position:absolute;top:8px;right:8px;
+  font-size:1.1rem;letter-spacing:2px;
+  pointer-events:none;
+}
+@keyframes btPop{
+  0%{opacity:1;transform:translate(-50%,-50%) scale(1);}
+  100%{opacity:0;transform:translate(-50%,-150%) scale(1.4);}
+}
 /* ===== 羽球計時警告 ===== */
 .badminton-timer-bar{
-position:absolute;top:0;left:0;right:0;
-height:4px;background:rgba(255,255,255,0.15);
-z-index:5002;
+  position:absolute;top:0;left:0;right:0;
+  height:4px;background:rgba(255,255,255,0.15);
+  z-index:5002;
 }
 .badminton-timer-fill{
-height:100%;
-background:linear-gradient(90deg,#22c55e,#f59e0b,#ef4444);
-transition:width 1s linear;
-border-radius:0 2px 2px 0;
+  height:100%;
+  background:linear-gradient(90deg,#22c55e,#f59e0b,#ef4444);
+  transition:width 1s linear;
+  border-radius:0 2px 2px 0;
 }
 .badminton-warn-bubble{
-position:absolute;top:64px;left:50%;transform:translateX(-50%);
-z-index:5010;
-background:linear-gradient(135deg,#fff7ed,#fef3c7);
-border:2.5px solid #f59e0b;
-border-radius:20px;padding:14px 20px;
-text-align:center;max-width:300px;width:calc(100% - 40px);
-box-shadow:0 8px 30px rgba(245,158,11,0.35);
-animation:warnPop 0.4s cubic-bezier(.34,1.56,.64,1);
+  position:absolute;top:64px;left:50%;transform:translateX(-50%);
+  z-index:5010;
+  background:linear-gradient(135deg,#fff7ed,#fef3c7);
+  border:2.5px solid #f59e0b;
+  border-radius:20px;padding:14px 20px;
+  text-align:center;max-width:300px;width:calc(100% - 40px);
+  box-shadow:0 8px 30px rgba(245,158,11,0.35);
+  animation:warnPop 0.4s cubic-bezier(.34,1.56,.64,1);
 }
 @keyframes warnPop{from{transform:translateX(-50%) scale(0.7);opacity:0}to{transform:translateX(-50%) scale(1);opacity:1}}
 .badminton-warn-title{font-size:1.1rem;font-weight:900;color:#92400e;margin-bottom:4px;}
 .badminton-warn-msg{font-size:0.9rem;font-weight:700;color:#b45309;line-height:1.5;}
 .badminton-warn-ok{
-margin-top:10px;padding:10px 24px;
-background:linear-gradient(135deg,#f59e0b,#d97706);
-color:white;border:none;border-radius:12px;
-font-size:0.95rem;font-weight:900;cursor:pointer;
-font-family:‘Nunito’,sans-serif;
+  margin-top:10px;padding:10px 24px;
+  background:linear-gradient(135deg,#f59e0b,#d97706);
+  color:white;border:none;border-radius:12px;
+  font-size:0.95rem;font-weight:900;cursor:pointer;
+  font-family:'Nunito',sans-serif;
 }
 
 .badminton-stop-overlay{
-position:absolute;top:0;left:0;right:0;bottom:0;
-z-index:5020;
-background:rgba(10,10,30,0.92);
-backdrop-filter:blur(8px);
-display:flex;align-items:center;justify-content:center;
-animation:fadeIn 0.5s ease;
+  position:absolute;top:0;left:0;right:0;bottom:0;
+  z-index:5020;
+  background:rgba(10,10,30,0.92);
+  backdrop-filter:blur(8px);
+  display:flex;align-items:center;justify-content:center;
+  animation:fadeIn 0.5s ease;
 }
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 .badminton-stop-card{
-background:linear-gradient(135deg,#fce4ec,#fff3e0);
-border-radius:28px;padding:30px 24px;
-text-align:center;max-width:320px;width:calc(100% - 40px);
-box-shadow:0 20px 60px rgba(0,0,0,0.4),0 0 0 3px #f48fb1;
-animation:popIn 0.5s cubic-bezier(.34,1.56,.64,1);
+  background:linear-gradient(135deg,#fce4ec,#fff3e0);
+  border-radius:28px;padding:30px 24px;
+  text-align:center;max-width:320px;width:calc(100% - 40px);
+  box-shadow:0 20px 60px rgba(0,0,0,0.4),0 0 0 3px #f48fb1;
+  animation:popIn 0.5s cubic-bezier(.34,1.56,.64,1);
 }
 .badminton-stop-boppy{display:flex;justify-content:center;margin-bottom:10px;font-size:0;}
 .badminton-stop-title{font-size:1.7rem;font-weight:900;color:#880e4f;margin-bottom:8px;}
 .badminton-stop-msg{font-size:1rem;font-weight:700;color:#ad1457;line-height:1.7;margin-bottom:20px;}
 .badminton-stop-btn{
-width:100%;padding:16px;font-size:1.1rem;font-weight:900;
-background:linear-gradient(135deg,#e91e63,#c2185b);
-color:white;border:none;border-radius:16px;cursor:pointer;
-font-family:‘Nunito’,sans-serif;
-box-shadow:0 5px 0 #880e4f;
+  width:100%;padding:16px;font-size:1.1rem;font-weight:900;
+  background:linear-gradient(135deg,#e91e63,#c2185b);
+  color:white;border:none;border-radius:16px;cursor:pointer;
+  font-family:'Nunito',sans-serif;
+  box-shadow:0 5px 0 #880e4f;
 }
 .badminton-stop-btn:active{transform:translateY(4px);box-shadow:0 1px 0 #880e4f;}
 
 /* ===== BADMINTON CARD ===== */
 .badminton-card{
-background:linear-gradient(135deg,rgba(10,15,50,0.97),rgba(20,30,80,0.97));
-border:2.5px solid rgba(244,143,177,0.4);
+  background:linear-gradient(135deg,rgba(10,15,50,0.97),rgba(20,30,80,0.97));
+  border:2.5px solid rgba(244,143,177,0.4);
 }
 .badminton-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
 .badminton-title{font-size:1.1rem;font-weight:900;color:white;}
 .badminton-sub{font-size:0.8rem;color:#f48fb1;font-weight:700;margin-top:2px;}
 .badminton-status{
-font-size:0.82rem;font-weight:800;
-padding:5px 12px;border-radius:14px;
-background:rgba(255,255,255,0.08);color:#9ca3af;
-border:1.5px solid rgba(255,255,255,0.1);
+  font-size:0.82rem;font-weight:800;
+  padding:5px 12px;border-radius:14px;
+  background:rgba(255,255,255,0.08);color:#9ca3af;
+  border:1.5px solid rgba(255,255,255,0.1);
 }
 .badminton-status.unlocked{
-background:rgba(255,215,0,0.15);color:#ffd700;
-border-color:rgba(255,215,0,0.4);
-animation:statusGlow 2s ease-in-out infinite;
+  background:rgba(255,215,0,0.15);color:#ffd700;
+  border-color:rgba(255,215,0,0.4);
+  animation:statusGlow 2s ease-in-out infinite;
 }
 @keyframes statusGlow{0%,100%{box-shadow:0 0 0 0 rgba(255,215,0,0.3);}50%{box-shadow:0 0 0 6px rgba(255,215,0,0);}}
 .badminton-preview{
-border-radius:16px;padding:16px;margin-bottom:14px;
-display:flex;flex-direction:column;align-items:center;gap:10px;
-min-height:100px;
+  border-radius:16px;padding:16px;margin-bottom:14px;
+  display:flex;flex-direction:column;align-items:center;gap:10px;
+  min-height:100px;
 }
 .badminton-preview.locked{
-background:rgba(255,255,255,0.04);border:2px dashed rgba(255,255,255,0.1);
+  background:rgba(255,255,255,0.04);border:2px dashed rgba(255,255,255,0.1);
 }
 .badminton-preview.unlocked-preview{
-background:linear-gradient(135deg,rgba(10,15,50,0.6),rgba(30,50,120,0.6));
-border:2px solid rgba(244,143,177,0.3);
+  background:linear-gradient(135deg,rgba(10,15,50,0.6),rgba(30,50,120,0.6));
+  border:2px solid rgba(244,143,177,0.3);
 }
 .badminton-lock-msg{font-size:0.88rem;font-weight:700;color:#6b7280;text-align:center;line-height:1.6;}
 .badminton-unlock-msg{font-size:0.95rem;font-weight:800;color:#f48fb1;text-align:center;line-height:1.6;}
 .badminton-btn{
-width:100%;padding:16px;font-size:1.15rem;font-weight:900;
-border:none;border-radius:16px;cursor:pointer;
-font-family:‘Nunito’,sans-serif;
-transition:transform 0.1s,box-shadow 0.1s;
-color:white;
+  width:100%;padding:16px;font-size:1.15rem;font-weight:900;
+  border:none;border-radius:16px;cursor:pointer;
+  font-family:'Nunito',sans-serif;
+  transition:transform 0.1s,box-shadow 0.1s;
+  color:white;
 }
 .badminton-btn:disabled{background:rgba(255,255,255,0.08);color:#6b7280;cursor:not-allowed;box-shadow:none;}
 .badminton-btn:not(:disabled){
-background:linear-gradient(135deg,#e91e63,#c2185b);
-box-shadow:0 5px 0 #880e4f,0 8px 20px rgba(233,30,99,0.35);
-animation:btnPulse 2s ease-in-out infinite;
+  background:linear-gradient(135deg,#e91e63,#c2185b);
+  box-shadow:0 5px 0 #880e4f,0 8px 20px rgba(233,30,99,0.35);
+  animation:btnPulse 2s ease-in-out infinite;
 }
 .badminton-btn:not(:disabled):active{transform:translateY(4px);box-shadow:0 1px 0 #880e4f;}
 @keyframes btnPulse{0%,100%{filter:brightness(1);}50%{filter:brightness(1.1);}}
 
 /* ===== MAKEUP (補課) CSS ===== */
 .cal-day.missed{
-background:linear-gradient(135deg,#fef3c7,#fde68a);
-border-color:#f59e0b;color:#92400e;
-cursor:pointer;
-transition:all 0.2s;
+  background:linear-gradient(135deg,#fef3c7,#fde68a);
+  border-color:#f59e0b;color:#92400e;
+  cursor:pointer;
+  transition:all 0.2s;
 }
 .cal-day.missed:hover{
-transform:scale(1.12);
-box-shadow:0 4px 14px rgba(245,158,11,0.4);
-background:linear-gradient(135deg,#fb923c,#f97316);
-color:white;border-color:#ea580c;
+  transform:scale(1.12);
+  box-shadow:0 4px 14px rgba(245,158,11,0.4);
+  background:linear-gradient(135deg,#fb923c,#f97316);
+  color:white;border-color:#ea580c;
 }
 .cal-day.makeup{
-background:linear-gradient(135deg,#a7f3d0,#6ee7b7);
-border-color:#10b981;color:#065f46;
-box-shadow:0 2px 8px rgba(16,185,129,0.3);
+  background:linear-gradient(135deg,#a7f3d0,#6ee7b7);
+  border-color:#10b981;color:#065f46;
+  box-shadow:0 2px 8px rgba(16,185,129,0.3);
 }
-.cal-day.makeup::after{content:‘✎’;position:absolute;font-size:0.55rem;}
+.cal-day.makeup::after{content:'✎';position:absolute;font-size:0.55rem;}
+.cal-day.reviewable{cursor:pointer;transition:transform 0.15s;}
+.cal-day.reviewable:hover{transform:scale(1.12);filter:brightness(1.15);}
+.cal-day.reviewable::after{content:'👁';position:absolute;font-size:0.5rem;top:1px;right:2px;}
 
 /* 補課彈窗 */
 .makeup-overlay{
-position:fixed;top:0;left:0;width:100%;height:100%;
-background:rgba(0,0,0,0.7);
-display:flex;align-items:center;justify-content:center;
-z-index:3000;
-backdrop-filter:blur(6px);
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  background:rgba(0,0,0,0.7);
+  display:flex;align-items:center;justify-content:center;
+  z-index:3000;
+  backdrop-filter:blur(6px);
 }
 .makeup-popup{
-background:linear-gradient(135deg,#fffbeb,#fef3c7);
-border-radius:28px;padding:28px 22px;text-align:center;
-max-width:340px;width:calc(100% - 32px);
-box-shadow:0 24px 60px rgba(180,120,30,0.35),0 0 0 3px #fde68a;
-animation:popIn 0.45s cubic-bezier(.34,1.56,.64,1);
+  background:linear-gradient(135deg,#fffbeb,#fef3c7);
+  border-radius:28px;padding:28px 22px;text-align:center;
+  max-width:340px;width:calc(100% - 32px);
+  box-shadow:0 24px 60px rgba(180,120,30,0.35),0 0 0 3px #fde68a;
+  animation:popIn 0.45s cubic-bezier(.34,1.56,.64,1);
 }
 .makeup-date{font-size:1rem;font-weight:800;color:#b45309;margin-bottom:6px;}
 .makeup-title{font-size:1.6rem;font-weight:900;color:#92400e;margin:8px 0;}
 .makeup-subjects{display:flex;flex-direction:column;gap:9px;margin:14px 0;}
 .makeup-subj-btn{
-display:flex;align-items:center;gap:12px;
-padding:13px 16px;border-radius:14px;
-border:none;cursor:pointer;font-family:‘Nunito’,sans-serif;
-font-size:1.05rem;font-weight:800;color:white;
-transition:transform 0.15s,box-shadow 0.15s;
-text-align:left;
+  display:flex;align-items:center;gap:12px;
+  padding:13px 16px;border-radius:14px;
+  border:none;cursor:pointer;font-family:'Nunito',sans-serif;
+  font-size:1.05rem;font-weight:800;color:white;
+  transition:transform 0.15s,box-shadow 0.15s;
+  text-align:left;
 }
 .makeup-subj-btn:active{transform:translateY(2px);}
 .makeup-subj-btn.chinese{background:linear-gradient(135deg,#ef4444,#dc2626);box-shadow:0 4px 12px rgba(239,68,68,0.35);}
@@ -1298,73 +1329,65 @@ text-align:left;
 .makeup-subj-ch{font-size:0.78rem;opacity:0.85;margin-top:2px;}
 .makeup-subj-status{font-size:1.3rem;}
 .makeup-close{
-width:100%;padding:14px;margin-top:10px;
-border:none;border-radius:14px;cursor:pointer;
-font-family:‘Nunito’,sans-serif;font-size:1rem;font-weight:800;
-background:rgba(0,0,0,0.06);color:#666;
+  width:100%;padding:14px;margin-top:10px;
+  border:none;border-radius:14px;cursor:pointer;
+  font-family:'Nunito',sans-serif;font-size:1rem;font-weight:800;
+  background:rgba(0,0,0,0.06);color:#666;
 }
 .makeup-close:active{background:rgba(0,0,0,0.12);}
 .makeup-note{font-size:0.8rem;color:#b45309;font-weight:700;margin-top:10px;opacity:0.8;}
 
 /* 補課模式學習頁頂部標示 */
 .makeup-banner{
-background:linear-gradient(135deg,#fb923c,#f97316);
-color:white;font-size:0.88rem;font-weight:800;
-padding:8px 16px;text-align:center;
-position:sticky;top:56px;z-index:9;
+  background:linear-gradient(135deg,#fb923c,#f97316);
+  color:white;font-size:0.88rem;font-weight:800;
+  padding:8px 16px;text-align:center;
+  position:sticky;top:56px;z-index:9;
 }
 
 /* ===== RESPONSIVE ===== */
 @media(max-width:400px){
-.big-char{font-size:7rem;}
-.big-letter{font-size:8rem;}
-.big-emoji{font-size:5.5rem;}
-.opt-btn{padding:16px 9px;font-size:1.35rem;}
-.welcome-title{font-size:1.8rem;}
+  .big-char{font-size:7rem;}
+  .big-letter{font-size:8rem;}
+  .big-emoji{font-size:5.5rem;}
+  .opt-btn{padding:16px 9px;font-size:1.35rem;}
+  .welcome-title{font-size:1.8rem;}
 }
 </style>
-
 </head>
 <body>
 
 <!-- 背景粒子 -->
-
 <div id="bgParticles"></div>
 
 <!-- 音效按鈕 -->
-
 <button class="sound-toggle" id="soundToggle" onclick="toggleSound()" title="音效開關">🔊</button>
 
 <div class="wrap">
 
 <!-- ===== 歡迎畫面 ===== -->
-
 <div id="welcomeScreen">
   <div class="welcome-cloud card">
     <div id="welcomeBoppy" class="hamster-hero" style="font-size:0px;display:flex;justify-content:center;"></div>
     <div class="welcome-title">波比魔法學院</div>
     <div class="welcome-sub">✨ 阿均的學習成長史 ✨</div>
 
-```
-<div class="story-box">
-  <p>🌟 歡迎來到波比魔法學院！</p>
-  <p>我是<b>波比</b>！你的冒險夥伴！我們要一起去探索知識的魔法森林，並肩挑戰每一個關卡！</p>
-  <p>答錯了完全沒關係！我們是<b>好朋友</b>，一起再試就好！每次你進步，我的<b>勇氣之星</b>就會更亮！⭐</p>
-  <p>學習中收集<b>勇氣徽章</b>，還能解鎖波比的特殊造型！<br>⭐迷你波 → ✨小波比(3) → 🌟中波比(5) → 💫大波比(7) → 🌈超級波比(10)<br>三科全部完成還能解鎖<b>羽球小遊戲</b>！🏸</p>
-</div>
+    <div class="story-box">
+      <p>🌟 歡迎來到波比魔法學院！</p>
+      <p>我是<b>波比</b>！你的冒險夥伴！我們要一起去探索知識的魔法森林，並肩挑戰每一個關卡！</p>
+      <p>答錯了完全沒關係！我們是<b>好朋友</b>，一起再試就好！每次你進步，我的<b>勇氣之星</b>就會更亮！⭐</p>
+      <p>學習中收集<b>勇氣徽章</b>，還能解鎖波比的特殊造型！<br>⭐迷你波 → ✨小波比(3) → 🌟中波比(5) → 💫大波比(7) → 🌈超級波比(10)<br>三科全部完成還能解鎖<b>羽球小遊戲</b>！🏸</p>
+    </div>
 
-<div class="name-box">
-  <label class="name-label">⭐ 告訴波比你的名字吧！</label>
-  <input type="text" id="nameInput" class="name-input" placeholder="阿均" maxlength="10">
-</div>
-<button class="start-btn" onclick="startApp()">🏸 我準備好了！跟波比出發！</button>
-```
-
+    <div class="name-box">
+      <label class="name-label">⭐ 告訴波比你的名字吧！</label>
+      <input type="text" id="nameInput" class="name-input" placeholder="阿均" maxlength="10">
+    </div>
+    <button class="start-btn" onclick="startApp()">🏸 我準備好了！跟波比出發！</button>
   </div>
 </div>
 
 <!-- ===== 主畫面 ===== -->
-
 <div id="mainScreen" class="hidden">
 
   <div class="card player-card">
@@ -1469,7 +1492,6 @@ position:sticky;top:56px;z-index:9;
   </div>
 
   <!-- 每日任務卡 -->
-
   <div class="card mission-card" id="missionCard">
     <div class="mission-header">
       <div class="mission-title-wrap">
@@ -1493,14 +1515,12 @@ position:sticky;top:56px;z-index:9;
   </div>
 
   <!-- 倉鼠造型收藏 -->
-
   <div class="card costume-card">
     <div class="costume-title">🌟 波比造型收藏館</div>
     <div class="costume-grid" id="costumeGrid"></div>
   </div>
 
   <!-- 月曆進度 -->
-
   <div class="card monthly-card">
     <div class="monthly-title">📅 本月學習月曆</div>
     <div class="cal-week-labels">
@@ -1512,27 +1532,13 @@ position:sticky;top:56px;z-index:9;
     <div class="cal-grid" id="calGrid"></div>
   </div>
 
-  <!-- 羽球小遊戲卡 -->
-
-  <div class="card badminton-card" id="badmintonCard">
-    <div class="badminton-header">
-      <div style="display:flex;align-items:center;gap:10px;">
-        <span style="font-size:1.6rem">🏸</span>
-        <div>
-          <div class="badminton-title">波比羽球場</div>
-          <div class="badminton-sub">完成今日三科課程後解鎖！</div>
-        </div>
-      </div>
-      <div class="badminton-status" id="badmintonStatus">🔒 未解鎖</div>
-    </div>
-    <div id="badmintonPreview" class="badminton-preview locked">
-      <div id="badmintonBoppy" style="display:flex;justify-content:center;font-size:0px;"></div>
-      <div class="badminton-lock-msg" id="badmintonMsg">完成今天的國語、英文、數學課程，就能和波比一起打羽球！⭐</div>
-    </div>
-    <button class="badminton-btn" id="badmintonBtn" onclick="openBadminton()" disabled>🔒 完成三科解鎖</button>
+  <!-- 波比遊樂場 -->
+  <div class="card" id="gameCenter" style="padding:18px;">
+    <div style="font-size:1rem;font-weight:900;color:#854d0e;margin-bottom:14px;text-align:center;">🎮 波比遊樂場</div>
+    <div id="gameCenterGrid" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;"></div>
   </div>
 
-  <div class="card exchange-card">
+  <div class="card exchange-card">  <div class="card exchange-card">
     <div class="exch-title">🎁 波比徽章升級工坊</div>
     <div class="exch-item">
       <div class="exch-info">⭐ 3個迷你波 → ✨ 1個小波比</div>
@@ -1556,7 +1562,6 @@ position:sticky;top:56px;z-index:9;
 </div><!-- /wrap -->
 
 <!-- ===== 學習畫面 ===== -->
-
 <div id="learnScreen" class="hidden">
   <div class="learn-header">
     <button class="learn-back" onclick="exitLesson()">⬅️</button>
@@ -1569,93 +1574,58 @@ position:sticky;top:56px;z-index:9;
 <!-- 粒子層 -->
 
 <!-- 羽球遊戲覆蓋層 -->
+<div id="gameOverlay" class="hidden" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:5000;background:#1a1a2e;display:flex;flex-direction:column;align-items:center;overflow:hidden;">
 
-<div id="badmintonOverlay" class="hidden" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:5000;background:linear-gradient(180deg,#1a1a3e 0%,#0d1b4b 40%,#1a3a6b 100%);display:flex;flex-direction:column;align-items:center;overflow:hidden;">
-
-  <!-- 計時進度條 -->
-
-  <div class="badminton-timer-bar">
-    <div class="badminton-timer-fill" id="badmintonTimerFill" style="width:0%"></div>
+  <!-- 頂部 bar -->
+  <div style="width:100%;max-width:520px;display:flex;align-items:center;justify-content:space-between;padding:14px 16px 8px;flex-shrink:0;">
+    <button onclick="closeGame()" style="background:rgba(255,255,255,0.15);border:none;border-radius:50%;width:44px;height:44px;font-size:1.4rem;color:white;cursor:pointer;">⬅️</button>
+    <div id="gameTitle" style="font-size:1.1rem;font-weight:900;color:white;"></div>
+    <div id="gameScoreDisplay" style="background:rgba(255,215,0,0.15);border:2px solid rgba(255,215,0,0.4);border-radius:20px;padding:6px 14px;font-size:1.1rem;font-weight:900;color:#ffd700;">⭐ 0</div>
   </div>
 
-  <!-- 返回 + 計時 -->
+  <!-- 計時條 -->
+  <div style="width:100%;max-width:520px;padding:0 16px 8px;flex-shrink:0;">
+    <div style="height:6px;background:rgba(255,255,255,0.1);border-radius:6px;overflow:hidden;">
+      <div id="gameTimerBar" style="height:100%;background:linear-gradient(90deg,#22c55e,#f59e0b,#ef4444);width:100%;transition:width 0.1s linear;border-radius:6px;"></div>
+    </div>
+  </div>
 
-  <div style="position:absolute;top:14px;left:14px;z-index:5001;display:flex;align-items:center;gap:10px;">
-    <button onclick="closeBadminton()" style="background:rgba(255,255,255,0.15);border:none;border-radius:50%;width:44px;height:44px;font-size:1.4rem;color:white;cursor:pointer;display:flex;align-items:center;justify-content:center;">⬅️</button>
-    <div id="badmintonTimerDisplay" style="background:rgba(255,255,255,0.1);border-radius:12px;padding:6px 12px;font-size:0.85rem;font-weight:800;color:rgba(255,255,255,0.8);">⏱ 0:00</div>
+  <!-- 遊戲內容區 -->
+  <div id="gameArea" style="width:100%;max-width:520px;flex:1;padding:0 12px;overflow:hidden;display:flex;flex-direction:column;justify-content:center;"></div>
+
+  <!-- 結束畫面 -->
+  <div id="gameEndScreen" style="display:none;position:absolute;top:0;left:0;right:0;bottom:0;z-index:100;background:rgba(10,10,30,0.9);align-items:center;justify-content:center;padding:20px;">
+    <div style="background:linear-gradient(135deg,#fce4ec,#fff3e0);border-radius:28px;padding:28px 22px;text-align:center;max-width:320px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.4);">
+      <div style="font-size:3.5rem;margin-bottom:8px;" id="gameEndEmoji">🎉</div>
+      <div style="font-size:1.7rem;font-weight:900;color:#880e4f;margin-bottom:6px;" id="gameEndTitle">好棒！</div>
+      <div style="font-size:2.6rem;font-weight:900;color:#e91e63;margin:10px 0;" id="gameEndScore">0 分</div>
+      <div style="font-size:0.95rem;color:#ad1457;font-weight:700;margin-bottom:18px;line-height:1.6;" id="gameEndMsg"></div>
+      <button onclick="restartCurrentGame()" style="width:100%;padding:15px;font-size:1.1rem;font-weight:900;background:linear-gradient(135deg,#e91e63,#c2185b);color:white;border:none;border-radius:16px;cursor:pointer;box-shadow:0 5px 0 #880e4f;margin-bottom:8px;font-family:Nunito,sans-serif;">🔄 再玩一次！</button>
+      <button onclick="closeGame()" style="width:100%;padding:15px;font-size:1.1rem;font-weight:900;background:linear-gradient(135deg,#6366f1,#4f46e5);color:white;border:none;border-radius:16px;cursor:pointer;box-shadow:0 5px 0 #3730a3;font-family:Nunito,sans-serif;">🏠 回主畫面</button>
+    </div>
   </div>
 
   <!-- 15分鐘警告 -->
-
-  <div id="badmintonWarn15" class="badminton-warn-bubble hidden">
-    <div id="badmintonWarnBoppy" style="font-size:0;display:flex;justify-content:center;margin-bottom:8px;"></div>
+  <div id="gameWarn15" class="badminton-warn-bubble hidden" style="top:70px;">
     <div class="badminton-warn-title">⏰ 已經玩15分鐘了！</div>
-    <div class="badminton-warn-msg">再玩10分鐘就要休息喔！🏸</div>
-    <button class="badminton-warn-ok" onclick="dismissWarn15()">好，我知道了！💪</button>
+    <div class="badminton-warn-msg">再玩10分鐘要休息喔！💪</div>
+    <button class="badminton-warn-ok" onclick="document.getElementById('gameWarn15').classList.add('hidden')">好的！</button>
   </div>
 
   <!-- 25分鐘強制停止 -->
-
-  <div id="badmintonStop25" class="badminton-stop-overlay hidden">
+  <div id="gameStop25" class="badminton-stop-overlay hidden">
     <div class="badminton-stop-card">
-      <div class="badminton-stop-boppy" id="badmintonStopBoppy"></div>
       <div class="badminton-stop-title">今天玩夠了！😊</div>
-      <div class="badminton-stop-msg">阿均已經玩了25分鐘！<br>眼睛要休息了，<br><b>明天再來和波比打球！</b>🌟</div>
-      <button class="badminton-stop-btn" onclick="forceCloseBadminton()">好的，明天見！👋</button>
+      <div class="badminton-stop-msg">阿均已經玩了25分鐘！<br>眼睛要休息了，<br><b>明天再來！</b>🌟</div>
+      <button class="badminton-stop-btn" onclick="forceCloseGame()">好的，明天見！👋</button>
     </div>
   </div>
 
-  <!-- 結束畫面（在 overlay 內）-->
+</div><!-- /gameOverlay -->
 
-  <div id="btEndScreen" style="display:none;position:absolute;top:0;left:0;right:0;bottom:0;z-index:100;align-items:center;justify-content:center;padding:20px;background:rgba(10,10,30,0.85);">
-    <div class="bt-overlay-card">
-      <div style="font-size:4rem;margin-bottom:8px;">🏸</div>
-      <div class="bt-overlay-title" id="btEndTitle">好棒！</div>
-      <div class="bt-overlay-score" id="btEndScore">0 分</div>
-      <div class="bt-overlay-msg" id="btEndMsg">繼續加油！</div>
-      <button class="bt-overlay-btn" onclick="startGame()">🔄 再打一場！</button>
-      <button class="bt-overlay-btn secondary" onclick="goBack()">🏠 回主畫面</button>
-    </div>
-  </div>
 
-  <!-- HUD -->
-
-  <div class="bt-hud">
-    <div></div>
-    <div class="bt-hud-title">🏸 波比羽球場</div>
-    <div class="bt-hud-score">⭐ <span id="btScoreDisplay">0</span></div>
-  </div>
-
-  <!-- 勇氣條 -->
-
-  <div class="bt-courage-wrap">
-    <div class="bt-courage-label">
-      <svg width="16" height="16" viewBox="0 0 20 20">
-        <polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7" fill="#e91e63"/>
-      </svg>
-      波比勇氣值
-      <span id="btCourageText" style="margin-left:auto;color:#ffd700;">0 / 100</span>
-    </div>
-    <div class="bt-courage-track">
-      <div class="bt-courage-fill" id="btCourageFill" style="width:0%"></div>
-    </div>
-  </div>
-
-  <!-- 遊戲區 -->
-
-  <div id="btGameWrap">
-    <canvas id="btGameCanvas"></canvas>
-    <div class="ctrl-row">
-      <button class="ctrl-btn ctrl-left" id="btBtnLeft">◀ 左移</button>
-      <button class="ctrl-smash" id="btBtnSmash">🌟<span>大力扣</span></button>
-      <button class="ctrl-btn ctrl-right" id="btBtnRight">右移 ▶</button>
-    </div>
-  </div>
-
-</div><!-- /badmintonOverlay -->
 
 <!-- 補課彈窗 -->
-
 <div id="makeupOverlay" class="makeup-overlay hidden">
   <div class="makeup-popup">
     <div id="makeupBoppy" style="font-size:0px;display:flex;justify-content:center;margin-bottom:8px;"></div>
@@ -1669,7 +1639,6 @@ position:sticky;top:56px;z-index:9;
 </div>
 
 <!-- 徽章彈窗 -->
-
 <div id="badgeOverlay" class="badge-overlay hidden">
   <div class="badge-popup">
     <div id="popupIcon" style="font-size:0px;display:flex;justify-content:center;margin-bottom:8px;"></div>
@@ -1680,7 +1649,6 @@ position:sticky;top:56px;z-index:9;
 </div>
 
 <!-- 造型解鎖彈窗 -->
-
 <div id="unlockOverlay" class="unlock-overlay hidden">
   <div class="unlock-popup">
     <div class="unlock-sparkles">✨🌟✨</div>
@@ -2659,7 +2627,7 @@ function updateUI(){
   renderCostumes();
   renderCalendar();
   checkCostumeUnlocks();
-  updateBadmintonCard();
+  renderGameCenter();
 }
 
 function exchange(type){
@@ -3669,39 +3637,141 @@ function renderCalendar(){
     const isPast   = d < today;
     const isFuture = d > today;
     const isDone   = log?.allDone;
-    const isMakeup = log?.isMakeup;  // 是否已補課完成
+    const isMakeup = log?.isMakeup;
     const isHoliday= HOLIDAYS[`${month+1}/${d}`];
 
-    // 計算是否在補課期限內（7天）
-    const diffDays = today - d;
-    // 只有在 startDate 之後的日期才可能補課
-    const afterStart = S.missions.startDate ? dateStr >= S.missions.startDate : false;
-    // 有 log 記錄（曾登入過）或距今在3天內才顯示橘色可補課
-    const hasRecord = !!log;
-    const isRecent  = diffDays >= 1 && diffDays <= 3;
-    const canMakeup = isPast && !isDone && afterStart && diffDays >= 1 && diffDays <= 7 && (hasRecord || isRecent);
-
-    // 已有部分補課（非全部完成）
-    const partialMakeup = isPast && !isDone && log && (log.tasks?.some(t=>t.done));
+    const diffDays  = today - d;
+    const afterStart = S.missions.startDate ? dateStr >= S.missions.startDate : true;
+    const hasRecord  = !!log;
+    const isRecent   = diffDays >= 1 && diffDays <= 3;
+    // 7天內未完成的日期都可補課（不強制要有記錄，讓阿均補回來）
+    const canMakeup  = isPast && !isDone && diffDays >= 1 && diffDays <= 7;
+    // 已完成且在 startDate 之後 → 可以複習
+    const canReview  = isPast && isDone && afterStart;
 
     let cls = 'cal-day';
-    if(isToday)              cls += ' today';
-    else if(isFuture)        cls += ' future';
-    else if(isDone && isMakeup) cls += ' done makeup';
-    else if(isDone)          cls += ' done';
-    else if(canMakeup)       cls += ' missed';  // 橘黃色，可點
-    else if(isPast && !isDone) cls += ' future'; // 超過7天，淡化
+    if(isToday)                   cls += ' today';
+    else if(isFuture)             cls += ' future';
+    else if(isDone && isMakeup)   cls += ' done makeup';
+    else if(isDone)               cls += ' done';
+    else if(canMakeup)            cls += ' missed';
+    else if(isPast && !isDone)    cls += ' future';
 
     if(isHoliday && !isDone) cls += ' holiday';
+    if(canReview) cls += ' reviewable';
 
-    const clickHandler = canMakeup ? `onclick="openMakeupPopup('${dateStr}')"` : '';
-    const tooltip = canMakeup ? '點我補課！' : (isHoliday || '');
-    const badge = isDone ? '' : (canMakeup ? '📖' : '');
+    let clickHandler = '';
+    let tooltip = isHoliday || '';
+    let badge = '';
+
+    if(canMakeup){
+      clickHandler = `onclick="openMakeupPopup('${dateStr}')"`;
+      tooltip = '點我補課！';
+      badge = '📖';
+    } else if(canReview){
+      clickHandler = `onclick="openReviewPopup('${dateStr}')"`;
+      tooltip = '點我複習！';
+      badge = ''; // 已完成打勾
+    }
 
     html += `<div class="${cls}" ${clickHandler} title="${tooltip}" style="position:relative">${d}${badge}</div>`;
   }
 
   el.innerHTML = html;
+}
+
+/* ===================================================
+   REVIEW SYSTEM — 複習系統
+   =================================================== */
+function openReviewPopup(dateStr){
+  sfxClick();
+  const [y,m,d] = dateStr.split('-');
+  const startDate = S.missions.startDate || dateStr;
+  const diffDays  = Math.floor((new Date(dateStr) - new Date(startDate)) / 86400000);
+  const dayNum    = diffDays + 1;
+
+  const subjInfo = {
+    chinese:{ icon:'📚', name:'國語魔法課', color:'chinese' },
+    english:{ icon:'🔤', name:'英文探險課', color:'english' },
+    math:   { icon:'🔢', name:'數學遊戲課', color:'math'    },
+  };
+
+  const subjectBtns = Object.keys(subjInfo).map(s=>{
+    const info = subjInfo[s];
+    const chIdx = (Math.max(0,dayNum-1)) % COURSES_ALL[s].length;
+    const chName = COURSES_ALL[s][chIdx].chapter.split('：')[1] || COURSES_ALL[s][chIdx].chapter;
+    return `<button class="makeup-subj-btn ${info.color}" onclick="startReviewLesson('${s}','${dateStr}')">
+      <span class="makeup-subj-icon">${info.icon}</span>
+      <div class="makeup-subj-info">
+        <div class="makeup-subj-name">${info.name}</div>
+        <div class="makeup-subj-ch">${chName}</div>
+      </div>
+      <span class="makeup-subj-status">▶</span>
+    </button>`;
+  }).join('');
+
+  // 用補課彈窗顯示，只是標題不同
+  const boppyEl = document.getElementById('makeupBoppy');
+  if(boppyEl) boppyEl.innerHTML = boppySVG(70,'happy','',false);
+  document.getElementById('makeupDateLabel').textContent = `${y}年${parseInt(m)}月${parseInt(d)}日`;
+
+  // 暫時替換彈窗標題
+  const popup = document.querySelector('.makeup-popup');
+  if(popup){
+    popup.querySelector('.makeup-title') && (popup.querySelector('.makeup-title').textContent = '📖 複習課程');
+    const subText = popup.querySelector('[style*="1.3rem"]') || popup.children[2];
+  }
+  document.getElementById('makeupSubjects').innerHTML = subjectBtns;
+  document.getElementById('makeupOverlay').classList.remove('hidden');
+
+  // 標記這是複習模式
+  window._reviewDate = dateStr;
+  window._reviewMode = true;
+}
+
+function startReviewLesson(subj, dateStr){
+  sfxFlip();
+  window._reviewMode = false;
+  document.getElementById('makeupOverlay').classList.add('hidden');
+
+  // 複習用補課模式（不計分、不扣徽章）
+  S.makeupMode = true;
+  S.makeupDate = dateStr;
+  S.makeupSubj = subj;
+  S.subj = subj;
+  S.unit = 0;
+  S.sessionBadges = 0;
+  S.retries = 0;
+
+  const startDate = S.missions.startDate || dateStr;
+  const diffDays  = Math.floor((new Date(dateStr) - new Date(startDate)) / 86400000);
+  const dayNum    = diffDays + 1;
+  const chIdx     = (Math.max(0,dayNum-1)) % COURSES_ALL[subj].length;
+  S.makeupCourse  = COURSES_ALL[subj][chIdx];
+
+  const screen = document.getElementById('learnScreen');
+  screen.className = `learn-screen learn-screen-enter ${subj}-theme`;
+  screen.classList.remove('hidden');
+
+  const chapterShort = S.makeupCourse.chapter.split('：')[1] || S.makeupCourse.chapter.replace(/^[^一-鿿]*/,'');
+  document.getElementById('learnTitle').textContent = `📖 複習：${chapterShort}`;
+  document.getElementById('sessionBadges').textContent = '0';
+
+  // 橫幅
+  const existingBanner = document.getElementById('makeupBanner');
+  if(existingBanner) existingBanner.remove();
+  const [y,m,d] = dateStr.split('-');
+  const learnHeader = document.querySelector('.learn-header');
+  if(learnHeader && learnHeader.parentNode){
+    const banner = document.createElement('div');
+    banner.id = 'makeupBanner';
+    banner.className = 'makeup-banner';
+    banner.style.background = 'linear-gradient(135deg,#3b82f6,#1d4ed8)';
+    banner.textContent = '📖 複習模式 — ' + parseInt(m) + '月' + parseInt(d) + '日的課程';
+    learnHeader.parentNode.insertBefore(banner, learnHeader.nextSibling);
+  }
+
+  renderMakeupUnit();
 }
 
 /* ===================================================
@@ -3966,464 +4036,512 @@ function updateBadmintonCard(){
   const status = document.getElementById('badmintonStatus');
   const preview= document.getElementById('badmintonPreview');
   const msg    = document.getElementById('badmintonMsg');
+  const sub    = document.getElementById('badmintonSub');
   const boppy  = document.getElementById('badmintonBoppy');
   if(!btn) return;
 
-  // 今日已被強制停止
+  // 今日已被強制停止（玩滿25分鐘）
   const stoppedToday = localStorage.getItem('boppy_badminton_' + todayStr()) === 'stopped';
   if(stoppedToday){
     btn.disabled = true;
     btn.textContent = '😊 今天已玩25分鐘，明天再來！';
-    if(status){ status.textContent = '✅ 今日已完成'; status.classList.add('unlocked'); }
+    if(status){ status.textContent = '✅ 今日已滿'; status.classList.add('unlocked'); }
+    if(sub) sub.textContent = '今天的羽球時間結束了！';
     if(preview){ preview.classList.remove('locked'); preview.classList.add('unlocked-preview'); }
     if(msg){ msg.className='badminton-unlock-msg'; msg.textContent='今天玩得很開心！好好休息，明天波比還在！😊'; }
     if(boppy) boppy.innerHTML = boppySVG(72,'happy','',false);
     return;
   }
 
+  // 隨時都可以玩
+  btn.disabled = false;
+  const done = ['chinese','english','math'].filter(s=>S.today[s].done).length;
+
   if(allDone){
-    btn.disabled = false;
-    btn.textContent = '🏸 和波比一起打羽球！';
-    if(status){ status.textContent = '✅ 已解鎖！'; status.classList.add('unlocked'); }
+    btn.textContent = '🏸 和波比打球！（加倍獎勵🌟）';
+    if(status){ status.textContent = '🌟 加倍獎勵！'; status.classList.add('unlocked'); }
+    if(sub) sub.textContent = '三科完成！今天打球獎勵加倍！';
     if(preview){ preview.classList.remove('locked'); preview.classList.add('unlocked-preview'); }
-    if(msg){ msg.className='badminton-unlock-msg'; msg.textContent='太棒了！三科全完成！波比在羽球場等你！快來打一場放鬆一下！🌟'; }
+    if(msg){ msg.className='badminton-unlock-msg'; msg.textContent='太棒了！三科全完成！今天打羽球的迷你波加倍！快來！🌟'; }
     if(boppy) boppy.innerHTML = boppySVG(72,'happy','',true);
   } else {
-    btn.disabled = true;
-    const done = ['chinese','english','math'].filter(s=>S.today[s].done).length;
-    btn.textContent = done===0 ? '🔒 完成三科解鎖' : `🔒 還差 ${3-done} 科（${done}/3）`;
-    if(status){ status.textContent = done===0 ? '🔒 未解鎖' : `⏳ ${done}/3 科`; status.classList.remove('unlocked'); }
-    if(preview){ preview.classList.add('locked'); preview.classList.remove('unlocked-preview'); }
-    if(msg){ msg.className='badminton-lock-msg'; msg.textContent='完成今天的國語、英文、數學課程，就能和波比一起打羽球！⭐'; }
-    if(boppy) boppy.innerHTML = boppySVG(60,'normal','',false);
+    btn.textContent = done===0 ? '🏸 和波比一起打羽球！' : `🏸 打羽球！（完成${3-done}科還有加倍）`;
+    if(status){ status.textContent = done===0 ? '🏸 開放中' : `⭐ ${done}/3 科`; status.classList.remove('unlocked'); }
+    if(sub) sub.textContent = done===0 ? '隨時來和波比打羽球！' : `再完成 ${3-done} 科，打球獎勵加倍！`;
+    if(preview){ preview.classList.remove('locked'); preview.classList.add('unlocked-preview'); }
+    if(msg){ msg.className='badminton-unlock-msg'; msg.textContent='波比在羽球場等你！完成三科課程後來玩，還有加倍獎勵！🌟'; }
+    if(boppy) boppy.innerHTML = boppySVG(72,'happy','',false);
   }
 }
 
 
 
 /* ===================================================
-   BADMINTON GAME ENGINE（最小版）
+   GAME CENTER — 四個遊戲
    =================================================== */
-// 羽球遊戲函數 — 由 openBadminton 呼叫時初始化
-window._btInit = null;
-window._btStopGame = null;
-(function(){
-  let canvas, ctx, animId=null, eventsReady=false;
-  const G={running:false,score:0,combo:0,courage:0,lives:3,smashCharge:0,frame:0,speed:1};
-  const paddle={w:80,h:14,y:0,x:0,vx:0,get cx(){return this.x+this.w/2;}};
-  const bird={x:0,y:0,vx:0,vy:0,r:10,spinning:false};
-  let particles=[], animId2=null, lastTime=0, audioCtx2=null, touchStartX=0;
-  const keys={left:false,right:false,smash:false};
 
-  function ensureCanvas(){
-    canvas=document.getElementById('btGameCanvas');
-    if(canvas){
-      try{ ctx=canvas.getContext('2d'); }catch(e){ ctx=null; }
+const GAMES = [
+  { id:'whack',  name:'🌸 打波比',    emoji:'🌸', desc:'點擊冒出的波比！', unlockDays:1,  color:'#e91e63' },
+  { id:'memory', name:'🎴 記憶翻牌',  emoji:'🎴', desc:'找出相同圖案！',   unlockDays:3,  color:'#8b5cf6' },
+  { id:'catch',  name:'🍎 接水果',    emoji:'🍎', desc:'接住掉下來的水果！',unlockDays:7,  color:'#22c55e' },
+  { id:'bubble', name:'🔢 數字泡泡',  emoji:'🔢', desc:'按順序點破泡泡！', unlockDays:14, color:'#f59e0b' },
+];
+
+let currentGameId  = null;
+let gameRunning    = false;
+let gameScore      = 0;
+let gameTimerID    = null;
+let gameTotalMs    = 0;
+let gameStartTime  = null;
+let gameWarn15Done = false;
+const GAME_WARN_MS = 15*60*1000;
+const GAME_STOP_MS = 25*60*1000;
+
+// ── 遊戲中心卡片 ──
+function renderGameCenter(){
+  const grid = document.getElementById('gameCenterGrid');
+  if(!grid) return;
+  const dayNum = getDayNumber();
+  const stoppedKey = 'boppy_game_' + todayStr();
+  const stoppedToday = localStorage.getItem(stoppedKey) === 'stopped';
+
+  grid.innerHTML = GAMES.map(g=>{
+    const unlocked = dayNum >= g.unlockDays;
+    const locked   = !unlocked;
+    const daysLeft = g.unlockDays - dayNum;
+    const iconHtml = locked ? '🔒' : (g.id==='whack' ? `<div style="display:flex;justify-content:center;">${boppySVG(40,'happy','',false)}</div>` : `<div style="font-size:2rem;">${g.emoji}</div>`);
+    return `<div onclick="${unlocked && !stoppedToday ? `openGame('${g.id}')` : ''}" style="
+      background:${locked ? 'rgba(0,0,0,0.05)' : `linear-gradient(135deg,${g.color}22,${g.color}44)`};
+      border:2px solid ${locked ? '#e5e7eb' : g.color};
+      border-radius:18px;padding:14px 10px;text-align:center;cursor:${locked||stoppedToday?'default':'pointer'};
+      opacity:${locked?0.5:1};transition:transform 0.15s;
+    ">
+      ${iconHtml}
+      <div style="font-size:0.82rem;font-weight:900;color:${locked?'#9ca3af':g.color};margin-top:4px;">${g.name}</div>
+      <div style="font-size:0.72rem;color:#6b7280;margin-top:3px;">${
+        stoppedToday ? '今日已結束' :
+        locked ? `再${daysLeft}天解鎖` : g.desc
+      }</div>
+    </div>`;
+  }).join('');
+}
+
+// ── 開啟遊戲 ──
+function openGame(gameId){
+  sfxClick();
+  const key = 'boppy_game_' + todayStr();
+  if(localStorage.getItem(key) === 'stopped'){
+    alert('😊 今天的遊戲時間結束了！明天再來！');
+    return;
+  }
+  currentGameId = gameId;
+  gameScore = 0;
+  gameRunning = false;
+
+  const g = GAMES.find(x=>x.id===gameId);
+  document.getElementById('gameTitle').textContent = g.name;
+  document.getElementById('gameScoreDisplay').textContent = '⭐ 0';
+  document.getElementById('gameEndScreen').style.display = 'none';
+  document.getElementById('gameTimerBar').style.width = '100%';
+  document.getElementById('gameWarn15').classList.add('hidden');
+  document.getElementById('gameStop25').classList.add('hidden');
+  document.getElementById('gameOverlay').classList.remove('hidden');
+
+  // 計時
+  const savedMs = parseInt(localStorage.getItem(key+'_ms')||'0');
+  gameTotalMs = savedMs;
+  gameStartTime = Date.now();
+  gameWarn15Done = gameTotalMs >= GAME_WARN_MS;
+  if(gameTimerID) clearInterval(gameTimerID);
+  gameTimerID = setInterval(updateGameTimer, 1000);
+
+  // 初始化遊戲
+  setTimeout(()=>{ initGame(gameId); }, 100);
+}
+
+function updateGameTimer(){
+  if(!gameStartTime) return;
+  const elapsed = gameTotalMs + (Date.now()-gameStartTime);
+  const pct = Math.max(0, 100 - (elapsed/GAME_STOP_MS)*100);
+  const bar = document.getElementById('gameTimerBar');
+  if(bar) bar.style.width = pct+'%';
+  if(!gameWarn15Done && elapsed >= GAME_WARN_MS){
+    gameWarn15Done = true;
+    document.getElementById('gameWarn15').classList.remove('hidden');
+  }
+  if(elapsed >= GAME_STOP_MS){
+    clearInterval(gameTimerID); gameTimerID=null;
+    const key='boppy_game_'+todayStr();
+    localStorage.setItem(key,'stopped');
+    localStorage.setItem(key+'_ms',String(elapsed));
+    gameRunning=false;
+    document.getElementById('gameStop25').classList.remove('hidden');
+  }
+}
+
+function saveGameTime(){
+  if(!gameStartTime) return;
+  const elapsed = gameTotalMs+(Date.now()-gameStartTime);
+  localStorage.setItem('boppy_game_'+todayStr()+'_ms', String(elapsed));
+}
+
+function closeGame(){
+  sfxClick();
+  stopCurrentGame();
+  saveGameTime();
+  if(gameTimerID){ clearInterval(gameTimerID); gameTimerID=null; }
+  gameStartTime=null;
+  document.getElementById('gameOverlay').classList.add('hidden');
+  renderGameCenter();
+}
+
+function forceCloseGame(){
+  saveGameTime();
+  if(gameTimerID){ clearInterval(gameTimerID); gameTimerID=null; }
+  gameStartTime=null;
+  document.getElementById('gameStop25').classList.add('hidden');
+  document.getElementById('gameOverlay').classList.add('hidden');
+  renderGameCenter();
+}
+
+function restartCurrentGame(){
+  if(currentGameId){
+    document.getElementById('gameEndScreen').style.display='none';
+    gameScore=0;
+    document.getElementById('gameScoreDisplay').textContent='⭐ 0';
+    setTimeout(()=>initGame(currentGameId), 100);
+  }
+}
+
+function addGameScore(pts){
+  gameScore += pts;
+  document.getElementById('gameScoreDisplay').textContent = '⭐ '+gameScore;
+}
+
+function showGameEnd(){
+  gameRunning = false;
+  stopCurrentGame();
+  // 發放迷你波獎勵
+  const allDone = S.today.chinese.done&&S.today.english.done&&S.today.math.done;
+  const bonus   = allDone ? 2 : 1;
+  const earned  = Math.max(1, Math.floor(gameScore/30)) * bonus;
+  S.badges.mini += earned;
+  save(); updateUI();
+
+  const lvl   = Math.min(3, Math.floor(gameScore/50));
+  const emojis= ['😊','🌟','🎉','🏆'];
+  const titles= ['繼續加油！','很不錯！','好厲害！','超強的！'];
+  const msgs  = ['波比陪著你！💪','越來越進步了！✨','波比都佩服你！🌟','你是遊戲達人！👑'];
+  document.getElementById('gameEndEmoji').textContent  = emojis[lvl];
+  document.getElementById('gameEndTitle').textContent  = titles[lvl];
+  document.getElementById('gameEndScore').textContent  = gameScore+' 分';
+  document.getElementById('gameEndMsg').textContent    = msgs[lvl]+'\n⭐ 獲得 '+earned+' 個迷你波'+(bonus===2?' (加倍！)':'');
+  document.getElementById('gameEndScreen').style.display = 'flex';
+}
+
+/* ─────────────────────────────
+   遊戲路由
+───────────────────────────── */
+function initGame(id){
+  stopCurrentGame();
+  const area = document.getElementById('gameArea');
+  if(!area) return;
+  gameRunning = true;
+  if(id==='whack')  initWhack(area);
+  else if(id==='memory') initMemory(area);
+  else if(id==='catch')  initCatch(area);
+  else if(id==='bubble') initBubble(area);
+}
+function stopCurrentGame(){
+  gameRunning = false;
+  // 清除各遊戲計時器
+  if(window._whackTimer){ clearInterval(window._whackTimer); window._whackTimer=null; }
+  if(window._catchTimer){ clearInterval(window._catchTimer); window._catchTimer=null; }
+  if(window._bubbleTimer){ clearInterval(window._bubbleTimer); window._bubbleTimer=null; }
+  if(window._gameCountdown){ clearInterval(window._gameCountdown); window._gameCountdown=null; }
+}
+
+/* ─────────────────────────────
+   遊戲1：打波比 (Whack-a-Boppy)
+───────────────────────────── */
+function initWhack(area){
+  let timeLeft = 30, hits = 0;
+  area.innerHTML = `
+    <div style="text-align:center;margin-bottom:10px;">
+      <span style="font-size:0.9rem;font-weight:800;color:white;">⏱ <span id="whackTime">30</span>秒 &nbsp;|&nbsp; 點擊波比得分！</span>
+    </div>
+    <div id="whackGrid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:0 4px;"></div>
+  `;
+  const grid = document.getElementById('whackGrid');
+  const HOLES = 9;
+  let active = -1, showTimer = null;
+
+  // 建立9個洞
+  for(let i=0;i<HOLES;i++){
+    const hole = document.createElement('div');
+    hole.style.cssText = 'background:rgba(0,0,0,0.3);border-radius:50%;aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:2.2rem;cursor:pointer;border:3px solid rgba(255,255,255,0.1);transition:transform 0.1s;position:relative;overflow:hidden;';
+    hole.dataset.idx = i;
+    const boppyHtml = boppySVG(52,'happy','',false);
+    hole.innerHTML = `<span style="opacity:0;transition:opacity 0.15s,transform 0.15s;transform:scale(0);display:flex;align-items:center;justify-content:center;" class="boppy-face">${boppyHtml}</span>`;
+    function hitHole(){
+      if(hole.dataset.idx != active) return;
+      if(hole.dataset.hitting === '1') return; // 防重複
+      hole.dataset.hitting = '1';
+      hits++;
+      addGameScore(10);
+      const face = hole.querySelector('.boppy-face');
+      face.innerHTML = boppySVG(52,'sad','',false);
+      setTimeout(()=>{
+        face.innerHTML = boppySVG(52,'happy','',false);
+        face.style.opacity='0';
+        face.style.transform='scale(0)';
+        active=-1;
+        hole.dataset.hitting = '0';
+        showNext();
+      }, 250);
+      sfxCorrect();
     }
-    return !!(canvas&&ctx);
+    hole.addEventListener('touchstart', e=>{ e.preventDefault(); hitHole(); }, {passive:false});
+    hole.addEventListener('click', hitHole);
+    grid.appendChild(hole);
   }
-  function resize(){
-    if(!ensureCanvas()) return;
-    const w=document.getElementById('btGameWrap');
-    const ww = w ? Math.max(w.clientWidth, window.innerWidth-16) : window.innerWidth-16;
-    canvas.width  = Math.min(ww, 520);
-    canvas.height = Math.min(window.innerHeight*0.48, 320);
-  }
-  function beep(f,t,d,v=0.3){
-    try{
-      if(!audioCtx2) audioCtx2=new(window.AudioContext||window.webkitAudioContext)();
-      const o=audioCtx2.createOscillator(),g=audioCtx2.createGain();
-      o.connect(g);g.connect(audioCtx2.destination);
-      o.type=t;o.frequency.value=f;
-      g.gain.setValueAtTime(0,audioCtx2.currentTime);
-      g.gain.linearRampToValueAtTime(v,audioCtx2.currentTime+0.01);
-      g.gain.exponentialRampToValueAtTime(0.001,audioCtx2.currentTime+d);
-      o.start();o.stop(audioCtx2.currentTime+d+0.05);
-    }catch(e){}
-  }
-  function sfxHit(){beep(660,'sine',0.12,0.4);}
-  function sfxMiss(){beep(200,'triangle',0.4,0.3);}
-  function sfxSmash(){beep(1200,'sine',0.08,0.5);}
 
-  function drawBoppyCanvas(x,y,size,expr){
-    const r=size*0.5;
-    ctx.save();ctx.translate(x,y);
-    const g=ctx.createRadialGradient(-r*.3,-r*.35,0,0,0,r);
-    g.addColorStop(0,'#fce4ec');g.addColorStop(.6,'#f48fb1');g.addColorStop(1,'#e91e63');
-    ctx.beginPath();ctx.arc(0,0,r,0,Math.PI*2);ctx.fillStyle=g;ctx.fill();
-    ctx.globalAlpha=.4;ctx.fillStyle='#f06292';
-    ctx.beginPath();ctx.ellipse(-r*.42,r*.18,r*.28,r*.18,0,0,Math.PI*2);ctx.fill();
-    ctx.beginPath();ctx.ellipse(r*.42,r*.18,r*.28,r*.18,0,0,Math.PI*2);ctx.fill();
-    ctx.globalAlpha=1;
-    const ey=-r*.1;
-    if(expr==='happy'){
-      ctx.strokeStyle='#1a1a2e';ctx.lineWidth=r*.12;ctx.lineCap='round';
-      ctx.beginPath();ctx.arc(-r*.3,ey,r*.22,-Math.PI,0);ctx.stroke();
-      ctx.beginPath();ctx.arc(r*.3,ey,r*.22,-Math.PI,0);ctx.stroke();
-    } else {
-      ctx.fillStyle='#1a1a2e';
-      ctx.beginPath();ctx.arc(-r*.3,ey,r*.23,0,Math.PI*2);ctx.fill();
-      ctx.beginPath();ctx.arc(r*.3,ey,r*.23,0,Math.PI*2);ctx.fill();
-      ctx.fillStyle='white';
-      ctx.beginPath();ctx.arc(-r*.22,ey-r*.08,r*.09,0,Math.PI*2);ctx.fill();
-      ctx.beginPath();ctx.arc(r*.38,ey-r*.08,r*.09,0,Math.PI*2);ctx.fill();
+  function showNext(){
+    if(!gameRunning) return;
+    const next = Math.floor(Math.random()*HOLES);
+    active = next;
+    const face = grid.children[next].querySelector('.boppy-face');
+    face.style.opacity='1'; face.style.transform='scale(1)';
+    showTimer = setTimeout(()=>{
+      if(active===next){ face.style.opacity='0'; face.style.transform='scale(0)'; active=-1; }
+      if(gameRunning) showNext();
+    }, Math.max(600, 1200 - hits*30));
+  }
+
+  // 倒數計時
+  window._gameCountdown = setInterval(()=>{
+    timeLeft--;
+    const tw = document.getElementById('whackTime');
+    if(tw) tw.textContent = timeLeft;
+    if(timeLeft <= 0){
+      clearInterval(window._gameCountdown); window._gameCountdown=null;
+      clearTimeout(showTimer);
+      showGameEnd();
     }
-    ctx.strokeStyle='#c2185b';ctx.lineWidth=r*.1;
-    ctx.beginPath();ctx.arc(0,r*.2,r*.32,.2,Math.PI-.2);ctx.stroke();
-    ctx.restore();
-  }
+  },1000);
 
-  function drawCourt(){
-    const W=canvas.width,H=canvas.height;
-    const sky=ctx.createLinearGradient(0,0,0,H*.6);
-    sky.addColorStop(0,'#0d1b4b');sky.addColorStop(1,'#1a3a6b');
-    ctx.fillStyle=sky;ctx.fillRect(0,0,W,H*.6);
-    const fl=ctx.createLinearGradient(0,H*.6,0,H);
-    fl.addColorStop(0,'#1b5e20');fl.addColorStop(1,'#2e7d32');
-    ctx.fillStyle=fl;ctx.fillRect(0,H*.6,W,H*.4);
-    ctx.strokeStyle='rgba(255,255,255,.3)';ctx.lineWidth=1.5;
-    ctx.beginPath();ctx.moveTo(W*.1,H*.6);ctx.lineTo(W*.9,H*.6);ctx.stroke();
-    ctx.beginPath();ctx.moveTo(W/2,H*.6);ctx.lineTo(W/2,H*.95);ctx.stroke();
-  }
+  showNext();
+}
 
-  function drawPaddle(){
-    const p=paddle;
-    const g=ctx.createLinearGradient(p.x,p.y,p.x,p.y+p.h);
-    g.addColorStop(0,'#fce4ec');g.addColorStop(1,'#f48fb1');
-    ctx.fillStyle=g;
-    ctx.strokeStyle=G.smashCharge>80?'#ffd700':'#e91e63';
-    ctx.lineWidth=2;
-    // 用 arc 畫圓角矩形（相容所有 iOS 版本）
-    const r=6;
-    ctx.beginPath();
-    ctx.moveTo(p.x+r,p.y);
-    ctx.lineTo(p.x+p.w-r,p.y);
-    ctx.arcTo(p.x+p.w,p.y,p.x+p.w,p.y+r,r);
-    ctx.lineTo(p.x+p.w,p.y+p.h-r);
-    ctx.arcTo(p.x+p.w,p.y+p.h,p.x+p.w-r,p.y+p.h,r);
-    ctx.lineTo(p.x+r,p.y+p.h);
-    ctx.arcTo(p.x,p.y+p.h,p.x,p.y+p.h-r,r);
-    ctx.lineTo(p.x,p.y+r);
-    ctx.arcTo(p.x,p.y,p.x+r,p.y,r);
-    ctx.closePath();
-    ctx.fill();ctx.stroke();
-  }
+/* ─────────────────────────────
+   遊戲2：記憶翻牌
+───────────────────────────── */
+function initMemory(area){
+  const ICONS = ['🐹','🌸','⭐','🎀','🍎','🌈','🎵','💎'];
+  const pairs = [...ICONS.slice(0,6),...ICONS.slice(0,6)].sort(()=>Math.random()-0.5);
+  let flipped=[], matched=0, canFlip=true, moves=0;
 
-  function drawBird(){
-    ctx.save();ctx.translate(bird.x,bird.y);
-    if(bird.spinning) ctx.rotate(G.frame*.3);
-    ctx.fillStyle=bird.spinning?'#ffd700':'white';
-    ctx.beginPath();ctx.arc(0,0,bird.r,0,Math.PI*2);ctx.fill();
-    ctx.strokeStyle='#bdbdbd';ctx.lineWidth=1.5;ctx.stroke();
-    ctx.fillStyle='rgba(255,255,255,.6)';
-    ctx.beginPath();ctx.arc(-bird.r*.3,-bird.r*.3,bird.r*.3,0,Math.PI*2);ctx.fill();
-    ctx.restore();
-  }
+  area.innerHTML = `
+    <div style="text-align:center;margin-bottom:10px;">
+      <span style="font-size:0.9rem;font-weight:800;color:white;">翻牌配對！找出 6 對相同圖案 🎴</span>
+    </div>
+    <div id="memGrid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:0 4px;"></div>
+  `;
+  const grid = document.getElementById('memGrid');
 
-  function spawnP(x,y,c){
-    for(let i=0;i<8;i++){
-      const a=Math.random()*Math.PI*2,s=2+Math.random()*4;
-      particles.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s,life:1,color:c});
-    }
+  pairs.forEach((icon,i)=>{
+    const card = document.createElement('div');
+    card.style.cssText = 'aspect-ratio:1;border-radius:12px;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:flex;align-items:center;justify-content:center;font-size:1.8rem;cursor:pointer;border:2px solid rgba(255,255,255,0.2);transition:transform 0.2s;user-select:none;-webkit-user-select:none;';
+    card.textContent = '❓';
+    card.dataset.icon = icon;
+    card.dataset.idx  = i;
+    card.dataset.done = '0';
+    card.addEventListener('click',()=>{
+      if(!canFlip||!gameRunning) return;
+      if(card.dataset.done==='1') return;
+      if(flipped.includes(card)) return;
+      card.textContent = icon;
+      card.style.background = 'linear-gradient(135deg,#fce4ec,#f48fb1)';
+      flipped.push(card);
+      if(flipped.length===2){
+        canFlip=false; moves++;
+        if(flipped[0].dataset.icon===flipped[1].dataset.icon){
+          flipped.forEach(c=>{ c.dataset.done='1'; c.style.background='linear-gradient(135deg,#d1fae5,#34d399)'; c.style.border='2px solid #10b981'; });
+          matched++; addGameScore(20); sfxCorrect();
+          flipped=[];canFlip=true;
+          if(matched===6){ setTimeout(()=>{ addGameScore(50-moves); showGameEnd(); },400); }
+        } else {
+          setTimeout(()=>{
+            flipped.forEach(c=>{ c.textContent='❓'; c.style.background='linear-gradient(135deg,#6366f1,#8b5cf6)'; });
+            flipped=[];canFlip=true;
+          },800);
+        }
+      }
+    });
+    grid.appendChild(card);
+  });
+}
+
+/* ─────────────────────────────
+   遊戲3：接水果
+───────────────────────────── */
+function initCatch(area){
+  const FRUITS=['🍎','🍊','🍋','🍇','🍓','🍑','🥝','🍌'];
+  let timeLeft=45, missed=0, paddleX=50;
+  area.style.position='relative';
+  area.innerHTML=`
+    <div style="text-align:center;margin-bottom:6px;">
+      <span style="font-size:0.9rem;font-weight:800;color:white;">⏱ <span id="catchTime">45</span>秒 &nbsp;滑動接水果！❤️ <span id="catchLives">5</span></span>
+    </div>
+    <div id="catchField" style="position:relative;width:100%;height:220px;background:linear-gradient(180deg,#1a3a6b,#1b5e20);border-radius:16px;overflow:hidden;border:2px solid rgba(255,255,255,0.1);">
+      <div id="catchPaddle" style="position:absolute;bottom:8px;width:22%;height:14px;background:linear-gradient(to right,#f48fb1,#e91e63);border-radius:8px;left:39%;border:2px solid #c2185b;transition:left 0.05s;"></div>
+    </div>
+    <div class="ctrl-row" style="margin-top:6px;">
+      <button id="catchLeft" class="ctrl-btn ctrl-left">◀ 左移</button>
+      <button id="catchRight" class="ctrl-btn ctrl-right">右移 ▶</button>
+    </div>
+  `;
+
+  const field   = document.getElementById('catchField');
+  const paddle  = document.getElementById('catchPaddle');
+  const fruits  = [];
+  let touchStartX2 = 0;
+
+  // 觸控滑動
+  field.addEventListener('touchstart',e=>{ touchStartX2=e.touches[0].clientX; e.preventDefault(); },{passive:false});
+  field.addEventListener('touchmove',e=>{
+    const dx=(e.touches[0].clientX-touchStartX2)/field.clientWidth*100;
+    touchStartX2=e.touches[0].clientX;
+    paddleX=Math.max(11,Math.min(89,paddleX+dx*1.5));
+    paddle.style.left=(paddleX-11)+'%';
+    e.preventDefault();
+  },{passive:false});
+
+  // 按鈕
+  const lBtn=document.getElementById('catchLeft'), rBtn=document.getElementById('catchRight');
+  let moveL=false,moveR=false;
+  function holdBtn(btn,isLeft){
+    btn.addEventListener('touchstart',e=>{isLeft?moveL=true:moveR=true;e.preventDefault();},{passive:false});
+    btn.addEventListener('touchend',()=>{isLeft?moveL=false:moveR=false;});
+    btn.addEventListener('mousedown',()=>{isLeft?moveL=true:moveR=true;});
+    btn.addEventListener('mouseup',()=>{isLeft?moveL=false:moveR=false;});
   }
-  function drawP(){
-    particles=particles.filter(p=>{
-      p.x+=p.vx;p.y+=p.vy;p.vy+=.15;p.life-=.04;
-      ctx.globalAlpha=p.life;ctx.fillStyle=p.color;
-      ctx.beginPath();ctx.arc(p.x,p.y,4,0,Math.PI*2);ctx.fill();
-      ctx.globalAlpha=1;return p.life>0;
+  holdBtn(lBtn,true); holdBtn(rBtn,false);
+
+  // 生成水果
+  function spawnFruit(){
+    if(!gameRunning) return;
+    const div=document.createElement('div');
+    const x=5+Math.random()*90;
+    div.style.cssText=`position:absolute;top:-30px;left:${x}%;font-size:1.5rem;transform:translateX(-50%);pointer-events:none;`;
+    div.textContent=FRUITS[Math.floor(Math.random()*FRUITS.length)];
+    div.dataset.x=x; div.dataset.y=-8;
+    field.appendChild(div);
+    fruits.push(div);
+  }
+  window._whackTimer = setInterval(spawnFruit, 800);
+
+  // 遊戲迴圈
+  let last=0;
+  function loop(t){
+    if(!gameRunning) return;
+    requestAnimationFrame(loop);
+    const dt=(t-last)/16; last=t;
+    // 移動球拍
+    if(moveL) paddleX=Math.max(11,paddleX-1.5*dt);
+    if(moveR) paddleX=Math.min(89,paddleX+1.5*dt);
+    paddle.style.left=(paddleX-11)+'%';
+    // 移動水果
+    const fh=field.clientHeight||220;
+    fruits.forEach((f,i)=>{
+      let y=parseFloat(f.dataset.y)+0.8*dt;
+      f.dataset.y=y;
+      f.style.top=(y/fh*100)+'%';
+      // 碰到球拍
+      const fx=parseFloat(f.dataset.x);
+      if(y>fh-40&&y<fh-10&&Math.abs(fx-paddleX)<13){
+        field.removeChild(f); fruits.splice(i,1);
+        addGameScore(10); sfxCorrect();
+        return;
+      }
+      // 落地
+      if(y>fh){
+        field.removeChild(f); fruits.splice(i,1);
+        missed++;
+        const lv=document.getElementById('catchLives');
+        if(lv) lv.textContent=Math.max(0,5-missed);
+        if(missed>=5){ showGameEnd(); }
+      }
+    });
+  }
+  requestAnimationFrame(loop);
+
+  // 倒數
+  window._gameCountdown=setInterval(()=>{
+    timeLeft--;
+    const tw=document.getElementById('catchTime'); if(tw) tw.textContent=timeLeft;
+    if(timeLeft<=0){ clearInterval(window._gameCountdown);window._gameCountdown=null; showGameEnd(); }
+  },1000);
+}
+
+/* ─────────────────────────────
+   遊戲4：數字泡泡
+───────────────────────────── */
+function initBubble(area){
+  const MAX=15;
+  let next=1, timeLeft=60, wrong=0;
+  area.innerHTML=`
+    <div style="text-align:center;margin-bottom:8px;">
+      <span style="font-size:0.9rem;font-weight:800;color:white;">按順序點破數字泡泡！⏱ <span id="bubbleTime">60</span>秒</span>
+    </div>
+    <div style="text-align:center;margin-bottom:6px;font-size:0.85rem;color:#ffd700;font-weight:800;">下一個：<span id="nextNum" style="font-size:1.2rem;">1</span></div>
+    <div id="bubbleField" style="position:relative;width:100%;height:240px;background:rgba(255,255,255,0.05);border-radius:16px;overflow:hidden;border:2px solid rgba(255,255,255,0.1);"></div>
+  `;
+  const field=document.getElementById('bubbleField');
+  const bubbles=[];
+  const colors=['#e91e63','#8b5cf6','#3b82f6','#22c55e','#f59e0b','#ef4444','#06b6d4','#a855f7'];
+
+  function spawnAll(){
+    field.innerHTML='';
+    bubbles.length=0;
+    const nums=[...Array(MAX)].map((_,i)=>i+1).sort(()=>Math.random()-0.5);
+    nums.forEach(n=>{
+      const b=document.createElement('div');
+      const x=5+Math.random()*88, y=5+Math.random()*88;
+      const c=colors[n%colors.length];
+      b.style.cssText=`position:absolute;left:${x}%;top:${y}%;transform:translate(-50%,-50%);width:44px;height:44px;border-radius:50%;background:${c};display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;color:white;cursor:pointer;border:3px solid rgba(255,255,255,0.4);box-shadow:0 4px 12px rgba(0,0,0,0.3);user-select:none;-webkit-user-select:none;`;
+      b.textContent=n;
+      b.addEventListener('click',()=>{
+        if(!gameRunning) return;
+        if(n===next){
+          b.style.transform='translate(-50%,-50%) scale(0)';
+          b.style.opacity='0';
+          b.style.transition='all 0.2s';
+          setTimeout(()=>b.remove(),200);
+          next++; addGameScore(15); sfxCorrect();
+          const nn=document.getElementById('nextNum'); if(nn) nn.textContent=next>MAX?'✅':next;
+          if(next>MAX){ setTimeout(()=>{addGameScore(100);showGameEnd();},400); }
+        } else {
+          b.style.animation='none'; b.style.background='#ef4444';
+          setTimeout(()=>b.style.background=c,300);
+          wrong++; sfxWrong();
+        }
+      });
+      field.appendChild(b);
+      bubbles.push(b);
     });
   }
 
-  function startGame(){
-    if(!ensureCanvas()) return;
-    resize();
-    const W=canvas.width,H=canvas.height;
-    paddle.w=Math.min(90,W*.22);paddle.h=14;paddle.y=H-55;
-    paddle.x=W/2-paddle.w/2;paddle.vx=0;
-    bird.x=W/2;bird.y=H*.25;
-    const spd=3.5,angle=(Math.random()*.6+.2)*Math.PI;
-    bird.vx=Math.cos(angle)*spd;bird.vy=Math.abs(Math.sin(angle)*spd);
-    bird.spinning=false;particles=[];
-    G.running=true;G.score=0;G.combo=0;G.courage=0;G.lives=3;G.smashCharge=0;G.frame=0;G.speed=1;
-    const _es=document.getElementById('btEndScreen'); if(_es) _es.style.display='none';
-    updateHUD();
-    if(animId) cancelAnimationFrame(animId);
-    lastTime=0;loop(0);
-  }
-
-  function loop(ts){
-    if(!G.running) return;
-    animId=requestAnimationFrame(loop);
-    const dt=Math.min((ts-lastTime)/16,3);lastTime=ts;G.frame++;
-    const W=canvas.width,H=canvas.height;
-    const spd=7*dt;
-    if(keys.left) paddle.vx=-spd;
-    else if(keys.right) paddle.vx=spd;
-    else paddle.vx*=.7;
-    paddle.x=Math.max(0,Math.min(W-paddle.w,paddle.x+paddle.vx));
-    const bs=G.speed*dt;
-    bird.x+=bird.vx*bs;bird.y+=bird.vy*bs;bird.vy+=.18*dt;
-    if(bird.x-bird.r<0){bird.x=bird.r;bird.vx=Math.abs(bird.vx);}
-    if(bird.x+bird.r>W){bird.x=W-bird.r;bird.vx=-Math.abs(bird.vx);}
-    if(bird.y-bird.r<0){bird.y=bird.r;bird.vy=Math.abs(bird.vy);}
-    if(bird.y+bird.r>=paddle.y&&bird.y+bird.r<=paddle.y+paddle.h+12&&bird.x>=paddle.x-5&&bird.x<=paddle.x+paddle.w+5&&bird.vy>0){
-      if(keys.smash&&G.smashCharge>=80){
-        bird.spinning=true;bird.vy=-12;bird.vx=(Math.random()-.5)*6;G.smashCharge=0;
-        sfxSmash();spawnP(bird.x,bird.y,'#ffd700');addScore(30);
-      } else {
-        bird.spinning=false;G.smashCharge=Math.min(100,G.smashCharge+20);G.combo++;
-        sfxHit();spawnP(bird.x,bird.y,'#f48fb1');addScore(G.combo>=5?15:G.combo>=3?10:5);
-      }
-      bird.vy=-(6+Math.random()*3)*G.speed;bird.vx+=(bird.x-paddle.cx)*.05;
-      G.speed=Math.min(2.2,1+G.score/200);
-    }
-    if(bird.y-bird.r>H){
-      G.combo=0;bird.spinning=false;G.lives--;sfxMiss();spawnP(bird.x,H-10,'#ef4444');
-      if(G.lives<=0){gameOver();return;}
-      bird.x=W/2+(Math.random()-.5)*W*.4;bird.y=H*.2;bird.vy=4;bird.vx=(Math.random()-.5)*5;
-    }
-    ctx.clearRect(0,0,W,H);drawCourt();drawP();drawBird();drawPaddle();
-    const glowing=G.courage>=100;
-    drawBoppyCanvas(W-36,H-36,32,G.combo>=5?'happy':'normal');
-    if(G.combo>=3){
-      ctx.font=`bold ${14+G.combo}px Nunito,sans-serif`;ctx.fillStyle='#ffd700';
-      ctx.textAlign='center';ctx.textBaseline='top';
-      ctx.fillText(`${G.combo} COMBO!`,W/2,8);
-    }
-    // 生命值
-    ctx.font='20px serif';
-    for(let i=0;i<G.lives;i++) ctx.fillText('🏸',W-30-i*28,26);
-  }
-
-  function addScore(pts){
-    G.score+=pts;G.courage=Math.min(100,G.courage+pts*.8);updateHUD();
-    if(G.courage>=100){G.courage=0;beep(784,'sine',.3,.4);}
-  }
-  function updateHUD(){
-    const sd=document.getElementById('btScoreDisplay');
-    if(sd) sd.textContent=G.score;
-    const cf=document.getElementById('btCourageFill');
-    if(cf) cf.style.width=G.courage+'%';
-    const ct=document.getElementById('btCourageText');
-    if(ct) ct.textContent=`${Math.floor(G.courage)} / 100`;
-  }
-
-  function gameOver(){
-    G.running=false;cancelAnimationFrame(animId);
-    const lvl=Math.min(3,Math.floor(G.score/50));
-    const titles=['繼續加油！','很不錯喲！','好厲害！','超強的！'];
-    const msgs=['波比陪著你，下次一定更好！💪','你的勇氣越來越強了！✨','波比都被你感動了！🌟','你是羽球小達人！🏸👑'];
-    const et=document.getElementById('btEndTitle'),es=document.getElementById('btEndScore'),em=document.getElementById('btEndMsg');
-    if(et) et.textContent=titles[lvl];
-    if(es) es.textContent=G.score+' 分';
-    if(em) em.textContent=msgs[lvl];
-    setTimeout(()=>{ const end=document.getElementById('btEndScreen'); if(end){end.style.display='flex';} },600);
-  }
-
-  function btKeyDown(e){
-    if(e.key==='ArrowLeft'||e.key==='a') keys.left=true;
-    if(e.key==='ArrowRight'||e.key==='d') keys.right=true;
-    if(e.key===' '||e.key==='ArrowUp') keys.smash=true;
-    e.preventDefault();
-  }
-  function btKeyUp(e){
-    if(e.key==='ArrowLeft'||e.key==='a') keys.left=false;
-    if(e.key==='ArrowRight'||e.key==='d') keys.right=false;
-    if(e.key===' '||e.key==='ArrowUp') keys.smash=false;
-  }
-  function hold(btn,key){
-    if(!btn) return;
-    btn.addEventListener('touchstart',e=>{keys[key]=true;e.preventDefault();},{passive:false});
-    btn.addEventListener('touchend',e=>{keys[key]=false;e.preventDefault();},{passive:false});
-    btn.addEventListener('mousedown',()=>keys[key]=true);
-    btn.addEventListener('mouseup',()=>keys[key]=false);
-  }
-
-  window._btInit=function(){
-    // 嘗試最多3次，每次間隔100ms（等 iOS 完成 layout）
-    let tries = 0;
-    function tryInit(){
-      tries++;
-      if(!ensureCanvas()){
-        if(tries < 3) setTimeout(tryInit, 150);
-        return;
-      }
-      canvas.style.touchAction='none';
-      resize();
-      // 確保 canvas 有尺寸後再開始
-      if(canvas.width === 0 || canvas.height === 0){
-        if(tries < 3){ setTimeout(tryInit, 150); return; }
-      }
-      if(!eventsReady){
-        eventsReady=true;
-        document.addEventListener('keydown',btKeyDown);
-        document.addEventListener('keyup',btKeyUp);
-        canvas.addEventListener('touchstart',e=>{touchStartX=e.touches[0].clientX;e.preventDefault();},{passive:false});
-        canvas.addEventListener('touchmove',e=>{
-          const dx=e.touches[0].clientX-touchStartX;touchStartX=e.touches[0].clientX;
-          paddle.x=Math.max(0,Math.min(canvas.width-paddle.w,paddle.x+dx*1.2));
-          e.preventDefault();
-        },{passive:false});
-        canvas.addEventListener('mousemove',e=>{
-          const r=canvas.getBoundingClientRect();
-          paddle.x=Math.max(0,Math.min(canvas.width-paddle.w,(e.clientX-r.left)-paddle.w/2));
-        });
-        hold(document.getElementById('btBtnLeft'),'left');
-        hold(document.getElementById('btBtnRight'),'right');
-        hold(document.getElementById('btBtnSmash'),'smash');
-      }
-      startGame();
-    }
-    tryInit();
-  };
-
-  window._btStopGame=function(){
-    G.running=false;
-    if(animId){cancelAnimationFrame(animId);animId=null;}
-    if(canvas) canvas.style.touchAction='';  // 恢復預設，讓主畫面可以滾動
-    document.removeEventListener('keydown',btKeyDown);
-    document.removeEventListener('keyup',btKeyUp);
-    eventsReady=false;
-  };
-
-})();
-// ← 羽球引擎結束
-
-
-/* ===================================================
-   BADMINTON TIMER SYSTEM
-   =================================================== */
-let badmintonStartTime = null;   // 本次開始時間
-let badmintonTotalMs   = 0;      // 今日累計毫秒
-let badmintonTimerID   = null;   // setInterval ID
-let warn15Shown        = false;  // 15分鐘警告是否已顯示
-const WARN_MS  = 15 * 60 * 1000;  // 15分鐘
-const STOP_MS  = 25 * 60 * 1000;  // 25分鐘
-
-function openBadminton(){
-  sfxClick();
-  // 檢查今日是否已被強制停止
-  const key = 'boppy_badminton_' + todayStr();
-  if(localStorage.getItem(key) === 'stopped'){
-    alert('😊 今天的羽球時間結束了！明天再來和波比打球吧！');
-    return;
-  }
-  // 讀取今日已累計時間
-  const savedMs = parseInt(localStorage.getItem(key+'_ms') || '0');
-  badmintonTotalMs = savedMs;
-  badmintonStartTime = Date.now();
-  warn15Shown = badmintonTotalMs >= WARN_MS;  // 已超過15分鐘不再提醒
-
-  const _es=document.getElementById('btEndScreen'); if(_es) _es.style.display='none';
-  document.getElementById('badmintonOverlay').classList.remove('hidden');
-  // 啟動遊戲（延遲確保 overlay 完全顯示後 canvas 才初始化）
-  keys.left=false;keys.right=false;keys.smash=false;
-  if(typeof window._btInit === 'function') setTimeout(window._btInit, 300);
-  // 填入波比 SVG
-  const warnBoppy = document.getElementById('badmintonWarnBoppy');
-  if(warnBoppy) warnBoppy.innerHTML = boppySVG(52,'normal','',false);
-  const stopBoppy = document.getElementById('badmintonStopBoppy');
-  if(stopBoppy) stopBoppy.innerHTML = boppySVG(80,'sad','',false);
-
-  // 啟動計時器
-  badmintonTimerID = setInterval(updateBadmintonTimer, 1000);
-  updateBadmintonTimer();
-}
-
-function updateBadmintonTimer(){
-  if(!badmintonStartTime) return;
-  const elapsed = badmintonTotalMs + (Date.now() - badmintonStartTime);
-  const totalSec = Math.floor(elapsed / 1000);
-  const min = Math.floor(totalSec / 60);
-  const sec = totalSec % 60;
-
-  // 更新計時顯示
-  const display = document.getElementById('badmintonTimerDisplay');
-  if(display){
-    const color = elapsed >= STOP_MS ? '#ef4444' : elapsed >= WARN_MS ? '#f59e0b' : 'rgba(255,255,255,0.8)';
-    display.style.color = color;
-    display.textContent = `⏱ ${min}:${String(sec).padStart(2,'0')}`;
-  }
-
-  // 更新進度條（25分鐘為滿）
-  const fill = document.getElementById('badmintonTimerFill');
-  if(fill){
-    const pct = Math.min(100, (elapsed / STOP_MS) * 100);
-    fill.style.width = pct + '%';
-  }
-
-  // 15分鐘警告
-  if(!warn15Shown && elapsed >= WARN_MS){
-    warn15Shown = true;
-    document.getElementById('badmintonWarn15').classList.remove('hidden');
-    sfxLevelUp();
-  }
-
-  // 25分鐘強制停止
-  if(elapsed >= STOP_MS){
-    clearInterval(badmintonTimerID);
-    badmintonTimerID = null;
-    // 儲存停止狀態
-    saveBadmintonTime(elapsed);
-    localStorage.setItem('boppy_badminton_' + todayStr(), 'stopped');
-    // 顯示停止畫面
-    document.getElementById('badmintonStop25').classList.remove('hidden');
-    sfxLevelUp();
-  }
-}
-
-function dismissWarn15(){
-  sfxClick();
-  document.getElementById('badmintonWarn15').classList.add('hidden');
-}
-
-function saveBadmintonTime(elapsedMs){
-  const key = 'boppy_badminton_' + todayStr() + '_ms';
-  localStorage.setItem(key, String(elapsedMs));
-}
-
-function closeBadminton(){
-  sfxClick();
-  // 停止遊戲迴圈
-  if(typeof window._btStopGame === 'function') window._btStopGame();
-  // 儲存累計時間
-  if(badmintonStartTime){
-    const elapsed = badmintonTotalMs + (Date.now() - badmintonStartTime);
-    saveBadmintonTime(elapsed);
-  }
-  _stopBadmintonTimer();
-  document.getElementById('badmintonOverlay').classList.add('hidden');
-  document.getElementById('badmintonWarn15').classList.add('hidden');
-}
-
-// 監聽 iframe 內的 postMessage（goBack 按鈕）
-window.addEventListener('message', function(e){
-  if(e.data === 'closeBadminton') closeBadminton();
-});
-
-function forceCloseBadminton(){
-  sfxClick();
-  _stopBadmintonTimer();
-  document.getElementById('badmintonStop25').classList.add('hidden');
-  document.getElementById('badmintonOverlay').classList.add('hidden');
-  document.getElementById('badmintonWarn15').classList.add('hidden');
-  // 更新按鈕狀態
-  const btn = document.getElementById('badmintonBtn');
-  if(btn){
-    btn.disabled = true;
-    btn.textContent = '😊 今天已玩25分鐘，明天再來！';
-  }
-  // 同步更新卡片狀態
-  updateBadmintonCard();
-}
-
-function _stopBadmintonTimer(){
-  if(badmintonTimerID){ clearInterval(badmintonTimerID); badmintonTimerID = null; }
-  badmintonStartTime = null;
+  spawnAll();
+  window._gameCountdown=setInterval(()=>{
+    timeLeft--;
+    const tw=document.getElementById('bubbleTime'); if(tw) tw.textContent=timeLeft;
+    if(timeLeft<=0){ clearInterval(window._gameCountdown);window._gameCountdown=null; showGameEnd(); }
+  },1000);
 }
 
 /* ===================================================
+   SAVE / LOAD/* ===================================================
    SAVE / LOAD
    =================================================== */
 function save(){ localStorage.setItem('hamsterAcademy_v2', JSON.stringify(S)); }
@@ -4435,6 +4553,5 @@ function load(){
 // ===== BOOT =====
 init();
 </script>
-
 </body>
 </html>
