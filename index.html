@@ -1345,6 +1345,7 @@ position:sticky;top:56px;z-index:9;
     <div class="welcome-title">波比魔法學院</div>
     <div class="welcome-sub">✨ 阿均的學習成長史 ✨</div>
 
+```
 <div class="story-box">
   <p>🌟 歡迎來到波比魔法學院！</p>
   <p>我是<b>波比</b>！你的冒險夥伴！我們要一起去探索知識的魔法森林，並肩挑戰每一個關卡！</p>
@@ -1357,6 +1358,7 @@ position:sticky;top:56px;z-index:9;
   <input type="text" id="nameInput" class="name-input" placeholder="阿均" maxlength="10">
 </div>
 <button class="start-btn" onclick="startApp()">🏸 我準備好了！跟波比出發！</button>
+```
 
   </div>
 </div>
@@ -3810,12 +3812,15 @@ function startMakeupLesson(subj, dateStr){
   // 在學習頁頂部加補課提示橫幅
   const existingBanner = document.getElementById('makeupBanner');
   if(existingBanner) existingBanner.remove();
-  const banner = document.createElement('div');
-  banner.id = 'makeupBanner';
-  banner.className = 'makeup-banner';
   const [y,m,d] = dateStr.split('-');
-  banner.textContent = `📖 補課模式 — ${parseInt(m)}月${parseInt(d)}日的課程`;
-  document.querySelector('.learn-header').insertAdjacentElement('afterend', banner);
+  const learnHeader = document.querySelector('.learn-header');
+  if(learnHeader && learnHeader.parentNode){
+    const banner = document.createElement('div');
+    banner.id = 'makeupBanner';
+    banner.className = 'makeup-banner';
+    banner.textContent = '📖 補課模式 — ' + parseInt(m) + '月' + parseInt(d) + '日的課程';
+    learnHeader.parentNode.insertBefore(banner, learnHeader.nextSibling);
+  }
 
   renderMakeupUnit();
 }
@@ -4236,28 +4241,41 @@ window._btStopGame = null;
   }
 
   window._btInit=function(){
-    if(!ensureCanvas()) return;
-    canvas.style.touchAction='none';  // 只在遊戲開啟時設定
-    resize();
-    if(!eventsReady){
-      eventsReady=true;
-      document.addEventListener('keydown',btKeyDown);
-      document.addEventListener('keyup',btKeyUp);
-      canvas.addEventListener('touchstart',e=>{touchStartX=e.touches[0].clientX;e.preventDefault();},{passive:false});
-      canvas.addEventListener('touchmove',e=>{
-        const dx=e.touches[0].clientX-touchStartX;touchStartX=e.touches[0].clientX;
-        paddle.x=Math.max(0,Math.min(canvas.width-paddle.w,paddle.x+dx*1.2));
-        e.preventDefault();
-      },{passive:false});
-      canvas.addEventListener('mousemove',e=>{
-        const r=canvas.getBoundingClientRect();
-        paddle.x=Math.max(0,Math.min(canvas.width-paddle.w,(e.clientX-r.left)-paddle.w/2));
-      });
-      hold(document.getElementById('btBtnLeft'),'left');
-      hold(document.getElementById('btBtnRight'),'right');
-      hold(document.getElementById('btBtnSmash'),'smash');
+    // 嘗試最多3次，每次間隔100ms（等 iOS 完成 layout）
+    let tries = 0;
+    function tryInit(){
+      tries++;
+      if(!ensureCanvas()){
+        if(tries < 3) setTimeout(tryInit, 150);
+        return;
+      }
+      canvas.style.touchAction='none';
+      resize();
+      // 確保 canvas 有尺寸後再開始
+      if(canvas.width === 0 || canvas.height === 0){
+        if(tries < 3){ setTimeout(tryInit, 150); return; }
+      }
+      if(!eventsReady){
+        eventsReady=true;
+        document.addEventListener('keydown',btKeyDown);
+        document.addEventListener('keyup',btKeyUp);
+        canvas.addEventListener('touchstart',e=>{touchStartX=e.touches[0].clientX;e.preventDefault();},{passive:false});
+        canvas.addEventListener('touchmove',e=>{
+          const dx=e.touches[0].clientX-touchStartX;touchStartX=e.touches[0].clientX;
+          paddle.x=Math.max(0,Math.min(canvas.width-paddle.w,paddle.x+dx*1.2));
+          e.preventDefault();
+        },{passive:false});
+        canvas.addEventListener('mousemove',e=>{
+          const r=canvas.getBoundingClientRect();
+          paddle.x=Math.max(0,Math.min(canvas.width-paddle.w,(e.clientX-r.left)-paddle.w/2));
+        });
+        hold(document.getElementById('btBtnLeft'),'left');
+        hold(document.getElementById('btBtnRight'),'right');
+        hold(document.getElementById('btBtnSmash'),'smash');
+      }
+      startGame();
     }
-    startGame();
+    tryInit();
   };
 
   window._btStopGame=function(){
