@@ -1345,6 +1345,79 @@ body{
   position:sticky;top:56px;z-index:9;
 }
 
+/* ===== 注音 / 字母輸入鍵盤 ===== */
+.input-zone{margin:14px 0;display:flex;flex-direction:column;align-items:center;gap:10px;}
+.input-display{width:100%;max-width:260px;background:white;border:3px solid #f59e0b;border-radius:16px;padding:14px;text-align:center;font-size:2rem;font-weight:900;color:#1a1a2e;min-height:62px;letter-spacing:4px;}
+.input-display.wrong{border-color:#ef4444;animation:shake 0.4s;}
+.input-display.correct{border-color:#22c55e;background:#f0fdf4;}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.pky-row{display:flex;flex-wrap:wrap;justify-content:center;gap:5px;margin-bottom:4px;max-width:340px;}
+.pky-btn{background:white;border:2px solid #e5e7eb;border-radius:10px;padding:7px 8px;font-size:0.95rem;font-weight:800;color:#374151;cursor:pointer;min-width:34px;text-align:center;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none;}
+.pky-btn:active{background:#fef3c7;transform:scale(0.9);}
+.pky-btn.tone{background:#fef9c3;color:#b45309;border-color:#fbbf24;}
+.pky-btn.del{background:#fee2e2;color:#ef4444;border-color:#fca5a5;font-size:1.1rem;}
+.pky-btn.ok{background:linear-gradient(135deg,#22c55e,#16a34a);color:white;border-color:#16a34a;padding:7px 16px;}
+.pky-btn.ok:disabled{background:#d1d5db;color:#9ca3af;border-color:#d1d5db;}
+.aky-row{display:flex;flex-wrap:wrap;justify-content:center;gap:5px;margin-bottom:4px;max-width:300px;}
+.aky-btn{background:white;border:2px solid #bfdbfe;border-radius:10px;padding:7px 9px;font-size:0.95rem;font-weight:800;color:#1d4ed8;cursor:pointer;min-width:34px;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none;}
+.aky-btn:active{background:#dbeafe;transform:scale(0.9);}
+.aky-btn.del{background:#fee2e2;color:#ef4444;border-color:#fca5a5;}
+.aky-btn.ok{background:linear-gradient(135deg,#3b82f6,#1d4ed8);color:white;border-color:#1d4ed8;padding:7px 16px;}
+.nky-wrap{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;max-width:220px;}
+.nky-btn{background:white;border:2px solid #d1d5db;border-radius:12px;width:56px;height:56px;font-size:1.4rem;font-weight:900;color:#374151;cursor:pointer;display:flex;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none;}
+.nky-btn:active{background:#f3f4f6;transform:scale(0.9);}
+.nky-btn.del{background:#fee2e2;color:#ef4444;border-color:#fca5a5;}
+.nky-btn.ok{background:linear-gradient(135deg,#22c55e,#16a34a);color:white;border-color:#16a34a;font-size:1rem;width:auto;padding:0 16px;}
+.teach-countdown{display:inline-flex;align-items:center;gap:8px;background:#fef3c7;border:2px solid #f59e0b;border-radius:12px;padding:8px 16px;font-size:0.9rem;font-weight:800;color:#92400e;margin-top:8px;}
+.must-listen{background:#eff6ff;border:2px solid #93c5fd;border-radius:12px;padding:8px 14px;font-size:0.85rem;font-weight:700;color:#1d4ed8;margin-top:6px;text-align:center;}
+
+/* ===== 加強學習模式 ===== */
+.reinforce-overlay{
+  position:fixed;top:0;left:0;right:0;bottom:0;z-index:8000;
+  background:rgba(10,10,30,0.92);
+  display:flex;align-items:center;justify-content:center;
+  padding:16px;
+}
+.reinforce-card{
+  background:linear-gradient(135deg,#fff1f2,#fce7f3);
+  border:3px solid #f43f5e;
+  border-radius:28px;padding:24px 20px;
+  max-width:360px;width:100%;
+  text-align:center;
+  animation:popIn 0.4s cubic-bezier(.34,1.56,.64,1);
+}
+.reinforce-title{font-size:1.5rem;font-weight:900;color:#be123c;margin:10px 0 6px;}
+.reinforce-char{font-size:3.5rem;font-weight:900;color:#1a1a2e;margin:8px 0;}
+.reinforce-pinyin{font-size:1.8rem;font-weight:800;color:#e11d48;margin:4px 0;}
+.reinforce-meaning{font-size:0.95rem;font-weight:700;color:#4b5563;margin:6px 0 12px;}
+.reinforce-progress{
+  display:flex;justify-content:center;gap:8px;margin:12px 0;
+}
+.rp-dot{
+  width:14px;height:14px;border-radius:50%;
+  border:2px solid #f43f5e;
+  background:white;
+  transition:background 0.3s;
+}
+.rp-dot.done{background:#f43f5e;}
+.reinforce-input{
+  background:white;border:3px solid #fda4af;border-radius:14px;
+  padding:12px;font-size:2rem;font-weight:900;
+  text-align:center;letter-spacing:4px;
+  margin:10px auto;width:100%;max-width:240px;
+  min-height:56px;display:block;
+}
+.reinforce-input.wrong{border-color:#ef4444;animation:shake 0.4s;}
+.reinforce-input.correct{border-color:#22c55e;background:#f0fdf4;}
+.reinforce-keyboard{display:flex;flex-wrap:wrap;justify-content:center;gap:5px;margin:8px 0;}
+.rk-btn{background:white;border:2px solid #fda4af;border-radius:8px;padding:6px 8px;font-size:0.9rem;font-weight:800;color:#be123c;cursor:pointer;min-width:32px;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none;}
+.rk-btn:active{background:#fce7f3;transform:scale(0.9);}
+.rk-btn.tone{background:#fff1f2;border-color:#f43f5e;}
+.rk-btn.del{background:#fee2e2;color:#ef4444;border-color:#fca5a5;}
+.rk-btn.ok{background:linear-gradient(135deg,#f43f5e,#be123c);color:white;border-color:#be123c;padding:6px 14px;}
+.rk-btn.ok:disabled{background:#d1d5db;border-color:#d1d5db;color:#9ca3af;}
+.reinforce-counter{font-size:0.85rem;color:#6b7280;font-weight:700;margin-top:8px;}
+
 /* ===== RESPONSIVE ===== */
 @media(max-width:400px){
   .big-char{font-size:7rem;}
@@ -1562,6 +1635,10 @@ body{
 </div><!-- /wrap -->
 
 <!-- ===== 學習畫面 ===== -->
+<div id="reinforceOverlay" class="reinforce-overlay hidden">
+  <div class="reinforce-card" id="reinforceCard"></div>
+</div>
+
 <div id="learnScreen" class="hidden">
   <div class="learn-header">
     <button class="learn-back" onclick="exitLesson()">⬅️</button>
@@ -1836,19 +1913,19 @@ chinese:[
       {type:'teach',char:'花',emoji:'🌸',pinyin:'ㄏㄨㄚ',meaning:'植物開出來漂亮的部分',
        talk:['第一個字是「<span class="char-big">花</span>」！','你看過公園裡的花嗎？紅色的、黃色的、粉色的！','「花」上面有個「艹」，代表它是植物喔！'],
        example:'春天來了，公園裡開滿了漂亮的<span class="hl">花</span>。'},
-      {type:'practice',char:'花',q:'下面哪一個是「花」？',hint:'花有漂亮花瓣，像🌸這樣！',
+      {type:'practice',char:'花',pinyin:'ㄏㄨㄚ',q:'下面哪一個是「花」？',hint:'花有漂亮花瓣，像🌸這樣！',
        opts:[{t:'🌸',c:true},{t:'🌳',c:false},{t:'🍎',c:false},{t:'☀️',c:false}],
        okMsg:'🌸就是花！記得真清楚！',failMsg:'花有漂亮花瓣的，像🌸這樣！'},
       {type:'teach',char:'草',emoji:'🌿',pinyin:'ㄘㄠˇ',meaning:'綠綠的小植物，長在地上',
        talk:['來認識「<span class="char-big">草</span>」！','草是綠綠的、軟軟的，長在地上。小兔子🐰最喜歡吃草！','「草」上面也有「艹」，也是植物！'],
        example:'小白兔在草地上吃<span class="hl">草</span>，好開心！'},
-      {type:'practice',char:'草',q:'小白兔🐰最喜歡吃什麼？',hint:'小白兔喜歡吃綠綠的植物～',
+      {type:'practice',char:'草',pinyin:'ㄘㄠˇ',q:'小白兔🐰最喜歡吃什麼？',hint:'小白兔喜歡吃綠綠的植物～',
        opts:[{t:'🌿 草',c:true},{t:'🍕 披薩',c:false},{t:'🍦 冰淇淋',c:false},{t:'🍔 漢堡',c:false}],
        okMsg:'小白兔最愛吃草！',failMsg:'兔子吃綠綠的植物，不是人類的食物喔！'},
       {type:'teach',char:'山',emoji:'⛰️',pinyin:'ㄕㄢ',meaning:'地面上高高凸起的地方',
        talk:['「<span class="char-big">山</span>」這個字超有趣！','三個尖尖，中間最高，是不是很像真正的山？這叫「象形字」！','台灣有好多美麗的山！'],
        example:'週末全家去爬<span class="hl">山</span>！'},
-      {type:'practice',char:'山',q:'「山」的樣子像什麼？',hint:'三個尖尖，中間最高⋯⋯',
+      {type:'practice',char:'山',pinyin:'ㄕㄢ',q:'「山」的樣子像什麼？',hint:'三個尖尖，中間最高⋯⋯',
        opts:[{t:'⛰️ 像山',c:true},{t:'🌊 像海浪',c:false},{t:'☀️ 像太陽',c:false},{t:'🌙 像月亮',c:false}],
        okMsg:'「山」就是照山的形狀畫的！象形字！',failMsg:'再看看「山」，尖尖的很像高山喔！'},
       {type:'teach',char:'水',emoji:'💧',pinyin:'ㄕㄨㄟˇ',meaning:'透明的液體，每天要喝',
@@ -1866,19 +1943,19 @@ chinese:[
       {type:'teach',char:'頭',emoji:'🗣️',pinyin:'ㄊㄡˊ',meaning:'身體最上面的部分',
        talk:['認識「<span class="char-big">頭</span>」！','頭在我們身體最上面，裡面有大腦！','我們用頭來思考，用頭來點頭說「好」！'],
        example:'老師問問題，我點點<span class="hl">頭</span>說「我知道！」'},
-      {type:'practice',char:'頭',q:'「頭」在身體的哪裡？',hint:'往上摸摸看，最上面的部分⋯⋯',
+      {type:'practice',char:'頭',pinyin:'ㄊㄡˊ',q:'「頭」在身體的哪裡？',hint:'往上摸摸看，最上面的部分⋯⋯',
        opts:[{t:'🗣️ 最上面',c:true},{t:'🦶 最下面',c:false},{t:'✋ 旁邊',c:false},{t:'👃 中間',c:false}],
        okMsg:'頭在最上面！我們用頭思考！',failMsg:'頭在身體最上面喔！往上摸摸看！'},
       {type:'teach',char:'手',emoji:'🖐️',pinyin:'ㄕㄡˇ',meaning:'可以拿東西、畫畫、寫字',
        talk:['認識「<span class="char-big">手</span>」！','手有五根手指頭，可以拿東西、畫畫、寫字！','我們現在用手拿筆寫「手」這個字！'],
        example:'我用<span class="hl">手</span>畫了一幅美麗的圖。'},
-      {type:'practice',char:'手',q:'我們用什麼來寫字畫畫？',hint:'有五根手指頭的⋯⋯',
+      {type:'practice',char:'手',pinyin:'ㄕㄡˇ',q:'我們用什麼來寫字畫畫？',hint:'有五根手指頭的⋯⋯',
        opts:[{t:'🖐️ 手',c:true},{t:'🦶 腳',c:false},{t:'👀 眼睛',c:false},{t:'👂 耳朵',c:false}],
        okMsg:'用手來寫字畫畫！手好厲害！',failMsg:'我們用手來寫字喔！有五根手指頭！'},
       {type:'teach',char:'腳',emoji:'🦶',pinyin:'ㄐㄧㄠˇ',meaning:'走路跑步都靠它',
        talk:['「<span class="char-big">腳</span>」！','腳讓我們可以走路、跑步、踢球！','用腳站起來，跳一跳！'],
        example:'小貓輕輕地用<span class="hl">腳</span>走路，不發出聲音。'},
-      {type:'practice',char:'腳',q:'跑步踢球靠什麼？',hint:'在身體最下面，穿鞋子的地方⋯⋯',
+      {type:'practice',char:'腳',pinyin:'ㄐㄧㄠˇ',q:'跑步踢球靠什麼？',hint:'在身體最下面，穿鞋子的地方⋯⋯',
        opts:[{t:'🦶 腳',c:true},{t:'🖐️ 手',c:false},{t:'👀 眼睛',c:false},{t:'🗣️ 嘴巴',c:false}],
        okMsg:'靠腳跑步踢球！腳超厲害！',failMsg:'跑步踢球要靠腳喔！在身體最下面！'},
       {type:'teach',char:'眼',emoji:'👁️',pinyin:'ㄧㄢˇ',meaning:'看東西的器官',
@@ -1899,13 +1976,13 @@ chinese:[
       {type:'teach',char:'爸',emoji:'👨',pinyin:'ㄅㄚˋ',meaning:'父親，家裡的爸爸',
        talk:['認識「<span class="char-big">爸</span>」！','爸爸是家裡很重要的人，他保護我們、養我們！','爸爸，我愛你！'],
        example:'<span class="hl">爸</span>爸帶我去公園騎腳踏車。'},
-      {type:'practice',char:'爸',q:'哪個字是「爸爸」的「爸」？',hint:'父親，家裡的爸爸⋯⋯',
+      {type:'practice',char:'爸',pinyin:'ㄅㄚˋ',q:'哪個字是「爸爸」的「爸」？',hint:'父親，家裡的爸爸⋯⋯',
        opts:[{t:'爸',c:true},{t:'媽',c:false},{t:'哥',c:false},{t:'姐',c:false}],
        okMsg:'對了！這是爸爸的爸！',failMsg:'爸爸的爸是這個字：爸！'},
       {type:'teach',char:'媽',emoji:'👩',pinyin:'ㄇㄚ',meaning:'母親，家裡的媽媽',
        talk:['認識「<span class="char-big">媽</span>」！','媽媽照顧我們，煮飯給我們吃，陪我們睡覺！','媽媽，謝謝你！'],
        example:'<span class="hl">媽</span>媽做的便當最好吃了！'},
-      {type:'practice',char:'媽',q:'誰照顧我們，煮飯給我們吃？',hint:'她叫什麼稱呼？',
+      {type:'practice',char:'媽',pinyin:'ㄇㄚ',q:'誰照顧我們，煮飯給我們吃？',hint:'她叫什麼稱呼？',
        opts:[{t:'媽媽',c:true},{t:'爺爺',c:false},{t:'哥哥',c:false},{t:'姐姐',c:false}],
        okMsg:'媽媽最辛苦了！要好好謝謝媽媽！',failMsg:'是媽媽照顧我們、煮飯給我們吃！'},
       {type:'teach',char:'哥',emoji:'👦',pinyin:'ㄍㄜ',meaning:'比自己年紀大的男生兄弟',
@@ -1929,13 +2006,13 @@ chinese:[
       {type:'teach',char:'狗',emoji:'🐕',pinyin:'ㄍㄡˇ',meaning:'忠心的寵物，會汪汪叫',
        talk:['認識「<span class="char-big">狗</span>」！','狗是人類最好的朋友，忠心又可愛！','汪汪！狗狗在叫你了！'],
        example:'我家的<span class="hl">狗</span>狗每天都在門口等我回家。'},
-      {type:'practice',char:'狗',q:'哪個動物會「汪汪」叫？',hint:'人類最好的朋友，忠心的寵物⋯⋯',
+      {type:'practice',char:'狗',pinyin:'ㄍㄡˇ',q:'哪個動物會「汪汪」叫？',hint:'人類最好的朋友，忠心的寵物⋯⋯',
        opts:[{t:'🐕 狗',c:true},{t:'🐱 貓',c:false},{t:'🐟 魚',c:false},{t:'🐦 鳥',c:false}],
        okMsg:'狗狗汪汪！忠心的好朋友！',failMsg:'汪汪叫的是狗！人類最好的朋友！'},
       {type:'teach',char:'貓',emoji:'🐱',pinyin:'ㄇㄠ',meaning:'喜歡睡覺的寵物，會喵喵叫',
        talk:['「<span class="char-big">貓</span>」！','貓咪軟軟的，喜歡睡覺！喵～','貓咪走路很輕，不發出聲音！'],
        example:'小<span class="hl">貓</span>咪縮在椅子上睡覺，好可愛！'},
-      {type:'practice',char:'貓',q:'哪個動物會「喵喵」叫？',hint:'軟軟的，喜歡睡覺的寵物⋯⋯',
+      {type:'practice',char:'貓',pinyin:'ㄇㄠ',q:'哪個動物會「喵喵」叫？',hint:'軟軟的，喜歡睡覺的寵物⋯⋯',
        opts:[{t:'🐱 貓',c:true},{t:'🐕 狗',c:false},{t:'🐟 魚',c:false},{t:'🐰 兔',c:false}],
        okMsg:'貓咪喵喵！軟軟的好可愛！',failMsg:'喵喵叫的是貓！軟軟的！'},
       {type:'teach',char:'魚',emoji:'🐟',pinyin:'ㄩˊ',meaning:'住在水裡，會游泳',
@@ -1959,13 +2036,13 @@ chinese:[
       {type:'teach',char:'米',emoji:'🍚',pinyin:'ㄇㄧˇ',meaning:'煮飯用的白色小顆粒',
        talk:['認識「<span class="char-big">米</span>」！','米是白白小小的，加水煮熟就變成飯！','台灣的米超好吃！'],
        example:'媽媽今天煮了香噴噴的白<span class="hl">米</span>飯。'},
-      {type:'practice',char:'米',q:'煮飯要用什麼？',hint:'白白小小的，加水煮熟變成飯⋯⋯',
+      {type:'practice',char:'米',pinyin:'ㄇㄧˇ',q:'煮飯要用什麼？',hint:'白白小小的，加水煮熟變成飯⋯⋯',
        opts:[{t:'🍚 米',c:true},{t:'🥩 肉',c:false},{t:'🥕 菜',c:false},{t:'🍎 果',c:false}],
        okMsg:'煮飯要用米！吃飯香香！',failMsg:'煮飯要用米！白白小小的！'},
       {type:'teach',char:'肉',emoji:'🥩',pinyin:'ㄖㄡˋ',meaning:'動物身上可以吃的部分',
        talk:['「<span class="char-big">肉</span>」！','肉是蛋白質，讓我們長大變強壯！','雞肉、豬肉、牛肉都是肉！'],
        example:'爸爸最喜歡吃烤<span class="hl">肉</span>了！'},
-      {type:'practice',char:'肉',q:'讓我們長大變強壯的食物？',hint:'雞的、豬的、牛的都是⋯⋯',
+      {type:'practice',char:'肉',pinyin:'ㄖㄡˋ',q:'讓我們長大變強壯的食物？',hint:'雞的、豬的、牛的都是⋯⋯',
        opts:[{t:'🥩 肉',c:true},{t:'🍚 米',c:false},{t:'🥕 菜',c:false},{t:'🍎 果',c:false}],
        okMsg:'吃肉長大變強壯！',failMsg:'雞肉豬肉牛肉都是「肉」！'},
       {type:'teach',char:'菜',emoji:'🥦',pinyin:'ㄘㄞˋ',meaning:'蔬菜，可以吃的植物',
@@ -1989,13 +2066,13 @@ chinese:[
       {type:'teach',char:'雨',emoji:'🌧️',pinyin:'ㄩˇ',meaning:'從天上掉下來的水',
        talk:['「<span class="char-big">雨</span>」！','下雨了！天空的水變成雨滴落下來！','下雨要帶傘☂️！'],
        example:'窗外下著大<span class="hl">雨</span>，我聽著雨聲做功課。'},
-      {type:'practice',char:'雨',q:'天空的水滴落下來是什麼？',hint:'要帶傘的天氣⋯⋯',
+      {type:'practice',char:'雨',pinyin:'ㄩˇ',q:'天空的水滴落下來是什麼？',hint:'要帶傘的天氣⋯⋯',
        opts:[{t:'🌧️ 雨',c:true},{t:'❄️ 雪',c:false},{t:'💨 風',c:false},{t:'☀️ 晴',c:false}],
        okMsg:'下雨了！記得帶傘！',failMsg:'天空水滴落下來是雨！'},
       {type:'teach',char:'雪',emoji:'❄️',pinyin:'ㄒㄩㄝˇ',meaning:'冬天從天上飄下來的白色冰晶',
        talk:['「<span class="char-big">雪</span>」！','雪是白白的，冬天才有！捏雪球、堆雪人！','台灣高山才有雪喔！'],
        example:'山頂上下了好大的<span class="hl">雪</span>，變成白色的世界！'},
-      {type:'practice',char:'雪',q:'冬天從天上飄下來的白色是？',hint:'可以堆雪人的⋯⋯',
+      {type:'practice',char:'雪',pinyin:'ㄒㄩㄝˇ',q:'冬天從天上飄下來的白色是？',hint:'可以堆雪人的⋯⋯',
        opts:[{t:'❄️ 雪',c:true},{t:'🌧️ 雨',c:false},{t:'💨 風',c:false},{t:'🌤️ 雲',c:false}],
        okMsg:'下雪了！去堆雪人！',failMsg:'白色飄下來的是雪！'},
       {type:'teach',char:'風',emoji:'💨',pinyin:'ㄈㄥ',meaning:'空氣流動形成的，能吹動樹葉',
@@ -2019,13 +2096,13 @@ chinese:[
       {type:'teach',char:'紅',emoji:'🔴',pinyin:'ㄏㄨㄥˊ',meaning:'像火焰、蘋果一樣的顏色',
        talk:['認識顏色「<span class="char-big">紅</span>」！','紅色像火一樣熱烈！蘋果🍎、草莓🍓都是紅色的！','過年的紅包也是紅色！'],
        example:'玫瑰花是<span class="hl">紅</span>色的，送給媽媽最漂亮！'},
-      {type:'practice',char:'紅',q:'蘋果🍎是什麼顏色？',hint:'像火焰一樣熱烈的顏色⋯⋯',
+      {type:'practice',char:'紅',pinyin:'ㄏㄨㄥˊ',q:'蘋果🍎是什麼顏色？',hint:'像火焰一樣熱烈的顏色⋯⋯',
        opts:[{t:'紅',c:true},{t:'黃',c:false},{t:'藍',c:false},{t:'綠',c:false}],
        okMsg:'蘋果是紅色！紅色好漂亮！',failMsg:'蘋果是紅色的！'},
       {type:'teach',char:'黃',emoji:'🟡',pinyin:'ㄏㄨㄤˊ',meaning:'像太陽、香蕉一樣的顏色',
        talk:['「<span class="char-big">黃</span>」！','黃色像太陽，溫暖又明亮！香蕉🍌、向日葵🌻都是黃色！','黃色讓人心情好！'],
        example:'秋天到了，樹葉變成<span class="hl">黃</span>色，好漂亮！'},
-      {type:'practice',char:'黃',q:'香蕉🍌是什麼顏色？',hint:'像太陽一樣溫暖明亮的⋯⋯',
+      {type:'practice',char:'黃',pinyin:'ㄏㄨㄤˊ',q:'香蕉🍌是什麼顏色？',hint:'像太陽一樣溫暖明亮的⋯⋯',
        opts:[{t:'黃',c:true},{t:'紅',c:false},{t:'綠',c:false},{t:'白',c:false}],
        okMsg:'香蕉是黃色！甜甜的！',failMsg:'香蕉是黃色的！'},
       {type:'teach',char:'藍',emoji:'🔵',pinyin:'ㄌㄢˊ',meaning:'像天空、大海一樣的顏色',
@@ -2049,7 +2126,7 @@ chinese:[
       {type:'teach',char:'一',emoji:'1️⃣',pinyin:'ㄧ',meaning:'數字1，最小的正整數',
        talk:['「<span class="char-big">一</span>」就是數字1！','「一」只有一橫，最簡單的字！','一個蘋果、一隻貓，都是「一」！'],
        example:'我有<span class="hl">一</span>隻可愛的小倉鼠。'},
-      {type:'practice',char:'一',q:'數字「1」的中文怎麼寫？',hint:'一橫，最簡單的字⋯⋯',
+      {type:'practice',char:'一',pinyin:'ㄧ',q:'數字「1」的中文怎麼寫？',hint:'一橫，最簡單的字⋯⋯',
        opts:[{t:'一',c:true},{t:'二',c:false},{t:'三',c:false},{t:'十',c:false}],
        okMsg:'對！1就是「一」！',failMsg:'1是「一」，只有一橫！'},
       {type:'teach',char:'二',emoji:'2️⃣',pinyin:'ㄦˋ',meaning:'數字2，兩橫',
@@ -2079,7 +2156,7 @@ chinese:[
       {type:'teach',char:'書',emoji:'📚',pinyin:'ㄕㄨ',meaning:'裡面有很多知識的本子',
        talk:['認識「<span class="char-big">書</span>」！','書裡有好多故事和知識！','看書讓我們變聰明！'],
        example:'我最喜歡看圖畫<span class="hl">書</span>，故事都好有趣！'},
-      {type:'practice',char:'書',q:'裡面有知識和故事的本子叫什麼？',hint:'看了會變聰明⋯⋯',
+      {type:'practice',char:'書',pinyin:'ㄕㄨ',q:'裡面有知識和故事的本子叫什麼？',hint:'看了會變聰明⋯⋯',
        opts:[{t:'📚 書',c:true},{t:'✏️ 筆',c:false},{t:'📏 尺',c:false},{t:'🎒 包',c:false}],
        okMsg:'書！裡面有好多故事！',failMsg:'有故事和知識的本子叫「書」！'},
       {type:'teach',char:'本',emoji:'📓',pinyin:'ㄅㄣˇ',meaning:'可以寫字的小冊子',
@@ -2088,7 +2165,7 @@ chinese:[
       {type:'teach',char:'筆',emoji:'✏️',pinyin:'ㄅㄧˇ',meaning:'用來寫字畫畫的工具',
        talk:['「<span class="char-big">筆</span>」！','鉛筆、原子筆、蠟筆都是筆！','沒有筆就沒辦法寫字！'],
        example:'我找不到我的<span class="hl">筆</span>，寫不了功課！'},
-      {type:'practice',char:'筆',q:'寫字畫畫要用什麼工具？',hint:'鉛筆原子筆都算⋯⋯',
+      {type:'practice',char:'筆',pinyin:'ㄅㄧˇ',q:'寫字畫畫要用什麼工具？',hint:'鉛筆原子筆都算⋯⋯',
        opts:[{t:'✏️ 筆',c:true},{t:'📚 書',c:false},{t:'📏 尺',c:false},{t:'🎒 包',c:false}],
        okMsg:'用筆來寫字！對了！',failMsg:'寫字要用筆！鉛筆原子筆都是！'},
       {type:'teach',char:'字',emoji:'🔤',pinyin:'ㄗˋ',meaning:'寫下來代表語言的符號',
@@ -2931,46 +3008,423 @@ function renderTeach(u){
     +`<div class="ham-bubble"><div class="ham-text">${u.talk.join('<br><br>')}</div></div></div>`;
 
   html += '<div class="content-display">';
-  if(S.subj==='chinese'){
+  const curSubj = S.makeupMode ? S.makeupSubj : S.subj;
+  if(curSubj==='chinese'){
     html += `<div class="big-char">${u.char}</div>
       <span class="big-emoji">${u.emoji}</span>
       <div class="pinyin">${u.pinyin}</div>
       <div class="meaning">${u.meaning}</div>
-      <button class="speak-btn" id="spkBtn" onclick="speakZh('${u.char}');animSpeakBtn()">🔊</button>`;
+      <button class="speak-btn" id="spkBtn" onclick="speakZh('${u.char}');markListened();animSpeakBtn()">🔊 點我聽發音</button>`;
     if(u.example) html += `<div class="example"><div class="ex-label">📝 例句</div><div class="ex-text">${u.example}</div></div>`;
-  } else if(S.subj==='english'){
+  } else if(curSubj==='english'){
     html += `<div class="big-letter">${u.letter}</div>
       <span class="big-emoji">${u.emoji}</span>
       <div class="big-word">${u.word}</div>
       <div class="word-zh">${u.zh}</div>
-      <button class="speak-btn" id="spkBtn" onclick="speakEn('${u.word}');animSpeakBtn()">🔊</button>`;
-  } else if(S.subj==='math'){
+      <button class="speak-btn" id="spkBtn" onclick="speakEn('${u.word}');markListened();animSpeakBtn()">🔊 點我聽發音</button>`;
+  } else if(curSubj==='math'){
     if(u.visual) html += renderMathVisual(u);
     if(u.result!==undefined&&u.result!==0&&u.visual) html += `<div style="font-size:4rem;font-weight:900;color:var(--math)">${u.result}</div>`;
     if(u.v1&&u.v2) html += mathEq(u.v1,u.v2,u.result,'result',u.isMinus||false);
   }
   html += '</div>';
-  html += `<button class="next-btn" onclick="sfxFlip();nextUnit()">我學會了！繼續 ➡️</button>`;
+
+  // 國語/英文：必須聽過發音才能繼續；數學：倒數5秒
+  if(curSubj==='chinese'||curSubj==='english'){
+    html += `<div class="must-listen" id="listenNote">👆 先點上面的🔊聽發音，才能繼續！</div>
+    <button class="next-btn" id="teachNextBtn" disabled onclick="sfxFlip();nextUnit()" style="opacity:0.4;">聽完了！繼續 ➡️</button>`;
+  } else {
+    html += `<div class="teach-countdown" id="teachCountdown">⏳ <span id="countNum">5</span> 秒後可以繼續</div>
+    <button class="next-btn" id="teachNextBtn" disabled onclick="sfxFlip();nextUnit()" style="opacity:0.4;">我看懂了！繼續 ➡️</button>`;
+    // 倒數計時
+    setTimeout(()=>{ startTeachCountdown(); }, 200);
+  }
   return html;
+}
+
+function markListened(){
+  const note = document.getElementById('listenNote');
+  const btn  = document.getElementById('teachNextBtn');
+  if(note){ note.textContent='✅ 很棒！聽完了，可以繼續了！'; note.style.background='#f0fdf4'; note.style.borderColor='#86efac'; note.style.color='#166534'; }
+  if(btn){ btn.disabled=false; btn.style.opacity='1'; }
+}
+
+function startTeachCountdown(){
+  let sec=5;
+  const countEl = document.getElementById('countNum');
+  const btn     = document.getElementById('teachNextBtn');
+  const cdWrap  = document.getElementById('teachCountdown');
+  const timer = setInterval(()=>{
+    sec--;
+    if(countEl) countEl.textContent=sec;
+    if(sec<=0){
+      clearInterval(timer);
+      if(btn){ btn.disabled=false; btn.style.opacity='1'; }
+      if(cdWrap){ cdWrap.innerHTML='✅ 好了！可以繼續了！'; cdWrap.style.background='#f0fdf4'; cdWrap.style.borderColor='#86efac'; cdWrap.style.color='#166534'; }
+    }
+  },1000);
 }
 
 function renderPractice(u){
   let html = hamsterTag()
-    +`<div class="ham-bubble"><div class="ham-text">來挑戰這題！💪 ${S.name}你一定行的！我在旁邊支持你！</div></div></div>`;
+    +`<div class="ham-bubble"><div class="ham-text">來挑戰！💪 ${S.name}你一定行的！認真想喔！</div></div></div>`;
   html += '<div class="content-display">';
   if(u.visual) html += renderMathVisual(u);
   if(u.v1&&u.v2) html += mathEq(u.v1,u.v2,null,'q',u.isMinus||false);
-  if(u.audio) html += `<button class="speak-btn" id="spkBtn" onclick="speakEn('${u.audio}');animSpeakBtn()">🔊</button>`;
+  if(u.audio) html += `<button class="speak-btn" id="spkBtn" onclick="speakEn('${u.audio}');animSpeakBtn()">🔊 聽聽看</button>`;
   html += '</div>';
-  html += `<div class="practice">
-    <div class="practice-q">${u.q}</div>
-    <div class="practice-hint">💡 ${u.hint}</div>
-    <div class="options">
-      ${u.opts.map(o=>`<button class="opt-btn" onclick="checkAns(${o.c},this)">${o.t}</button>`).join('')}
+
+  // 用補課科目或當前科目判斷（確保補課時不混科）
+  const curSubj = S.makeupMode ? S.makeupSubj : S.subj;
+
+  // 國語：注音輸入
+  if(curSubj==='chinese' && u.pinyin){
+    html += renderPinyinInput(u);
+  }
+  // 英文：字母輸入（英文練習用選項，不用字母輸入）
+  else if(curSubj==='english' && u.ans){
+    html += renderAlphaInput(u);
+  }
+  // 數學：數字輸入
+  else if(curSubj==='math' && u.opts && !u.pinyin){
+    // 找出正確答案
+    const ans = u.opts.find(o=>o.c)?.t || '';
+    html += renderNumInput(u, String(ans));
+  }
+  // 其他（含英文選項題）：原本的選項按鈕
+  else {
+    html += `<div class="practice">
+      <div class="practice-q">${u.q}</div>
+      <div class="practice-hint">💡 ${u.hint}</div>
+      <div class="options">
+        ${u.opts.map(o=>`<button class="opt-btn" onclick="checkAns(${o.c},this)">${o.t}</button>`).join('')}
+      </div>
+      <div id="feedback"></div><div id="btns"></div>
+    </div>`;
+  }
+  return html;
+}
+
+/* ===================================================
+   加強學習模式 — 錯3次後觸發
+   =================================================== */
+let _reinforcePending = null;  // 等待加強的單元資訊
+
+function triggerReinforce(unitData){
+  // unitData: {type, char, pinyin, word, ans, correct, subj}
+  _reinforcePending = { ...unitData, round:0, totalRounds:3, unitRetries:0 };
+  showReinforceRound();
+}
+
+function showReinforceRound(){
+  const r = _reinforcePending;
+  if(!r) return;
+
+  const overlay = document.getElementById('reinforceOverlay');
+  const card    = document.getElementById('reinforceCard');
+  overlay.classList.remove('hidden');
+
+  const dots = [0,1,2].map(i=>
+    `<div class="rp-dot${i<r.round?' done':''}"></div>`
+  ).join('');
+
+  let inputHtml = '';
+  let question  = '';
+
+  if(r.subj==='chinese'){
+    question = `「${r.char}」的注音怎麼寫？`;
+    const INITIALS = ['ㄅ','ㄆ','ㄇ','ㄈ','ㄉ','ㄊ','ㄋ','ㄌ','ㄍ','ㄎ','ㄏ','ㄐ','ㄑ','ㄒ','ㄓ','ㄔ','ㄕ','ㄖ','ㄗ','ㄘ','ㄙ'];
+    const FINALS   = ['ㄚ','ㄛ','ㄜ','ㄝ','ㄞ','ㄟ','ㄠ','ㄡ','ㄢ','ㄣ','ㄤ','ㄥ','ㄦ','ㄧ','ㄨ','ㄩ'];
+    const TONES    = ['ˊ','ˇ','ˋ','˙'];
+    inputHtml = `
+      <div class="reinforce-input" id="rfInput">　</div>
+      <div class="reinforce-keyboard">
+        <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:4px;margin-bottom:3px;">
+          ${INITIALS.map(c=>`<button class="rk-btn" onclick="rfType('${c}')">${c}</button>`).join('')}
+        </div>
+        <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:4px;margin-bottom:3px;">
+          ${FINALS.map(c=>`<button class="rk-btn" onclick="rfType('${c}')">${c}</button>`).join('')}
+        </div>
+        <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:4px;">
+          ${TONES.map(c=>`<button class="rk-btn tone" onclick="rfType('${c}')">${c}</button>`).join('')}
+          <button class="rk-btn del" onclick="rfDel()">⌫</button>
+          <button class="rk-btn ok" id="rfOkBtn" onclick="rfCheck()">確認 ✓</button>
+        </div>
+      </div>`;
+  } else if(r.subj==='english'){
+    question = `請拼出：${r.emoji||''} ${r.word}`;
+    const ROWS = ['abcdefghij','klmnopqrst','uvwxyz'];
+    inputHtml = `
+      <div class="reinforce-input" id="rfInput">　</div>
+      <div class="reinforce-keyboard">
+        ${ROWS.map(row=>`<div style="display:flex;flex-wrap:wrap;justify-content:center;gap:4px;margin-bottom:3px;">${row.split('').map(c=>`<button class="rk-btn" onclick="rfType('${c}')">${c}</button>`).join('')}</div>`).join('')}
+        <div style="display:flex;gap:6px;justify-content:center;">
+          <button class="rk-btn del" onclick="rfDel()">⌫</button>
+          <button class="rk-btn ok" onclick="rfCheck()">確認 ✓</button>
+        </div>
+      </div>`;
+  } else {
+    // 數學
+    question = r.q || `算算看！`;
+    inputHtml = `
+      <div class="reinforce-input" id="rfInput">　</div>
+      <div class="reinforce-keyboard">
+        <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:6px;">
+          ${[1,2,3,4,5,6,7,8,9,0].map(n=>`<button class="rk-btn" style="width:48px;height:48px;font-size:1.2rem;" onclick="rfType('${n}')">${n}</button>`).join('')}
+          <button class="rk-btn del" onclick="rfDel()">⌫</button>
+          <button class="rk-btn ok" onclick="rfCheck()">✓</button>
+        </div>
+      </div>`;
+  }
+
+  card.innerHTML = `
+    <div style="font-size:2rem;">💪</div>
+    <div class="reinforce-title">加強練習！</div>
+    <div style="font-size:0.9rem;font-weight:700;color:#be123c;margin-bottom:8px;">
+      錯太多次了，讓我們認真練習三輪再繼續！
+    </div>
+    <div class="reinforce-char">${r.char||r.word||'?'}</div>
+    <div class="reinforce-pinyin">${r.pinyin||r.ans||r.correct||''}</div>
+    <div class="reinforce-meaning">${r.meaning||r.zh||r.hint||''}</div>
+    ${r.subj==='chinese'?`<button onclick="speakZh('${r.char}')" style="background:white;border:2px solid #fda4af;border-radius:10px;padding:6px 14px;font-size:0.9rem;font-weight:800;cursor:pointer;margin-bottom:8px;">🔊 聽發音</button>`:''}
+    ${r.subj==='english'?`<button onclick="speakEn('${r.word}')" style="background:white;border:2px solid #bfdbfe;border-radius:10px;padding:6px 14px;font-size:0.9rem;font-weight:800;cursor:pointer;margin-bottom:8px;">🔊 聽發音</button>`:''}
+    <div style="font-size:0.92rem;font-weight:700;color:#4b5563;margin-bottom:10px;">${question}</div>
+    <div class="reinforce-progress">${dots}</div>
+    ${inputHtml}
+    <div id="rfFeedback" style="min-height:28px;margin-top:6px;font-size:0.9rem;font-weight:700;"></div>
+    <div class="reinforce-counter">第 ${r.round+1} / ${r.totalRounds} 輪</div>
+  `;
+  _rfVal = '';
+}
+
+let _rfVal = '';
+function rfType(c){
+  if(_rfVal.length >= 8) return;
+  _rfVal += c;
+  const d = document.getElementById('rfInput');
+  if(d){ d.textContent=_rfVal; d.classList.remove('wrong','correct'); }
+}
+function rfDel(){
+  _rfVal = _rfVal.slice(0,-1);
+  const d = document.getElementById('rfInput');
+  if(d) d.textContent = _rfVal || '　';
+}
+function rfCheck(){
+  const r   = _reinforcePending;
+  const d   = document.getElementById('rfInput');
+  const fb  = document.getElementById('rfFeedback');
+  const ans = (r.pinyin || r.ans || String(r.correct) || '').trim();
+  const isOk = _rfVal.trim().toLowerCase() === ans.toLowerCase();
+
+  if(isOk){
+    if(d){ d.classList.add('correct'); }
+    sfxCorrect();
+    r.round++;
+    if(r.round >= r.totalRounds){
+      // 三輪全過！解鎖繼續
+      if(fb) fb.innerHTML = `<span style="color:#16a34a;">🎉 太棒了！練習完成！可以繼續了！</span>`;
+      setTimeout(()=>{
+        document.getElementById('reinforceOverlay').classList.add('hidden');
+        _reinforcePending = null;
+        _pkyVal=''; _akyVal=''; _nkyVal='';
+        S.retries = 0;
+        // 答對後繼續下一題
+        nextUnit();
+      }, 1200);
+    } else {
+      if(fb) fb.innerHTML = `<span style="color:#16a34a;">✅ 第${r.round}輪過了！繼續加油！</span>`;
+      _rfVal = '';
+      setTimeout(()=>showReinforceRound(), 800);
+    }
+  } else {
+    if(d){ d.classList.add('wrong'); setTimeout(()=>d.classList.remove('wrong'),400); }
+    sfxWrong();
+    _rfVal = '';
+    setTimeout(()=>{ if(d) d.textContent='　'; }, 300);
+    if(fb) fb.innerHTML = `<span style="color:#ef4444;">❌ 不對喔！答案是「${ans}」，再試一次！</span>`;
+    // 加強模式答錯，提示一下但不重置輪次
+  }
+}
+
+// ── 注音輸入鍵盤 ──
+function renderPinyinInput(u){
+  const INITIALS  = ['ㄅ','ㄆ','ㄇ','ㄈ','ㄉ','ㄊ','ㄋ','ㄌ','ㄍ','ㄎ','ㄏ','ㄐ','ㄑ','ㄒ','ㄓ','ㄔ','ㄕ','ㄖ','ㄗ','ㄘ','ㄙ'];
+  const FINALS    = ['ㄚ','ㄛ','ㄜ','ㄝ','ㄞ','ㄟ','ㄠ','ㄡ','ㄢ','ㄣ','ㄤ','ㄥ','ㄦ','ㄧ','ㄨ','ㄩ'];
+  const TONES     = ['ˊ','ˇ','ˋ','˙'];
+  const correct   = u.pinyin; // e.g. "ㄏㄨㄚ" or "ㄘㄠˇ"
+
+  let html = `<div class="practice">
+    <div class="practice-q">${u.q || '這個字的注音是什麼？'}</div>
+    <div style="font-size:2.5rem;font-weight:900;margin:8px 0;">${u.char}${u.emoji?'  '+u.emoji:''}</div>
+    <div class="input-zone">
+      <div class="input-display" id="pinyinDisplay">　</div>
+      <div>
+        <div class="pky-row">${INITIALS.map(c=>`<button class="pky-btn" onclick="pkyInput('${c}')" ontouchstart="pkyInput('${c}')">${c}</button>`).join('')}</div>
+        <div class="pky-row">${FINALS.map(c=>`<button class="pky-btn" onclick="pkyInput('${c}')" ontouchstart="pkyInput('${c}')">${c}</button>`).join('')}</div>
+        <div class="pky-row">
+          ${TONES.map(c=>`<button class="pky-btn tone" onclick="pkyInput('${c}')" ontouchstart="pkyInput('${c}')">${c}</button>`).join('')}
+          <button class="pky-btn del" onclick="pkyDel()">⌫</button>
+          <button class="pky-btn ok" id="pkyOk" onclick="pkyCheck('${correct}')">確認 ✓</button>
+        </div>
+      </div>
     </div>
     <div id="feedback"></div><div id="btns"></div>
   </div>`;
   return html;
+}
+
+let _pkyVal = '';
+function pkyInput(c){
+  _pkyVal += c;
+  const d = document.getElementById('pinyinDisplay');
+  if(d){ d.textContent=_pkyVal; d.classList.remove('wrong','correct'); }
+}
+function pkyDel(){
+  _pkyVal = _pkyVal.slice(0,-1);
+  const d = document.getElementById('pinyinDisplay');
+  if(d){ d.textContent=_pkyVal||'　'; d.classList.remove('wrong','correct'); }
+}
+function pkyCheck(correct){
+  const d = document.getElementById('pinyinDisplay');
+  const isOk = _pkyVal.trim() === correct.trim();
+  if(isOk){
+    if(d){ d.classList.add('correct'); }
+    sfxCorrect();
+    const u = (S.makeupMode ? S.makeupCourse : getDailyCourse(S.subj)).units[S.unit];
+    document.getElementById('feedback').innerHTML = `<div class="feedback correct">
+      <div class="fb-head"><span class="fb-icon">🎉</span><span class="fb-title">答對了！注音超棒！</span></div>
+      <div class="fb-msg">${u.okMsg||'太厲害了！'}</div>
+    </div>`;
+    document.getElementById('btns').innerHTML = `<button class="next-btn" onclick="sfxFlip();nextUnit();_pkyVal=''">繼續 ➡️</button>`;
+    S.badges.mini += 1; save(); updateUI();
+  } else {
+    if(d){ d.classList.add('wrong'); setTimeout(()=>d.classList.remove('wrong'),400); }
+    sfxWrong();
+    _pkyVal = '';
+    setTimeout(()=>{ if(d){ d.textContent='　'; } }, 300);
+    S.retries = (S.retries||0)+1;
+    if(S.retries >= 3){
+      const u = (S.makeupMode?S.makeupCourse:getDailyCourse(S.subj)).units[S.unit];
+      triggerReinforce({subj:'chinese', char:u.char||'', pinyin:correct, meaning:u.meaning||'', emoji:u.emoji||''});
+    } else {
+      document.getElementById('feedback').innerHTML = `<div class="feedback wrong">
+        <div class="fb-head"><span class="fb-icon">💪</span><span class="fb-title">再試一次！（${S.retries}/3）</span></div>
+        <div class="fb-msg">注音是「${correct}」，對照上面的注音表再試試！</div>
+      </div>`;
+    }
+  }
+}
+
+// ── 字母輸入鍵盤 ──
+function renderAlphaInput(u){
+  const ROWS = ['abcdefghij','klmnopqrst','uvwxyz'];
+  let html = `<div class="practice">
+    <div class="practice-q">${u.q || '請拼出這個單字！'}</div>
+    <div style="font-size:1.4rem;font-weight:800;color:#166534;margin:6px 0;">${u.hint||''}</div>
+    <div class="input-zone">
+      <div class="input-display" id="alphaDisplay">　</div>
+      <div>
+        ${ROWS.map(row=>`<div class="aky-row">${row.split('').map(c=>`<button class="aky-btn" onclick="akyInput('${c}')">${c}</button>`).join('')}</div>`).join('')}
+        <div class="aky-row">
+          <button class="aky-btn del" onclick="akyDel()">⌫</button>
+          <button class="aky-btn ok" onclick="akyCheck('${u.ans||''}')">確認 ✓</button>
+        </div>
+      </div>
+    </div>
+    <div id="feedback"></div><div id="btns"></div>
+  </div>`;
+  return html;
+}
+
+let _akyVal = '';
+function akyInput(c){
+  _akyVal += c;
+  const d = document.getElementById('alphaDisplay');
+  if(d){ d.textContent=_akyVal; d.classList.remove('wrong','correct'); }
+}
+function akyDel(){
+  _akyVal = _akyVal.slice(0,-1);
+  const d = document.getElementById('alphaDisplay');
+  if(d){ d.textContent=_akyVal||'　'; }
+}
+function akyCheck(correct){
+  const d = document.getElementById('alphaDisplay');
+  const isOk = _akyVal.trim().toLowerCase() === correct.trim().toLowerCase();
+  if(isOk){
+    if(d) d.classList.add('correct');
+    sfxCorrect();
+    if(correct) speakEn(correct);
+    document.getElementById('feedback').innerHTML=`<div class="feedback correct"><div class="fb-head"><span class="fb-icon">🎉</span><span class="fb-title">拼對了！</span></div></div>`;
+    document.getElementById('btns').innerHTML=`<button class="next-btn" onclick="sfxFlip();nextUnit();_akyVal=''">繼續 ➡️</button>`;
+    S.badges.mini+=1; save(); updateUI();
+  } else {
+    if(d){ d.classList.add('wrong'); setTimeout(()=>d.classList.remove('wrong'),400); }
+    sfxWrong();
+    _akyVal='';
+    setTimeout(()=>{ if(d) d.textContent='　'; },300);
+    S.retries=(S.retries||0)+1;
+    if(S.retries>=3){
+      const u=(S.makeupMode?S.makeupCourse:getDailyCourse(S.subj)).units[S.unit];
+      triggerReinforce({subj:'english', word:correct, ans:correct, zh:u.zh||'', emoji:u.emoji||''});
+    } else {
+      document.getElementById('feedback').innerHTML=`<div class="feedback wrong"><div class="fb-head"><span class="fb-icon">💪</span><span class="fb-title">再試一次！（${S.retries}/3）</span></div><div class="fb-msg">提示：${correct.length}個字母</div></div>`;
+    }
+  }
+}
+
+// ── 數字輸入鍵盤 ──
+function renderNumInput(u, correct){
+  let html = `<div class="practice">
+    <div class="practice-q">${u.q}</div>
+    <div class="practice-hint">💡 ${u.hint}</div>
+    <div class="input-zone">
+      <div class="input-display" id="numDisplay">　</div>
+      <div class="nky-wrap">
+        ${[1,2,3,4,5,6,7,8,9,0].map(n=>`<button class="nky-btn" onclick="nkyInput('${n}')">${n}</button>`).join('')}
+        <button class="nky-btn del" onclick="nkyDel()">⌫</button>
+        <button class="nky-btn ok" onclick="nkyCheck('${correct}')">✓</button>
+      </div>
+    </div>
+    <div id="feedback"></div><div id="btns"></div>
+  </div>`;
+  return html;
+}
+
+let _nkyVal='';
+function nkyInput(c){
+  if(_nkyVal.length>=3) return;
+  _nkyVal+=String(c);
+  const d=document.getElementById('numDisplay');
+  if(d){ d.textContent=_nkyVal; d.classList.remove('wrong','correct'); }
+}
+function nkyDel(){
+  _nkyVal=_nkyVal.slice(0,-1);
+  const d=document.getElementById('numDisplay');
+  if(d) d.textContent=_nkyVal||'　';
+}
+function nkyCheck(correct){
+  const d=document.getElementById('numDisplay');
+  const isOk=_nkyVal.trim()===String(correct).trim();
+  if(isOk){
+    if(d) d.classList.add('correct');
+    sfxCorrect();
+    const u=(S.makeupMode?S.makeupCourse:getDailyCourse(S.subj)).units[S.unit];
+    document.getElementById('feedback').innerHTML=`<div class="feedback correct"><div class="fb-head"><span class="fb-icon">🎉</span><span class="fb-title">${u.okMsg||'答對了！'}</span></div></div>`;
+    document.getElementById('btns').innerHTML=`<button class="next-btn" onclick="sfxFlip();nextUnit();_nkyVal=''">繼續 ➡️</button>`;
+    S.badges.mini+=1; save(); updateUI();
+  } else {
+    if(d){ d.classList.add('wrong'); setTimeout(()=>d.classList.remove('wrong'),400); }
+    sfxWrong();
+    _nkyVal='';
+    setTimeout(()=>{ if(d) d.textContent='　'; },300);
+    S.retries=(S.retries||0)+1;
+    if(S.retries>=3){
+      const u=(S.makeupMode?S.makeupCourse:getDailyCourse(S.subj)).units[S.unit];
+      triggerReinforce({subj:'math', char:u.q||'？', correct:correct, q:u.q||'', hint:u.hint||''});
+    } else {
+      document.getElementById('feedback').innerHTML=`<div class="feedback wrong"><div class="fb-head"><span class="fb-icon">💪</span><span class="fb-title">${(S.makeupMode?S.makeupCourse:getDailyCourse(S.subj)).units[S.unit].failMsg||'再想想！'}（${S.retries}/3）</span></div></div>`;
+    }
+  }
 }
 
 function renderTest(u){
@@ -3640,22 +4094,27 @@ function renderCalendar(){
     const isMakeup = log?.isMakeup;
     const isHoliday= HOLIDAYS[`${month+1}/${d}`];
 
-    const diffDays  = today - d;
-    const afterStart = S.missions.startDate ? dateStr >= S.missions.startDate : true;
-    const hasRecord  = !!log;
-    const isRecent   = diffDays >= 1 && diffDays <= 3;
-    // 7天內未完成的日期都可補課（不強制要有記錄，讓阿均補回來）
-    const canMakeup  = isPast && !isDone && diffDays >= 1 && diffDays <= 7;
-    // 已完成且在 startDate 之後 → 可以複習
-    const canReview  = isPast && isDone && afterStart;
+    const startDate  = S.missions.startDate || dateStr;
+    const afterStart = dateStr >= startDate;   // startDate 當天及之後才顯示內容
+    const diffDays   = today - d;
+
+    // startDate 之前：顯示空格，不顯示日期數字
+    if(!afterStart){
+      html += `<div class="cal-day future" style="opacity:0.2;">${d}</div>`;
+      continue;
+    }
+
+    // startDate 之後的判斷
+    const canMakeup = isPast && !isDone && afterStart;  // 所有未完成的過去日期都可補課
+    const canReview = isPast && isDone && afterStart;
 
     let cls = 'cal-day';
-    if(isToday)                   cls += ' today';
-    else if(isFuture)             cls += ' future';
-    else if(isDone && isMakeup)   cls += ' done makeup';
-    else if(isDone)               cls += ' done';
-    else if(canMakeup)            cls += ' missed';
-    else if(isPast && !isDone)    cls += ' future';
+    if(isToday)                  cls += ' today';
+    else if(isFuture)            cls += ' future';
+    else if(isDone && isMakeup)  cls += ' done makeup';
+    else if(isDone)              cls += ' done';
+    else if(canMakeup)           cls += ' missed';
+    else if(isPast && !isDone)   cls += ' future';  // 超過7天，淡灰
 
     if(isHoliday && !isDone) cls += ' holiday';
     if(canReview) cls += ' reviewable';
@@ -3671,7 +4130,6 @@ function renderCalendar(){
     } else if(canReview){
       clickHandler = `onclick="openReviewPopup('${dateStr}')"`;
       tooltip = '點我複習！';
-      badge = ''; // 已完成打勾
     }
 
     html += `<div class="${cls}" ${clickHandler} title="${tooltip}" style="position:relative">${d}${badge}</div>`;
@@ -3743,18 +4201,25 @@ function startReviewLesson(subj, dateStr){
   S.sessionBadges = 0;
   S.retries = 0;
 
-  const startDate = S.missions.startDate || dateStr;
-  const diffDays  = Math.floor((new Date(dateStr) - new Date(startDate)) / 86400000);
-  const dayNum    = diffDays + 1;
-  const chIdx     = (Math.max(0,dayNum-1)) % COURSES_ALL[subj].length;
-  S.makeupCourse  = COURSES_ALL[subj][chIdx];
+  // 計算補課日對應章節（確保每天不同）
+  let mkDayNum;
+  const mkStartDate = S.missions.startDate;
+  if(mkStartDate && mkStartDate <= dateStr){
+    const mkDiff = Math.floor((new Date(dateStr) - new Date(mkStartDate)) / 86400000);
+    mkDayNum = mkDiff + 1;
+  } else {
+    const [,mm,dd] = dateStr.split('-');
+    mkDayNum = parseInt(dd);
+  }
+  const chIdx    = (Math.max(0, mkDayNum-1)) % COURSES_ALL[subj].length;
+  S.makeupCourse = COURSES_ALL[subj][chIdx];
 
   const screen = document.getElementById('learnScreen');
   screen.className = `learn-screen learn-screen-enter ${subj}-theme`;
   screen.classList.remove('hidden');
 
-  const chapterShort = S.makeupCourse.chapter.split('：')[1] || S.makeupCourse.chapter.replace(/^[^一-鿿]*/,'');
-  document.getElementById('learnTitle').textContent = `📖 複習：${chapterShort}`;
+  const chapterShort = S.makeupCourse.chapter.split('：')[1] || S.makeupCourse.chapter.replace(/^[^\u4e00-\u9fff]*/,'');
+  document.getElementById('learnTitle').textContent = `📖 補課：${chapterShort}`;
   document.getElementById('sessionBadges').textContent = '0';
 
   // 橫幅
@@ -3816,10 +4281,20 @@ function openMakeupPopup(dateStr){
     math:   { icon:'🔢', name:'數學遊戲課', color:'math'    },
   };
 
-  // 取得該日對應的章節（依該日是第幾天）
-  const startDate = S.missions.startDate || dateStr;
-  const diffDays = Math.floor((new Date(dateStr) - new Date(startDate)) / 86400000);
-  const dayNum = diffDays + 1;
+  // 取得該日對應的章節
+  // 優先用 startDate 計算天數，若 startDate 比補課日晚（阿均剛開始用），
+  // 改用補課日的日曆日期作為章節輪替依據，確保每天不同內容
+  let dayNum;
+  const startDate = S.missions.startDate;
+  if(startDate && startDate <= dateStr){
+    // startDate 在補課日之前或當天，正常計算
+    const diffDays = Math.floor((new Date(dateStr) - new Date(startDate)) / 86400000);
+    dayNum = diffDays + 1;
+  } else {
+    // startDate 比補課日晚（剛開始用），用補課日的日期數字作輪替
+    const [,mm,dd] = dateStr.split('-');
+    dayNum = parseInt(dd); // 用日期(1-31)做章節輪替，每天不同
+  }
 
   const subjHtml = Object.keys(subjInfo).map(s=>{
     const done = makeupSubjs[s];
@@ -4548,6 +5023,10 @@ function save(){ localStorage.setItem('hamsterAcademy_v2', JSON.stringify(S)); }
 function load(){
   const d = localStorage.getItem('hamsterAcademy_v2');
   if(d){ try{ S={...S,...JSON.parse(d)}; }catch(e){} }
+  // 確保 startDate 至少從 2026-03-01 開始（給阿均完整的歷史）
+  if(!S.missions.startDate || S.missions.startDate > '2026-03-01'){
+    S.missions.startDate = '2026-03-01';
+  }
 }
 
 // ===== BOOT =====
