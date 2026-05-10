@@ -1665,6 +1665,25 @@ box-shadow:0 4px 0 #5b21b6;
 
   <div id="quizReadyArea"></div>
 
+  <!-- 錯題本卡片（有錯題才顯示） -->
+
+  <div id="mistakeBookArea"></div>
+
+  <!-- 家長報告按鈕 -->
+
+  <div class="card" style="padding:14px;background:linear-gradient(135deg,#dbeafe,#bfdbfe);border:2px solid #3b82f6;">
+    <div style="display:flex;align-items:center;gap:10px;">
+      <div style="font-size:2rem;">📊</div>
+      <div style="flex:1;">
+        <div style="font-size:1rem;font-weight:900;color:#1e40af;">家長學習報告</div>
+        <div style="font-size:0.78rem;color:#1e3a8a;margin-top:2px;">給爸媽看：學習時間、進步、弱點</div>
+      </div>
+      <button onclick="openParentReport()" style="padding:10px 18px;background:linear-gradient(135deg,#3b82f6,#1d4ed8);color:white;border:none;border-radius:12px;font-weight:900;font-family:Nunito,sans-serif;font-size:0.9rem;cursor:pointer;box-shadow:0 4px 0 #1e3a8a;">
+        查看報告
+      </button>
+    </div>
+  </div>
+
   <!-- 波比遊樂場 -->
 
   <div class="card" id="gameCenter" style="padding:18px;">
@@ -1791,6 +1810,14 @@ box-shadow:0 4px 0 #5b21b6;
     <div class="makeup-subjects" id="makeupSubjects"></div>
     <button class="makeup-close" onclick="closeMakeupPopup()">先不要，下次再補</button>
     <div class="makeup-note">💡 補課只能補7天內的課程</div>
+  </div>
+</div>
+
+<!-- 家長報告 overlay -->
+
+<div id="parentReportOverlay" class="hidden" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:3000;background:rgba(0,0,0,0.55);backdrop-filter:blur(6px);overflow-y:auto;padding:20px;">
+  <div style="max-width:480px;margin:20px auto;background:white;border-radius:24px;padding:24px 20px;box-shadow:0 24px 60px rgba(0,0,0,0.3);">
+    <div id="parentReportBody"></div>
   </div>
 </div>
 
@@ -3623,6 +3650,16 @@ let S = {
   costumes:{active:'default',unlocked:['default']},
   makeupMode:false,makeupDate:null,makeupSubj:null,makeupCourse:null,
   quizResults:{},  // 各科小考記錄 {chinese:{day5:true, day10:false...}}
+  // 錯題本：每個項目 {key, subj, label, hint, correct, wrongCount, masteredCount, lastWrong, graduated}
+  mistakes:{chinese:{},english:{},math:{}},
+  // 家長統計
+  parentStats:{
+    dailyTime:{},        // {date: 分鐘數}
+    accuracyLog:{},      // {date: {subj: {correct:N, total:N}}}
+    sessionStart:null    // 目前學習開始時間 (timestamp)
+  },
+  // 複習模式
+  reviewMode:false, reviewQueue:null, reviewIdx:0
 };
 
 /* ===================================================
@@ -3784,6 +3821,50 @@ function updateUI(){
   checkCostumeUnlocks();
   renderGameCenter();
   renderQuizReadyCard();
+  renderMistakeBookCard();
+}
+
+function renderMistakeBookCard(){
+  const el = document.getElementById('mistakeBookArea');
+  if(!el) return;
+  const c = getActiveMistakes('chinese').length;
+  const e = getActiveMistakes('english').length;
+  const m = getActiveMistakes('math').length;
+  const total = c+e+m;
+  if(total === 0){
+    el.innerHTML = `<div class="card" style="padding:14px;background:linear-gradient(135deg,#dcfce7,#bbf7d0);border:2px solid #22c55e;text-align:center;">
+      <div style="font-size:1.6rem;">🎉</div>
+      <div style="font-size:0.9rem;font-weight:800;color:#166534;margin-top:4px;">沒有錯題！太厲害了！</div>
+      <div style="font-size:0.78rem;color:#16a34a;margin-top:2px;">繼續保持！🌟</div>
+    </div>`;
+    return;
+  }
+  el.innerHTML = `<div class="card" style="padding:14px;background:linear-gradient(135deg,#fff7ed,#ffedd5);border:2px solid #f97316;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+      <div style="font-size:2rem;">📖</div>
+      <div style="flex:1;">
+        <div style="font-size:1rem;font-weight:900;color:#9a3412;">錯題本（共 ${total} 題）</div>
+        <div style="font-size:0.78rem;color:#c2410c;margin-top:2px;">複習答對3次就畢業！💪</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:10px;">
+      <div style="background:white;border-radius:8px;padding:7px;text-align:center;">
+        <div style="font-size:1.3rem;font-weight:900;color:#dc2626;">${c}</div>
+        <div style="font-size:0.7rem;color:#9a3412;">國語</div>
+      </div>
+      <div style="background:white;border-radius:8px;padding:7px;text-align:center;">
+        <div style="font-size:1.3rem;font-weight:900;color:#2563eb;">${e}</div>
+        <div style="font-size:0.7rem;color:#9a3412;">英文</div>
+      </div>
+      <div style="background:white;border-radius:8px;padding:7px;text-align:center;">
+        <div style="font-size:1.3rem;font-weight:900;color:#9333ea;">${m}</div>
+        <div style="font-size:0.7rem;color:#9a3412;">數學</div>
+      </div>
+    </div>
+    <button onclick="startReview()" style="width:100%;padding:14px;background:linear-gradient(135deg,#fb923c,#f97316);color:white;border:none;border-radius:14px;font-weight:900;font-family:Nunito,sans-serif;font-size:1rem;cursor:pointer;box-shadow:0 4px 0 #c2410c;">
+      📖 開始複習錯題（最多10題）
+    </button>
+  </div>`;
 }
 
 function exchange(type){
@@ -3814,6 +3895,7 @@ function startLesson(subj){
   }
   sfxFlip();
   S.subj=subj; S.unit=0; S.sessionBadges=0; S.retries=0;
+  startSessionTimer();
 
   const screen = document.getElementById('learnScreen');
   screen.className = 'learn-screen learn-screen-enter '+subj+'-theme';
@@ -3828,6 +3910,7 @@ function startLesson(subj){
 
 function exitLesson(){
   sfxClick();
+  endSessionTimer();
   document.getElementById('learnScreen').classList.add('hidden');
   save(); updateUI();
 }
@@ -3986,6 +4069,8 @@ function checkPhonicsBlend(correct, btn, word){
     if(ham){ ham.classList.remove('sad'); ham.classList.add('happy'); ham.innerHTML=boppySVG(52,'happy','',false); }
     if(word) speakEn(word);
     const u = getDailyCourse(S.subj).units[S.unit];
+    logCorrect(u, S.subj);
+    logAccuracy(S.subj, true);
     document.getElementById('feedback').innerHTML = `<div class="feedback correct">
       <div class="fb-head"><span class="fb-icon">🎉</span><span class="fb-title">拼對了！</span></div>
       <div class="fb-msg">${u.okMsg}</div>
@@ -4005,6 +4090,8 @@ function checkPhonicsBlend(correct, btn, word){
     if(ham){ ham.classList.remove('happy'); ham.classList.add('sad'); ham.innerHTML=boppySVG(52,'sad','',false); }
     S.retries++; S.stats.totalRetries++;
     const u = getDailyCourse(S.subj).units[S.unit];
+    logMistake(u, S.subj);
+    logAccuracy(S.subj, false);
     document.getElementById('feedback').innerHTML = `<div class="feedback retry">
       <div class="fb-head"><span class="fb-icon">💪</span><span class="fb-title">再試一次！</span></div>
       <div class="fb-msg">${u.failMsg}</div>
@@ -4017,8 +4104,11 @@ function checkPhonicsBlend(correct, btn, word){
 function checkPhonicsTest(correct, btn, ans, audio){
   document.querySelectorAll('.opt-btn').forEach(b=>b.disabled=true);
   const ham = document.getElementById('hamAvatar_main');
+  const u = getDailyCourse(S.subj).units[S.unit];
   if(correct){
     btn.classList.add('correct'); sfxCorrect();
+    logCorrect(u, S.subj);
+    logAccuracy(S.subj, true);
     if(ham){ ham.classList.remove('sad'); ham.classList.add('happy'); ham.innerHTML=boppySVG(52,'happy','',false); }
     if(audio) speakEn(audio);
     document.getElementById('feedback').innerHTML = `<div class="feedback correct">
@@ -4036,6 +4126,8 @@ function checkPhonicsTest(correct, btn, ans, audio){
     document.getElementById('btns').innerHTML=`<button class="next-btn" onclick="sfxFlip();nextUnit()">繼續 ➡️</button>`;
   } else {
     btn.classList.add('wrong'); sfxWrong();
+    logMistake(u, S.subj);
+    logAccuracy(S.subj, false);
     if(ham){ ham.classList.remove('happy'); ham.classList.add('sad'); ham.innerHTML=boppySVG(52,'sad','',false); }
     S.retries++; S.stats.totalRetries++;
     document.getElementById('feedback').innerHTML = `<div class="feedback retry">
@@ -4449,10 +4541,12 @@ function pkyDel(){
 function pkyCheck(correct){
   const d = document.getElementById('pinyinDisplay');
   const isOk = _pkyVal.trim() === correct.trim();
+  const u = (S.makeupMode ? S.makeupCourse : getDailyCourse(S.subj)).units[S.unit];
   if(isOk){
     if(d){ d.classList.add('correct'); }
     sfxCorrect();
-    const u = (S.makeupMode ? S.makeupCourse : getDailyCourse(S.subj)).units[S.unit];
+    logCorrect(u, 'chinese');
+    logAccuracy('chinese', true);
     document.getElementById('feedback').innerHTML = `<div class="feedback correct">
       <div class="fb-head"><span class="fb-icon">🎉</span><span class="fb-title">答對了！注音超棒！</span></div>
       <div class="fb-msg">${u.okMsg||'太厲害了！'}</div>
@@ -4462,11 +4556,12 @@ function pkyCheck(correct){
   } else {
     if(d){ d.classList.add('wrong'); setTimeout(()=>d.classList.remove('wrong'),400); }
     sfxWrong();
+    logMistake(u, 'chinese');
+    logAccuracy('chinese', false);
     _pkyVal = '';
     setTimeout(()=>{ if(d){ d.textContent='　'; } }, 300);
     S.retries = (S.retries||0)+1;
     if(S.retries >= 3){
-      const u = (S.makeupMode?S.makeupCourse:getDailyCourse(S.subj)).units[S.unit];
       triggerReinforce({subj:'chinese', char:u.char||'', pinyin:correct, meaning:u.meaning||'', emoji:u.emoji||''});
     } else {
       document.getElementById('feedback').innerHTML = `<div class="feedback wrong">
@@ -4512,9 +4607,12 @@ function akyDel(){
 function akyCheck(correct){
   const d = document.getElementById('alphaDisplay');
   const isOk = _akyVal.trim().toLowerCase() === correct.trim().toLowerCase();
+  const u = (S.makeupMode?S.makeupCourse:getDailyCourse(S.subj)).units[S.unit];
   if(isOk){
     if(d) d.classList.add('correct');
     sfxCorrect();
+    logCorrect(u, 'english');
+    logAccuracy('english', true);
     if(correct) speakEn(correct);
     document.getElementById('feedback').innerHTML=`<div class="feedback correct"><div class="fb-head"><span class="fb-icon">🎉</span><span class="fb-title">拼對了！</span></div></div>`;
     document.getElementById('btns').innerHTML=`<button class="next-btn" onclick="sfxFlip();nextUnit();_akyVal=''">繼續 ➡️</button>`;
@@ -4522,11 +4620,12 @@ function akyCheck(correct){
   } else {
     if(d){ d.classList.add('wrong'); setTimeout(()=>d.classList.remove('wrong'),400); }
     sfxWrong();
+    logMistake(u, 'english');
+    logAccuracy('english', false);
     _akyVal='';
     setTimeout(()=>{ if(d) d.textContent='　'; },300);
     S.retries=(S.retries||0)+1;
     if(S.retries>=3){
-      const u=(S.makeupMode?S.makeupCourse:getDailyCourse(S.subj)).units[S.unit];
       triggerReinforce({subj:'english', word:correct, ans:correct, zh:u.zh||'', emoji:u.emoji||''});
     } else {
       document.getElementById('feedback').innerHTML=`<div class="feedback wrong"><div class="fb-head"><span class="fb-icon">💪</span><span class="fb-title">再試一次！（${S.retries}/3）</span></div><div class="fb-msg">提示：${correct.length}個字母</div></div>`;
@@ -4567,25 +4666,28 @@ function nkyDel(){
 function nkyCheck(correct){
   const d=document.getElementById('numDisplay');
   const isOk=_nkyVal.trim()===String(correct).trim();
+  const u=(S.makeupMode?S.makeupCourse:getDailyCourse(S.subj)).units[S.unit];
   if(isOk){
     if(d) d.classList.add('correct');
     sfxCorrect();
-    const u=(S.makeupMode?S.makeupCourse:getDailyCourse(S.subj)).units[S.unit];
+    logCorrect(u, 'math');
+    logAccuracy('math', true);
     document.getElementById('feedback').innerHTML=`<div class="feedback correct"><div class="fb-head"><span class="fb-icon">🎉</span><span class="fb-title">${u.okMsg||'答對了！'}</span></div></div>`;
     document.getElementById('btns').innerHTML=`<button class="next-btn" onclick="sfxFlip();nextUnit();_nkyVal=''">繼續 ➡️</button>`;
     S.badges.mini+=1; save(); updateUI();
   } else {
     if(d){ d.classList.add('wrong'); setTimeout(()=>d.classList.remove('wrong'),400); }
     sfxWrong();
+    logMistake(u, 'math');
+    logAccuracy('math', false);
     _nkyVal='';
     setTimeout(()=>{ if(d) d.textContent='　'; },300);
     S.retries=(S.retries||0)+1;
     if(S.retries>=3){
-      const u=(S.makeupMode?S.makeupCourse:getDailyCourse(S.subj)).units[S.unit];
       const mathOpts = (u.opts||[]).map(o=>String(o.t));
       triggerReinforce({subj:'math', char:u.q||'？', correct:correct, q:u.q||'', hint:u.hint||'', opts:mathOpts});
     } else {
-      document.getElementById('feedback').innerHTML=`<div class="feedback wrong"><div class="fb-head"><span class="fb-icon">💪</span><span class="fb-title">${(S.makeupMode?S.makeupCourse:getDailyCourse(S.subj)).units[S.unit].failMsg||'再想想！'}（${S.retries}/3）</span></div></div>`;
+      document.getElementById('feedback').innerHTML=`<div class="feedback wrong"><div class="fb-head"><span class="fb-icon">💪</span><span class="fb-title">${u.failMsg||'再想想！'}（${S.retries}/3）</span></div></div>`;
     }
   }
 }
@@ -4627,6 +4729,441 @@ function mathEq(v1,v2,result,type,isMinus=false){
 }
 
 /* ===================================================
+   MISTAKES NOTEBOOK — 錯題本
+   =================================================== */
+
+// 從 unit 取出可記錄的 key 與顯示資料
+function _mistakeKeyFromUnit(u, subj){
+  if(subj==='chinese'){
+    if(u.char) return {key:u.char, label:u.char, hint:u.pinyin||u.q||'', meaning:u.meaning||''};
+  } else if(subj==='english'){
+    if(u.word) return {key:u.word, label:u.word, hint:u.zh||u.q||'', audio:u.audioWord||u.word};
+    if(u.letter && u.audioWord) return {key:u.audioWord, label:u.audioWord, hint:u.soundZh||'', audio:u.audioWord};
+  } else if(subj==='math'){
+    // math 用題目本身當 key
+    if(u.q) return {key:u.q, label:u.q, hint:u.hint||''};
+  }
+  return null;
+}
+
+function logMistake(u, subj){
+  if(S.reviewMode) return;  // 複習模式不再記新錯題（避免無限循環）
+  const info = _mistakeKeyFromUnit(u, subj);
+  if(!info) return;
+  if(!S.mistakes[subj]) S.mistakes[subj]={};
+  const m = S.mistakes[subj][info.key] || {key:info.key, ...info, wrongCount:0, masteredCount:0, graduated:false};
+  m.wrongCount++;
+  m.masteredCount = 0;  // 答錯就重置已掌握次數
+  m.graduated = false;
+  m.lastWrong = todayStr();
+  // 把 unit 完整存下來，複習時直接重用
+  m.unit = u;
+  m.subj = subj;
+  S.mistakes[subj][info.key] = m;
+  save();
+}
+
+function logCorrect(u, subj){
+  // 如果這題在錯題本裡，增加 mastered 次數，連對 3 次畢業
+  const info = _mistakeKeyFromUnit(u, subj);
+  if(!info) return;
+  const m = (S.mistakes[subj]||{})[info.key];
+  if(!m) return;
+  m.masteredCount = (m.masteredCount||0) + 1;
+  if(m.masteredCount >= 3){
+    m.graduated = true;
+  }
+  S.mistakes[subj][info.key] = m;
+  save();
+}
+
+// 取得目前活躍（未畢業）的錯題清單
+function getActiveMistakes(subj=null){
+  const out = [];
+  const subjs = subj ? [subj] : ['chinese','english','math'];
+  subjs.forEach(s=>{
+    const bag = S.mistakes[s] || {};
+    Object.values(bag).forEach(m=>{
+      if(!m.graduated) out.push(m);
+    });
+  });
+  return out;
+}
+
+// 隨機抽取 N 題複習
+function pickReviewQueue(n=10){
+  const all = getActiveMistakes();
+  // 排序：錯越多次的、最近錯的優先
+  all.sort((a,b)=>{
+    const score = x => (x.wrongCount||0)*2 + (x.lastWrong===todayStr()?5:0) - (x.masteredCount||0);
+    return score(b) - score(a);
+  });
+  return all.slice(0, n);
+}
+
+// 進入複習模式
+function startReview(){
+  sfxFlip();
+  const queue = pickReviewQueue(10);
+  if(queue.length === 0){
+    alert('🎉 太棒了！沒有錯題要複習！');
+    return;
+  }
+  S.reviewMode = true;
+  S.reviewQueue = queue;
+  S.reviewIdx = 0;
+  S.subj = queue[0].subj;
+  S.sessionBadges = 0;
+  S.retries = 0;
+
+  // 紀錄開始時間（家長報告用）
+  startSessionTimer();
+
+  const screen = document.getElementById('learnScreen');
+  screen.className = 'learn-screen learn-screen-enter '+queue[0].subj+'-theme';
+  screen.classList.remove('hidden');
+  document.getElementById('learnTitle').textContent = `📖 錯題複習 (${queue.length}題)`;
+  document.getElementById('sessionBadges').textContent = '0';
+  renderReviewUnit();
+}
+
+function renderReviewUnit(){
+  if(!S.reviewQueue || S.reviewIdx >= S.reviewQueue.length){
+    showReviewComplete();
+    return;
+  }
+  const m = S.reviewQueue[S.reviewIdx];
+  S.subj = m.subj;
+  // 切換主題色
+  const screen = document.getElementById('learnScreen');
+  screen.className = 'learn-screen learn-screen-enter '+m.subj+'-theme';
+
+  const u = m.unit;
+  const content = document.getElementById('learnContent');
+  let html = `<div class="teach-card" style="margin-bottom:14px">
+    <div class="chapter-intro" style="background:linear-gradient(135deg,#fff7ed,#ffedd5);border-color:#f97316;">
+      <div class="ch-title">📖 錯題複習 第 ${S.reviewIdx+1} 題 / 共 ${S.reviewQueue.length} 題</div>
+      <div class="ch-story">這題之前答錯過${m.wrongCount}次，再多答對 ${Math.max(0, 3-(m.masteredCount||0))} 次就畢業了！💪</div>
+    </div>
+  </div>`;
+
+  html += '<div class="teach-card">';
+  if(u.type==='phonics_teach' || u.type==='teach'){
+    // teach 變成練習：用題目「複習這個字/詞」
+    html += renderReviewQuestion(m, u);
+  } else if(u.type==='phonics_blend')  html += renderPhonicsBlend(u);
+  else if(u.type==='phonics_test')     html += renderPhonicsTest(u);
+  else if(u.type==='practice')         html += renderPractice(u);
+  else if(u.type==='test')             html += renderTest(u);
+  else                                 html += renderReviewQuestion(m, u);
+  html += '</div>';
+
+  content.innerHTML = html;
+  const ls = document.getElementById('learnScreen');
+  if(ls) ls.scrollTop = 0;
+  fillHamAvatars();
+}
+
+// 把 teach 類的單元包成複習題
+function renderReviewQuestion(m, u){
+  let html = hamsterTag()
+    +`<div class="ham-bubble"><div class="ham-text">⭐ 還記得嗎？來練習一下這題！</div></div></div>`;
+  if(m.subj==='chinese'){
+    html += `<div class="content-display">
+      <div class="big-char">${u.char}</div>
+      ${u.emoji?`<span class="big-emoji">${u.emoji}</span>`:''}
+      <button class="speak-btn" onclick="speakZh('${u.char}');animSpeakBtn()">🔊</button>
+    </div>`;
+    // 從同科目題目挖出選項
+    const fakeOpts = makePinyinChoices(u.pinyin);
+    html += `<div class="practice">
+      <div class="practice-q">「${u.char}」的注音是？</div>
+      <div class="practice-hint">💡 ${u.meaning||''}</div>
+      <div class="options">
+        ${shuffleArr(fakeOpts).map(o=>`<button class="opt-btn" onclick="checkReviewAns(${o===u.pinyin},this,'${u.pinyin}')">${o}</button>`).join('')}
+      </div>
+      <div id="feedback"></div><div id="btns"></div>
+    </div>`;
+  } else if(m.subj==='english'){
+    const audio = u.audioWord || u.word;
+    html += `<div class="content-display">
+      <div class="big-emoji">${u.emoji||'🔤'}</div>
+      <button class="speak-btn" onclick="speakEn('${audio}');animSpeakBtn()">🔊</button>
+    </div>`;
+    const fakeOpts = makeEnglishChoices(audio);
+    html += `<div class="practice">
+      <div class="practice-q">這個單字怎麼拼？</div>
+      <div class="practice-hint">💡 ${u.zh||''}</div>
+      <div class="options">
+        ${shuffleArr(fakeOpts).map(o=>`<button class="opt-btn" onclick="checkReviewAns(${o===audio},this,'${audio}')">${o}</button>`).join('')}
+      </div>
+      <div id="feedback"></div><div id="btns"></div>
+    </div>`;
+  } else {
+    // math: just rerun original practice
+    if(u.opts){
+      html += `<div class="practice">
+        <div class="practice-q">${u.q}</div>
+        <div class="practice-hint">💡 ${u.hint||''}</div>
+        <div class="options">
+          ${shuffleOpts(u.opts).map(o=>`<button class="opt-btn" onclick="checkReviewAns(${o.c},this,'')">${o.t}</button>`).join('')}
+        </div>
+        <div id="feedback"></div><div id="btns"></div>
+      </div>`;
+    }
+  }
+  return html;
+}
+
+// 從錯題本和課程資料抽出注音選項
+function makePinyinChoices(correct){
+  const all = new Set([correct]);
+  COURSES_ALL.chinese.forEach(c=>c.units.forEach(u=>{
+    if(u.pinyin && u.pinyin!==correct) all.add(u.pinyin);
+  }));
+  const arr = Array.from(all);
+  arr.shift();
+  arr.sort(()=>Math.random()-0.5);
+  return [correct, ...arr.slice(0,3)];
+}
+function makeEnglishChoices(correct){
+  const all = new Set([correct]);
+  COURSES_ALL.english.forEach(c=>c.units.forEach(u=>{
+    const w = u.audioWord || u.word;
+    if(w && w!==correct) all.add(w);
+  }));
+  const arr = Array.from(all);
+  arr.shift();
+  arr.sort(()=>Math.random()-0.5);
+  return [correct, ...arr.slice(0,3)];
+}
+
+function checkReviewAns(correct, btn, ans){
+  document.querySelectorAll('.opt-btn').forEach(b=>b.disabled=true);
+  const m = S.reviewQueue[S.reviewIdx];
+  if(correct){
+    btn.classList.add('correct'); sfxCorrect();
+    logCorrect(m.unit, m.subj);
+    S.sessionBadges++;
+    S.badges.mini++;
+    document.getElementById('sessionBadges').textContent = S.sessionBadges;
+    logAccuracy(m.subj, true);
+
+    document.getElementById('feedback').innerHTML = `<div class="feedback correct">
+      <div class="fb-head"><span class="fb-icon">🎉</span><span class="fb-title">答對了！</span></div>
+      <div class="fb-msg">已掌握 ${(S.mistakes[m.subj][m.key]||{}).masteredCount||0} / 3 次！</div>
+    </div>`;
+    document.getElementById('btns').innerHTML = `<button class="next-btn" onclick="sfxFlip();S.reviewIdx++;renderReviewUnit()">下一題 ➡️</button>`;
+  } else {
+    btn.classList.add('wrong'); sfxWrong();
+    // 複習答錯不增加 wrongCount，但重置 mastered
+    if(S.mistakes[m.subj][m.key]) S.mistakes[m.subj][m.key].masteredCount = 0;
+    save();
+    logAccuracy(m.subj, false);
+    document.getElementById('feedback').innerHTML = `<div class="feedback retry">
+      <div class="fb-head"><span class="fb-icon">💪</span><span class="fb-title">再試一次！</span></div>
+      <div class="fb-msg">正確答案是「${ans}」，記住這個！</div>
+    </div>`;
+    document.getElementById('btns').innerHTML = `<button class="retry-btn" onclick="sfxClick();renderReviewUnit()">再來一次 💪</button>`;
+  }
+}
+
+function showReviewComplete(){
+  endSessionTimer();
+  const screen = document.getElementById('learnScreen');
+  const graduated = S.reviewQueue.filter(m=>(S.mistakes[m.subj][m.key]||{}).graduated).length;
+  document.getElementById('learnContent').innerHTML = `
+    <div class="teach-card complete">
+      <div class="complete-ham" id="reviewCompleteHam" style="font-size:0px;display:flex;justify-content:center;"></div>
+      <div class="complete-title">複習完成！</div>
+      <div class="complete-msg">
+        練了 ${S.reviewQueue.length} 題，畢業 ${graduated} 題！🎓<br>
+        多複習幾次就會記住了！💪
+      </div>
+      <div class="complete-badges">
+        <div class="comp-badge">
+          <div class="comp-b-icon">🌟</div>
+          <div class="comp-b-count">+${S.sessionBadges}</div>
+          <div class="comp-b-name">迷你波</div>
+        </div>
+        <div class="comp-badge">
+          <div class="comp-b-icon">🎓</div>
+          <div class="comp-b-count">${graduated}</div>
+          <div class="comp-b-name">畢業題</div>
+        </div>
+      </div>
+      <button class="next-btn" onclick="exitReview()">🏠 回主畫面</button>
+    </div>`;
+  const ham = document.getElementById('reviewCompleteHam');
+  if(ham) ham.innerHTML = boppySVG(90,'happy','',false);
+  save();
+}
+
+function exitReview(){
+  sfxClick();
+  S.reviewMode = false;
+  S.reviewQueue = null;
+  document.getElementById('learnScreen').classList.add('hidden');
+  updateUI();
+}
+
+/* ===================================================
+   PARENT STATS — 家長報告
+   =================================================== */
+
+function startSessionTimer(){
+  S.parentStats.sessionStart = Date.now();
+}
+function endSessionTimer(){
+  if(!S.parentStats.sessionStart) return;
+  const mins = Math.round((Date.now() - S.parentStats.sessionStart) / 60000);
+  if(mins > 0){
+    const key = todayStr();
+    S.parentStats.dailyTime[key] = (S.parentStats.dailyTime[key]||0) + mins;
+  }
+  S.parentStats.sessionStart = null;
+  save();
+}
+
+function logAccuracy(subj, correct){
+  const key = todayStr();
+  if(!S.parentStats.accuracyLog[key]) S.parentStats.accuracyLog[key] = {};
+  if(!S.parentStats.accuracyLog[key][subj]) S.parentStats.accuracyLog[key][subj] = {correct:0, total:0};
+  S.parentStats.accuracyLog[key][subj].total++;
+  if(correct) S.parentStats.accuracyLog[key][subj].correct++;
+}
+
+// 取得最近 N 天的累計統計
+function getRecentStats(days=7){
+  const out = {time:0, accuracy:{chinese:{correct:0,total:0},english:{correct:0,total:0},math:{correct:0,total:0}}, days:0};
+  const now = new Date();
+  for(let i=0; i<days; i++){
+    const d = new Date(now);
+    d.setDate(d.getDate()-i);
+    const key = d.toISOString().split('T')[0];
+    if(S.parentStats.dailyTime[key]) out.days++;
+    out.time += (S.parentStats.dailyTime[key]||0);
+    const a = S.parentStats.accuracyLog[key]||{};
+    ['chinese','english','math'].forEach(s=>{
+      out.accuracy[s].correct += (a[s]?.correct||0);
+      out.accuracy[s].total   += (a[s]?.total||0);
+    });
+  }
+  return out;
+}
+
+function _pct(c,t){ return t>0 ? Math.round(c/t*100) : 0; }
+
+function openParentReport(){
+  sfxClick();
+  const stats7  = getRecentStats(7);
+  const stats30 = getRecentStats(30);
+  const totalMistakes = ['chinese','english','math'].map(s=>getActiveMistakes(s).length);
+  const subjNames = {chinese:'國語',english:'英文',math:'數學'};
+  const todayKey = todayStr();
+  const todayStats = S.parentStats.accuracyLog[todayKey]||{};
+  const todayTime = S.parentStats.dailyTime[todayKey]||0;
+
+  // 最弱的 5 題
+  const allMistakes = getActiveMistakes().slice().sort((a,b)=>(b.wrongCount||0)-(a.wrongCount||0)).slice(0,5);
+
+  const overlay = document.getElementById('parentReportOverlay');
+  document.getElementById('parentReportBody').innerHTML = `
+    <div style="text-align:center;margin-bottom:18px;">
+      <div style="font-size:2.5rem;">📊</div>
+      <h2 style="font-size:1.5rem;font-weight:900;color:#1e293b;margin:6px 0;">${S.name} 的學習報告</h2>
+      <div style="font-size:0.85rem;color:#64748b;">給爸爸媽媽看的</div>
+    </div>
+
+    <div style="background:linear-gradient(135deg,#dbeafe,#bfdbfe);border-radius:16px;padding:14px;margin-bottom:14px;">
+      <div style="font-size:0.95rem;font-weight:800;color:#1e40af;margin-bottom:8px;">📅 今天</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+        <div style="background:white;border-radius:10px;padding:10px;text-align:center;">
+          <div style="font-size:1.6rem;font-weight:900;color:#1e40af;">${todayTime} 分</div>
+          <div style="font-size:0.78rem;color:#64748b;">學習時間</div>
+        </div>
+        <div style="background:white;border-radius:10px;padding:10px;text-align:center;">
+          <div style="font-size:1.6rem;font-weight:900;color:#1e40af;">${Object.values(todayStats).reduce((s,a)=>s+(a.correct||0),0)}/${Object.values(todayStats).reduce((s,a)=>s+(a.total||0),0)}</div>
+          <div style="font-size:0.78rem;color:#64748b;">答對/答題</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="background:linear-gradient(135deg,#dcfce7,#bbf7d0);border-radius:16px;padding:14px;margin-bottom:14px;">
+      <div style="font-size:0.95rem;font-weight:800;color:#14532d;margin-bottom:8px;">📈 最近 7 天</div>
+      <div style="font-size:0.82rem;color:#15803d;margin-bottom:8px;">學了 ${stats7.days} 天，共 ${stats7.time} 分鐘</div>
+      ${['chinese','english','math'].map(s=>{
+        const a = stats7.accuracy[s];
+        const pct = _pct(a.correct, a.total);
+        const color = pct>=80?'#16a34a':pct>=60?'#f59e0b':'#dc2626';
+        return `<div style="margin:8px 0;">
+          <div style="display:flex;justify-content:space-between;font-size:0.82rem;margin-bottom:3px;">
+            <span style="font-weight:700;color:#14532d;">${subjNames[s]}</span>
+            <span style="font-weight:800;color:${color}">${a.correct}/${a.total} (${pct}%)</span>
+          </div>
+          <div style="background:#fff;border-radius:6px;height:8px;overflow:hidden;">
+            <div style="height:100%;width:${pct}%;background:${color};transition:width 0.6s;"></div>
+          </div>
+        </div>`;
+      }).join('')}
+    </div>
+
+    <div style="background:linear-gradient(135deg,#fef3c7,#fde68a);border-radius:16px;padding:14px;margin-bottom:14px;">
+      <div style="font-size:0.95rem;font-weight:800;color:#92400e;margin-bottom:8px;">📖 錯題本</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center;">
+        <div style="background:white;border-radius:8px;padding:8px;">
+          <div style="font-size:1.4rem;font-weight:900;color:#dc2626;">${totalMistakes[0]}</div>
+          <div style="font-size:0.72rem;color:#92400e;">國語</div>
+        </div>
+        <div style="background:white;border-radius:8px;padding:8px;">
+          <div style="font-size:1.4rem;font-weight:900;color:#2563eb;">${totalMistakes[1]}</div>
+          <div style="font-size:0.72rem;color:#92400e;">英文</div>
+        </div>
+        <div style="background:white;border-radius:8px;padding:8px;">
+          <div style="font-size:1.4rem;font-weight:900;color:#9333ea;">${totalMistakes[2]}</div>
+          <div style="font-size:0.72rem;color:#92400e;">數學</div>
+        </div>
+      </div>
+      ${allMistakes.length>0 ? `
+        <div style="margin-top:10px;font-size:0.82rem;color:#92400e;font-weight:700;">最常錯的題目：</div>
+        <div style="margin-top:6px;display:flex;flex-direction:column;gap:5px;">
+          ${allMistakes.map(m=>`<div style="background:white;border-radius:8px;padding:7px 10px;font-size:0.85rem;">
+            <span style="color:#1e293b;font-weight:700;">${m.label}</span>
+            <span style="color:#dc2626;float:right;font-size:0.78rem;">錯 ${m.wrongCount} 次</span>
+          </div>`).join('')}
+        </div>
+      `:''}
+    </div>
+
+    <div style="background:linear-gradient(135deg,#ede9fe,#ddd6fe);border-radius:16px;padding:14px;margin-bottom:14px;">
+      <div style="font-size:0.95rem;font-weight:800;color:#5b21b6;margin-bottom:8px;">🔥 連續學習</div>
+      <div style="display:flex;justify-content:space-around;text-align:center;">
+        <div>
+          <div style="font-size:1.8rem;font-weight:900;color:#5b21b6;">${S.stats.streak}</div>
+          <div style="font-size:0.72rem;color:#7c3aed;">連續天數</div>
+        </div>
+        <div>
+          <div style="font-size:1.8rem;font-weight:900;color:#5b21b6;">${stats30.days}</div>
+          <div style="font-size:0.72rem;color:#7c3aed;">本月學習日</div>
+        </div>
+        <div>
+          <div style="font-size:1.8rem;font-weight:900;color:#5b21b6;">${S.badges.mini}</div>
+          <div style="font-size:0.72rem;color:#7c3aed;">總徽章</div>
+        </div>
+      </div>
+    </div>
+
+    <button class="next-btn" style="background:linear-gradient(135deg,#3b82f6,#1d4ed8);box-shadow:0 5px 0 #1e3a8a;" onclick="closeParentReport()">關閉報告</button>
+  `;
+  overlay.classList.remove('hidden');
+}
+
+function closeParentReport(){
+  sfxClick();
+  document.getElementById('parentReportOverlay').classList.add('hidden');
+}
+
+/* ===================================================
    CHECK ANSWER
    =================================================== */
 function checkAns(correct, btn){
@@ -4637,6 +5174,8 @@ function checkAns(correct, btn){
   if(correct){
     btn.classList.add('correct');
     sfxCorrect();
+    logCorrect(u, S.subj);
+    logAccuracy(S.subj, true);
     if(ham){ ham.classList.remove('sad'); ham.classList.add('happy'); ham.innerHTML=boppySVG(52,'happy','',false); }
     const isRetry = S.retries>0;
     const msg = isRetry
@@ -4674,6 +5213,8 @@ function checkAns(correct, btn){
   } else {
     btn.classList.add('wrong');
     sfxWrong();
+    logMistake(u, S.subj);
+    logAccuracy(S.subj, false);
     if(ham){ ham.classList.remove('happy'); ham.classList.add('sad'); ham.innerHTML=boppySVG(52,'sad','',false); }
     S.retries++;
     S.stats.totalRetries++;
@@ -4697,6 +5238,8 @@ function checkTest(correct, btn, ans){
   if(correct){
     btn.classList.add('correct');
     sfxCorrect();
+    logCorrect(u, S.subj);
+    logAccuracy(S.subj, true);
     if(ham){ ham.classList.remove('sad'); ham.classList.add('happy'); ham.innerHTML=boppySVG(52,'happy','',false); }
 
     document.getElementById('feedback').innerHTML = `<div class="feedback correct">
@@ -4725,6 +5268,8 @@ function checkTest(correct, btn, ans){
   } else {
     btn.classList.add('wrong');
     sfxWrong();
+    logMistake(u, S.subj);
+    logAccuracy(S.subj, false);
     if(ham){ ham.classList.remove('happy'); ham.classList.add('sad'); ham.innerHTML=boppySVG(52,'sad','',false); }
     S.retries++;
     S.stats.totalRetries++;
@@ -4831,6 +5376,7 @@ function _getCompleteMsg(subj, retries, allThreeDone, doneCount){
 function showComplete(){
   // 補課模式交給 showMakeupComplete 處理
   if(S.makeupMode){ showMakeupComplete(); return; }
+  endSessionTimer();
   S.today[S.subj].done = true;
   const today = new Date().toISOString().split('T')[0];
   if(S.stats.lastDate !== today){ S.stats.streak++; S.stats.lastDate=today; }
@@ -5572,6 +6118,7 @@ function closeMakeupPopup(){
 // 開始補課（進入學習畫面，但標記為補課模式）
 function startMakeupLesson(subj, dateStr){
   sfxFlip();
+  startSessionTimer();
   document.getElementById('makeupOverlay').classList.add('hidden');
 
   // 設定補課模式
@@ -5652,6 +6199,7 @@ function renderMakeupUnit(){
 
 // 補課完成
 function showMakeupComplete(){
+  endSessionTimer();
   const dateStr = S.makeupDate;
   const subj    = S.makeupSubj;
 
@@ -6707,6 +7255,18 @@ function load(){
   if(!S.missions.startDate || S.missions.startDate > '2026-03-01'){
     S.missions.startDate = '2026-03-01';
   }
+  // 補齊舊存檔缺的欄位（向後相容）
+  if(!S.mistakes) S.mistakes = {chinese:{},english:{},math:{}};
+  ['chinese','english','math'].forEach(s=>{
+    if(!S.mistakes[s]) S.mistakes[s] = {};
+  });
+  if(!S.parentStats) S.parentStats = {dailyTime:{}, accuracyLog:{}, sessionStart:null};
+  if(!S.parentStats.dailyTime)   S.parentStats.dailyTime   = {};
+  if(!S.parentStats.accuracyLog) S.parentStats.accuracyLog = {};
+  // 重新整理 review 狀態（不應該跨 session 持久化）
+  S.reviewMode = false;
+  S.reviewQueue = null;
+  S.reviewIdx = 0;
 }
 
 // ===== BOOT =====
