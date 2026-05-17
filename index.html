@@ -1519,8 +1519,11 @@ box-shadow:0 4px 0 #5b21b6;
   <div class="card player-card">
     <div class="player-top">
       <div class="player-avatar" id="playerAvatar" style="font-size:0px;display:flex;align-items:center;justify-content:center;padding:0;"></div>
-      <div>
-        <div class="player-name" id="displayName">阿均</div>
+      <div style="flex:1;">
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+          <div class="player-name" id="displayName">阿均</div>
+          <div id="gradeTag" style="font-size:0.68rem;font-weight:800;color:#6b21a8;background:linear-gradient(135deg,#ede9fe,#ddd6fe);padding:2px 8px;border-radius:8px;border:1.5px solid #c4b5fd;">📚 二年級</div>
+        </div>
         <div class="player-title" id="playerTitle">✨ 學習小新手</div>
         <div class="player-streak">
           <span class="streak-fire">🔥</span>
@@ -2010,6 +2013,152 @@ function triggerBurst(){
    COURSES DATA
    =================================================== */
 // 這個檔案的內容會被插入到 hamster_v2.html 的 COURSES 定義位置
+/* ===================================================
+   📚 能力指標字典（Skill Taxonomy）— P1/P2
+   每個 skill 有：subj, name, grade, parent(optional)
+   未來新年級只要擴充這份字典 + 加 _skillsForUnit 規則即可
+   =================================================== */
+const SKILLS = {
+  // ── 中文 ──
+  ZH_PINYIN:        {subj:'chinese', name:'注音認讀',   grade:'g2', area:'語音'},
+  ZH_CHAR_RECOG:    {subj:'chinese', name:'字形辨識',   grade:'g2', area:'識字'},
+  ZH_VOCAB:         {subj:'chinese', name:'詞義理解',   grade:'g2', area:'識字'},
+  ZH_ANTONYM:       {subj:'chinese', name:'相反詞',     grade:'g2', area:'語法'},
+  ZH_RADICAL:       {subj:'chinese', name:'部首識別',   grade:'g2', area:'識字'},
+  ZH_IDIOM:         {subj:'chinese', name:'成語應用',   grade:'g2', area:'語法'},
+  ZH_SENTENCE:      {subj:'chinese', name:'句型結構',   grade:'g2', area:'語法'},
+  ZH_THEME_NATURE:  {subj:'chinese', name:'主題-自然',  grade:'g2', area:'主題詞彙'},
+  ZH_THEME_BODY:    {subj:'chinese', name:'主題-身體',  grade:'g2', area:'主題詞彙'},
+  ZH_THEME_FAMILY:  {subj:'chinese', name:'主題-家人',  grade:'g2', area:'主題詞彙'},
+  ZH_THEME_ANIMAL:  {subj:'chinese', name:'主題-動物',  grade:'g2', area:'主題詞彙'},
+  ZH_THEME_LIFE:    {subj:'chinese', name:'主題-生活',  grade:'g2', area:'主題詞彙'},
+  ZH_THEME_COLOR:   {subj:'chinese', name:'主題-顏色',  grade:'g2', area:'主題詞彙'},
+  ZH_THEME_NUMBERS: {subj:'chinese', name:'主題-數字',  grade:'g2', area:'主題詞彙'},
+  ZH_THEME_TRANS:   {subj:'chinese', name:'主題-交通',  grade:'g2', area:'主題詞彙'},
+  ZH_THEME_ACTION:  {subj:'chinese', name:'主題-動作',  grade:'g2', area:'主題詞彙'},
+  ZH_THEME_FEEL:    {subj:'chinese', name:'主題-感覺',  grade:'g2', area:'主題詞彙'},
+  // ── 數學 ──
+  MATH_COUNTING:    {subj:'math',    name:'數數',       grade:'g2', area:'數與量'},
+  MATH_ADD_BASIC:   {subj:'math',    name:'基礎加法',   grade:'g2', area:'數與量'},
+  MATH_SUB_BASIC:   {subj:'math',    name:'基礎減法',   grade:'g2', area:'數與量'},
+  MATH_COMPARE:     {subj:'math',    name:'大小比較',   grade:'g2', area:'數與量'},
+  MATH_PATTERN:     {subj:'math',    name:'數列規律',   grade:'g2', area:'代數思維'},
+  MATH_ADD_2D:      {subj:'math',    name:'兩位數加法', grade:'g2', area:'數與量'},
+  MATH_ADD_CARRY:   {subj:'math',    name:'進位加法',   grade:'g2', area:'數與量'},
+  MATH_SUB_2D:      {subj:'math',    name:'兩位數減法', grade:'g2', area:'數與量'},
+  MATH_SUB_BORROW:  {subj:'math',    name:'退位減法',   grade:'g2', area:'數與量'},
+  MATH_MULT_LOW:    {subj:'math',    name:'乘法 2/3/5', grade:'g2', area:'乘法'},
+  MATH_MULT_HIGH:   {subj:'math',    name:'乘法 4-9',   grade:'g2', area:'乘法'},
+  MATH_DIV_INTRO:   {subj:'math',    name:'除法概念',   grade:'g2', area:'乘法'},
+  MATH_SHAPE:       {subj:'math',    name:'形狀辨識',   grade:'g2', area:'幾何'},
+  MATH_TIME:        {subj:'math',    name:'時間鐘錶',   grade:'g2', area:'量與測量'},
+  MATH_MEASURE:     {subj:'math',    name:'長度重量',   grade:'g2', area:'量與測量'},
+  MATH_MONEY:       {subj:'math',    name:'金錢計算',   grade:'g2', area:'生活應用'},
+  MATH_WORD_PROB:   {subj:'math',    name:'文字應用題', grade:'g2', area:'生活應用'},
+  MATH_3DIGIT:      {subj:'math',    name:'三位數',     grade:'g2', area:'數與量'},
+  MATH_ODD_EVEN:    {subj:'math',    name:'奇偶數',     grade:'g2', area:'數論'},
+  MATH_FRACTION:    {subj:'math',    name:'分數概念',   grade:'g2', area:'數論'},
+  // ── 英文 ──
+  EN_PHONICS:       {subj:'english', name:'自然拼音',   grade:'g2', area:'發音'},
+  EN_LETTER:        {subj:'english', name:'字母辨識',   grade:'g2', area:'發音'},
+  EN_VOCAB_COLOR:   {subj:'english', name:'單字-顏色',  grade:'g2', area:'單字'},
+  EN_VOCAB_NUM:     {subj:'english', name:'單字-數字',  grade:'g2', area:'單字'},
+  EN_VOCAB_ANIMAL:  {subj:'english', name:'單字-動物',  grade:'g2', area:'單字'},
+  EN_VOCAB_FOOD:    {subj:'english', name:'單字-食物',  grade:'g2', area:'單字'},
+  EN_VOCAB_BODY:    {subj:'english', name:'單字-身體',  grade:'g2', area:'單字'},
+  EN_SENTENCE_BE:   {subj:'english', name:'be 動詞句型',grade:'g2', area:'句型'},
+  EN_PLURAL:        {subj:'english', name:'複數變化',   grade:'g2', area:'句型'},
+  EN_VERB:          {subj:'english', name:'動詞應用',   grade:'g2', area:'句型'},
+  EN_GREETING:      {subj:'english', name:'招呼語',     grade:'g2', area:'會話'},
+  EN_TIME:          {subj:'english', name:'星期月份',   grade:'g2', area:'單字'},
+  EN_DIALOGUE:      {subj:'english', name:'英文對話',   grade:'g2', area:'會話'}
+};
+
+/* ── 從章節索引 + 題目類型自動推導出對應的 skill 標籤 ── */
+function _skillsForUnit(subj, chapterIdx, u){
+  const out = [];
+  if(!u) return out;
+  if(subj==='chinese'){
+    if(u.pinyin) out.push('ZH_PINYIN');
+    if(u.type==='test') out.push('ZH_CHAR_RECOG');
+    if(u.type==='practice' && u.char) out.push('ZH_VOCAB');
+    const themeMap = {
+      0:'ZH_THEME_NATURE', 1:'ZH_THEME_BODY', 2:'ZH_THEME_FAMILY',
+      3:'ZH_THEME_ANIMAL', 4:'ZH_THEME_LIFE',  5:'ZH_THEME_NATURE',
+      6:'ZH_THEME_COLOR',  7:'ZH_THEME_NUMBERS',8:'ZH_THEME_LIFE',
+      10:'ZH_THEME_TRANS', 11:'ZH_THEME_NATURE',12:'ZH_THEME_LIFE',
+      13:'ZH_THEME_ACTION',14:'ZH_THEME_FEEL',
+      16:'ZH_ANTONYM',     17:'ZH_RADICAL',     18:'ZH_IDIOM', 19:'ZH_SENTENCE'
+    };
+    if(themeMap[chapterIdx]) out.push(themeMap[chapterIdx]);
+  } else if(subj==='math'){
+    const map = {
+      0:['MATH_COUNTING','MATH_ADD_BASIC'],
+      1:['MATH_SUB_BASIC'],
+      2:['MATH_ADD_BASIC','MATH_SUB_BASIC'],
+      3:['MATH_COMPARE'],
+      4:['MATH_PATTERN'],
+      5:['MATH_ADD_BASIC','MATH_SUB_BASIC','MATH_COMPARE'],
+      6:['MATH_SHAPE'],
+      7:['MATH_TIME'],
+      8:['MATH_MEASURE'],
+      9:['MATH_MONEY'],
+      10:['MATH_DIV_INTRO'],
+      11:['MATH_ADD_BASIC','MATH_SUB_BASIC','MATH_COMPARE'],
+      12:['MATH_ADD_2D'],
+      13:['MATH_ADD_CARRY'],
+      14:['MATH_SUB_2D'],
+      15:['MATH_SUB_BORROW'],
+      16:['MATH_MULT_LOW'],
+      17:['MATH_MULT_HIGH'],
+      18:['MATH_TIME'],
+      19:['MATH_MONEY'],
+      20:['MATH_WORD_PROB'],
+      21:['MATH_3DIGIT'],
+      22:['MATH_ODD_EVEN','MATH_FRACTION'],
+      23:['MATH_ADD_CARRY','MATH_SUB_BORROW','MATH_MULT_LOW','MATH_MULT_HIGH']
+    };
+    if(map[chapterIdx]) out.push(...map[chapterIdx]);
+  } else if(subj==='english'){
+    if(u.type && (u.type==='phonics_teach'||u.type==='phonics_blend'||u.type==='phonics_test'||u.type==='phonics_family')){
+      out.push('EN_PHONICS','EN_LETTER');
+    } else {
+      const map = {
+        6:'EN_VOCAB_COLOR', 7:'EN_VOCAB_NUM',   8:'EN_VOCAB_ANIMAL',
+        9:'EN_VOCAB_FOOD', 10:'EN_VOCAB_BODY',
+        12:'EN_SENTENCE_BE',13:'EN_PLURAL',     14:'EN_VERB',
+        15:'EN_GREETING',  16:'EN_TIME',        17:'EN_DIALOGUE'
+      };
+      if(map[chapterIdx]) out.push(map[chapterIdx]);
+    }
+  }
+  return out;
+}
+
+/* ===================================================
+   🎓 課程目錄（CURRICULUM）— 多年級包裝層
+   未來加新年級只要在 grades 下面新增條目並指向新的 courses 物件
+   =================================================== */
+const CURRICULUM = {
+  defaultGrade: 'g2',
+  grades: {
+    g1: { label:'一年級', subtitle:'入門基礎',      ready:false, courses:null },
+    g2: { label:'二年級', subtitle:'2026 春季學期', ready:true,  courses:null /* 下面綁定 */ },
+    g3: { label:'三年級', subtitle:'進階拓展',      ready:false, courses:null },
+    g4: { label:'四年級', subtitle:'規劃中',        ready:false, courses:null },
+    g5: { label:'五年級', subtitle:'規劃中',        ready:false, courses:null },
+    g6: { label:'六年級', subtitle:'規劃中',        ready:false, courses:null }
+  }
+};
+
+function getActiveGrade(){
+  return (S && S.activeGrade) || CURRICULUM.defaultGrade;
+}
+function getCurrentCourses(){
+  const g = CURRICULUM.grades[getActiveGrade()];
+  return (g && g.courses) || COURSES_ALL;
+}
+
 const COURSES_ALL = {
 
 // ════════════════════════════════════════════════
@@ -3615,6 +3764,9 @@ english:[
 ]
 }
 
+// 將二年級內容綁定到 CURRICULUM（P1 多年級包裝完成）
+CURRICULUM.grades.g2.courses = COURSES_ALL;
+
 // 向下相容：COURSES 保留供非每日模式使用
 const COURSES = {
   chinese: COURSES_ALL.chinese[0],
@@ -3622,13 +3774,23 @@ const COURSES = {
   math:    COURSES_ALL.math[0],
 };
 
-// 取得今日對應章節（依 day number 輪替）
+// 取得今日對應章節（依 day number 輪替，依當前年級切換內容來源）
 function getDailyCourse(subj){
-  const list = COURSES_ALL[subj];
+  const list = (getCurrentCourses()||{})[subj] || COURSES_ALL[subj];
   if(!list || !list.length) return COURSES[subj];
   const dayNum = (typeof getDayNumber === 'function') ? getDayNumber() : 1;
   const idx = (Math.max(0, dayNum - 1)) % list.length;
   return list[idx];
+}
+
+// 反查某 unit 在當前年級該科目中的章節索引（供能力標籤推導用）
+function _chapterIdxForUnit(subj, u){
+  if(!u) return -1;
+  const list = (getCurrentCourses()||{})[subj] || COURSES_ALL[subj] || [];
+  for(let i=0; i<list.length; i++){
+    if(list[i] && Array.isArray(list[i].units) && list[i].units.indexOf(u) >= 0) return i;
+  }
+  return -1;
 }
 
 const CHEERS = {
@@ -3661,7 +3823,11 @@ let S = {
   // 複習模式
   reviewMode:false, reviewQueue:null, reviewIdx:0,
   // 課前熱身複習模式（一次最多 3 題到期錯題）
-  warmupMode:false, warmupSubj:null
+  warmupMode:false, warmupSubj:null,
+  // 多年級切換（P1）— 預設二年級；未來加新年級資料後可切換
+  activeGrade:'g2',
+  // 能力地圖追蹤（P2）— {skillId: {correct, total, lastSeen}}
+  skillMastery:{}
 };
 
 /* ===================================================
@@ -3707,6 +3873,13 @@ function checkDay(){
 function updateUI(){
   document.getElementById('displayName').textContent = S.name;
   document.getElementById('streakDays').textContent = S.stats.streak;
+  // 年級指示（P1 多年級骨架）
+  const gtag = document.getElementById('gradeTag');
+  if(gtag){
+    const g = CURRICULUM.grades[getActiveGrade()] || CURRICULUM.grades.g2;
+    gtag.textContent = `📚 ${g.label}`;
+    gtag.title = g.subtitle;
+  }
 
   // 玩家頭像換成當前造型
   updateAvatarIcon();
@@ -4104,7 +4277,7 @@ function checkPhonicsBlend(correct, btn, word){
     if(word) speakEn(word);
     const u = getDailyCourse(S.subj).units[S.unit];
     logCorrect(u, S.subj);
-    logAccuracy(S.subj, true);
+    logAccuracy(S.subj, true, u);
     document.getElementById('feedback').innerHTML = `<div class="feedback correct">
       <div class="fb-head"><span class="fb-icon">🎉</span><span class="fb-title">拼對了！</span></div>
       <div class="fb-msg">${u.okMsg}</div>
@@ -4125,7 +4298,7 @@ function checkPhonicsBlend(correct, btn, word){
     S.retries++; S.stats.totalRetries++;
     const u = getDailyCourse(S.subj).units[S.unit];
     logMistake(u, S.subj);
-    logAccuracy(S.subj, false);
+    logAccuracy(S.subj, false, u);
     document.getElementById('feedback').innerHTML = `<div class="feedback retry">
       <div class="fb-head"><span class="fb-icon">💪</span><span class="fb-title">再試一次！</span></div>
       <div class="fb-msg">${u.failMsg}</div>
@@ -4142,7 +4315,7 @@ function checkPhonicsTest(correct, btn, ans, audio){
   if(correct){
     btn.classList.add('correct'); sfxCorrect();
     logCorrect(u, S.subj);
-    logAccuracy(S.subj, true);
+    logAccuracy(S.subj, true, u);
     if(ham){ ham.classList.remove('sad'); ham.classList.add('happy'); ham.innerHTML=boppySVG(52,'happy','',false); }
     if(audio) speakEn(audio);
     document.getElementById('feedback').innerHTML = `<div class="feedback correct">
@@ -4161,7 +4334,7 @@ function checkPhonicsTest(correct, btn, ans, audio){
   } else {
     btn.classList.add('wrong'); sfxWrong();
     logMistake(u, S.subj);
-    logAccuracy(S.subj, false);
+    logAccuracy(S.subj, false, u);
     if(ham){ ham.classList.remove('happy'); ham.classList.add('sad'); ham.innerHTML=boppySVG(52,'sad','',false); }
     S.retries++; S.stats.totalRetries++;
     document.getElementById('feedback').innerHTML = `<div class="feedback retry">
@@ -4580,7 +4753,7 @@ function pkyCheck(correct){
     if(d){ d.classList.add('correct'); }
     sfxCorrect();
     logCorrect(u, 'chinese');
-    logAccuracy('chinese', true);
+    logAccuracy('chinese', true, u);
     document.getElementById('feedback').innerHTML = `<div class="feedback correct">
       <div class="fb-head"><span class="fb-icon">🎉</span><span class="fb-title">答對了！注音超棒！</span></div>
       <div class="fb-msg">${u.okMsg||'太厲害了！'}</div>
@@ -4591,7 +4764,7 @@ function pkyCheck(correct){
     if(d){ d.classList.add('wrong'); setTimeout(()=>d.classList.remove('wrong'),400); }
     sfxWrong();
     logMistake(u, 'chinese');
-    logAccuracy('chinese', false);
+    logAccuracy('chinese', false, u);
     _pkyVal = '';
     setTimeout(()=>{ if(d){ d.textContent='　'; } }, 300);
     S.retries = (S.retries||0)+1;
@@ -4646,7 +4819,7 @@ function akyCheck(correct){
     if(d) d.classList.add('correct');
     sfxCorrect();
     logCorrect(u, 'english');
-    logAccuracy('english', true);
+    logAccuracy('english', true, u);
     if(correct) speakEn(correct);
     document.getElementById('feedback').innerHTML=`<div class="feedback correct"><div class="fb-head"><span class="fb-icon">🎉</span><span class="fb-title">拼對了！</span></div></div>`;
     document.getElementById('btns').innerHTML=`<button class="next-btn" onclick="sfxFlip();nextUnit();_akyVal=''">繼續 ➡️</button>`;
@@ -4655,7 +4828,7 @@ function akyCheck(correct){
     if(d){ d.classList.add('wrong'); setTimeout(()=>d.classList.remove('wrong'),400); }
     sfxWrong();
     logMistake(u, 'english');
-    logAccuracy('english', false);
+    logAccuracy('english', false, u);
     _akyVal='';
     setTimeout(()=>{ if(d) d.textContent='　'; },300);
     S.retries=(S.retries||0)+1;
@@ -4705,7 +4878,7 @@ function nkyCheck(correct){
     if(d) d.classList.add('correct');
     sfxCorrect();
     logCorrect(u, 'math');
-    logAccuracy('math', true);
+    logAccuracy('math', true, u);
     document.getElementById('feedback').innerHTML=`<div class="feedback correct"><div class="fb-head"><span class="fb-icon">🎉</span><span class="fb-title">${u.okMsg||'答對了！'}</span></div></div>`;
     document.getElementById('btns').innerHTML=`<button class="next-btn" onclick="sfxFlip();nextUnit();_nkyVal=''">繼續 ➡️</button>`;
     S.badges.mini+=1; save(); updateUI();
@@ -4713,7 +4886,7 @@ function nkyCheck(correct){
     if(d){ d.classList.add('wrong'); setTimeout(()=>d.classList.remove('wrong'),400); }
     sfxWrong();
     logMistake(u, 'math');
-    logAccuracy('math', false);
+    logAccuracy('math', false, u);
     _nkyVal='';
     setTimeout(()=>{ if(d) d.textContent='　'; },300);
     S.retries=(S.retries||0)+1;
@@ -5059,7 +5232,7 @@ function checkReviewAns(correct, btn, ans){
     S.sessionBadges++;
     S.badges.mini++;
     document.getElementById('sessionBadges').textContent = S.sessionBadges;
-    logAccuracy(m.subj, true);
+    logAccuracy(m.subj, true, m.unit);
 
     const updated = (S.mistakes[m.subj]||{})[m.key]||{};
     const reps = updated.repetitions||0;
@@ -5077,7 +5250,7 @@ function checkReviewAns(correct, btn, ans){
     btn.classList.add('wrong'); sfxWrong();
     // 複習/熱身答錯：透過 logMistake 走 SM-2 重置（不增加 wrongCount）
     logMistake(m.unit, m.subj);
-    logAccuracy(m.subj, false);
+    logAccuracy(m.subj, false, m.unit);
     document.getElementById('feedback').innerHTML = `<div class="feedback retry">
       <div class="fb-head"><span class="fb-icon">💪</span><span class="fb-title">再試一次！</span></div>
       <div class="fb-msg">正確答案是「${ans}」，記住這個！</div>
@@ -5160,12 +5333,56 @@ function endSessionTimer(){
   save();
 }
 
-function logAccuracy(subj, correct){
+function logAccuracy(subj, correct, u){
   const key = todayStr();
   if(!S.parentStats.accuracyLog[key]) S.parentStats.accuracyLog[key] = {};
   if(!S.parentStats.accuracyLog[key][subj]) S.parentStats.accuracyLog[key][subj] = {correct:0, total:0};
   S.parentStats.accuracyLog[key][subj].total++;
   if(correct) S.parentStats.accuracyLog[key][subj].correct++;
+  if(u) updateSkillMastery(subj, u, correct);
+}
+
+// P2：依據題目自動更新能力地圖（從 _skillsForUnit 推導）
+function updateSkillMastery(subj, u, correct){
+  const idx = _chapterIdxForUnit(subj, u);
+  // 找不到章節索引時，退而用今日章節索引（補課/熱身可能找不到）
+  let chapterIdx = idx;
+  if(chapterIdx < 0){
+    const list = (getCurrentCourses()||{})[subj] || COURSES_ALL[subj] || [];
+    const today = getDailyCourse(subj);
+    chapterIdx = list.indexOf(today);
+  }
+  if(chapterIdx < 0) return;
+  const skills = _skillsForUnit(subj, chapterIdx, u);
+  if(!skills.length) return;
+  const today = todayStr();
+  if(!S.skillMastery) S.skillMastery = {};
+  skills.forEach(sk=>{
+    if(!S.skillMastery[sk]) S.skillMastery[sk] = {correct:0, total:0, lastSeen:today};
+    S.skillMastery[sk].total++;
+    if(correct) S.skillMastery[sk].correct++;
+    S.skillMastery[sk].lastSeen = today;
+  });
+}
+
+// 取得某 skill 的掌握度百分比；資料量太少時回傳 null（避免誤判）
+function getSkillMastery(skillId){
+  const m = (S.skillMastery||{})[skillId];
+  if(!m || m.total < 2) return null;
+  return Math.round(m.correct / m.total * 100);
+}
+
+// 取得某科目所有有資料的 skill，按掌握度排序
+function getSubjectSkillReport(subj){
+  return Object.keys(SKILLS)
+    .filter(id => SKILLS[id].subj === subj)
+    .map(id => ({
+      id, name: SKILLS[id].name, area: SKILLS[id].area,
+      ...((S.skillMastery||{})[id] || {correct:0,total:0,lastSeen:null}),
+      mastery: getSkillMastery(id)
+    }))
+    .filter(s => s.total > 0)
+    .sort((a,b)=> (a.mastery??101) - (b.mastery??101));  // null（資料不足）排最後
 }
 
 // 取得最近 N 天的累計統計
@@ -5288,9 +5505,74 @@ function openParentReport(){
       </div>
     </div>
 
+    ${_renderSkillMapSection()}
+
     <button class="next-btn" style="background:linear-gradient(135deg,#3b82f6,#1d4ed8);box-shadow:0 5px 0 #1e3a8a;" onclick="closeParentReport()">關閉報告</button>
   `;
   overlay.classList.remove('hidden');
+}
+
+// P2：能力地圖區塊 — 家長報告中最有商業價值的功能
+function _renderSkillMapSection(){
+  const subjLabels = {chinese:'國語', english:'英文', math:'數學'};
+  const subjColors = {chinese:'#dc2626', english:'#2563eb', math:'#9333ea'};
+  const grade = CURRICULUM.grades[getActiveGrade()] || CURRICULUM.grades.g2;
+  const sections = ['chinese','english','math'].map(s=>{
+    const report = getSubjectSkillReport(s);
+    if(report.length === 0) return '';
+    // 弱項 top 3（mastery 數字小排前）
+    const weakest = report.filter(r=>r.mastery!==null).slice(0,3);
+    const totalSkills = report.length;
+    const avgMastery = report.filter(r=>r.mastery!==null)
+      .reduce((sum,r,_,arr)=>sum + r.mastery/arr.length, 0);
+    const avg = Math.round(avgMastery) || 0;
+    const color = subjColors[s];
+    // 進度條：每個能力一條
+    const bars = report.map(r=>{
+      const pct = r.mastery;
+      const display = pct===null ? `<span style="font-size:0.7rem;color:#9ca3af;">(資料蒐集中, ${r.total}題)</span>` : `${pct}%`;
+      const barColor = pct===null ? '#e5e7eb' : pct>=80 ? '#16a34a' : pct>=60 ? '#f59e0b' : '#dc2626';
+      const barWidth = pct===null ? 6 : pct;
+      return `<div style="margin:5px 0;">
+        <div style="display:flex;justify-content:space-between;font-size:0.74rem;margin-bottom:2px;">
+          <span style="font-weight:700;color:#1e293b;">${r.name} <span style="color:#9ca3af;font-weight:500;">·${r.area}</span></span>
+          <span style="font-weight:800;color:${barColor};">${display}</span>
+        </div>
+        <div style="background:#f1f5f9;border-radius:5px;height:6px;overflow:hidden;">
+          <div style="height:100%;width:${barWidth}%;background:${barColor};transition:width 0.6s;"></div>
+        </div>
+      </div>`;
+    }).join('');
+    const adviceList = weakest.length>0
+      ? `<div style="margin-top:8px;padding:8px;background:#fffbeb;border-radius:8px;border-left:3px solid #f59e0b;">
+          <div style="font-size:0.78rem;font-weight:800;color:#92400e;margin-bottom:3px;">📌 建議加強：</div>
+          ${weakest.map(w=>`<div style="font-size:0.74rem;color:#9a3412;">• ${w.name}（${w.mastery}% / ${w.total}題）</div>`).join('')}
+        </div>`
+      : '';
+    return `<div style="background:white;border-radius:12px;padding:10px;margin-bottom:8px;border:2px solid ${color}22;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+        <div style="font-size:0.92rem;font-weight:800;color:${color};">${subjLabels[s]}</div>
+        <div style="font-size:0.78rem;color:#64748b;">追蹤 ${totalSkills} 項能力 · 平均 <b style="color:${color};">${avg}%</b></div>
+      </div>
+      ${bars}
+      ${adviceList}
+    </div>`;
+  }).filter(Boolean).join('');
+  if(!sections){
+    return `<div style="background:linear-gradient(135deg,#f3e8ff,#e9d5ff);border-radius:16px;padding:14px;margin-bottom:14px;text-align:center;">
+      <div style="font-size:1.8rem;">🧭</div>
+      <div style="font-size:0.92rem;font-weight:800;color:#6b21a8;margin-top:4px;">能力地圖蒐集中</div>
+      <div style="font-size:0.78rem;color:#7c3aed;margin-top:3px;">完成更多題目後就能看到孩子在 ${Object.keys(SKILLS).length} 項能力的表現！</div>
+    </div>`;
+  }
+  return `<div style="background:linear-gradient(135deg,#f3e8ff,#e9d5ff);border-radius:16px;padding:14px;margin-bottom:14px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+      <div style="font-size:0.95rem;font-weight:800;color:#6b21a8;">🧭 能力地圖</div>
+      <div style="font-size:0.7rem;color:#7c3aed;background:white;padding:2px 8px;border-radius:8px;">${grade.label} · ${grade.subtitle}</div>
+    </div>
+    <div style="font-size:0.78rem;color:#7c3aed;margin-bottom:8px;">每一題自動對應到課綱能力指標，下面是孩子目前的掌握狀況：</div>
+    ${sections}
+  </div>`;
 }
 
 function closeParentReport(){
@@ -5310,7 +5592,7 @@ function checkAns(correct, btn){
     btn.classList.add('correct');
     sfxCorrect();
     logCorrect(u, S.subj);
-    logAccuracy(S.subj, true);
+    logAccuracy(S.subj, true, u);
     if(ham){ ham.classList.remove('sad'); ham.classList.add('happy'); ham.innerHTML=boppySVG(52,'happy','',false); }
     const isRetry = S.retries>0;
     const msg = isRetry
@@ -5349,7 +5631,7 @@ function checkAns(correct, btn){
     btn.classList.add('wrong');
     sfxWrong();
     logMistake(u, S.subj);
-    logAccuracy(S.subj, false);
+    logAccuracy(S.subj, false, u);
     if(ham){ ham.classList.remove('happy'); ham.classList.add('sad'); ham.innerHTML=boppySVG(52,'sad','',false); }
     S.retries++;
     S.stats.totalRetries++;
@@ -5374,7 +5656,7 @@ function checkTest(correct, btn, ans){
     btn.classList.add('correct');
     sfxCorrect();
     logCorrect(u, S.subj);
-    logAccuracy(S.subj, true);
+    logAccuracy(S.subj, true, u);
     if(ham){ ham.classList.remove('sad'); ham.classList.add('happy'); ham.innerHTML=boppySVG(52,'happy','',false); }
 
     document.getElementById('feedback').innerHTML = `<div class="feedback correct">
@@ -5404,7 +5686,7 @@ function checkTest(correct, btn, ans){
     btn.classList.add('wrong');
     sfxWrong();
     logMistake(u, S.subj);
-    logAccuracy(S.subj, false);
+    logAccuracy(S.subj, false, u);
     if(ham){ ham.classList.remove('happy'); ham.classList.add('sad'); ham.innerHTML=boppySVG(52,'sad','',false); }
     S.retries++;
     S.stats.totalRetries++;
@@ -7406,6 +7688,9 @@ function load(){
   if(!S.parentStats) S.parentStats = {dailyTime:{}, accuracyLog:{}, sessionStart:null};
   if(!S.parentStats.dailyTime)   S.parentStats.dailyTime   = {};
   if(!S.parentStats.accuracyLog) S.parentStats.accuracyLog = {};
+  // P1/P2 補欄位
+  if(!S.activeGrade)   S.activeGrade   = 'g2';
+  if(!S.skillMastery)  S.skillMastery  = {};
   // 重新整理 review/warmup 狀態（不應該跨 session 持久化）
   S.reviewMode = false;
   S.reviewQueue = null;
