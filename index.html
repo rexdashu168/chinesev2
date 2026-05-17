@@ -3659,7 +3659,9 @@ let S = {
     sessionStart:null    // 目前學習開始時間 (timestamp)
   },
   // 複習模式
-  reviewMode:false, reviewQueue:null, reviewIdx:0
+  reviewMode:false, reviewQueue:null, reviewIdx:0,
+  // 課前熱身複習模式（一次最多 3 題到期錯題）
+  warmupMode:false, warmupSubj:null
 };
 
 /* ===================================================
@@ -3831,6 +3833,11 @@ function renderMistakeBookCard(){
   const e = getActiveMistakes('english').length;
   const m = getActiveMistakes('math').length;
   const total = c+e+m;
+  // 今天到期的數量（依 SM-2 排程）
+  const dueC = getActiveMistakes('chinese', true).length;
+  const dueE = getActiveMistakes('english', true).length;
+  const dueM = getActiveMistakes('math',    true).length;
+  const dueTotal = dueC+dueE+dueM;
   if(total === 0){
     el.innerHTML = `<div class="card" style="padding:14px;background:linear-gradient(135deg,#dcfce7,#bbf7d0);border:2px solid #22c55e;text-align:center;">
       <div style="font-size:1.6rem;">🎉</div>
@@ -3839,30 +3846,44 @@ function renderMistakeBookCard(){
     </div>`;
     return;
   }
+  // 到期橫幅（有到期時用紅色強調，無到期用平和訊息）
+  const dueBanner = dueTotal > 0
+    ? `<div style="background:linear-gradient(135deg,#fee2e2,#fecaca);border:2px solid #ef4444;border-radius:10px;padding:8px 10px;margin-bottom:10px;display:flex;align-items:center;gap:8px;">
+        <div style="font-size:1.4rem;">⏰</div>
+        <div style="flex:1;">
+          <div style="font-size:0.88rem;font-weight:900;color:#991b1b;">今天有 ${dueTotal} 題要複習！</div>
+          <div style="font-size:0.72rem;color:#b91c1c;">上新課前會自動先做 1-3 題熱身</div>
+        </div>
+      </div>`
+    : `<div style="background:linear-gradient(135deg,#dcfce7,#bbf7d0);border:2px solid #22c55e;border-radius:10px;padding:8px 10px;margin-bottom:10px;display:flex;align-items:center;gap:8px;">
+        <div style="font-size:1.4rem;">✨</div>
+        <div style="flex:1;">
+          <div style="font-size:0.88rem;font-weight:900;color:#166534;">今天暫時不用複習！</div>
+          <div style="font-size:0.72rem;color:#16a34a;">系統會在最佳時機提醒你再考</div>
+        </div>
+      </div>`;
+  const cell = (count, due, label, color) =>
+    `<div style="background:white;border-radius:8px;padding:7px;text-align:center;position:relative;">
+      <div style="font-size:1.3rem;font-weight:900;color:${color};">${count}</div>
+      <div style="font-size:0.7rem;color:#9a3412;">${label}</div>
+      ${due>0?`<div style="position:absolute;top:-4px;right:-4px;background:#ef4444;color:white;font-size:0.62rem;font-weight:900;border-radius:8px;padding:1px 5px;">⏰${due}</div>`:''}
+    </div>`;
   el.innerHTML = `<div class="card" style="padding:14px;background:linear-gradient(135deg,#fff7ed,#ffedd5);border:2px solid #f97316;">
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
       <div style="font-size:2rem;">📖</div>
       <div style="flex:1;">
         <div style="font-size:1rem;font-weight:900;color:#9a3412;">錯題本（共 ${total} 題）</div>
-        <div style="font-size:0.78rem;color:#c2410c;margin-top:2px;">複習答對3次就畢業！💪</div>
+        <div style="font-size:0.78rem;color:#c2410c;margin-top:2px;">用間隔重複，連對 4 階段才畢業！💪</div>
       </div>
     </div>
+    ${dueBanner}
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:10px;">
-      <div style="background:white;border-radius:8px;padding:7px;text-align:center;">
-        <div style="font-size:1.3rem;font-weight:900;color:#dc2626;">${c}</div>
-        <div style="font-size:0.7rem;color:#9a3412;">國語</div>
-      </div>
-      <div style="background:white;border-radius:8px;padding:7px;text-align:center;">
-        <div style="font-size:1.3rem;font-weight:900;color:#2563eb;">${e}</div>
-        <div style="font-size:0.7rem;color:#9a3412;">英文</div>
-      </div>
-      <div style="background:white;border-radius:8px;padding:7px;text-align:center;">
-        <div style="font-size:1.3rem;font-weight:900;color:#9333ea;">${m}</div>
-        <div style="font-size:0.7rem;color:#9a3412;">數學</div>
-      </div>
+      ${cell(c, dueC, '國語', '#dc2626')}
+      ${cell(e, dueE, '英文', '#2563eb')}
+      ${cell(m, dueM, '數學', '#9333ea')}
     </div>
-    <button onclick="startReview()" style="width:100%;padding:14px;background:linear-gradient(135deg,#fb923c,#f97316);color:white;border:none;border-radius:14px;font-weight:900;font-family:Nunito,sans-serif;font-size:1rem;cursor:pointer;box-shadow:0 4px 0 #c2410c;">
-      📖 開始複習錯題（最多10題）
+    <button onclick="startReview()" style="width:100%;padding:14px;background:linear-gradient(135deg,${dueTotal>0?'#ef4444,#dc2626':'#fb923c,#f97316'});color:white;border:none;border-radius:14px;font-weight:900;font-family:Nunito,sans-serif;font-size:1rem;cursor:pointer;box-shadow:0 4px 0 ${dueTotal>0?'#991b1b':'#c2410c'};">
+      ${dueTotal>0 ? `⏰ 立即複習 ${Math.min(10, dueTotal)} 題到期錯題` : '📖 開始複習錯題（最多10題）'}
     </button>
   </div>`;
 }
@@ -3895,6 +3916,7 @@ function startLesson(subj){
   }
   sfxFlip();
   S.subj=subj; S.unit=0; S.sessionBadges=0; S.retries=0;
+  S.warmupMode=false; S.warmupSubj=null;
   startSessionTimer();
 
   const screen = document.getElementById('learnScreen');
@@ -3905,7 +3927,19 @@ function startLesson(subj){
   const chapterShort = todayCourse.chapter.split('：').slice(1).join('：') || todayCourse.chapter.replace(/^[^\u4e00-\u9fff]*/, '');
   document.getElementById('learnTitle').textContent = chapterShort.length>12 ? chapterShort.substring(0,12)+'…' : chapterShort;
   document.getElementById('sessionBadges').textContent='0';
-  renderUnit();
+
+  // 課前熱身：若同科有到期錯題，先做最多 3 題再進正課（分散練習更穩固）
+  const dueWarmup = getActiveMistakes(subj, true).slice(0, 3);
+  if(dueWarmup.length > 0){
+    S.warmupMode = true;
+    S.warmupSubj = subj;
+    S.reviewQueue = dueWarmup;
+    S.reviewIdx = 0;
+    document.getElementById('learnTitle').textContent = `🔥 出發前熱身 (${dueWarmup.length}題)`;
+    renderReviewUnit();
+  } else {
+    renderUnit();
+  }
 }
 
 function exitLesson(){
@@ -4746,57 +4780,112 @@ function _mistakeKeyFromUnit(u, subj){
   return null;
 }
 
+/* ===== SM-2 間隔重複演算法（兒童簡化版）=====
+   每題依答題表現自動安排「下次複習日」：
+   - 答錯 → 1 天後再見
+   - 答對 → 1 → 3 → 7 → 14 → 30 天（漸進拉長）
+   - quality: 0=錯 / 3=重試後對 / 5=一次就對
+*/
+function _addDays(dateStr, n){
+  const d = new Date(dateStr + 'T00:00:00');
+  d.setDate(d.getDate() + n);
+  return d.toISOString().split('T')[0];
+}
+function _scheduleSM2(m, quality){
+  if(quality < 3){
+    m.repetitions = 0;
+    m.interval = 1;
+  } else {
+    m.repetitions = (m.repetitions||0) + 1;
+    if(m.repetitions === 1)      m.interval = 1;
+    else if(m.repetitions === 2) m.interval = 3;
+    else if(m.repetitions === 3) m.interval = 7;
+    else                         m.interval = Math.min(30, Math.round((m.interval||7) * (m.ef||2.5)));
+    // 更新易度因子（quality 5 → 上升，quality 3 → 微降）
+    const ef = (m.ef||2.5) + (0.1 - (5-quality)*(0.08 + (5-quality)*0.02));
+    m.ef = Math.max(1.3, Math.min(3.0, ef));
+  }
+  m.dueDate = _addDays(todayStr(), m.interval);
+}
+// 兒童版「畢業」門檻：連對 4 次且間隔已拉到 14 天以上，代表能維持中期記憶
+function _isGraduated(m){
+  return (m.repetitions||0) >= 4 && (m.interval||0) >= 14;
+}
+
 function logMistake(u, subj){
-  if(S.reviewMode) return;  // 複習模式不再記新錯題（避免無限循環）
   const info = _mistakeKeyFromUnit(u, subj);
   if(!info) return;
   if(!S.mistakes[subj]) S.mistakes[subj]={};
-  const m = S.mistakes[subj][info.key] || {key:info.key, ...info, wrongCount:0, masteredCount:0, graduated:false};
-  m.wrongCount++;
-  m.masteredCount = 0;  // 答錯就重置已掌握次數
-  m.graduated = false;
+  // 複習/熱身模式答錯：不新增條目，只重置該題的 SM-2 排程
+  if(S.reviewMode || S.warmupMode){
+    const existing = S.mistakes[subj][info.key];
+    if(existing){
+      _scheduleSM2(existing, 0);
+      existing.lastWrong = todayStr();
+      existing.graduated = false;
+      save();
+    }
+    return;
+  }
+  const m = S.mistakes[subj][info.key] || {
+    key:info.key, ...info,
+    wrongCount:0, repetitions:0, ef:2.5, interval:1,
+    dueDate:todayStr(), graduated:false
+  };
+  m.wrongCount = (m.wrongCount||0) + 1;
   m.lastWrong = todayStr();
-  // 把 unit 完整存下來，複習時直接重用
   m.unit = u;
   m.subj = subj;
+  _scheduleSM2(m, 0);
+  m.graduated = false;
   S.mistakes[subj][info.key] = m;
   save();
 }
 
 function logCorrect(u, subj){
-  // 如果這題在錯題本裡，增加 mastered 次數，連對 3 次畢業
+  // 只追蹤錯題本中已存在的項目；首次答對的題目不入錯題本
   const info = _mistakeKeyFromUnit(u, subj);
   if(!info) return;
   const m = (S.mistakes[subj]||{})[info.key];
   if(!m) return;
-  m.masteredCount = (m.masteredCount||0) + 1;
-  if(m.masteredCount >= 3){
-    m.graduated = true;
-  }
+  // 一次答對給 5 分，重試後才對給 3 分（觸發 SM-2 不同的間隔成長速度）
+  const quality = (S.retries||0) === 0 ? 5 : 3;
+  _scheduleSM2(m, quality);
+  // 兼容舊欄位顯示
+  m.masteredCount = (m.repetitions||0);
+  if(_isGraduated(m)) m.graduated = true;
   S.mistakes[subj][info.key] = m;
   save();
 }
 
-// 取得目前活躍（未畢業）的錯題清單
-function getActiveMistakes(subj=null){
+// 取得活躍（未畢業）錯題；dueOnly=true 只回傳今天到期的
+function getActiveMistakes(subj=null, dueOnly=false){
   const out = [];
   const subjs = subj ? [subj] : ['chinese','english','math'];
+  const today = todayStr();
   subjs.forEach(s=>{
     const bag = S.mistakes[s] || {};
     Object.values(bag).forEach(m=>{
-      if(!m.graduated) out.push(m);
+      if(m.graduated) return;
+      if(dueOnly && m.dueDate && m.dueDate > today) return;
+      out.push(m);
     });
   });
   return out;
 }
 
-// 隨機抽取 N 題複習
+// 排序原則：到期日越早越優先 → 錯越多次越優先 → repetitions 少的越優先
 function pickReviewQueue(n=10){
   const all = getActiveMistakes();
-  // 排序：錯越多次的、最近錯的優先
+  const today = todayStr();
   all.sort((a,b)=>{
-    const score = x => (x.wrongCount||0)*2 + (x.lastWrong===todayStr()?5:0) - (x.masteredCount||0);
-    return score(b) - score(a);
+    const aDue = (a.dueDate||'1900-01-01') <= today ? 0 : 1;
+    const bDue = (b.dueDate||'1900-01-01') <= today ? 0 : 1;
+    if(aDue !== bDue) return aDue - bDue;  // 到期的擺前面
+    const dueCmp = (a.dueDate||'').localeCompare(b.dueDate||'');
+    if(dueCmp !== 0) return dueCmp;
+    if((a.wrongCount||0) !== (b.wrongCount||0)) return (b.wrongCount||0) - (a.wrongCount||0);
+    return (a.repetitions||0) - (b.repetitions||0);
   });
   return all.slice(0, n);
 }
@@ -4840,10 +4929,33 @@ function renderReviewUnit(){
 
   const u = m.unit;
   const content = document.getElementById('learnContent');
+  // 掌握進度條（4 格代表 1→3→7→14 天的記憶階段）
+  const reps = m.repetitions||0;
+  const dots = [0,1,2,3].map(i=>
+    `<span style="display:inline-block;width:14px;height:14px;border-radius:50%;margin:0 2px;background:${i<reps?'#16a34a':'#fed7aa'};border:2px solid ${i<reps?'#15803d':'#fb923c'};"></span>`
+  ).join('');
+  const stageMsg = reps===0 ? '從頭開始記！1 天後再見面' :
+                   reps===1 ? '第 1 關過了！3 天後再考' :
+                   reps===2 ? '第 2 關過了！7 天後再考' :
+                   reps===3 ? '快畢業了！14 天後再考' :
+                              '記得很穩了！';
+  const isWarmup = S.warmupMode;
+  const titleIcon = isWarmup ? '🔥' : '📖';
+  const titleText = isWarmup ? '出發前熱身' : '錯題複習';
+  const headerStory = isWarmup
+    ? `先暖暖身再上新課！這題之前答錯 ${m.wrongCount} 次，加油 💪`
+    : `這題之前答錯 ${m.wrongCount} 次，掌握度 ${reps}/4`;
+  const bgGrad = isWarmup ? 'linear-gradient(135deg,#fef9c3,#fde68a)' : 'linear-gradient(135deg,#fff7ed,#ffedd5)';
+  const borderC = isWarmup ? '#f59e0b' : '#f97316';
   let html = `<div class="teach-card" style="margin-bottom:14px">
-    <div class="chapter-intro" style="background:linear-gradient(135deg,#fff7ed,#ffedd5);border-color:#f97316;">
-      <div class="ch-title">📖 錯題複習 第 ${S.reviewIdx+1} 題 / 共 ${S.reviewQueue.length} 題</div>
-      <div class="ch-story">這題之前答錯過${m.wrongCount}次，再多答對 ${Math.max(0, 3-(m.masteredCount||0))} 次就畢業了！💪</div>
+    <div class="chapter-intro" style="background:${bgGrad};border-color:${borderC};">
+      <div class="ch-title">${titleIcon} ${titleText} 第 ${S.reviewIdx+1} 題 / 共 ${S.reviewQueue.length} 題</div>
+      <div class="ch-story">${headerStory}</div>
+      <div style="margin-top:8px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+        <span style="font-size:0.78rem;font-weight:800;color:#92400e;">掌握進度：</span>
+        <span>${dots}</span>
+        <span style="font-size:0.72rem;color:#9a3412;">${stageMsg}</span>
+      </div>
     </div>
   </div>`;
 
@@ -4943,22 +5055,28 @@ function checkReviewAns(correct, btn, ans){
   const m = S.reviewQueue[S.reviewIdx];
   if(correct){
     btn.classList.add('correct'); sfxCorrect();
-    logCorrect(m.unit, m.subj);
+    logCorrect(m.unit, m.subj);  // 走 SM-2 排程
     S.sessionBadges++;
     S.badges.mini++;
     document.getElementById('sessionBadges').textContent = S.sessionBadges;
     logAccuracy(m.subj, true);
 
+    const updated = (S.mistakes[m.subj]||{})[m.key]||{};
+    const reps = updated.repetitions||0;
+    const nextDays = updated.interval||1;
+    const graduated = updated.graduated;
+    const msg = graduated
+      ? `🎓 太厲害了！這題畢業了！`
+      : `已掌握 ${reps}/4 階段，下次 ${nextDays} 天後再考！`;
     document.getElementById('feedback').innerHTML = `<div class="feedback correct">
       <div class="fb-head"><span class="fb-icon">🎉</span><span class="fb-title">答對了！</span></div>
-      <div class="fb-msg">已掌握 ${(S.mistakes[m.subj][m.key]||{}).masteredCount||0} / 3 次！</div>
+      <div class="fb-msg">${msg}</div>
     </div>`;
     document.getElementById('btns').innerHTML = `<button class="next-btn" onclick="sfxFlip();S.reviewIdx++;renderReviewUnit()">下一題 ➡️</button>`;
   } else {
     btn.classList.add('wrong'); sfxWrong();
-    // 複習答錯不增加 wrongCount，但重置 mastered
-    if(S.mistakes[m.subj][m.key]) S.mistakes[m.subj][m.key].masteredCount = 0;
-    save();
+    // 複習/熱身答錯：透過 logMistake 走 SM-2 重置（不增加 wrongCount）
+    logMistake(m.unit, m.subj);
     logAccuracy(m.subj, false);
     document.getElementById('feedback').innerHTML = `<div class="feedback retry">
       <div class="fb-head"><span class="fb-icon">💪</span><span class="fb-title">再試一次！</span></div>
@@ -4969,6 +5087,23 @@ function checkReviewAns(correct, btn, ans){
 }
 
 function showReviewComplete(){
+  // 熱身模式：複習完直接接入正課，不顯示複習完成畫面、不停 session timer
+  if(S.warmupMode){
+    S.warmupMode = false;
+    S.reviewQueue = null;
+    S.reviewIdx = 0;
+    S.retries = 0;
+    // 改回該科目今日的章節標題
+    const subj = S.subj;
+    const todayCourse = getDailyCourse(subj);
+    const chRaw = todayCourse.chapter || '';
+    const chapterShort = chRaw.split('：').slice(1).join('：') || chRaw.replace(/^[^一-鿿]*/, '');
+    document.getElementById('learnTitle').textContent =
+      chapterShort.length>12 ? chapterShort.substring(0,12)+'…' : chapterShort;
+    save();
+    renderUnit();
+    return;
+  }
   endSessionTimer();
   const screen = document.getElementById('learnScreen');
   const graduated = S.reviewQueue.filter(m=>(S.mistakes[m.subj][m.key]||{}).graduated).length;
@@ -7257,16 +7392,26 @@ function load(){
   }
   // 補齊舊存檔缺的欄位（向後相容）
   if(!S.mistakes) S.mistakes = {chinese:{},english:{},math:{}};
+  const today = todayStr();
   ['chinese','english','math'].forEach(s=>{
     if(!S.mistakes[s]) S.mistakes[s] = {};
+    // 為舊資料補上 SM-2 欄位：repetitions 沿用 masteredCount，dueDate 預設今天到期
+    Object.values(S.mistakes[s]).forEach(m=>{
+      if(typeof m.ef === 'undefined')          m.ef = 2.5;
+      if(typeof m.interval === 'undefined')    m.interval = 1;
+      if(typeof m.repetitions === 'undefined') m.repetitions = (m.masteredCount||0);
+      if(!m.dueDate)                           m.dueDate = today;
+    });
   });
   if(!S.parentStats) S.parentStats = {dailyTime:{}, accuracyLog:{}, sessionStart:null};
   if(!S.parentStats.dailyTime)   S.parentStats.dailyTime   = {};
   if(!S.parentStats.accuracyLog) S.parentStats.accuracyLog = {};
-  // 重新整理 review 狀態（不應該跨 session 持久化）
+  // 重新整理 review/warmup 狀態（不應該跨 session 持久化）
   S.reviewMode = false;
   S.reviewQueue = null;
   S.reviewIdx = 0;
+  S.warmupMode = false;
+  S.warmupSubj = null;
 }
 
 // ===== BOOT =====
