@@ -4090,6 +4090,7 @@ function startLesson(subj){
   sfxFlip();
   S.subj=subj; S.unit=0; S.sessionBadges=0; S.retries=0;
   S.warmupMode=false; S.warmupSubj=null;
+  S.sessionSkills={};  // 本次 session 的能力答題快照（給完課總結用）
   startSessionTimer();
 
   const screen = document.getElementById('learnScreen');
@@ -5076,6 +5077,7 @@ function startReview(){
   S.reviewIdx = 0;
   S.subj = queue[0].subj;
   S.sessionBadges = 0;
+  S.sessionSkills = {};
   S.retries = 0;
 
   // 紀錄開始時間（家長報告用）
@@ -5357,11 +5359,16 @@ function updateSkillMastery(subj, u, correct){
   if(!skills.length) return;
   const today = todayStr();
   if(!S.skillMastery) S.skillMastery = {};
+  if(!S.sessionSkills) S.sessionSkills = {};
   skills.forEach(sk=>{
     if(!S.skillMastery[sk]) S.skillMastery[sk] = {correct:0, total:0, lastSeen:today};
     S.skillMastery[sk].total++;
     if(correct) S.skillMastery[sk].correct++;
     S.skillMastery[sk].lastSeen = today;
+    // 同步寫入本次 session 的能力快照（供完課回饋用）
+    if(!S.sessionSkills[sk]) S.sessionSkills[sk] = {correct:0, total:0};
+    S.sessionSkills[sk].total++;
+    if(correct) S.sessionSkills[sk].correct++;
   });
 }
 
@@ -5790,6 +5797,42 @@ function _getCompleteMsg(subj, retries, allThreeDone, doneCount){
   return `${learnedStr}${performMsg}<br><br>${nextMsg}`;
 }
 
+// 取得「明天就會到期」的錯題數量（給孩子預告明天會有的複習）
+function getDueByTomorrow(subj=null){
+  const tomorrow = _addDays(todayStr(), 1);
+  const out = [];
+  const subjs = subj ? [subj] : ['chinese','english','math'];
+  subjs.forEach(s=>{
+    const bag = S.mistakes[s] || {};
+    Object.values(bag).forEach(m=>{
+      if(m.graduated) return;
+      if(m.dueDate && m.dueDate <= tomorrow) out.push(m);
+    });
+  });
+  return out;
+}
+
+// 從 sessionSkills 找出本次學習中表現最好 / 最該加強的能力（給孩子的回饋）
+function _summarizeSessionSkills(){
+  const ss = S.sessionSkills || {};
+  const arr = Object.keys(ss)
+    .filter(k => SKILLS[k] && ss[k].total >= 2)
+    .map(k => ({
+      id:k, name:SKILLS[k].name, area:SKILLS[k].area,
+      correct:ss[k].correct, total:ss[k].total,
+      pct: Math.round(ss[k].correct/ss[k].total*100)
+    }));
+  if(arr.length === 0) return {best:null, weak:null};
+  // 最厲害：百分比最高、平手取題數多的
+  const best = arr.slice().sort((a,b)=> b.pct - a.pct || b.total - a.total)[0];
+  // 還要加強：百分比 < 100 中最低的；若全都 100% 則 weak = null
+  const weakCandidates = arr.filter(s => s.pct < 100);
+  const weak = weakCandidates.length > 0
+    ? weakCandidates.sort((a,b)=> a.pct - b.pct || b.total - a.total)[0]
+    : null;
+  return {best, weak: weak && weak.id === best.id ? null : weak};
+}
+
 function showComplete(){
   // 補課模式交給 showMakeupComplete 處理
   if(S.makeupMode){ showMakeupComplete(); return; }
@@ -5849,11 +5892,70 @@ function showComplete(){
           <div class="comp-b-name">今日任務</div>
         </div>
       </div>
+      ${_renderSessionSummaryCard()}
       ${allThreeDone ? `<div style="background:linear-gradient(135deg,#fef3c7,#fde68a);border-radius:16px;padding:14px;margin-bottom:16px;border:2.5px solid #fbbf24;font-size:1.05rem;font-weight:800;color:#92400e;text-align:center;">
         🏆 今日全科達標！連續 ${S.stats.streak} 天！繼續保持！
       </div>` : ''}
       <button class="next-btn" onclick="sfxClick();exitLesson()">🏠 回到主畫面</button>
     </div>`;
+}
+
+// 完課回饋卡：把本次學的能力 + 明天的複習預告講給孩子聽
+function _renderSessionSummaryCard(){
+  const {best, weak} = _summarizeSessionSkills();
+  const dueTomorrow = getDueByTomorrow().length;
+  if(!best && dueTomorrow === 0) return '';  // 沒有可說的就不秀
+
+  const bestLine = best
+    ? `<div style="display:flex;align-items:flex-start;gap:8px;margin:5px 0;">
+        <div style="font-size:1.1rem;flex-shrink:0;">🌟</div>
+        <div style="flex:1;">
+          <div style="font-size:0.82rem;font-weight:800;color:#15803d;">今天最厲害的能力</div>
+          <div style="font-size:0.78rem;color:#166534;">
+            <b>${best.name}</b>
+            <span style="color:#64748b;font-weight:500;"> · ${best.area}</span>
+            <span style="margin-left:6px;background:#dcfce7;border-radius:8px;padding:1px 6px;font-weight:800;color:#15803d;">${best.pct}% (${best.correct}/${best.total})</span>
+          </div>
+        </div>
+      </div>`
+    : '';
+
+  const weakLine = weak
+    ? `<div style="display:flex;align-items:flex-start;gap:8px;margin:5px 0;">
+        <div style="font-size:1.1rem;flex-shrink:0;">💪</div>
+        <div style="flex:1;">
+          <div style="font-size:0.82rem;font-weight:800;color:#b45309;">明天再多練一點</div>
+          <div style="font-size:0.78rem;color:#92400e;">
+            <b>${weak.name}</b>
+            <span style="color:#64748b;font-weight:500;"> · ${weak.area}</span>
+            <span style="margin-left:6px;background:#fef3c7;border-radius:8px;padding:1px 6px;font-weight:800;color:#b45309;">${weak.pct}% (${weak.correct}/${weak.total})</span>
+          </div>
+        </div>
+      </div>`
+    : (best ? `<div style="display:flex;align-items:flex-start;gap:8px;margin:5px 0;">
+        <div style="font-size:1.1rem;flex-shrink:0;">✨</div>
+        <div style="flex:1;">
+          <div style="font-size:0.82rem;font-weight:800;color:#15803d;">這節全部都答對！</div>
+          <div style="font-size:0.78rem;color:#166534;">今天的能力都很穩，超強！</div>
+        </div>
+      </div>` : '');
+
+  const tomorrowLine = dueTomorrow > 0
+    ? `<div style="display:flex;align-items:flex-start;gap:8px;margin:5px 0;">
+        <div style="font-size:1.1rem;flex-shrink:0;">📅</div>
+        <div style="flex:1;">
+          <div style="font-size:0.82rem;font-weight:800;color:#1e40af;">明天的小提醒</div>
+          <div style="font-size:0.78rem;color:#1e3a8a;">明天會自動安排 <b>${dueTomorrow}</b> 題到期複習，先在新課前熱身一下！</div>
+        </div>
+      </div>`
+    : '';
+
+  return `<div style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);border:2.5px solid #86efac;border-radius:16px;padding:12px 14px;margin-bottom:14px;text-align:left;">
+    <div style="font-size:0.92rem;font-weight:900;color:#14532d;margin-bottom:4px;text-align:center;">📋 ${S.name} 的學習小結</div>
+    ${bestLine}
+    ${weakLine}
+    ${tomorrowLine}
+  </div>`;
 }
 
 /* ===================================================
@@ -6406,6 +6508,7 @@ function startReviewLesson(subj, dateStr){
   S.subj = subj;
   S.unit = 0;
   S.sessionBadges = 0;
+  S.sessionSkills = {};
   S.retries = 0;
 
   // 計算補課日對應章節（確保每天不同）
@@ -6545,6 +6648,7 @@ function startMakeupLesson(subj, dateStr){
   S.subj = subj;
   S.unit = 0;
   S.sessionBadges = 0;
+  S.sessionSkills = {};
   S.retries = 0;
 
   // 取得補課日對應章節
