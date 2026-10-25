@@ -10,7 +10,7 @@
 <title>🌟 波比魔法學院</title>
 <script>
 /* 獨立的更新檢查：放在最前面，就算後面的程式出錯，也一定能換到新版 */
-var BOPPY_VERSION = '2026-10-25-v16';
+var BOPPY_VERSION = '2026-10-25-v17';
 (function(){
   function check(){
     try{
@@ -1647,6 +1647,41 @@ box-shadow:0 4px 0 #5b21b6;
 .g3-locked .g3-subj.ok{background:#dcfce7;color:#166534;}
 .g3-time{grid-column:1/-1;text-align:center;font-size:.85rem;font-weight:800;color:#0f766e;background:#ccfbf1;border-radius:12px;padding:6px;}
 .g3-time b{font-size:1.1rem;}
+/* ===== 商店與小伙伴 ===== */
+.shop-coins{align-self:center;padding:6px 16px;border-radius:20px;background:#fde68a;color:#78350f;font-weight:900;font-size:1.05rem;}
+.shop-tabs{display:flex;gap:6px;justify-content:center;}
+.shop-tabs button{flex:1;padding:8px 4px;border:none;border-radius:12px;background:rgba(255,255,255,.15);color:#fff;font-weight:900;font-family:inherit;font-size:.9rem;cursor:pointer;}
+.shop-tabs button.on{background:#fff;color:#92400e;}
+.shop-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;}
+.shop-card{display:flex;flex-direction:column;align-items:center;gap:3px;background:rgba(255,252,240,.97);color:#3b2a0a;border-radius:14px;padding:10px 6px;text-align:center;}
+.shop-card b{font-size:.95rem;}
+.shop-card span{font-size:.7rem;color:#6b7280;font-weight:700;line-height:1.35;}
+.shop-ic{font-size:2rem;line-height:1.1;}
+.shop-have{color:#0f766e!important;}
+.shop-buy{margin-top:3px;padding:6px 12px;border:none;border-radius:12px;background:#f59e0b;color:#fff;font-weight:900;font-family:inherit;font-size:.82rem;cursor:pointer;}
+.shop-buy.on{background:#16a34a;}
+.shop-buy:disabled{opacity:.4;cursor:default;}
+.comp-list{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;}
+.comp-card{display:flex;flex-direction:column;align-items:center;gap:3px;background:rgba(255,252,240,.97);color:#3b2a0a;border-radius:14px;padding:10px 6px;text-align:center;border:3px solid transparent;}
+.comp-card.on{border-color:#22c55e;}
+.comp-card.no{background:rgba(255,255,255,.1);color:#94a3b8;}
+.comp-card span{font-size:.7rem;color:#6b7280;font-weight:700;line-height:1.35;}
+.comp-ic{font-size:2.2rem;line-height:1.1;}
+.comp-hearts{font-size:.7rem!important;letter-spacing:-1px;}
+.hatch-egg{font-size:5rem;animation:hatchShake .35s ease-in-out infinite;}
+.hatch-egg.open{animation:hatchPop .6s ease-out forwards;}
+@keyframes hatchShake{0%,100%{transform:rotate(0)}25%{transform:rotate(-12deg)}75%{transform:rotate(12deg)}}
+@keyframes hatchPop{0%{transform:scale(.3)}70%{transform:scale(1.3)}100%{transform:scale(1)}}
+.adv-shoprow{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.adv-shoprow button{padding:9px 6px;border:none;border-radius:14px;color:#fff;font-weight:900;font-family:inherit;font-size:.88rem;cursor:pointer;}
+.adv-items{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;}
+.adv-items button{display:flex;flex-direction:column;align-items:center;padding:6px 2px;border:none;border-radius:12px;background:rgba(255,252,240,.95);color:#3b2a0a;font-weight:800;font-size:.72rem;font-family:inherit;cursor:pointer;}
+.adv-items button b{font-size:1.4rem;}
+.adv-items button:disabled{opacity:.35;}
+.bp-acc{position:absolute;top:-6px;left:-8px;line-height:1;}
+.coin-toast{position:fixed;left:50%;top:18%;transform:translateX(-50%);z-index:9000;background:#fde68a;color:#78350f;font-weight:900;font-size:1.2rem;padding:12px 22px;border-radius:20px;box-shadow:0 8px 24px rgba(0,0,0,.25);display:flex;flex-direction:column;align-items:center;animation:coinUp 2.6s ease forwards;}
+.coin-toast small{font-size:.75rem;font-weight:800;opacity:.8;}
+@keyframes coinUp{0%{opacity:0;transform:translate(-50%,20px)}15%{opacity:1;transform:translate(-50%,0)}80%{opacity:1}100%{opacity:0;transform:translate(-50%,-20px)}}
 /* ===== 三年級版標示 ===== */
 .g3-badge{display:block;width:max-content;margin:6px auto 0;padding:6px 16px;border-radius:20px;background:linear-gradient(135deg,#7c3aed,#ec4899);color:#fff;font-weight:900;font-size:1.05rem;box-shadow:0 4px 12px rgba(124,58,237,.35);}
 .g3-banner{display:flex;align-items:center;gap:10px;margin-bottom:14px;padding:12px 14px;border-radius:18px;background:linear-gradient(135deg,#7c3aed,#ec4899);color:#fff;font-weight:900;font-size:1rem;cursor:pointer;box-shadow:0 6px 18px rgba(124,58,237,.35);margin-right:54px;}
@@ -1703,7 +1738,7 @@ box-shadow:0 4px 0 #5b21b6;
 <div id="mainScreen" class="hidden">
 
   <div class="g3-banner" onclick="document.getElementById('gameCenter').scrollIntoView({behavior:'smooth'})">
-    <span class="g3-tag">三年級版 <small style="font-weight:700;opacity:.7">v16</small></span>
+    <span class="g3-tag">三年級版 <small style="font-weight:700;opacity:.7">v17</small></span>
     <span id="g3BannerText">⚔️ 冒險島開放了！點我 👇</span>
   </div>
 
@@ -6039,6 +6074,7 @@ function showComplete(){
   endSessionTimer();
   S.today[S.subj].done = true;
   if(getActiveGrade()==='g3' && typeof g3CommitPlan==='function') g3CommitPlan(S.subj);
+  if(typeof walletAdd==='function'){ const c=20+(S.retries===0?10:0); walletAdd(c); setTimeout(()=>toastCoins(c, S.retries===0?'全部答對加碼！':'上完一堂課'), 900); }
   const today = new Date().toISOString().split('T')[0];
   if(S.stats.lastDate !== today){ S.stats.streak++; S.stats.lastDate=today; }
 
@@ -8224,7 +8260,7 @@ function advStats(st){
 function advForm(st){ const f=BOPPY_FORMS[st.evo]; return [f.badge||'🌸', f.name]; }
 
 /* ── 波比進化型態的畫法 ── */
-function boppyForm(evo,size,expr,shadow){
+function boppyForm(evo,size,expr,shadow,acc){
   const f=BOPPY_FORMS[Math.max(0,Math.min(evo,BOPPY_FORMS.length-1))];
   const s=Math.round(size*(1+evo*0.04));
   const glow = shadow ? '' : (f.glow ? 'filter:drop-shadow(0 0 8px '+f.glow+') drop-shadow(0 0 3px '+f.glow+');' : '');
@@ -8233,6 +8269,7 @@ function boppyForm(evo,size,expr,shadow){
     '<span class="bp-body'+(f.hue===-1&&!shadow?' bp-rainbow':'')+'" style="'+body+'">'+boppySVG(s,expr||'happy','',false)+'</span>'+
     (f.badge&&!shadow?'<span class="bp-badge" style="font-size:'+Math.round(s*0.34)+'px">'+f.badge+'</span>':'')+
     (shadow?'<span class="bp-badge" style="font-size:'+Math.round(s*0.34)+'px">❓</span>':'')+
+    (acc&&!shadow?'<span class="bp-acc" style="font-size:'+Math.round(s*0.36)+'px">'+acc+'</span>':'')+
   '</span>';
 }
 
@@ -8383,8 +8420,8 @@ function advReviewGate(area, words){
   }
   function finish(){
     try{ localStorage.setItem('boppy_en_gate', todayStr()); }catch(e){}
-    const s=advLoad(), gain=10*words.length+5*right; advGainExp(s,gain); advSave(s); sfxLevelUp();
-    $('advMsg').innerHTML='🎉 今日複習完成！一次就拼對 '+right+' / '+words.length+' 個，波比獲得經驗值 +'+gain;
+    const s=advLoad(), gain=10*words.length+5*right; advGainExp(s,gain); advSave(s); sfxLevelUp(); walletAdd(10+2*right);
+    $('advMsg').innerHTML='🎉 今日複習完成！一次就拼對 '+right+' / '+words.length+' 個，波比獲得經驗值 +'+gain+'、🪙 +'+(10+2*right);
     $('advPanel').innerHTML='<div class="lg-row"><button class="lg-mini" onclick="advWordBook()">📒 單字本</button><button class="lg-next" onclick="advMap()">🗺️ 出發冒險</button></div>';
   }
   next();
@@ -8446,14 +8483,17 @@ function advMap(area){
   const W=ADV_WORLDS[w], ws=advWorldStars(st,w);
   let html='<div class="lg-wrap adv" style="background:linear-gradient(180deg,'+W.bg+',#1a1a2e 65%)">'+
     '<div class="adv-card">'+
-      '<div class="adv-hero">'+boppyForm(st.evo,46)+'</div>'+
+      '<div class="adv-hero">'+boppyForm(st.evo,46,'happy',false,advAccIcon(st))+'</div>'+
       '<div style="flex:1;min-width:0">'+
         '<div><b style="color:#fde68a">'+f.name+'</b>　Lv.'+st.lv+'<span class="adv-small"> / 上限 '+cap+'</span></div>'+
         '<div class="adv-bar"><div style="width:'+Math.min(100,st.exp/need*100)+'%;background:#38bdf8"></div></div>'+
-        '<div class="adv-small">'+pf[0]+' 夥伴 '+pf[1]+'：'+P.perk+'　🧪×'+st.potions+'</div>'+
+        '<div class="adv-small">'+pf[0]+' 夥伴 '+pf[1]+'：'+P.perk+(compTeamIcons(st)?'　小伙伴 '+compTeamIcons(st):'')+'</div>'+
       '</div>'+
       '<button class="lg-mini" onclick="advDex()">📘<br>圖鑑</button>'+
     '</div>';
+  const eggN=advInvGet(st,'egg'), compN=Object.keys(st.comps||{}).length;
+  html+='<div class="adv-shoprow"><button style="background:#d97706" onclick="advShop()">🏪 商店　🪙 '+walletGet()+'</button>'+
+    '<button style="background:#16a34a" onclick="advCompanions()">🐾 小伙伴 '+compN+'/'+COMPANIONS.length+(eggN?'　🥚×'+eggN:'')+'</button></div>';
   if(advTrialReady(st)){
     html+='<button class="adv-trial" onclick="advTrial()">✨ 進化試煉開放！打贏就能進化成「'+BOPPY_FORMS[st.evo+1].name+'」</button>';
   } else if(st.evo<BOPPY_FORMS.length-1){
@@ -8524,17 +8564,18 @@ function advTrial(){
 /* ── 對戰引擎 ── */
 function advFight(cfg){
   sfxStart();
-  const area=document.getElementById('gameArea'), st=advLoad(), S0=advStats(st);
+  const area=document.getElementById('gameArea'), st=advLoad(), S0=advStats(st), CE=compEffects(st);
+  let atkBoost=1, shieldBlocks=0, hintNext=false, foxLeft=CE.fox, dogLeft=CE.dog, owlNext=false, chickCnt=0, revived=false;
   const type=cfg.type, T=ADV_TYPES[type]||{icon:'✨',name:'進化試煉',desc:'三科各命中一次，打掉三個護盾後才能造成傷害'};
   const bg = cfg.trial ? '#581c87' : ADV_WORLDS[cfg.w].bg;
   let fi=0, foe=null, eHp=0, pHp=S0.hp, combo=0, wrong=0, busy=false, ended=false;
-  let shieldHits=0, shieldUp=(type==='shield'), trialShields=cfg.trial?ADV_KEYS.slice():[], enraged=false, timeLeft=75;
+  let shieldHits=0, shieldUp=(type==='shield'), trialShields=cfg.trial?ADV_KEYS.slice():[], enraged=false, timeLeft=75+(CE.rabbit||0);
   area.innerHTML='<div class="lg-wrap adv" style="background:linear-gradient(180deg,'+bg+',#1a1a2e 70%)">'+
     '<div class="adv-stage">'+T.icon+' '+(cfg.trial?'進化試煉':((cfg.w+1)+'-'+(cfg.g%10+1)+' '+T.name))+'<span id="advTimer"></span></div>'+
     '<div class="adv-foe"><div class="adv-info"><div id="advEName"></div>'+
       '<div class="adv-bar"><div id="advEHp" style="width:100%"></div></div><div class="adv-small" id="advEInfo"></div></div>'+
       '<div class="adv-mon" id="advEMon"></div></div>'+
-    '<div class="adv-me"><div class="adv-mon me" id="advPMon">'+boppyForm(st.evo,58)+'<span class="adv-pal">'+advPartnerForm(st)[0]+'</span></div>'+
+    '<div class="adv-me"><div class="adv-mon me" id="advPMon">'+boppyForm(st.evo,58,'happy',false,advAccIcon(st))+'<span class="adv-pal">'+advPartnerForm(st)[0]+compTeamIcons(st)+'</span></div>'+
       '<div class="adv-info"><div><b>'+BOPPY_FORMS[st.evo].name+'</b>　Lv.'+st.lv+'</div>'+
       '<div class="adv-bar"><div id="advPHp" style="width:100%;background:#22c55e"></div></div><div class="adv-small" id="advPHpTxt"></div></div></div>'+
     '<div class="adv-msg" id="advMsg"></div><div id="advPanel"></div></div>';
@@ -8572,27 +8613,52 @@ function advFight(cfg){
       const m=ADV_SUBJ[k], ok=allowed.includes(k);
       return '<button class="adv-move" style="--mc:'+m.color+'" data-k="'+k+'" '+(ok?'':'disabled')+'>'+m.icon+' '+m.move+'<span>'+(ok?m.name+'題':'這關不能用')+'</span></button>';
     }).join('')+
-    '<button class="adv-move small" id="advPot" style="--mc:#ec4899">🧪 補血藥 ×'+st.potions+'</button>'+
+    '<button class="adv-move small" id="advPot" style="--mc:#ec4899">🎒 道具</button>'+
     '<button class="adv-move small" id="advRun" style="--mc:#64748b">🏃 回地圖</button></div>';
     [...$('advPanel').querySelectorAll('[data-k]')].forEach(b=>{ if(!b.disabled) b.onclick=()=>ask(b.dataset.k); });
     $('advPot').onclick=potion; $('advRun').onclick=()=>{ stopTimer(); sfxClick(); advMap(); };
-    if(st.potions<=0) $('advPot').disabled=true;
   }
+  /* 道具背包 */
   function potion(){
-    if(busy||st.potions<=0) return;
-    if(pHp>=S0.hp){ msg('體力是滿的，先把補血藥留著吧！'); return; }
-    st.potions--; const s2=advLoad(); s2.potions=st.potions; advSave(s2);
-    const heal=Math.min(S0.hp-pHp, Math.round(S0.hp*0.4)); pHp+=heal;
-    sfxCorrect(); pop('advPMon','+'+heal,'#22c55e'); bars();
-    msg('🧪 喝下補血藥，回復了 '+heal+' 點體力！'); moves();
+    if(busy||ended) return;
+    const s2=advLoad(), items=SHOP_ITEMS.filter(x=>!['snack','egg'].includes(x.id));
+    $('advPanel').innerHTML='<div class="adv-items">'+items.map(x=>{ const n=advInvGet(s2,x.id);
+      const usable = n>0 && x.id!=='feather' && !(x.id==='hourglass'&&type!=='speed') && !((x.id==='potion'||x.id==='big')&&pHp>=S0.hp) && !(x.id==='atk'&&atkBoost>1) && !(x.id==='hint'&&hintNext);
+      return '<button data-it="'+x.id+'" '+(usable?'':'disabled')+'><b>'+x.icon+'</b>'+x.name+' ×'+n+'</button>'; }).join('')+'</div>'+
+      '<div class="adv-note" style="font-size:.75rem">🪶 復活羽毛會在體力用完時自動使用。道具可以到 🏪 商店購買。</div>'+
+      '<button class="lg-mini" style="align-self:center" id="advItemBack">↩️ 返回</button>';
+    [...$('advPanel').querySelectorAll('[data-it]')].forEach(b=>{ if(!b.disabled) b.onclick=()=>useItem(b.dataset.it); });
+    $('advItemBack').onclick=moves;
+  }
+  function useItem(id){
+    const s2=advLoad(), n=advInvGet(s2,id); if(n<=0||ended) return;
+    advInvSet(s2,id,n-1); advSave(s2); st.potions=s2.potions; sfxCorrect();
+    if(id==='potion'||id==='big'){ const heal=Math.min(S0.hp-pHp, id==='big'?S0.hp:Math.round(S0.hp*0.4)); pHp+=heal; pop('advPMon','+'+heal,'#22c55e'); bars(); msg((id==='big'?'💊 大補血藥':'🧪 補血藥')+'，回復了 '+heal+' 點體力！'); }
+    if(id==='atk'){ atkBoost=1.5; msg('⚡ 喝下攻擊藥水，這一場攻擊力 ×1.5！'); }
+    if(id==='shield'){ shieldBlocks+=2; msg('🛡️ 防護罩張開了，可以擋下 2 次攻擊！'); }
+    if(id==='hint'){ hintNext=true; msg('💡 提示卡準備好了，下一題會幫你刪掉 2 個錯的選項！'); }
+    if(id==='hourglass'){ timeLeft+=30; const t=$('advTimer'); if(t) t.textContent='　⏱ '+timeLeft+' 秒'; msg('⏳ 時間多了 30 秒！'); }
+    moves();
+  }
+  function tryRevive(){
+    if(revived) return false;
+    const s2=advLoad(), n=advInvGet(s2,'feather'); if(!n) return false;
+    advInvSet(s2,'feather',n-1); advSave(s2); revived=true; pHp=Math.round(S0.hp/2); bars(); sfxLevelUp();
+    msg('🪶 復活羽毛發光了！波比復活，回復一半體力！'); return true;
   }
   function ask(k){
     if(busy||!gameRunning||ended) return; busy=true; sfxClick();
     const q=advQuestion(k,cfg.region), m=ADV_SUBJ[k];
-    msg(m.icon+' 準備使出「'+m.move+'」！'+(q.spell?'拼對單字威力 ×1.5！':'答對就能命中！'));
-    if(q.spell){ $('advPanel').innerHTML='<div id="advSpell"></div>'; advSpellUI($('advSpell'), q.word, q.emo, 'quiz', v=>hit(k,q,null,v)); return; }
+    let useHint=false, hintBy='';
+    if(hintNext){ hintNext=false; useHint=true; hintBy='💡 提示卡'; } else if(foxLeft>0){ foxLeft--; useHint=true; hintBy='🦊 狐狸軍師'; }
+    msg(m.icon+' 準備使出「'+m.move+'」！'+(q.spell?'拼對單字威力 ×1.5！':'答對就能命中！')+(useHint?'<br>'+hintBy+(q.spell?' 幫你亮出第一個字母！':' 幫你刪掉 2 個錯的選項！'):''));
+    if(q.spell){ $('advPanel').innerHTML='<div id="advSpell"></div>'; advSpellUI($('advSpell'), q.word, q.emo, 'quiz', v=>hit(k,q,null,v));
+      if(useHint){ const t=[...$('advSpell').querySelectorAll('.lg-tile')].find(x=>x.textContent===q.word[0]); if(t) t.classList.add('glow'); }
+      return; }
+    let opts=q.opts;
+    if(useHint){ const wr=lgShuffle(opts.filter(o=>o!==q.ans)); const drop=wr.slice(0, Math.min(2, wr.length-1)); opts=opts.filter(o=>!drop.includes(o)); }
     $('advPanel').innerHTML='<div class="lg-q adv-q">'+q.q+'</div><div class="lg-opts" id="advOpts"></div>';
-    lgShuffle(q.opts).forEach(o=>{ const b=document.createElement('button'); b.className='lg-opt'; b.innerHTML=o; b.dataset.v=o; b.onclick=()=>hit(k,q,b,o); $('advOpts').appendChild(b); });
+    lgShuffle(opts).forEach(o=>{ const b=document.createElement('button'); b.className='lg-opt'; b.innerHTML=o; b.dataset.v=o; b.onclick=()=>hit(k,q,b,o); $('advOpts').appendChild(b); });
     if(q.speak){ try{ speakEn(q.speak); }catch(e){} }
   }
   function hit(k,q,btn,o){
@@ -8603,6 +8669,8 @@ function advFight(cfg){
       combo++; if(btn) btn.classList.add('ok'); sfxCorrect();
       let line='', dmg=0;
       if(S0.heal && pHp<S0.hp){ const h=Math.min(S0.hp-pHp,S0.heal); pHp+=h; pop('advPMon','+'+h,'#22c55e'); }
+      chickCnt++;
+      if(CE.chick && chickCnt%3===0 && pHp<S0.hp){ const h=Math.min(S0.hp-pHp, Math.round(S0.hp*CE.chick)); pHp+=h; pop('advPMon','🐣+'+h,'#22c55e'); }
       if(type==='shield' && shieldUp){
         shieldHits++;
         if(shieldHits>=2){ shieldUp=false; line='💥 護盾被打破了！'; } else line='🛡️ 擊中護盾！再答對 1 題就能打破！';
@@ -8611,8 +8679,11 @@ function advFight(cfg){
         if(trialShields.includes(k)){ trialShields=trialShields.filter(x=>x!==k); line=m.icon+' 護盾消失了！'+(trialShields.length?'還剩 '+trialShields.map(x=>ADV_SUBJ[x].icon).join(''):'護盾全破，開始攻擊！'); shake('advEMon'); }
         else line='這個護盾已經打掉了，換 '+trialShields.map(x=>ADV_SUBJ[x].icon+ADV_SUBJ[x].name).join('、')+' 試試！';
       } else {
-        const mult = k===foe.weak ? 2 : k===foe.resist ? 0.5 : 1, crit=combo>=3, sp=q.spell?1.5:1;
-        dmg=Math.max(1,Math.round(S0.atk*mult*sp*(crit?1.5:1)));
+        const mult = k===foe.weak ? 2 : k===foe.resist ? 0.5 : 1, crit=combo>=(CE.dragon?2:3), sp=q.spell?1.5:1;
+        const critMul = CE.dragon===2 ? 1.8 : 1.5;
+        const bonus = atkBoost * (k===foe.weak ? 1+(CE.cat||0) : 1) * (type==='boss' ? 1+(CE.panda||0) : 1) * (owlNext ? 1+(CE.owl||0) : 1);
+        owlNext=false;
+        dmg=Math.max(1,Math.round(S0.atk*mult*sp*(crit?critMul:1)*bonus));
         eHp-=dmg; shake('advEMon'); pop('advEMon','-'+dmg,'#fde047');
         if(q.spell) enMarkRight(q.word);
         line=(q.spell?'✍️ 拼字成功！':'')+'使出 '+m.move+'！'+(mult===2?'<b class="adv-eff">效果絕佳！</b>':mult<1?'效果不太好…':'')+(crit?' 💥會心一擊！':'');
@@ -8637,10 +8708,14 @@ function advFight(cfg){
       let extra='';
       if(type==='shield' && shieldHits>0 && shieldUp){ shieldHits=0; extra='🛡️ 護盾的裂痕恢復了！'; }
       if(type==='shield' && !shieldUp){ shieldUp=true; shieldHits=0; extra='🛡️ 護盾又長回來了！'; }
-      pHp-=foe.atk; shake('advPMon'); pop('advPMon','-'+foe.atk,'#f87171'); info(); bars();
-      msg('攻擊沒打中！'+foe.name+' 反擊，造成 '+foe.atk+' 點傷害！'+extra+'<br>💡 正確答案是 '+q.ans+(q.tip?'：'+q.tip:''));
+      let dmgIn=Math.round(foe.atk*(1-(CE.turtle||0))), blockTxt='';
+      if(shieldBlocks>0){ shieldBlocks--; dmgIn=0; blockTxt='🛡️ 防護罩擋下了 '+foe.name+' 的攻擊！'; }
+      else if(dogLeft>0){ dogLeft--; dmgIn=0; blockTxt='🐶 汪汪隊長擋下了 '+foe.name+' 的攻擊！'; }
+      if(CE.owl) owlNext=true;
+      pHp-=dmgIn; if(dmgIn){ shake('advPMon'); pop('advPMon','-'+dmgIn,'#f87171'); } info(); bars();
+      msg('攻擊沒打中！'+(dmgIn?foe.name+' 反擊，造成 '+dmgIn+' 點傷害！':blockTxt)+extra+'<br>💡 正確答案是 '+q.ans+(q.tip?'：'+q.tip:''));
       const goOn=()=>{ if(ended) return; const nb=document.createElement('button'); nb.className='lg-next'; nb.textContent='繼續 ➜';
-        nb.onclick=()=>{ if(ended) return; if(pHp<=0) lose('體力用完了'); else moves(); };
+        nb.onclick=()=>{ if(ended) return; if(pHp<=0){ if(tryRevive()) moves(); else lose('體力用完了'); } else moves(); };
         $('advPanel').appendChild(nb); };
       if(k==='en') setTimeout(()=>{ if(!ended) advEnFix($('advPanel'), q, msg, goOn); }, q.spell?900:1200); else goOn();
     }
@@ -8650,7 +8725,7 @@ function advFight(cfg){
     if(ended) return; ended=true; stopTimer();
     const s2=advLoad(), oldLv=s2.lv;
     if(cfg.trial){
-      s2.evo++; advSave(s2); sfxLevelUp(); addGameScore(100);
+      s2.evo++; advSave(s2); sfxLevelUp(); addGameScore(100); walletAdd(50);
       return advEvolveScene(s2.evo);
     }
     const stars = wrong===0 ? 3 : pHp>=S0.hp/2 ? 2 : 1, prev=s2.stars[cfg.g]||0, first=!prev;
@@ -8661,9 +8736,12 @@ function advFight(cfg){
     const newMon=[]; cfg.foes.forEach(f=>{ if(!s2.caught.includes(f.id)){ s2.caught.push(f.id); newMon.push(f); } });
     let gotPot=false; if(type==='boss' && first && s2.potions<9){ s2.potions++; gotPot=true; }
     s2.wins=(s2.wins||0)+1;
+    const coins=Math.round((10+stars*5+(first?10:0)+(type==='boss'?30:0))*(1+(CE.unicorn||0)));
+    (s2.team||[]).forEach(id=>{ if(s2.comps&&s2.comps[id]) s2.comps[id].hearts=Math.min(10,(s2.comps[id].hearts||0)+1); });
+    let gotEgg=false; if(type==='boss' && first){ advInvSet(s2,'egg',advInvGet(s2,'egg')+1); gotEgg=true; }
     const w=cfg.w, worldUnlock = w<ADV_WORLDS.length-1 && !advWorldOpen(advLoad(),w+1) && advWorldOpen(s2,w+1);
     if(worldUnlock) s2.world=w+1;
-    advSave(s2);
+    advSave(s2); walletAdd(coins);
     addGameScore(30+cfg.g*2+(first?20:0)+stars*10);
     if(ups) sfxLevelUp(); else sfxCorrect();
     const nextG=cfg.g+1, hasNext = nextG<ADV_WORLDS.length*10 && advStageOpen(s2,nextG) && Math.floor(nextG/10)===w;
@@ -8671,7 +8749,9 @@ function advFight(cfg){
     $('advPanel').innerHTML='<div class="adv-result">'+
       '<div class="adv-bigstars">'+'★'.repeat(stars)+'<i>'+'★'.repeat(3-stars)+'</i></div>'+
       '<div class="adv-small" style="color:#6b7280">'+(stars===3?'一題都沒錯，滿分三顆星！':stars===2?'全對可以拿三顆星喔！':'體力剩一半以上可以拿兩顆星')+'</div>'+
-      '<div>⭐ 經驗值 +'+gain+'</div>'+
+      '<div>⭐ 經驗值 +'+gain+'　🪙 金幣 +'+coins+(CE.unicorn?'（🦄加成）':'')+'</div>'+
+      ((s2.team||[]).length?'<div>'+compTeamIcons(s2)+' 小伙伴好感度 +1 ❤️</div>':'')+
+      (gotEgg?'<div>🥚 頭目掉了一顆小伙伴蛋！到 🐾 小伙伴之家孵孵看！</div>':'')+
       (ups?'<div>⬆️ 升級！Lv.'+oldLv+' → Lv.'+s2.lv+'</div>':'')+
       (advTrialReady(s2)?'<div class="adv-evolve">✨ 達到等級上限！可以挑戰進化試煉了！</div>':'')+
       newMon.map(f=>'<div>📘 '+f.emo+' '+f.name+' 加入圖鑑！</div>').join('')+
@@ -8750,16 +8830,163 @@ function advChest(g){
     s2.stars[g]=Math.max(prev,stars);
     let gain=Math.round((right*(5+g*0.3))*(first?1:0.6)); const ups=advGainExp(s2,gain);
     const pot = right>=6 && s2.potions<9; if(pot) s2.potions++;
-    advSave(s2); sfxLevelUp();
+    advSave(s2); sfxLevelUp(); const chestCoins=right*3+(right===8?10:0); walletAdd(chestCoins);
     $('advChestBox').textContent='💰';
     $('advMsg').innerHTML='🎉 寶箱打開了！答對 '+right+' / 8 題';
     const nextG=g+1, hasNext=advStageOpen(s2,nextG) && Math.floor(nextG/10)===w;
     $('advPanel').innerHTML='<div class="adv-result"><div class="adv-bigstars">'+'★'.repeat(stars)+'<i>'+'★'.repeat(3-stars)+'</i></div>'+
-      '<div>⭐ 經驗值 +'+gain+'</div>'+(ups?'<div>⬆️ 升到 Lv.'+s2.lv+'</div>':'')+(pot?'<div>🧪 獲得補血藥 1 瓶</div>':'')+
+      '<div>⭐ 經驗值 +'+gain+'　🪙 金幣 +'+chestCoins+'</div>'+(ups?'<div>⬆️ 升到 Lv.'+s2.lv+'</div>':'')+(pot?'<div>🧪 獲得補血藥 1 瓶</div>':'')+
       (advTrialReady(s2)?'<div class="adv-evolve">✨ 可以挑戰進化試煉了！</div>':'')+
       '</div><div class="lg-row"><button class="lg-mini" onclick="advMap()">🗺️ 回地圖</button>'+(hasNext?'<button class="lg-next" onclick="advStart('+nextG+')">▶ 下一關</button>':'')+'</div>';
   }
   next();
+}
+
+
+/* ===================================================
+   🏪 商店・🪙 冒險金幣・🐾 小伙伴
+   金幣來源：上課（每科 20，全對再 +10）、冒險過關、寶箱關、單字複習
+   =================================================== */
+const WALLET_KEY='boppy_wallet';
+function walletGet(){ try{ return parseInt(localStorage.getItem(WALLET_KEY)||'0',10)||0; }catch(e){ return 0; } }
+function walletAdd(n){ const v=Math.max(0, walletGet()+Math.round(n)); try{ localStorage.setItem(WALLET_KEY, String(v)); }catch(e){} return v; }
+function toastCoins(n, why){
+  const d=document.createElement('div'); d.className='coin-toast'; d.innerHTML='🪙 +'+n+' 冒險金幣'+(why?'<small>'+why+'</small>':'');
+  document.body.appendChild(d); setTimeout(()=>d.remove(), 2600);
+}
+const SHOP_ITEMS=[
+  {id:'potion',  icon:'🧪', name:'補血藥',   price:20,  desc:'回復 40% 體力', max:9},
+  {id:'big',     icon:'💊', name:'大補血藥', price:50,  desc:'體力全部回滿', max:5},
+  {id:'atk',     icon:'⚡', name:'攻擊藥水', price:40,  desc:'這一場攻擊力 ×1.5', max:5},
+  {id:'shield',  icon:'🛡️', name:'防護罩',   price:40,  desc:'擋下接下來 2 次攻擊', max:5},
+  {id:'hint',    icon:'💡', name:'提示卡',   price:30,  desc:'下一題刪掉 2 個錯的選項（拼字題會亮出第一個字母）', max:9},
+  {id:'hourglass',icon:'⏳',name:'時間沙漏', price:30,  desc:'快攻戰多 30 秒', max:5},
+  {id:'feather', icon:'🪶', name:'復活羽毛', price:100, desc:'體力用完時自動復活，回復一半體力', max:3},
+  {id:'snack',   icon:'🍪', name:'伙伴點心', price:15,  desc:'餵小伙伴，好感度 +1', max:20},
+  {id:'egg',     icon:'🥚', name:'小伙伴蛋', price:150, desc:'孵出一隻新的小伙伴', max:5},
+];
+const SHOP_ACC=[
+  {id:'bow',    icon:'🎀', name:'蝴蝶結', price:80},
+  {id:'scarf',  icon:'🧣', name:'圍巾',   price:100},
+  {id:'shades', icon:'🕶️', name:'墨鏡',   price:120},
+  {id:'magic',  icon:'🎩', name:'魔術帽', price:150},
+  {id:'grad',   icon:'🎓', name:'學士帽', price:200},
+  {id:'crown',  icon:'👑', name:'小皇冠', price:300},
+];
+const COMPANIONS=[
+  {id:'chick',   icon:'🐣', name:'小雞嗶嗶', skill:'每答對 3 題，回復 10% 體力',     skill2:'每答對 3 題，回復 15% 體力'},
+  {id:'dog',     icon:'🐶', name:'汪汪隊長', skill:'第一次答錯時，幫你擋下攻擊',     skill2:'前兩次答錯，都幫你擋下攻擊'},
+  {id:'cat',     icon:'🐱', name:'喵喵法師', skill:'打弱點時，傷害再 +30%',         skill2:'打弱點時，傷害再 +50%'},
+  {id:'fox',     icon:'🦊', name:'狐狸軍師', skill:'每場第 1 題自動刪掉 2 個錯的選項', skill2:'每場前 2 題自動刪掉 2 個錯的選項'},
+  {id:'rabbit',  icon:'🐰', name:'跳跳兔',   skill:'快攻戰多 20 秒',               skill2:'快攻戰多 35 秒'},
+  {id:'panda',   icon:'🐼', name:'熊貓力士', skill:'打頭目傷害 +25%',              skill2:'打頭目傷害 +40%'},
+  {id:'unicorn', icon:'🦄', name:'彩虹獨角獸',skill:'過關金幣 +50%',                skill2:'過關金幣 +100%'},
+  {id:'dragon',  icon:'🐲', name:'小火龍',   skill:'連對 2 題就能打出會心一擊',      skill2:'連對 2 題會心一擊，威力更強'},
+  {id:'turtle',  icon:'🐢', name:'慢慢龜',   skill:'受到的傷害 -20%',              skill2:'受到的傷害 -35%'},
+  {id:'owl',     icon:'🦉', name:'博士鴞',   skill:'答錯後的下一次攻擊 +50%',        skill2:'答錯後的下一次攻擊 +80%'},
+];
+function advInv(st){ st.inv=st.inv||{}; st.inv.potion=st.potions||0; return st.inv; }
+function advInvSet(st,id,n){ st.inv=st.inv||{}; if(id==='potion'){ st.potions=n; st.inv.potion=n; } else st.inv[id]=n; }
+function advInvGet(st,id){ return id==='potion' ? (st.potions||0) : ((st.inv&&st.inv[id])||0); }
+function compStrong(st,id){ return ((st.comps||{})[id]||{hearts:0}).hearts>=5; }
+function compEffects(st){
+  const e={chick:0,dog:0,cat:0,fox:0,rabbit:0,panda:0,unicorn:0,dragon:0,turtle:0,owl:0};
+  (st.team||[]).forEach(id=>{ if(!(st.comps||{})[id]) return; const s=compStrong(st,id);
+    if(id==='chick') e.chick=s?0.15:0.10; if(id==='dog') e.dog=s?2:1; if(id==='cat') e.cat=s?0.5:0.3; if(id==='fox') e.fox=s?2:1;
+    if(id==='rabbit') e.rabbit=s?35:20; if(id==='panda') e.panda=s?0.4:0.25; if(id==='unicorn') e.unicorn=s?1:0.5;
+    if(id==='dragon') e.dragon=s?2:1; if(id==='turtle') e.turtle=s?0.35:0.2; if(id==='owl') e.owl=s?0.8:0.5; });
+  return e;
+}
+function compTeamIcons(st){ return (st.team||[]).filter(id=>(st.comps||{})[id]).map(id=>COMPANIONS.find(c=>c.id===id).icon).join(''); }
+
+/* ── 商店 ── */
+function advShop(tab){
+  tab=tab||'item';
+  const st=advLoad(), area=document.getElementById('gameArea'), coins=walletGet();
+  let html='<div class="lg-wrap adv" style="background:linear-gradient(180deg,#b45309,#1a1a2e 65%)">'+
+    '<div class="adv-title">🏪 波比商店</div><div class="shop-coins">🪙 '+coins+' 冒險金幣</div>'+
+    '<div class="shop-tabs">'+[['item','🎒 道具'],['acc','🎀 裝飾'],['comp','🐾 小伙伴']].map(t=>'<button class="'+(t[0]===tab?'on':'')+'" onclick="advShop(\''+t[0]+'\')">'+t[1]+'</button>').join('')+'</div>';
+  if(tab==='item'){
+    html+='<div class="shop-grid">'+SHOP_ITEMS.filter(x=>x.id!=='snack'&&x.id!=='egg').map(x=>shopCard(x, advInvGet(st,x.id))).join('')+'</div>';
+  } else if(tab==='acc'){
+    const owned=st.accOwned||[];
+    html+='<div class="adv-note" style="font-size:.8rem">買了可以戴在波比身上，地圖和對戰都看得到！</div>'+
+      '<div class="shop-grid">'+SHOP_ACC.map(a=>{ const has=owned.includes(a.id), on=st.acc===a.id;
+        return '<div class="shop-card"><div class="shop-ic">'+a.icon+'</div><b>'+a.name+'</b>'+
+          (has?'<button class="shop-buy '+(on?'on':'')+'" onclick="advWear(\''+a.id+'\')">'+(on?'✅ 戴著':'戴上')+'</button>'
+              :'<button class="shop-buy" '+(coins<a.price?'disabled':'')+' onclick="advBuyAcc(\''+a.id+'\')">🪙 '+a.price+'</button>')+'</div>'; }).join('')+'</div>'+
+      (st.acc?'<button class="lg-mini" style="align-self:center" onclick="advWear(\'\')">拿掉裝飾</button>':'');
+  } else {
+    html+='<div class="shop-grid">'+SHOP_ITEMS.filter(x=>x.id==='snack'||x.id==='egg').map(x=>shopCard(x, advInvGet(st,x.id))).join('')+'</div>'+
+      '<button class="lg-next" onclick="advCompanions()">🐾 去小伙伴之家</button>';
+  }
+  html+='<div class="lg-row"><button class="lg-mini" onclick="advMap()">🗺️ 回地圖</button></div></div>';
+  area.innerHTML=html;
+  function shopCard(x,have){
+    const full=have>=x.max;
+    return '<div class="shop-card"><div class="shop-ic">'+x.icon+'</div><b>'+x.name+'</b><span>'+x.desc+'</span><span class="shop-have">擁有 '+have+'</span>'+
+      '<button class="shop-buy" '+(coins<x.price||full?'disabled':'')+' onclick="advBuy(\''+x.id+'\',\''+tab+'\')">'+(full?'已滿':'🪙 '+x.price)+'</button></div>';
+  }
+}
+function advBuy(id,tab){
+  const x=SHOP_ITEMS.find(i=>i.id===id), st=advLoad(), have=advInvGet(st,id);
+  if(!x || have>=x.max) return;
+  if(walletGet()<x.price){ sfxWrong(); return; }
+  walletAdd(-x.price); advInvSet(st,id,have+1); advSave(st); sfxCorrect();
+  advShop(tab);
+}
+function advBuyAcc(id){
+  const a=SHOP_ACC.find(x=>x.id===id), st=advLoad(); st.accOwned=st.accOwned||[];
+  if(!a || st.accOwned.includes(id) || walletGet()<a.price){ sfxWrong(); return; }
+  walletAdd(-a.price); st.accOwned.push(id); st.acc=id; advSave(st); sfxLevelUp(); advShop('acc');
+}
+function advWear(id){ const st=advLoad(); st.acc=id||''; advSave(st); sfxClick(); advShop('acc'); }
+function advAccIcon(st){ const a=SHOP_ACC.find(x=>x.id===(st&&st.acc)); return a?a.icon:''; }
+
+/* ── 小伙伴之家 ── */
+function advCompanions(){
+  const st=advLoad(), area=document.getElementById('gameArea'); st.comps=st.comps||{}; st.team=st.team||[];
+  const owned=COMPANIONS.filter(c=>st.comps[c.id]), eggs=advInvGet(st,'egg'), snacks=advInvGet(st,'snack');
+  let html='<div class="lg-wrap adv" style="background:linear-gradient(180deg,#15803d,#1a1a2e 65%)">'+
+    '<div class="adv-title">🐾 小伙伴之家　'+owned.length+' / '+COMPANIONS.length+'</div>'+
+    '<div class="adv-note" style="font-size:.8rem">選 2 隻小伙伴一起出戰！打贏或餵點心會增加好感度，滿 5 顆心技能會變強。</div>'+
+    '<div class="lg-row"><button class="lg-next" '+(eggs?'':'disabled style="opacity:.4"')+' onclick="advHatch()">🥚 孵蛋（有 '+eggs+' 顆）</button>'+
+    '<button class="lg-mini" onclick="advShop(\'comp\')">🏪 買蛋和點心</button></div>';
+  html+='<div class="comp-list">'+COMPANIONS.map(c=>{
+    const o=st.comps[c.id];
+    if(!o) return '<div class="comp-card no"><div class="comp-ic">❔</div><b>？？？</b><span>還沒遇到</span></div>';
+    const on=st.team.includes(c.id), h=o.hearts||0, strong=h>=5;
+    return '<div class="comp-card'+(on?' on':'')+'"><div class="comp-ic">'+c.icon+'</div><b>'+c.name+'</b>'+
+      '<span class="comp-hearts">'+'❤️'.repeat(Math.min(h,5))+'🤍'.repeat(Math.max(0,5-h))+(h>5?' +'+(h-5):'')+'</span>'+
+      '<span>'+(strong?'⭐ '+c.skill2:c.skill)+'</span>'+
+      '<div class="lg-row"><button class="shop-buy '+(on?'on':'')+'" onclick="advTeam(\''+c.id+'\')">'+(on?'✅ 出戰中':'出戰')+'</button>'+
+      '<button class="shop-buy" '+(snacks&&h<10?'':'disabled')+' onclick="advFeed(\''+c.id+'\')">🍪 餵食</button></div></div>';
+  }).join('')+'</div><div class="lg-row"><button class="lg-mini" onclick="advMap()">🗺️ 回地圖</button></div></div>';
+  area.innerHTML=html;
+}
+function advTeam(id){
+  const st=advLoad(); st.team=st.team||[];
+  if(st.team.includes(id)) st.team=st.team.filter(x=>x!==id);
+  else { st.team.push(id); if(st.team.length>2) st.team.shift(); }
+  advSave(st); sfxClick(); advCompanions();
+}
+function advFeed(id){
+  const st=advLoad(), n=advInvGet(st,'snack'); if(!n||!st.comps||!st.comps[id]) return;
+  advInvSet(st,'snack',n-1); st.comps[id].hearts=Math.min(10,(st.comps[id].hearts||0)+1); advSave(st); sfxCorrect(); advCompanions();
+}
+function advHatch(){
+  const st=advLoad(), n=advInvGet(st,'egg'); if(!n) return;
+  st.comps=st.comps||{}; const left=COMPANIONS.filter(c=>!st.comps[c.id]);
+  advInvSet(st,'egg',n-1);
+  const area=document.getElementById('gameArea');
+  if(!left.length){ walletAdd(80); advSave(st);
+    area.innerHTML='<div class="lg-wrap adv" style="background:#14532d;justify-content:center;min-height:100%"><div class="adv-title">🥚 所有小伙伴都到齊了！</div><div class="adv-note">這顆蛋變成 🪙 80 金幣還給你。</div><button class="lg-next" onclick="advCompanions()">好的</button></div>'; return; }
+  const c=lgPick(left); st.comps[c.id]={hearts:0}; st.team=st.team||[]; if(st.team.length<2) st.team.push(c.id); advSave(st);
+  area.innerHTML='<div class="lg-wrap adv" style="background:radial-gradient(circle at 50% 35%,#fef9c3,#16a34a 45%,#1a1a2e 80%);align-items:center;justify-content:center;min-height:100%">'+
+    '<div class="adv-title">🥚 蛋在動了……</div><div class="hatch-egg" id="hatchEgg">🥚</div><div id="hatchInfo"></div></div>';
+  sfxStart();
+  setTimeout(()=>{ const e=document.getElementById('hatchEgg'); if(!e) return; e.classList.add('open'); e.textContent=c.icon; sfxLevelUp();
+    document.getElementById('hatchInfo').innerHTML='<div class="adv-result"><div>🎉 孵出了 <b>'+c.name+'</b>！</div><div>技能：'+c.skill+'</div></div><button class="lg-next" onclick="advCompanions()">🐾 去看看</button>'; }, 1800);
 }
 
 /* ── 國語課次切換（有課本資料時才會出現）── */
@@ -9846,7 +10073,7 @@ try{
 try{ init(); }catch(e){ console.error('init failed', e); }
 
 /* ===== 自動更新：發現新版本就重新載入 ===== */
-const APP_VERSION = '2026-10-25-v16';
+const APP_VERSION = '2026-10-25-v17';
 function checkAppUpdate(){
   try{
     fetch(location.pathname + '?_=' + Date.now(), {cache:'no-store'})
