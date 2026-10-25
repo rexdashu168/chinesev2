@@ -1621,6 +1621,8 @@ box-shadow:0 4px 0 #5b21b6;
 .g3-locked{grid-column:1/-1;text-align:center;background:#fff7ed;border:2px dashed #f59e0b;border-radius:16px;padding:14px;font-weight:800;color:#92400e;line-height:1.8;}
 .g3-locked .g3-subj{display:inline-block;margin:2px 4px;padding:3px 10px;border-radius:10px;background:#fee2e2;color:#991b1b;}
 .g3-locked .g3-subj.ok{background:#dcfce7;color:#166534;}
+.g3-time{grid-column:1/-1;text-align:center;font-size:.85rem;font-weight:800;color:#0f766e;background:#ccfbf1;border-radius:12px;padding:6px;}
+.g3-time b{font-size:1.1rem;}
 /* ===== 三年級版標示 ===== */
 .g3-badge{display:block;width:max-content;margin:6px auto 0;padding:6px 16px;border-radius:20px;background:linear-gradient(135deg,#7c3aed,#ec4899);color:#fff;font-weight:900;font-size:1.05rem;box-shadow:0 4px 12px rgba(124,58,237,.35);}
 .g3-banner{display:flex;align-items:center;gap:10px;margin-bottom:14px;padding:12px 14px;border-radius:18px;background:linear-gradient(135deg,#7c3aed,#ec4899);color:#fff;font-weight:900;font-size:1rem;cursor:pointer;box-shadow:0 6px 18px rgba(124,58,237,.35);margin-right:54px;}
@@ -1950,8 +1952,8 @@ box-shadow:0 4px 0 #5b21b6;
   <!-- 15分鐘警告 -->
 
   <div id="gameWarn15" class="badminton-warn-bubble hidden" style="top:70px;">
-    <div class="badminton-warn-title">⏰ 已經玩15分鐘了！</div>
-    <div class="badminton-warn-msg">再玩10分鐘要休息喔！💪</div>
+    <div class="badminton-warn-title">⏰ 已經玩 80 分鐘了！</div>
+    <div class="badminton-warn-msg">再玩 10 分鐘就要休息喔！💪</div>
     <button class="badminton-warn-ok" onclick="document.getElementById('gameWarn15').classList.add('hidden')">好的！</button>
   </div>
 
@@ -1960,7 +1962,7 @@ box-shadow:0 4px 0 #5b21b6;
   <div id="gameStop25" class="badminton-stop-overlay hidden">
     <div class="badminton-stop-card">
       <div class="badminton-stop-title">今天玩夠了！😊</div>
-      <div class="badminton-stop-msg">阿均已經玩了25分鐘！<br>眼睛要休息了，<br><b>明天再來！</b>🌟</div>
+      <div class="badminton-stop-msg">阿均今天已經玩了一個半小時！<br>眼睛要休息了，<br><b>明天再來！</b>🌟</div>
       <button class="badminton-stop-btn" onclick="forceCloseGame()">好的，明天見！👋</button>
     </div>
   </div>
@@ -7066,8 +7068,9 @@ let gameTimerID    = null;
 let gameTotalMs    = 0;
 let gameStartTime  = null;
 let gameWarn15Done = false;
-const GAME_WARN_MS = 15*60*1000;
-const GAME_STOP_MS = 25*60*1000;
+const GAME_WARN_MS = 80*60*1000;   // 玩到 80 分鐘提醒
+const GAME_STOP_MS = 90*60*1000;   // 每天最多一個半小時
+function gameUsedMs(){ return parseInt(localStorage.getItem('boppy_game_'+todayStr()+'_ms')||'0'); }
 
 // ── 遊戲中心卡片 ──
 function renderGameCenter(){
@@ -7075,7 +7078,8 @@ function renderGameCenter(){
   if(!grid) return;
   const dayNum = getDayNumber();
   const stoppedKey = 'boppy_game_' + todayStr();
-  const stoppedToday = localStorage.getItem(stoppedKey) === 'stopped';
+  const stoppedToday = gameUsedMs() >= GAME_STOP_MS;   // 依實際累積時間判斷（上限調整後立即生效）
+  const leftMin = Math.max(0, Math.ceil((GAME_STOP_MS - gameUsedMs())/60000));
   const learnDone = g3AllDoneToday();
   const playsLeft = Infinity; // 不限每日次數（只保留每天 25 分鐘遊戲時間）
 
@@ -7107,7 +7111,8 @@ function renderGameCenter(){
       '<div class="g3-locked">📚 先上完今天的三堂課，遊樂場就會開放！<br>'
     + [['chinese','國語'],['math','數學'],['english','英文']].map(function(x){ return '<span class="g3-subj'+(S.today[x[0]].done?' ok':'')+'">'+(S.today[x[0]].done?'✅ ':'⬜ ')+x[1]+'</span>'; }).join('')
     + '</div>';
-  grid.innerHTML = lockHtml +
+  var timeHtml = '<div class="g3-time">⏱ 今天還可以玩 <b>'+leftMin+'</b> 分鐘（每天最多 90 分鐘）</div>';
+  grid.innerHTML = timeHtml + lockHtml +
       '<div class="lg-group">⚔️ 冒險對戰</div>'
     + '<div style="grid-column:1/-1;">'+cardHtml(adv)+'</div>'
     + '<div class="lg-group">📚 三年級學習遊戲</div>'
@@ -7121,7 +7126,7 @@ function openGame(gameId){
   sfxClick();
   if(!g3AllDoneToday()){ alert('📚 先完成今天的國語、數學、英文三堂課，遊樂場和冒險島就會開放喔！'); return; }
   const key = 'boppy_game_' + todayStr();
-  if(localStorage.getItem(key) === 'stopped'){
+  if(gameUsedMs() >= GAME_STOP_MS){
     alert('😊 今天的遊戲時間結束了！明天再來！');
     return;
   }
@@ -9387,7 +9392,7 @@ function g3SpellSetup(u){
 function g3AllDoneToday(){ return !!(S && S.today && S.today.chinese.done && S.today.english.done && S.today.math.done); }
 
 /* ===== 自動更新：發現新版本就重新載入 ===== */
-const APP_VERSION = '2026-10-25-v9';
+const APP_VERSION = '2026-10-25-v10';
 function checkAppUpdate(){
   try{
     fetch(location.pathname + '?_=' + Date.now(), {cache:'no-store'})
