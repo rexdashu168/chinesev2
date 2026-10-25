@@ -3,6 +3,9 @@
 <html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>🌟 波比魔法學院</title>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
@@ -8728,6 +8731,26 @@ function load(){
 // ===== BOOT =====
 init();
 
+
+/* ===== 自動更新：發現新版本就重新載入 ===== */
+const APP_VERSION = '2026-10-25-v5b';
+function checkAppUpdate(){
+  try{
+    fetch(location.pathname + '?_=' + Date.now(), {cache:'no-store'})
+      .then(r => r.ok ? r.text() : '')
+      .then(t => {
+        const m = t.match(/const APP_VERSION = '([^']+)'/);
+        if(!m || m[1] === APP_VERSION) return;
+        const tried = sessionStorage.getItem('boppy_upd');
+        if(tried === m[1]) return;               // 同一版只試一次，避免無限重整
+        sessionStorage.setItem('boppy_upd', m[1]);
+        if(typeof gameRunning !== 'undefined' && gameRunning) return; // 遊戲進行中不打斷
+        location.replace(location.pathname + '?v=' + encodeURIComponent(m[1]));
+      }).catch(()=>{});
+  }catch(e){}
+}
+window.addEventListener('load', () => setTimeout(checkAppUpdate, 1500));
+document.addEventListener('visibilitychange', () => { if(document.visibilityState === 'visible') checkAppUpdate(); });
 </script>
 
 </body>
