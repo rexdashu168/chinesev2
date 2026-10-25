@@ -1600,6 +1600,16 @@ box-shadow:0 4px 0 #5b21b6;
 @keyframes advEvoIn{0%{opacity:0;transform:translate(-50%,-50%) scale(.4);filter:brightness(4)}70%{transform:translate(-50%,-50%) scale(1.15)}100%{opacity:1;transform:translate(-50%,-50%) scale(1);filter:brightness(1)}}
 .adv-fixword{font-size:2rem;font-weight:900;color:#0369a1;letter-spacing:4px;margin:4px 0;}
 .lg-slot.wrong{background:#ef4444;border-color:#b91c1c;}
+.adv-wordbook{display:block;width:100%;padding:9px;border:none;border-radius:14px;background:rgba(20,184,166,.25);color:#ccfbf1;font-weight:800;font-size:.85rem;font-family:inherit;cursor:pointer;text-align:left;}
+.adv-wordbook b{color:#fde047;}
+.en-row{display:flex;align-items:center;gap:8px;background:rgba(255,252,240,.96);color:#3b2a0a;border-radius:12px;padding:6px 10px;}
+.en-row b{font-size:1.15rem;letter-spacing:1px;min-width:64px;}
+.en-row .adv-small{color:#6b7280;flex:1;text-align:right;}
+.en-emo{font-size:1.5rem;}
+.en-dots{color:#0d9488;letter-spacing:2px;}
+.en-sum{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center;color:#ccfbf1;font-size:.78rem;font-weight:800;}
+.en-sum div{background:rgba(255,255,255,.1);border-radius:12px;padding:8px 4px;}
+.en-sum b{display:block;font-size:1.5rem;color:#fde047;}
 /* ===== 三年級版標示 ===== */
 .g3-badge{display:block;width:max-content;margin:6px auto 0;padding:6px 16px;border-radius:20px;background:linear-gradient(135deg,#7c3aed,#ec4899);color:#fff;font-weight:900;font-size:1.05rem;box-shadow:0 4px 12px rgba(124,58,237,.35);}
 .g3-banner{display:flex;align-items:center;gap:10px;margin-bottom:14px;padding:12px 14px;border-radius:18px;background:linear-gradient(135deg,#7c3aed,#ec4899);color:#fff;font-weight:900;font-size:1rem;cursor:pointer;box-shadow:0 6px 18px rgba(124,58,237,.35);margin-right:54px;}
@@ -5105,8 +5115,9 @@ function _mistakeKeyFromUnit(u, subj){
    - quality: 0=錯 / 3=重試後對 / 5=一次就對
 */
 function _addDays(dateStr, n){
-  const d = new Date(dateStr + 'T00:00:00');
-  d.setDate(d.getDate() + n);
+  // 與 todayStr() 同樣用 UTC 計算，避免在台灣時區少算一天
+  const d = new Date(dateStr + 'T00:00:00Z');
+  d.setUTCDate(d.getUTCDate() + n);
   return d.toISOString().split('T')[0];
 }
 function _scheduleSM2(m, quality){
@@ -8186,7 +8197,7 @@ function advQuestion(subj,region){
     const t=Math.random();
     return t<0.4 ? lgMkRadical(i) : t<0.7 ? lgMkMeasure() : lgMkIdiom();
   }
-  return Math.random()<0.5 ? advSpellQ(region) : lgMkEnglish();
+  return Math.random()<(enLearning().length?0.7:0.5) ? advSpellQ(region) : lgMkEnglish();
 }
 
 /* ── 進入點 ── */
@@ -8197,12 +8208,14 @@ function advSpellUI(box, word, emo, mode, onDone){
   const typed=[];
   box.innerHTML='<div class="lg-q adv-q">'+
     (mode==='fix'
-      ? '<div class="lg-sub">✏️ 訂正時間：照著拼對才能繼續</div><div class="adv-fixword">'+emo+' '+word+'</div>'
+      ? '<div class="lg-sub">✏️ 訂正第 1 步：看清楚，照著拼一次</div><div class="adv-fixword">'+emo+' '+word+'</div>'
+      : mode==='recall'
+      ? '<div class="lg-sub">🙈 訂正第 2 步：字蓋起來了，靠記憶拼出來（'+word.length+' 個字母）</div><div style="font-size:2.6rem">'+emo+'</div>'
       : '<div class="lg-sub">聽聽看，拼出這個英文單字（'+word.length+' 個字母）</div><div style="font-size:2.6rem">'+emo+'</div>')+
     '<button class="lg-mini" style="background:#f59e0b" data-say>🔊 聽發音</button></div>'+
     '<div class="lg-slots">'+word.split('').map(()=>'<div class="lg-slot"></div>').join('')+'</div>'+
     '<div class="lg-tiles">'+letters.map(c=>'<button class="lg-tile">'+c+'</button>').join('')+'</div>'+
-    (mode==='quiz'?'<div class="lg-row"><button class="lg-mini" data-undo>⌫ 退一格</button></div>':'');
+    (mode!=='fix'?'<div class="lg-row"><button class="lg-mini" data-undo>⌫ 退一格</button></div>':'');
   const say=()=>{ try{ speakEn(word); }catch(e){} };
   say(); box.querySelector('[data-say]').onclick=say;
   const slots=box.querySelectorAll('.lg-slot'), tiles=[...box.querySelectorAll('.lg-tile')];
@@ -8216,7 +8229,7 @@ function advSpellUI(box, word, emo, mode, onDone){
     if(typed.length===word.length){
       finished=true;
       const v=typed.map(x=>x.textContent).join('');
-      if(mode==='quiz') [...slots].forEach((x,i)=>{ x.classList.toggle('wrong', v[i]!==word[i]); });
+      if(mode!=='fix') [...slots].forEach((x,i)=>{ x.classList.toggle('wrong', v[i]!==word[i]); });
       setTimeout(()=>{ if(mode==='fix') say(); onDone(v); }, 300);
     }
   });
@@ -8224,21 +8237,107 @@ function advSpellUI(box, word, emo, mode, onDone){
   if(u) u.onclick=()=>{ if(finished) return; const t=typed.pop(); if(!t) return; t.disabled=false; t.classList.remove('used'); const sl=slots[typed.length]; sl.textContent=''; sl.classList.remove('filled'); };
 }
 function advSpellQ(region){
+  const b=enLoad(), due=enDue(), learn=enLearning();
+  let pick=null;
+  if(due.length && Math.random()<0.6) pick=lgPick(due);
+  else if(learn.length && Math.random()<0.3) pick=lgPick(learn);
+  if(pick) return {spell:true, word:pick, emo:b[pick].emo, ans:pick, tip:b[pick].emo+' = '+pick, review:true};
   const maxL = region===0 ? 4 : region===1 ? 5 : 9;
   const pool=LG_SPELL.concat(LG_SPELL_MORE).filter(x=>x[0].length<=maxL);
   const [w,emo]=lgPick(pool);
   return {spell:true, word:w, emo, ans:w, tip:emo+' = '+w};
 }
-/* 英文答錯後的訂正：拼對才呼叫 next */
+/* ── 英文單字本：答錯的字排進複習；隔 1、3、7 天各在到期日靠記憶拼對，才算記住 ── */
+const EN_KEY='boppy_en_words', EN_GAPS=[1,3,7];
+function enLoad(){ try{ return JSON.parse(localStorage.getItem(EN_KEY)||'{}'); }catch(e){ return {}; } }
+function enSave(b){ try{ localStorage.setItem(EN_KEY, JSON.stringify(b)); }catch(e){} }
+function enMarkWrong(word,emo){
+  const b=enLoad(), e=b[word]||{emo:emo, streak:0, wrong:0};
+  e.emo=emo||e.emo; e.wrong++; e.streak=0; e.mastered=false; e.due=_addDays(todayStr(),1); e.last='';
+  b[word]=e; enSave(b);
+}
+function enMarkRight(word){
+  const b=enLoad(), e=b[word], t=todayStr();
+  if(!e || e.mastered || !e.due || t<e.due || e.last===t) return e||null;
+  e.last=t; e.streak++;
+  if(e.streak>=EN_GAPS.length){ e.mastered=true; e.due=''; } else e.due=_addDays(t, EN_GAPS[e.streak]);
+  enSave(b); return e;
+}
+function enDue(){ const b=enLoad(), t=todayStr(); return Object.keys(b).filter(w=>!b[w].mastered && b[w].due && b[w].due<=t); }
+function enLearning(){ const b=enLoad(); return Object.keys(b).filter(w=>!b[w].mastered); }
+function enMastered(){ const b=enLoad(); return Object.keys(b).filter(w=>b[w].mastered); }
+
+/* 英文答錯後的訂正：第 1 步照著拼、第 2 步蓋起來靠記憶拼；第 2 步拼錯就重來，全部對了才呼叫 next */
 function advEnFix(panel, q, msgFn, next){
   if(!q.word){ next(); return; }
-  panel.innerHTML='<div></div>';
-  advSpellUI(panel.firstChild, q.word, q.emo||'', 'fix', ()=>{ sfxCorrect(); msgFn('✏️ 訂正完成！記住了：'+(q.emo||'')+' '+q.word); next(); });
+  enMarkWrong(q.word, q.emo);
+  const copy=()=>{ panel.innerHTML='<div></div>';
+    advSpellUI(panel.firstChild, q.word, q.emo||'', 'fix', ()=>{ sfxCorrect(); msgFn('👀 很好！現在把字蓋起來，靠記憶再拼一次'); setTimeout(recall,800); }); };
+  const recall=()=>{ panel.innerHTML='<div></div>';
+    advSpellUI(panel.firstChild, q.word, q.emo||'', 'recall', v=>{
+      if(v===q.word){ sfxCorrect(); msgFn('✏️ 記住了！'+(q.emo||'')+' '+q.word+'　這個字放進單字本，明天會再考一次'); next(); }
+      else { sfxWrong(); msgFn('還差一點！正確是 '+q.word+'，再看一次'); setTimeout(copy,1100); }
+    }); };
+  copy();
+}
+
+/* 每天第一次進冒險島：先複習到期的單字 */
+function advReviewGate(area, words){
+  const b=enLoad(); let i=0, right=0;
+  area.innerHTML='<div class="lg-wrap adv" style="background:linear-gradient(180deg,#0f766e,#1a1a2e 70%)">'+
+    '<div class="adv-title">📒 今日單字複習</div><div class="adv-note">出發冒險前，先把之前拼錯的單字靠記憶拼出來！</div>'+
+    '<div class="adv-msg" id="advMsg"></div><div id="advPanel"></div></div>';
+  const $=id=>document.getElementById(id);
+  function next(){
+    if(!gameRunning) return;
+    if(i>=words.length) return finish();
+    const w=words[i];
+    $('advMsg').innerHTML='第 '+(i+1)+' / '+words.length+' 個單字';
+    $('advPanel').innerHTML='<div></div>';
+    advSpellUI($('advPanel').firstChild, w, b[w].emo, 'quiz', v=>{
+      if(v===w){ right++; sfxCorrect(); addGameScore(10); const e=enMarkRight(w);
+        $('advMsg').innerHTML='✅ 拼對了！'+(e&&e.mastered?'　🎉「'+w+'」已經記住了！':'　下次複習：'+(e&&e.due?e.due.slice(5).replace('-','/'):''));
+        i++; setTimeout(next,1200); }
+      else { $('advMsg').innerHTML='💡 正確是 '+b[w].emo+' '+w;
+        setTimeout(()=>advEnFix($('advPanel'), {word:w, emo:b[w].emo}, h=>{ $('advMsg').innerHTML=h; }, ()=>{ i++; setTimeout(next,1200); }), 900); }
+    });
+  }
+  function finish(){
+    try{ localStorage.setItem('boppy_en_gate', todayStr()); }catch(e){}
+    const s=advLoad(), gain=10*words.length+5*right; advGainExp(s,gain); advSave(s); sfxLevelUp();
+    $('advMsg').innerHTML='🎉 今日複習完成！一次就拼對 '+right+' / '+words.length+' 個，波比獲得經驗值 +'+gain;
+    $('advPanel').innerHTML='<div class="lg-row"><button class="lg-mini" onclick="advWordBook()">📒 單字本</button><button class="lg-next" onclick="advMap()">🗺️ 出發冒險</button></div>';
+  }
+  next();
+}
+
+/* 單字本 */
+function advWordBook(){
+  const b=enLoad(), t=todayStr(), area=document.getElementById('gameArea');
+  const due=enDue(), learning=enLearning().filter(w=>!due.includes(w)), done=enMastered();
+  const row=w=>{ const e=b[w];
+    return '<div class="en-row"><span class="en-emo">'+e.emo+'</span><b>'+w+'</b>'+
+      '<span class="en-dots">'+EN_GAPS.map((_,i)=>i<e.streak?'●':'○').join('')+'</span>'+
+      '<span class="adv-small">'+(e.mastered?'記住了 ✅':e.due<=t?'今天要考':'下次 '+e.due.slice(5).replace('-','/'))+'</span>'+
+      '<button class="lg-mini" onclick="try{speakEn(\''+w+'\')}catch(e){}">🔊</button></div>'; };
+  area.innerHTML='<div class="lg-wrap adv" style="background:linear-gradient(180deg,#0f766e,#1a1a2e 60%)">'+
+    '<div class="adv-title">📒 英文單字本</div>'+
+    '<div class="adv-note" style="font-size:.8rem">拼錯的字會收進來。隔 1 天、3 天、7 天各考一次，三次都靠記憶拼對，才算真的記住（●●●）。</div>'+
+    '<div class="en-sum"><div><b>'+due.length+'</b>今天要考</div><div><b>'+learning.length+'</b>學習中</div><div><b>'+done.length+'</b>已記住</div></div>'+
+    (due.length?'<div class="adv-rname">⏰ 今天要考</div>'+due.map(row).join(''):'')+
+    (learning.length?'<div class="adv-rname">📖 學習中</div>'+learning.map(row).join(''):'')+
+    (done.length?'<div class="adv-rname">✅ 已記住</div>'+done.map(row).join(''):'')+
+    (!due.length&&!learning.length&&!done.length?'<div class="adv-note">還沒有收錄單字。英文拼錯的字會自動放進來。</div>':'')+
+    (due.length?'<button class="lg-next" onclick="advReviewGate(document.getElementById(\'gameArea\'), enDue().slice(0,5))">✏️ 現在複習</button>':'')+
+    '<button class="lg-mini" style="align-self:center" onclick="advMap()">🗺️ 回地圖</button></div>';
 }
 
 function initAdventure(area){
   const st=advLoad();
   if(!st || !st.starter){ advPickStarter(area); return; }
+  let gate=''; try{ gate=localStorage.getItem('boppy_en_gate')||''; }catch(e){}
+  const due=enDue();
+  if(due.length && gate!==todayStr()){ advReviewGate(area, due.slice(0,5)); return; }
   advMap(area);
 }
 function advPickStarter(area){
@@ -8281,6 +8380,8 @@ function advMap(area){
   } else if(st.evo<BOPPY_FORMS.length-1){
     html+='<div class="adv-note" style="font-size:.78rem">升到 Lv.'+cap+' 就能挑戰進化試煉，進化成「'+BOPPY_FORMS[st.evo+1].name+'」</div>';
   }
+  const enDueN=enDue().length, enLearnN=enLearning().length;
+  if(enLearnN || enMastered().length) html+='<button class="adv-wordbook" onclick="advWordBook()">📒 英文單字本　學習中 '+enLearnN+'・已記住 '+enMastered().length+(enDueN?'　<b>⏰ 今天要考 '+enDueN+' 個</b>':'')+'</button>';
   html+='<div class="adv-world">'+
     '<button class="lg-mini" '+(w>0?'onclick="advSetWorld('+(w-1)+')"':'disabled style="opacity:.3"')+'>◀</button>'+
     '<div style="flex:1;text-align:center"><div class="adv-wname">'+W.icon+' 第 '+(w+1)+' 區・'+W.name+'</div>'+
@@ -8434,6 +8535,7 @@ function advFight(cfg){
         const mult = k===foe.weak ? 2 : k===foe.resist ? 0.5 : 1, crit=combo>=3, sp=q.spell?1.5:1;
         dmg=Math.max(1,Math.round(S0.atk*mult*sp*(crit?1.5:1)));
         eHp-=dmg; shake('advEMon'); pop('advEMon','-'+dmg,'#fde047');
+        if(q.spell) enMarkRight(q.word);
         line=(q.spell?'✍️ 拼字成功！':'')+'使出 '+m.move+'！'+(mult===2?'<b class="adv-eff">效果絕佳！</b>':mult<1?'效果不太好…':'')+(crit?' 💥會心一擊！':'');
         addGameScore(10+(mult===2?5:0)+(crit?5:0));
       }
@@ -8550,7 +8652,7 @@ function advChest(g){
     $('advMsg').innerHTML='第 '+(i+1)+' / 8 題　'+ADV_SUBJ[k].icon+ADV_SUBJ[k].name+'　已答對 '+right+' 題';
     const judge=(ok,b)=>{
       i++;
-      if(ok){ right++; if(b) b.classList.add('ok'); sfxCorrect(); addGameScore(10); setTimeout(next,800); return; }
+      if(ok){ right++; if(q.spell) enMarkRight(q.word); if(b) b.classList.add('ok'); sfxCorrect(); addGameScore(10); setTimeout(next,800); return; }
       if(b) b.classList.add('bad'); sfxWrong();
       if($('advOpts')) [...$('advOpts').children].forEach(x=>{ if(x.dataset.v===q.ans) x.classList.add('ok'); });
       $('advMsg').innerHTML='💡 正確答案是 '+q.ans+(q.tip?'：'+q.tip:'');
@@ -9068,7 +9170,7 @@ init();
 
 
 /* ===== 自動更新：發現新版本就重新載入 ===== */
-const APP_VERSION = '2026-10-25-v7';
+const APP_VERSION = '2026-10-25-v8';
 function checkAppUpdate(){
   try{
     fetch(location.pathname + '?_=' + Date.now(), {cache:'no-store'})
