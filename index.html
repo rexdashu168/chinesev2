@@ -1610,6 +1610,17 @@ box-shadow:0 4px 0 #5b21b6;
 .en-sum{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center;color:#ccfbf1;font-size:.78rem;font-weight:800;}
 .en-sum div{background:rgba(255,255,255,.1);border-radius:12px;padding:8px 4px;}
 .en-sum b{display:block;font-size:1.5rem;color:#fde047;}
+/* ===== 三年級每日課程 ===== */
+.g3-teach{text-align:center;}
+.g3-big{font-size:2.4rem;font-weight:900;color:#92400e;letter-spacing:4px;line-height:1.3;margin:6px 0;word-break:keep-all;}
+.g3-sub{display:inline-block;padding:3px 12px;border-radius:12px;background:#fde68a;color:#78350f;font-weight:800;font-size:.85rem;margin-bottom:8px;}
+.g3-lines{text-align:left;font-size:1.02rem;font-weight:700;color:#3b2a0a;line-height:1.9;background:#fffbeb;border-radius:14px;padding:10px 14px;margin:6px 0;}
+.g3-lines b{color:#7c3aed;font-size:1.2rem;}
+.g3-spellbox{background:#1e293b;border-radius:18px;padding:12px;display:flex;flex-direction:column;gap:10px;}
+.practice-q svg{max-width:100%;height:auto;}
+.g3-locked{grid-column:1/-1;text-align:center;background:#fff7ed;border:2px dashed #f59e0b;border-radius:16px;padding:14px;font-weight:800;color:#92400e;line-height:1.8;}
+.g3-locked .g3-subj{display:inline-block;margin:2px 4px;padding:3px 10px;border-radius:10px;background:#fee2e2;color:#991b1b;}
+.g3-locked .g3-subj.ok{background:#dcfce7;color:#166534;}
 /* ===== 三年級版標示 ===== */
 .g3-badge{display:block;width:max-content;margin:6px auto 0;padding:6px 16px;border-radius:20px;background:linear-gradient(135deg,#7c3aed,#ec4899);color:#fff;font-weight:900;font-size:1.05rem;box-shadow:0 4px 12px rgba(124,58,237,.35);}
 .g3-banner{display:flex;align-items:center;gap:10px;margin-bottom:14px;padding:12px 14px;border-radius:18px;background:linear-gradient(135deg,#7c3aed,#ec4899);color:#fff;font-weight:900;font-size:1rem;cursor:pointer;box-shadow:0 6px 18px rgba(124,58,237,.35);margin-right:54px;}
@@ -2298,7 +2309,7 @@ const CURRICULUM = {
   grades: {
     g1: { label:'一年級', subtitle:'入門基礎',      ready:false, courses:null },
     g2: { label:'二年級', subtitle:'2026 春季學期', ready:true,  courses:null /* 下面綁定 */ },
-    g3: { label:'三年級', subtitle:'進階拓展',      ready:false, courses:null },
+    g3: { label:'三年級', subtitle:'三年級每日課程', ready:true,  courses:null },
     g4: { label:'四年級', subtitle:'規劃中',        ready:false, courses:null },
     g5: { label:'五年級', subtitle:'規劃中',        ready:false, courses:null },
     g6: { label:'六年級', subtitle:'規劃中',        ready:false, courses:null }
@@ -3930,6 +3941,7 @@ const COURSES = {
 
 // 取得今日對應章節（依 day number 輪替，依當前年級切換內容來源）
 function getDailyCourse(subj){
+  if(getActiveGrade()==='g3' && typeof g3DailyCourse==='function') return g3DailyCourse(subj);
   const list = (getCurrentCourses()||{})[subj] || COURSES_ALL[subj];
   if(!list || !list.length) return COURSES[subj];
   const dayNum = (typeof getDayNumber === 'function') ? getDayNumber() : 1;
@@ -4306,6 +4318,8 @@ function renderUnit(){
   else if(u.type==='teach')     html += renderTeach(u);
   else if(u.type==='practice')  html += renderPractice(u);
   else if(u.type==='test')      html += renderTest(u);
+  else if(u.type==='g3teach')   html += renderG3Teach(u);
+  else if(u.type==='g3spell')   html += renderG3Spell(u);
   html += '</div>';
 
   content.innerHTML = html;
@@ -4314,6 +4328,7 @@ function renderUnit(){
   if(ls) ls.scrollTop = 0;
   // 安全填入波比 SVG（避免 template literal 衝突）
   fillHamAvatars();
+  if(u.type==='g3spell') g3SpellSetup(u);
   if(u.audio) setTimeout(()=>speakEn(u.audio), 600);
 }
 
@@ -5871,6 +5886,7 @@ function nextUnit(){ S.unit++; if(S.makeupMode) renderMakeupUnit(); else renderU
    =================================================== */
 // ── 為什麼今天要學這個：從孩子的生活出發 ──
 function _getWhyLearn(subj, course){
+  if(course.why) return course.why;
   const ch = course.chapter || '';
 
   // 國語
@@ -7060,6 +7076,7 @@ function renderGameCenter(){
   const dayNum = getDayNumber();
   const stoppedKey = 'boppy_game_' + todayStr();
   const stoppedToday = localStorage.getItem(stoppedKey) === 'stopped';
+  const learnDone = g3AllDoneToday();
   const playsLeft = Infinity; // 不限每日次數（只保留每天 25 分鐘遊戲時間）
 
   function cardHtml(g){
@@ -7067,11 +7084,11 @@ function renderGameCenter(){
     var locked   = !unlocked;
     var daysLeft = g.unlockDays - dayNum;
     var iconHtml = locked ? '🔒' : (g.id==='whack' ? '<div style="display:flex;justify-content:center;">'+boppySVG(40,'happy','',false)+'</div>' : '<div style="font-size:2rem;">'+g.emoji+'</div>');
-    var clickAttr = (unlocked && !stoppedToday && playsLeft>0) ? 'onclick="openGame(\'' + g.id + '\')"' : '';
+    var clickAttr = (unlocked && learnDone && !stoppedToday && playsLeft>0) ? 'onclick="openGame(\'' + g.id + '\')"' : '';
     var bg = locked ? 'rgba(0,0,0,0.05)' : ('linear-gradient(135deg,'+g.color+'22,'+g.color+'44)');
     var border = locked ? '#e5e7eb' : g.color;
-    var cursor = (locked||stoppedToday||playsLeft===0) ? 'default' : 'pointer';
-    var opacity = locked ? 0.5 : 1;
+    var cursor = (locked||!learnDone||stoppedToday||playsLeft===0) ? 'default' : 'pointer';
+    var opacity = locked ? 0.5 : (learnDone ? 1 : 0.55);
     var nameColor = locked ? '#9ca3af' : g.color;
     var descText = stoppedToday ? '今天的遊戲時間到了 🔒' :
                    locked ? ('再'+daysLeft+'天解鎖') :
@@ -7086,7 +7103,11 @@ function renderGameCenter(){
   }
   advBannerUpdate();
   var adv = GAMES.filter(function(g){ return g.cat==='adv'; })[0];
-  grid.innerHTML =
+  var lockHtml = learnDone ? '' :
+      '<div class="g3-locked">📚 先上完今天的三堂課，遊樂場就會開放！<br>'
+    + [['chinese','國語'],['math','數學'],['english','英文']].map(function(x){ return '<span class="g3-subj'+(S.today[x[0]].done?' ok':'')+'">'+(S.today[x[0]].done?'✅ ':'⬜ ')+x[1]+'</span>'; }).join('')
+    + '</div>';
+  grid.innerHTML = lockHtml +
       '<div class="lg-group">⚔️ 冒險對戰</div>'
     + '<div style="grid-column:1/-1;">'+cardHtml(adv)+'</div>'
     + '<div class="lg-group">📚 三年級學習遊戲</div>'
@@ -7098,6 +7119,7 @@ function renderGameCenter(){
 // ── 開啟遊戲 ──
 function openGame(gameId){
   sfxClick();
+  if(!g3AllDoneToday()){ alert('📚 先完成今天的國語、數學、英文三堂課，遊樂場和冒險島就會開放喔！'); return; }
   const key = 'boppy_game_' + todayStr();
   if(localStorage.getItem(key) === 'stopped'){
     alert('😊 今天的遊戲時間結束了！明天再來！');
@@ -8699,6 +8721,7 @@ function advCardInfo(){
 function advBannerUpdate(){
   const el=document.getElementById('g3BannerText'); if(!el) return;
   const st=advLoad();
+  if(typeof g3AllDoneToday==='function' && !g3AllDoneToday()){ el.textContent='📚 先上完今天三堂課，冒險島就開放！'; return; }
   el.textContent = st ? ('⚔️ '+BOPPY_FORMS[st.evo].name+' Lv.'+st.lv+'　點我繼續冒險 👇') : '⚔️ 冒險島開放了！點我 👇';
 }
 
@@ -9156,6 +9179,8 @@ function load(){
   if(!S.parentStats.accuracyLog) S.parentStats.accuracyLog = {};
   // P1/P2 補欄位
   if(!S.activeGrade)   S.activeGrade   = 'g2';
+  // 2026-10-25：升上三年級，改用三年級每日課程（只轉換一次）
+  if(!S.g3Migrated){ S.activeGrade='g3'; S.g3Migrated=true; S.g3Start=todayStr(); }
   if(!S.skillMastery)  S.skillMastery  = {};
   // 重新整理 review/warmup 狀態（不應該跨 session 持久化）
   S.reviewMode = false;
@@ -9169,8 +9194,200 @@ function load(){
 init();
 
 
+/* ===================================================
+   🎒 三年級每日課程（依日期產生、同一天內容固定、每天往前進）
+   國語：成語、量詞、部首家族｜數學：三上 9 個主題輪替｜英文：每天 4 個新單字＋拼字
+   =================================================== */
+const LG_IDIOMS_MORE=[
+  ['一言為定',2,['圍','維','唯'],'說定了就不再改變'],
+  ['七嘴八舌',3,['蛇','折','捨'],'很多人同時說話，很吵雜'],
+  ['人山人海',3,['害','還','孩'],'人非常多'],
+  ['心花怒放',1,['化','畫','華'],'心裡非常高興'],
+  ['手忙腳亂',3,['論','輪','卵'],'做事慌張，沒有條理'],
+  ['目不轉睛',3,['晴','精','請'],'眼睛一直盯著看，非常專心'],
+  ['異口同聲',3,['生','升','聖'],'大家說出一樣的話'],
+  ['東張西望',3,['忘','王','往'],'到處看來看去'],
+  ['津津有味',3,['為','位','未'],'吃得或看得很有興趣'],
+  ['興高采烈',2,['彩','菜','財'],'非常高興，情緒熱烈'],
+  ['迫不及待',3,['代','帶','袋'],'急得不能再等'],
+  ['依依不捨',3,['設','社','射'],'捨不得離開'],
+  ['小心翼翼',2,['意','易','益'],'非常小心謹慎'],
+  ['一模一樣',1,['摸','磨','魔'],'完全相同'],
+  ['五花八門',3,['們','悶','問'],'種類很多，變化很多'],
+  ['刻舟求劍',1,['周','州','洲'],'不知道事情已經改變，還用老方法'],
+  ['愚公移山',2,['宜','姨','疑'],'有毅力，不怕困難'],
+  ['胸有成竹',3,['築','逐','燭'],'做事之前心裡已經有了把握'],
+  ['畫龍點睛',3,['晴','精','請'],'在關鍵的地方加上一筆，讓整體更生動'],
+  ['掩耳盜鈴',3,['零','玲','齡'],'自己騙自己'],
+  ['自相矛盾',3,['頓','鈍','燉'],'說話或做事前後不一致'],
+  ['坐井觀天',2,['關','官','冠'],'眼光狹小，見識不廣'],
+  ['雪中送炭',3,['碳','嘆','探'],'在別人困難的時候給予幫助'],
+  ['大驚小怪',3,['乖','快','拐'],'對很平常的事表現得太過驚訝'],
+];
+LG_IDIOMS.push(...LG_IDIOMS_MORE);
+const G3_IDIOM_EX={
+  '守株待兔':'想要好成績不能守株待兔，要每天認真練習。','畫蛇添足':'圖畫已經很漂亮了，再多畫就是畫蛇添足。',
+  '井底之蛙':'多看書、多出去走走，才不會像井底之蛙。','亡羊補牢':'考試錯的題目趕快訂正，亡羊補牢還來得及。',
+  '對牛彈琴':'跟小貓講數學，簡直是對牛彈琴。','狐假虎威':'他仗著哥哥在旁邊就欺負人，真是狐假虎威。',
+  '半途而廢':'拼圖拼到一半，不要半途而廢。','一舉兩得':'走路上學既能運動又能省錢，真是一舉兩得。',
+  '五顏六色':'花園裡開滿了五顏六色的花。','十全十美':'世界上沒有十全十美的人。',
+  '自言自語':'弟弟一邊玩積木，一邊自言自語。','四面八方':'放學時，同學們從四面八方走向校門口。',
+  '百發百中':'他投籃百發百中，大家都好佩服。','拔苗助長':'學習要一步一步來，拔苗助長反而學不好。',
+  '三心二意':'寫功課不能三心二意，要專心。','九牛一毛':'這點零食對大胃王來說只是九牛一毛。',
+  '一言為定':'我們約好星期六去公園，一言為定！','七嘴八舌':'下課時，大家七嘴八舌地討論卡通。',
+  '人山人海':'跨年晚會的廣場上人山人海。','心花怒放':'收到生日禮物，妹妹心花怒放。',
+  '手忙腳亂':'快遲到了，我手忙腳亂地收書包。','目不轉睛':'看魔術表演時，大家都目不轉睛。',
+  '異口同聲':'老師問誰想吃冰淇淋，大家異口同聲說：「我！」','東張西望':'上課時不要東張西望，要專心聽講。',
+  '津津有味':'弟弟津津有味地吃著冰淇淋。','興高采烈':'要去動物園了，大家興高采烈。',
+  '迫不及待':'一放學，我就迫不及待地打開新漫畫。','依依不捨':'畢業那天，大家依依不捨地互相道別。',
+  '小心翼翼':'他小心翼翼地端著一碗熱湯。','一模一樣':'這對雙胞胎長得一模一樣。',
+  '五花八門':'夜市裡的小吃五花八門。','刻舟求劍':'規則已經改了還用舊方法，就像刻舟求劍。',
+  '愚公移山':'每天背五個單字，用愚公移山的精神也能背完一本書。','胸有成竹':'他已經練習很多次，上台表演胸有成竹。',
+  '畫龍點睛':'作文最後一句寫得好，有畫龍點睛的效果。','掩耳盜鈴':'把考卷藏起來不給媽媽看，就像掩耳盜鈴。',
+  '自相矛盾':'他說自己不愛吃糖，卻一直吃糖果，真是自相矛盾。','坐井觀天':'不要坐井觀天，要多讀書看看外面的世界。',
+  '雪中送炭':'朋友在我最需要的時候幫忙，真是雪中送炭。','大驚小怪':'看到一隻小蟲就大叫，真是大驚小怪。',
+};
+const G3_EN_ZH={cat:'貓',dog:'狗',pig:'豬',fish:'魚',bird:'鳥',duck:'鴨子',frog:'青蛙',lion:'獅子',bear:'熊',apple:'蘋果',egg:'蛋',milk:'牛奶',
+  cake:'蛋糕',book:'書',pen:'原子筆',bag:'書包',sun:'太陽',moon:'月亮',star:'星星',tree:'樹',bus:'公車',car:'汽車',ball:'球',hat:'帽子',bed:'床',
+  cup:'杯子',kite:'風箏',rain:'雨',ant:'螞蟻',bee:'蜜蜂',cow:'乳牛',fox:'狐狸',owl:'貓頭鷹',hen:'母雞',box:'盒子',toy:'玩具',pie:'派',nut:'堅果',
+  corn:'玉米',rice:'米飯',gift:'禮物',bell:'鈴',drum:'鼓',ship:'船',boat:'小船',sock:'襪子',shoe:'鞋子',door:'門',key:'鑰匙',bread:'麵包',
+  grape:'葡萄',lemon:'檸檬',pizza:'披薩',tiger:'老虎',zebra:'斑馬',horse:'馬',sheep:'綿羊',mouse:'老鼠',snake:'蛇',whale:'鯨魚',shark:'鯊魚',
+  house:'房子',clock:'時鐘',chair:'椅子',train:'火車',plane:'飛機',robot:'機器人',hand:'手',ear:'耳朵',nose:'鼻子'};
+const G3_MATH_TOPICS=[
+  {name:'一萬以內的數', gen:()=>khMathPlace(), big:'3507', lines:['四位數有千位、百位、十位、個位。','3507 就是 3 個千、5 個百、0 個十、7 個一。','千位上的 3，代表 3000。']},
+  {name:'四位數加減',   gen:()=>khMathAddSub(), big:'2468 ＋ 1375 ＝ 3843', lines:['直式計算時，個位要對齊個位。','加法：同一位加起來滿 10，就往前一位進 1。','減法：不夠減，就向前一位借 1 當 10。']},
+  {name:'乘法',         gen:()=>khMathMul(), big:'123 × 4 ＝ 492', lines:['從個位開始乘，滿十就往前進位。','3 × 4 ＝ 12，寫 2 進 1；2 × 4 ＝ 8，加 1 是 9；1 × 4 ＝ 4。','所以 123 × 4 ＝ 492。']},
+  {name:'除法與餘數',   gen:()=>khMathDiv(), big:'23 ÷ 4 ＝ 5 餘 3', lines:['4 × 5 ＝ 20，23 － 20 ＝ 3，剩下的 3 就是餘數。','餘數一定要比除數小。','驗算：4 × 5 ＋ 3 ＝ 23。']},
+  {name:'公分和毫米',   gen:()=>khMathLength(), big:'1 公分 ＝ 10 毫米', lines:['尺上最小的一小格是 1 毫米。','3 公分 5 毫米 ＝ 35 毫米。','48 毫米 ＝ 4 公分 8 毫米。']},
+  {name:'公斤和公克',   gen:()=>khMathWeight(), big:'1 公斤 ＝ 1000 公克', lines:['2 公斤 300 公克 ＝ 2300 公克。','4500 公克 ＝ 4 公斤 500 公克。','比較重量前，先換成同一個單位。']},
+  {name:'周長',         gen:()=>khMathPerimeter(), big:'周長 ＝ 一圈的長度', lines:['把圖形每一邊的長度加起來，就是周長。','長方形：長 5、寬 3，周長 ＝ 5 ＋ 3 ＋ 5 ＋ 3 ＝ 16。','正方形：每邊 4，周長 ＝ 4 × 4 ＝ 16。']},
+  {name:'時間',         gen:i=>lgMkClock(i,true), big:'⏰', lines:['短針是時針，長針是分針。','長針走一大格是 5 分鐘，走一圈是 60 分鐘，也就是 1 小時。','3 點 40 分再過 30 分鐘，是 4 點 10 分。']},
+  {name:'分數',         gen:i=>lgMkPizza(i), big:'🍕', lines:['把一個東西平分成 4 份，其中 1 份就是 4 分之 1。','分母是平分成幾份，分子是拿了幾份。','分母一樣的時候，分子越大，分數越大。']},
+];
+
+/* 種子亂數：同一天、同一科產生的課程完全一樣 */
+function g3Hash(str){ let h=2166136261; for(let i=0;i<str.length;i++){ h^=str.charCodeAt(i); h=Math.imul(h,16777619); } return h>>>0; }
+function g3Seeded(seed, fn){
+  const orig=Math.random; let s=seed||1;
+  Math.random=function(){ s^=s<<13; s>>>=0; s^=s>>>17; s^=s<<5; s>>>=0; return s/4294967296; };
+  try{ return fn(); } finally{ Math.random=orig; }
+}
+function g3DayIndex(){
+  if(!S.g3Start) S.g3Start=todayStr();
+  const d=Math.round((new Date(todayStr()+'T00:00:00Z') - new Date(S.g3Start+'T00:00:00Z'))/86400000);
+  return Math.max(0,d);
+}
+function g3Practice(q, extra){
+  return Object.assign({type:'practice', q:q.q, opts:q.opts.map(t=>({t, c:t===q.ans})),
+    hint:'仔細想一想再作答', okMsg:q.tip||'答對了！', failMsg:'再想一次，答對才能往下走喔！'}, extra||{});
+}
+const _g3Cache={};
+function g3DailyCourse(subj){
+  const key=subj+'|'+todayStr()+'|'+(S.g3Start||'');
+  if(_g3Cache[key]) return _g3Cache[key];
+  const day=g3DayIndex();
+  const course=g3Seeded(g3Hash(key), ()=> subj==='chinese' ? g3Chinese(day) : subj==='math' ? g3Math(day) : g3English(day));
+  _g3Cache[key]=course; return course;
+}
+function g3Chinese(day){
+  const units=[], I=LG_IDIOMS, n=I.length;
+  const ids=[I[(day*2)%n], I[(day*2+1)%n]];
+  ids.forEach(it=>{
+    const [w,,,mean]=it;
+    units.push({type:'g3teach', big:w, sub:'今日成語', lines:['意思：'+mean], example:G3_IDIOM_EX[w]||'', say:w, lang:'zh', talk:'今天來學成語「'+w+'」！先聽聽看怎麼念。'});
+    units.push(g3Practice(lgMkIdiom(it)));
+  });
+  const M=LG_MEASURE, m1=M[(day*2)%M.length], m2=M[(day*2+1)%M.length];
+  units.push({type:'g3teach', big:'一'+m1[2]+m1[1]+'　一'+m2[2]+m2[1], emoji:m1[0]+' '+m2[0], sub:'量詞', say:'一'+m1[2]+m1[1]+'，一'+m2[2]+m2[1], lang:'zh',
+    lines:['說「一個什麼」的時候，不同的東西要用不同的量詞。','「'+m1[1]+'」要說一'+m1[2]+m1[1]+'，「'+m2[1]+'」要說一'+m2[2]+m2[1]+'。'], talk:'量詞小教室！'});
+  units.push(g3Practice(lgMkMeasure(m1)));
+  units.push(g3Practice(lgMkMeasure(m2)));
+  const F=LG_RADICAL_FAMILIES[day%LG_RADICAL_FAMILIES.length];
+  units.push({type:'g3teach', big:F.p, sub:'部首家族：「'+F.p+'」的朋友', say:F.items.map(x=>x[1]).join('，'), lang:'zh',
+    lines:F.items.map(x=>x[0]+' ＋ '+F.p+' ＝ <b>'+x[1]+'</b>　'+x[2]), talk:'同一個部件加上不同部首，就變成不同的字！'});
+  for(let k=0;k<2;k++){
+    let q; for(let t=0;t<30;t++){ q=lgMkRadical(k); if(q.q.includes(F.p)) break; }
+    units.push(g3Practice(q));
+  }
+  if(day>0){ const old=I[lgRand(0,Math.min(day*2,n)-1)]; units.push(g3Practice(lgMkIdiom(old),{hint:'這是之前學過的成語，還記得嗎？'})); }
+  const why='三年級的國語會讀到更多成語和量詞。學會它們，說話和寫作文都會更精彩！';
+  return {chapter:'📖 三年級國語：'+ids.map(x=>x[0]).join('、'), why, units};
+}
+function g3Math(day){
+  const T=G3_MATH_TOPICS, t=T[day%T.length], units=[];
+  units.push({type:'g3teach', big:t.big, sub:'今日主題：'+t.name, lines:t.lines, talk:'今天的數學主題是「'+t.name+'」，先看懂觀念！'});
+  for(let i=0;i<6;i++) units.push(g3Practice(t.gen(i)));
+  if(day>0){ for(let k=0;k<2;k++){ const r=T[lgRand(0,T.length-1)]; units.push(g3Practice(r.gen(lgRand(0,9)),{hint:'複習題：'+r.name})); } }
+  return {chapter:'🔢 三年級數學：'+t.name, why:'「'+t.name+'」是三年級上學期的數學重點，學會了，買東西、量長度、看時間都用得到！', units};
+}
+function g3English(day){
+  const ALL=LG_SPELL.concat(LG_SPELL_MORE).slice().sort((a,b)=>a[0].length-b[0].length);
+  const N=ALL.length, words=[0,1,2,3].map(k=>ALL[(day*4+k)%N]);
+  const units=[];
+  words.forEach(([w,emo])=>units.push({type:'teach', letter:w[0].toUpperCase()+w[0], emoji:emo, word:w, zh:G3_EN_ZH[w]||'',
+    talk:['今天的新單字是「'+w+'」！','它的意思是「'+(G3_EN_ZH[w]||'')+'」，先點🔊聽發音，跟著念三次！']}));
+  words.forEach(([w,emo])=>{
+    const others=lgShuffle(ALL.filter(x=>x[0]!==w)).slice(0,3).map(x=>x[0]);
+    units.push({type:'practice', q:'<div style="font-size:3rem">'+emo+'</div>這是哪一個英文單字？', opts:[w,...others].map(t=>({t, c:t===w})),
+      hint:G3_EN_ZH[w]||'', okMsg:emo+' = '+w, failMsg:'再看一次今天學的單字！', word:w, emoji:emo, zh:G3_EN_ZH[w]||''});
+  });
+  words.forEach(([w,emo])=>units.push({type:'g3spell', word:w, emoji:emo, zh:G3_EN_ZH[w]||''}));
+  const review=enDue().filter(x=>!words.some(y=>y[0]===x)).slice(0,2);
+  const b=enLoad();
+  review.forEach(w=>units.push({type:'g3spell', word:w, emoji:b[w].emo, zh:G3_EN_ZH[w]||'', review:true}));
+  return {chapter:'🔤 三年級英文：'+words.map(x=>x[0]).join('、'), why:'每天學 4 個新單字，聽、選、拼都會了，才算真的學會！拼錯的字會放進單字本，過幾天再考一次。', units, newWords:words};
+}
+function enAddNew(word,emo){
+  const b=enLoad(); if(b[word]) return;
+  b[word]={emo:emo, streak:0, wrong:0, mastered:false, due:_addDays(todayStr(),1), last:''}; enSave(b);
+}
+
+/* ── 新的單元畫面 ── */
+function renderG3Teach(u){
+  let html = hamsterTag()+`<div class="ham-bubble"><div class="ham-text">${u.talk||''}</div></div></div>`;
+  html += '<div class="content-display g3-teach">'+(u.emoji?`<span class="big-emoji">${u.emoji}</span>`:'')+
+    `<div class="g3-big">${u.big}</div>`+(u.sub?`<div class="g3-sub">${u.sub}</div>`:'')+
+    '<div class="g3-lines">'+u.lines.map(l=>'<div>'+l+'</div>').join('')+'</div>'+
+    (u.example?`<div class="example"><div class="ex-label">📝 例句</div><div class="ex-text">${u.example}</div></div>`:'');
+  if(u.say) html += `<button class="speak-btn" id="spkBtn" onclick="${u.lang==='en'?'speakEn':'speakZh'}('${u.say}');markListened();animSpeakBtn()">🔊 點我聽</button>`;
+  html += '</div>';
+  if(u.say){
+    html += `<div class="must-listen" id="listenNote">👆 先點上面的🔊聽一次，才能繼續！</div>
+    <button class="next-btn" id="teachNextBtn" disabled onclick="sfxFlip();nextUnit()" style="opacity:0.4;">我學會了！繼續 ➡️</button>`;
+  } else {
+    html += `<div class="teach-countdown" id="teachCountdown">⏳ <span id="countNum">5</span> 秒後可以繼續</div>
+    <button class="next-btn" id="teachNextBtn" disabled onclick="sfxFlip();nextUnit()" style="opacity:0.4;">我看懂了！繼續 ➡️</button>`;
+    setTimeout(()=>{ startTeachCountdown(); }, 200);
+  }
+  return html;
+}
+function renderG3Spell(u){
+  return hamsterTag()+`<div class="ham-bubble"><div class="ham-text">${u.review?'📒 單字本複習！還記得怎麼拼嗎？':'✍️ 拼拼看！拼對才算真的學會喔！'}</div></div></div>`+
+    '<div class="g3-spellbox" id="g3SpellBox"></div><div id="feedback"></div><div id="btns"></div>';
+}
+function g3SpellSetup(u){
+  const box=document.getElementById('g3SpellBox'); if(!box) return;
+  const subj='english';
+  const nextBtn=label=>{ document.getElementById('btns').innerHTML=`<button class="next-btn" onclick="sfxFlip();nextUnit()">${label}</button>`; };
+  advSpellUI(box, u.word, u.emoji, 'quiz', v=>{
+    if(v===u.word){
+      sfxCorrect(); logCorrect(u,subj); logAccuracy(subj,true,u);
+      if(!u.review) enAddNew(u.word,u.emoji); else enMarkRight(u.word);
+      S.sessionBadges++; S.badges.mini++; S.retries=S.retries||0;
+      const el=document.getElementById('sessionBadges'); if(el) el.textContent=S.sessionBadges;
+      document.getElementById('feedback').innerHTML=`<div class="feedback correct"><div class="fb-head"><span class="fb-icon">🎉</span><span class="fb-title">拼對了！</span></div><div class="fb-msg">${u.emoji} ${u.word}：${u.zh}</div></div>`;
+      nextBtn('繼續 ➡️');
+    } else {
+      logMistake(u,subj); logAccuracy(subj,false,u); S.retries++; S.stats.totalRetries++;
+      document.getElementById('feedback').innerHTML=`<div class="feedback retry"><div class="fb-head"><span class="fb-icon">💪</span><span class="fb-title">正確是 ${u.word}</span></div><div class="fb-msg">來訂正：先照著拼，再蓋起來拼一次！</div></div>`;
+      setTimeout(()=>advEnFix(box,{word:u.word, emo:u.emoji}, h=>{ document.getElementById('feedback').innerHTML='<div class="feedback correct"><div class="fb-msg">'+h+'</div></div>'; }, ()=>nextBtn('訂正完成！繼續 ➡️')), 1200);
+    }
+  });
+}
+function g3AllDoneToday(){ return !!(S && S.today && S.today.chinese.done && S.today.english.done && S.today.math.done); }
+
 /* ===== 自動更新：發現新版本就重新載入 ===== */
-const APP_VERSION = '2026-10-25-v8';
+const APP_VERSION = '2026-10-25-v9';
 function checkAppUpdate(){
   try{
     fetch(location.pathname + '?_=' + Date.now(), {cache:'no-store'})
