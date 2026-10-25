@@ -10,7 +10,7 @@
 <title>🌟 波比魔法學院</title>
 <script>
 /* 獨立的更新檢查：放在最前面，就算後面的程式出錯，也一定能換到新版 */
-var BOPPY_VERSION = '2026-10-25-v17';
+var BOPPY_VERSION = '2026-10-25-v18';
 (function(){
   function check(){
     try{
@@ -1682,6 +1682,11 @@ box-shadow:0 4px 0 #5b21b6;
 .coin-toast{position:fixed;left:50%;top:18%;transform:translateX(-50%);z-index:9000;background:#fde68a;color:#78350f;font-weight:900;font-size:1.2rem;padding:12px 22px;border-radius:20px;box-shadow:0 8px 24px rgba(0,0,0,.25);display:flex;flex-direction:column;align-items:center;animation:coinUp 2.6s ease forwards;}
 .coin-toast small{font-size:.75rem;font-weight:800;opacity:.8;}
 @keyframes coinUp{0%{opacity:0;transform:translate(-50%,20px)}15%{opacity:1;transform:translate(-50%,0)}80%{opacity:1}100%{opacity:0;transform:translate(-50%,-20px)}}
+.shop-tabs.two{display:grid;grid-template-columns:repeat(3,1fr);}
+.shop-card.gear-on{box-shadow:0 0 0 3px #22c55e inset;}
+.shop-buy.up{background:#7c3aed;}
+.bp-wpn{position:absolute;left:-12px;bottom:2px;line-height:1;transform:rotate(-20deg);}
+.adv-gear{font-size:.72rem;color:#0f766e;font-weight:800;}
 /* ===== 三年級版標示 ===== */
 .g3-badge{display:block;width:max-content;margin:6px auto 0;padding:6px 16px;border-radius:20px;background:linear-gradient(135deg,#7c3aed,#ec4899);color:#fff;font-weight:900;font-size:1.05rem;box-shadow:0 4px 12px rgba(124,58,237,.35);}
 .g3-banner{display:flex;align-items:center;gap:10px;margin-bottom:14px;padding:12px 14px;border-radius:18px;background:linear-gradient(135deg,#7c3aed,#ec4899);color:#fff;font-weight:900;font-size:1rem;cursor:pointer;box-shadow:0 6px 18px rgba(124,58,237,.35);margin-right:54px;}
@@ -1738,7 +1743,7 @@ box-shadow:0 4px 0 #5b21b6;
 <div id="mainScreen" class="hidden">
 
   <div class="g3-banner" onclick="document.getElementById('gameCenter').scrollIntoView({behavior:'smooth'})">
-    <span class="g3-tag">三年級版 <small style="font-weight:700;opacity:.7">v17</small></span>
+    <span class="g3-tag">三年級版 <small style="font-weight:700;opacity:.7">v18</small></span>
     <span id="g3BannerText">⚔️ 冒險島開放了！點我 👇</span>
   </div>
 
@@ -8244,6 +8249,7 @@ function advCap(st){ return st.evo>=BOPPY_FORMS.length-1 ? 60 : (st.evo+1)*5; }
 function advExpNeed(lv){ return 40+lv*12; }
 function advTrialReady(st){ return st.evo<BOPPY_FORMS.length-1 && st.lv>=advCap(st); }
 function advGainExp(st,n){
+  if(advPerk(st,'exp')) n*=1.3;
   const before=st.lv; st.exp+=Math.round(n);
   while(st.lv<advCap(st) && st.exp>=advExpNeed(st.lv)){ st.exp-=advExpNeed(st.lv); st.lv++; }
   if(st.lv>=advCap(st)) st.exp=Math.min(st.exp, advExpNeed(st.lv));
@@ -8255,12 +8261,14 @@ function advStats(st){
   let atk=8+st.lv*1.5+st.evo*3, hp=30+st.lv*4+st.evo*10;
   if(st.starter==='fire') atk*=1.15;
   if(st.starter==='water') hp*=1.2;
+  const W=advWeapon(st), A=advArmor(st);
+  atk*=1+advWpnAtk(W); hp*=1+(A?A.hp:0);
   return {atk:Math.round(atk), hp:Math.round(hp), heal: st.starter==='leaf' ? 3+Math.floor(st.lv/5) : 0};
 }
 function advForm(st){ const f=BOPPY_FORMS[st.evo]; return [f.badge||'🌸', f.name]; }
 
 /* ── 波比進化型態的畫法 ── */
-function boppyForm(evo,size,expr,shadow,acc){
+function boppyForm(evo,size,expr,shadow,acc,wpn){
   const f=BOPPY_FORMS[Math.max(0,Math.min(evo,BOPPY_FORMS.length-1))];
   const s=Math.round(size*(1+evo*0.04));
   const glow = shadow ? '' : (f.glow ? 'filter:drop-shadow(0 0 8px '+f.glow+') drop-shadow(0 0 3px '+f.glow+');' : '');
@@ -8270,6 +8278,7 @@ function boppyForm(evo,size,expr,shadow,acc){
     (f.badge&&!shadow?'<span class="bp-badge" style="font-size:'+Math.round(s*0.34)+'px">'+f.badge+'</span>':'')+
     (shadow?'<span class="bp-badge" style="font-size:'+Math.round(s*0.34)+'px">❓</span>':'')+
     (acc&&!shadow?'<span class="bp-acc" style="font-size:'+Math.round(s*0.36)+'px">'+acc+'</span>':'')+
+    (wpn&&!shadow?'<span class="bp-wpn" style="font-size:'+Math.round(s*0.42)+'px">'+wpn+'</span>':'')+
   '</span>';
 }
 
@@ -8483,7 +8492,7 @@ function advMap(area){
   const W=ADV_WORLDS[w], ws=advWorldStars(st,w);
   let html='<div class="lg-wrap adv" style="background:linear-gradient(180deg,'+W.bg+',#1a1a2e 65%)">'+
     '<div class="adv-card">'+
-      '<div class="adv-hero">'+boppyForm(st.evo,46,'happy',false,advAccIcon(st))+'</div>'+
+      '<div class="adv-hero">'+boppyForm(st.evo,46,'happy',false,advAccIcon(st),advGearIcon(st))+'</div>'+
       '<div style="flex:1;min-width:0">'+
         '<div><b style="color:#fde68a">'+f.name+'</b>　Lv.'+st.lv+'<span class="adv-small"> / 上限 '+cap+'</span></div>'+
         '<div class="adv-bar"><div style="width:'+Math.min(100,st.exp/need*100)+'%;background:#38bdf8"></div></div>'+
@@ -8565,7 +8574,8 @@ function advTrial(){
 function advFight(cfg){
   sfxStart();
   const area=document.getElementById('gameArea'), st=advLoad(), S0=advStats(st), CE=compEffects(st);
-  let atkBoost=1, shieldBlocks=0, hintNext=false, foxLeft=CE.fox, dogLeft=CE.dog, owlNext=false, chickCnt=0, revived=false;
+  const WP=advWeapon(st), AR=advArmor(st); let firstHit=!!(WP&&WP.first);
+  let atkBoost=1, shieldBlocks=(AR&&AR.aura)||0, hintNext=false, foxLeft=CE.fox, dogLeft=CE.dog, owlNext=false, chickCnt=0, revived=false;
   const type=cfg.type, T=ADV_TYPES[type]||{icon:'✨',name:'進化試煉',desc:'三科各命中一次，打掉三個護盾後才能造成傷害'};
   const bg = cfg.trial ? '#581c87' : ADV_WORLDS[cfg.w].bg;
   let fi=0, foe=null, eHp=0, pHp=S0.hp, combo=0, wrong=0, busy=false, ended=false;
@@ -8575,8 +8585,9 @@ function advFight(cfg){
     '<div class="adv-foe"><div class="adv-info"><div id="advEName"></div>'+
       '<div class="adv-bar"><div id="advEHp" style="width:100%"></div></div><div class="adv-small" id="advEInfo"></div></div>'+
       '<div class="adv-mon" id="advEMon"></div></div>'+
-    '<div class="adv-me"><div class="adv-mon me" id="advPMon">'+boppyForm(st.evo,58,'happy',false,advAccIcon(st))+'<span class="adv-pal">'+advPartnerForm(st)[0]+compTeamIcons(st)+'</span></div>'+
+    '<div class="adv-me"><div class="adv-mon me" id="advPMon">'+boppyForm(st.evo,58,'happy',false,advAccIcon(st),advGearIcon(st))+'<span class="adv-pal">'+advPartnerForm(st)[0]+compTeamIcons(st)+'</span></div>'+
       '<div class="adv-info"><div><b>'+BOPPY_FORMS[st.evo].name+'</b>　Lv.'+st.lv+'</div>'+
+      ((advWeapon(st)||advArmor(st))?'<div class="adv-gear">'+(advWeapon(st)?advWeapon(st).icon+advWeapon(st).name+' Lv.'+advWeapon(st).lv:'')+(advArmor(st)?'　'+advArmor(st).icon+advArmor(st).name:'')+'</div>':'')+
       '<div class="adv-bar"><div id="advPHp" style="width:100%;background:#22c55e"></div></div><div class="adv-small" id="advPHpTxt"></div></div></div>'+
     '<div class="adv-msg" id="advMsg"></div><div id="advPanel"></div></div>';
   const $=id=>document.getElementById(id);
@@ -8679,10 +8690,11 @@ function advFight(cfg){
         if(trialShields.includes(k)){ trialShields=trialShields.filter(x=>x!==k); line=m.icon+' 護盾消失了！'+(trialShields.length?'還剩 '+trialShields.map(x=>ADV_SUBJ[x].icon).join(''):'護盾全破，開始攻擊！'); shake('advEMon'); }
         else line='這個護盾已經打掉了，換 '+trialShields.map(x=>ADV_SUBJ[x].icon+ADV_SUBJ[x].name).join('、')+' 試試！';
       } else {
-        const mult = k===foe.weak ? 2 : k===foe.resist ? 0.5 : 1, crit=combo>=(CE.dragon?2:3), sp=q.spell?1.5:1;
-        const critMul = CE.dragon===2 ? 1.8 : 1.5;
-        const bonus = atkBoost * (k===foe.weak ? 1+(CE.cat||0) : 1) * (type==='boss' ? 1+(CE.panda||0) : 1) * (owlNext ? 1+(CE.owl||0) : 1);
-        owlNext=false;
+        const mult = k===foe.weak ? 2 : k===foe.resist ? 0.5 : 1, crit = firstHit || combo>=((CE.dragon||(WP&&WP.combo))?2:3), sp=q.spell?1.5:1;
+        const critMul = (CE.dragon===2 ? 1.8 : 1.5) + (advPerk(st,'crit') ? 0.4 : 0);
+        const bonus = atkBoost * (k===foe.weak ? 1+(CE.cat||0) : 1) * (type==='boss' ? 1+(CE.panda||0) : 1) * (owlNext ? 1+(CE.owl||0) : 1)
+          * (WP&&WP.boss&&type==='boss' ? 1+WP.boss : 1) * (WP&&WP.weak&&k===foe.weak ? 1+WP.weak : 1);
+        owlNext=false; firstHit=false;
         dmg=Math.max(1,Math.round(S0.atk*mult*sp*(crit?critMul:1)*bonus));
         eHp-=dmg; shake('advEMon'); pop('advEMon','-'+dmg,'#fde047');
         if(q.spell) enMarkRight(q.word);
@@ -8708,8 +8720,8 @@ function advFight(cfg){
       let extra='';
       if(type==='shield' && shieldHits>0 && shieldUp){ shieldHits=0; extra='🛡️ 護盾的裂痕恢復了！'; }
       if(type==='shield' && !shieldUp){ shieldUp=true; shieldHits=0; extra='🛡️ 護盾又長回來了！'; }
-      let dmgIn=Math.round(foe.atk*(1-(CE.turtle||0))), blockTxt='';
-      if(shieldBlocks>0){ shieldBlocks--; dmgIn=0; blockTxt='🛡️ 防護罩擋下了 '+foe.name+' 的攻擊！'; }
+      let dmgIn=Math.round(foe.atk*(1-(CE.turtle||0))*(1-((AR&&AR.guard)||0))), blockTxt='';
+      if(shieldBlocks>0){ shieldBlocks--; dmgIn=0; blockTxt=(AR&&AR.aura&&shieldBlocks===0&&!blockTxt?'🌟 星光戰袍':'🛡️ 防護罩')+'擋下了 '+foe.name+' 的攻擊！'; }
       else if(dogLeft>0){ dogLeft--; dmgIn=0; blockTxt='🐶 汪汪隊長擋下了 '+foe.name+' 的攻擊！'; }
       if(CE.owl) owlNext=true;
       pHp-=dmgIn; if(dmgIn){ shake('advPMon'); pop('advPMon','-'+dmgIn,'#f87171'); } info(); bars();
@@ -8736,7 +8748,7 @@ function advFight(cfg){
     const newMon=[]; cfg.foes.forEach(f=>{ if(!s2.caught.includes(f.id)){ s2.caught.push(f.id); newMon.push(f); } });
     let gotPot=false; if(type==='boss' && first && s2.potions<9){ s2.potions++; gotPot=true; }
     s2.wins=(s2.wins||0)+1;
-    const coins=Math.round((10+stars*5+(first?10:0)+(type==='boss'?30:0))*(1+(CE.unicorn||0)));
+    const coins=Math.round((10+stars*5+(first?10:0)+(type==='boss'?30:0))*(1+(CE.unicorn||0))*advCoinMul(s2));
     (s2.team||[]).forEach(id=>{ if(s2.comps&&s2.comps[id]) s2.comps[id].hearts=Math.min(10,(s2.comps[id].hearts||0)+1); });
     let gotEgg=false; if(type==='boss' && first){ advInvSet(s2,'egg',advInvGet(s2,'egg')+1); gotEgg=true; }
     const w=cfg.w, worldUnlock = w<ADV_WORLDS.length-1 && !advWorldOpen(advLoad(),w+1) && advWorldOpen(s2,w+1);
@@ -8830,7 +8842,7 @@ function advChest(g){
     s2.stars[g]=Math.max(prev,stars);
     let gain=Math.round((right*(5+g*0.3))*(first?1:0.6)); const ups=advGainExp(s2,gain);
     const pot = right>=6 && s2.potions<9; if(pot) s2.potions++;
-    advSave(s2); sfxLevelUp(); const chestCoins=right*3+(right===8?10:0); walletAdd(chestCoins);
+    advSave(s2); sfxLevelUp(); const chestCoins=Math.round((right*3+(right===8?10:0))*advCoinMul(s2)); walletAdd(chestCoins);
     $('advChestBox').textContent='💰';
     $('advMsg').innerHTML='🎉 寶箱打開了！答對 '+right+' / 8 題';
     const nextG=g+1, hasNext=advStageOpen(s2,nextG) && Math.floor(nextG/10)===w;
@@ -8901,12 +8913,13 @@ function compTeamIcons(st){ return (st.team||[]).filter(id=>(st.comps||{})[id]).
 
 /* ── 商店 ── */
 function advShop(tab){
-  tab=tab||'item';
+  tab=tab||'wpn';
   const st=advLoad(), area=document.getElementById('gameArea'), coins=walletGet();
   let html='<div class="lg-wrap adv" style="background:linear-gradient(180deg,#b45309,#1a1a2e 65%)">'+
     '<div class="adv-title">🏪 波比商店</div><div class="shop-coins">🪙 '+coins+' 冒險金幣</div>'+
-    '<div class="shop-tabs">'+[['item','🎒 道具'],['acc','🎀 裝飾'],['comp','🐾 小伙伴']].map(t=>'<button class="'+(t[0]===tab?'on':'')+'" onclick="advShop(\''+t[0]+'\')">'+t[1]+'</button>').join('')+'</div>';
-  if(tab==='item'){
+    '<div class="shop-tabs two">'+[['wpn','⚔️ 武器'],['arm','🛡️ 防具'],['perk','📘 能力'],['item','🎒 道具'],['acc','🎀 裝飾'],['comp','🐾 小伙伴']].map(t=>'<button class="'+(t[0]===tab?'on':'')+'" onclick="advShop(\''+t[0]+'\')">'+t[1]+'</button>').join('')+'</div>';
+  if(['wpn','arm','perk'].includes(tab)){ html+=advShopGear(tab); }
+  else if(tab==='item'){
     html+='<div class="shop-grid">'+SHOP_ITEMS.filter(x=>x.id!=='snack'&&x.id!=='egg').map(x=>shopCard(x, advInvGet(st,x.id))).join('')+'</div>';
   } else if(tab==='acc'){
     const owned=st.accOwned||[];
@@ -8923,14 +8936,14 @@ function advShop(tab){
   html+='<div class="lg-row"><button class="lg-mini" onclick="advMap()">🗺️ 回地圖</button></div></div>';
   area.innerHTML=html;
   function shopCard(x,have){
-    const full=have>=x.max;
+    const full=have>=advItemMax(st,x);
     return '<div class="shop-card"><div class="shop-ic">'+x.icon+'</div><b>'+x.name+'</b><span>'+x.desc+'</span><span class="shop-have">擁有 '+have+'</span>'+
       '<button class="shop-buy" '+(coins<x.price||full?'disabled':'')+' onclick="advBuy(\''+x.id+'\',\''+tab+'\')">'+(full?'已滿':'🪙 '+x.price)+'</button></div>';
   }
 }
 function advBuy(id,tab){
   const x=SHOP_ITEMS.find(i=>i.id===id), st=advLoad(), have=advInvGet(st,id);
-  if(!x || have>=x.max) return;
+  if(!x || have>=advItemMax(st,x)) return;
   if(walletGet()<x.price){ sfxWrong(); return; }
   walletAdd(-x.price); advInvSet(st,id,have+1); advSave(st); sfxCorrect();
   advShop(tab);
@@ -8988,6 +9001,79 @@ function advHatch(){
   setTimeout(()=>{ const e=document.getElementById('hatchEgg'); if(!e) return; e.classList.add('open'); e.textContent=c.icon; sfxLevelUp();
     document.getElementById('hatchInfo').innerHTML='<div class="adv-result"><div>🎉 孵出了 <b>'+c.name+'</b>！</div><div>技能：'+c.skill+'</div></div><button class="lg-next" onclick="advCompanions()">🐾 去看看</button>'; }, 1800);
 }
+
+
+/* ===================================================
+   ⚔️ 武器・🛡️ 防具・📘 永久能力（商店購買，永久擁有）
+   =================================================== */
+const SHOP_WEAPONS=[
+  {id:'wand',    icon:'🪄', name:'木頭魔杖',   price:120,  atk:0.10, desc:'攻擊 +10%'},
+  {id:'dagger',  icon:'🗡️', name:'勇者短劍',   price:250,  atk:0.20, desc:'攻擊 +20%'},
+  {id:'bow',     icon:'🏹', name:'精靈弓',     price:350,  atk:0.20, combo:true, desc:'攻擊 +20%，連對 2 題就會心一擊'},
+  {id:'hammer',  icon:'🔨', name:'雷神鎚',     price:450,  atk:0.25, boss:0.20, desc:'攻擊 +25%，打頭目再 +20%'},
+  {id:'trident', icon:'🔱', name:'海神三叉戟', price:600,  atk:0.30, weak:0.20, desc:'攻擊 +30%，打弱點再 +20%'},
+  {id:'sword',   icon:'⚔️', name:'傳說之劍',   price:1000, atk:0.40, first:true, desc:'攻擊 +40%，每場第一擊必定會心'},
+];
+const SHOP_ARMORS=[
+  {id:'cloth',   icon:'🥋', name:'練功服',   price:100,  hp:0.10, desc:'體力 +10%'},
+  {id:'iron',    icon:'🛡️', name:'鐵盾',     price:300,  hp:0.20, guard:0.10, desc:'體力 +20%，受傷 -10%'},
+  {id:'crystal', icon:'💠', name:'水晶鎧甲', price:600,  hp:0.35, guard:0.15, desc:'體力 +35%，受傷 -15%'},
+  {id:'star',    icon:'🌟', name:'星光戰袍', price:1000, hp:0.50, guard:0.15, aura:1, desc:'體力 +50%，受傷 -15%，每場自帶 1 次防護'},
+];
+const SHOP_PERKS=[
+  {id:'exp',   icon:'📗', name:'經驗加倍書', price:400, desc:'獲得的經驗值永久 +30%'},
+  {id:'coin',  icon:'🐱', name:'招財貓',     price:500, desc:'過關和寶箱的金幣永久 +30%'},
+  {id:'bag',   icon:'🎒', name:'大背包',     price:300, desc:'每種道具可以帶的數量變 2 倍'},
+  {id:'crit',  icon:'📕', name:'會心之書',   price:450, desc:'會心一擊的傷害更高'},
+];
+const WPN_MAX_LV=5;
+function wpnUpCost(w,lv){ return Math.round(w.price*0.5*lv); }   // Lv1→2 半價、之後遞增
+function advWeapon(st){ const w=SHOP_WEAPONS.find(x=>x.id===st.wpn); if(!w||!(st.weapons||{})[w.id]) return null; return Object.assign({lv:st.weapons[w.id].lv||1}, w); }
+function advArmor(st){ const a=SHOP_ARMORS.find(x=>x.id===st.arm); if(!a||!(st.armors||{})[a.id]) return null; return a; }
+function advPerk(st,id){ return !!(st.perks||{})[id]; }
+function advWpnAtk(w){ return w ? w.atk + 0.05*(w.lv-1) : 0; }
+function advItemMax(st,x){ return x.max*(advPerk(st,'bag')?2:1); }
+function advCoinMul(st){ return advPerk(st,'coin') ? 1.3 : 1; }
+
+function advShopGear(tab){
+  const st=advLoad(), coins=walletGet();
+  st.weapons=st.weapons||{}; st.armors=st.armors||{}; st.perks=st.perks||{};
+  if(tab==='wpn') return '<div class="adv-note" style="font-size:.8rem">武器永久擁有，可以升級到 Lv.'+WPN_MAX_LV+'（每升一級攻擊再 +5%）。</div><div class="shop-grid">'+SHOP_WEAPONS.map(w=>{
+      const o=st.weapons[w.id], on=st.wpn===w.id;
+      if(!o) return '<div class="shop-card"><div class="shop-ic">'+w.icon+'</div><b>'+w.name+'</b><span>'+w.desc+'</span><button class="shop-buy" '+(coins<w.price?'disabled':'')+' onclick="advBuyGear(\'wpn\',\''+w.id+'\')">🪙 '+w.price+'</button></div>';
+      const lv=o.lv||1, cost=wpnUpCost(w,lv);
+      return '<div class="shop-card'+(on?' gear-on':'')+'"><div class="shop-ic">'+w.icon+'</div><b>'+w.name+' Lv.'+lv+'</b><span>'+w.desc+(lv>1?'，再 +'+(5*(lv-1))+'%':'')+'</span>'+
+        '<button class="shop-buy '+(on?'on':'')+'" onclick="advEquip(\'wpn\',\''+w.id+'\')">'+(on?'✅ 裝備中':'裝備')+'</button>'+
+        (lv<WPN_MAX_LV?'<button class="shop-buy up" '+(coins<cost?'disabled':'')+' onclick="advUpWpn(\''+w.id+'\')">⬆️ 升級 🪙 '+cost+'</button>':'<span class="shop-have">已經滿級</span>')+'</div>';
+    }).join('')+'</div>';
+  if(tab==='arm') return '<div class="adv-note" style="font-size:.8rem">防具永久擁有，裝備一件就有效果。</div><div class="shop-grid">'+SHOP_ARMORS.map(a=>{
+      const o=st.armors[a.id], on=st.arm===a.id;
+      return '<div class="shop-card'+(on?' gear-on':'')+'"><div class="shop-ic">'+a.icon+'</div><b>'+a.name+'</b><span>'+a.desc+'</span>'+
+        (o?'<button class="shop-buy '+(on?'on':'')+'" onclick="advEquip(\'arm\',\''+a.id+'\')">'+(on?'✅ 穿著':'穿上')+'</button>'
+          :'<button class="shop-buy" '+(coins<a.price?'disabled':'')+' onclick="advBuyGear(\'arm\',\''+a.id+'\')">🪙 '+a.price+'</button>')+'</div>';
+    }).join('')+'</div>';
+  return '<div class="adv-note" style="font-size:.8rem">能力買了就永久有效，不用裝備。</div><div class="shop-grid">'+SHOP_PERKS.map(k=>{
+      const has=st.perks[k.id];
+      return '<div class="shop-card'+(has?' gear-on':'')+'"><div class="shop-ic">'+k.icon+'</div><b>'+k.name+'</b><span>'+k.desc+'</span>'+
+        (has?'<span class="shop-have">✅ 已擁有</span>':'<button class="shop-buy" '+(coins<k.price?'disabled':'')+' onclick="advBuyGear(\'perk\',\''+k.id+'\')">🪙 '+k.price+'</button>')+'</div>';
+    }).join('')+'</div>';
+}
+function advBuyGear(kind,id){
+  const st=advLoad(); st.weapons=st.weapons||{}; st.armors=st.armors||{}; st.perks=st.perks||{};
+  const list = kind==='wpn'?SHOP_WEAPONS : kind==='arm'?SHOP_ARMORS : SHOP_PERKS, x=list.find(i=>i.id===id);
+  const box = kind==='wpn'?st.weapons : kind==='arm'?st.armors : st.perks;
+  if(!x || box[id] || walletGet()<x.price){ sfxWrong(); return; }
+  walletAdd(-x.price);
+  if(kind==='wpn'){ box[id]={lv:1}; st.wpn=id; } else if(kind==='arm'){ box[id]=true; st.arm=id; } else box[id]=true;
+  advSave(st); sfxLevelUp(); advShop(kind);
+}
+function advEquip(kind,id){ const st=advLoad(); if(kind==='wpn') st.wpn = st.wpn===id ? '' : id; else st.arm = st.arm===id ? '' : id; advSave(st); sfxClick(); advShop(kind); }
+function advUpWpn(id){
+  const st=advLoad(), w=SHOP_WEAPONS.find(x=>x.id===id), o=(st.weapons||{})[id]; if(!w||!o) return;
+  const lv=o.lv||1, cost=wpnUpCost(w,lv); if(lv>=WPN_MAX_LV || walletGet()<cost){ sfxWrong(); return; }
+  walletAdd(-cost); o.lv=lv+1; advSave(st); sfxLevelUp(); advShop('wpn');
+}
+function advGearIcon(st){ const w=advWeapon(st); return w?w.icon:''; }
 
 /* ── 國語課次切換（有課本資料時才會出現）── */
 function khStep(d){
@@ -10073,7 +10159,7 @@ try{
 try{ init(); }catch(e){ console.error('init failed', e); }
 
 /* ===== 自動更新：發現新版本就重新載入 ===== */
-const APP_VERSION = '2026-10-25-v17';
+const APP_VERSION = '2026-10-25-v18';
 function checkAppUpdate(){
   try{
     fetch(location.pathname + '?_=' + Date.now(), {cache:'no-store'})
