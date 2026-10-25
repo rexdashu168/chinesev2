@@ -1598,6 +1598,8 @@ box-shadow:0 4px 0 #5b21b6;
 .adv-evo-new{opacity:0;animation:advEvoIn 1.6s 1.2s forwards;}
 @keyframes advEvoOut{0%{opacity:1;filter:brightness(1)}50%{filter:brightness(3)}100%{opacity:0;filter:brightness(5);transform:translate(-50%,-50%) scale(1.3)}}
 @keyframes advEvoIn{0%{opacity:0;transform:translate(-50%,-50%) scale(.4);filter:brightness(4)}70%{transform:translate(-50%,-50%) scale(1.15)}100%{opacity:1;transform:translate(-50%,-50%) scale(1);filter:brightness(1)}}
+.adv-fixword{font-size:2rem;font-weight:900;color:#0369a1;letter-spacing:4px;margin:4px 0;}
+.lg-slot.wrong{background:#ef4444;border-color:#b91c1c;}
 /* ===== 三年級版標示 ===== */
 .g3-badge{display:block;width:max-content;margin:6px auto 0;padding:6px 16px;border-radius:20px;background:linear-gradient(135deg,#7c3aed,#ec4899);color:#fff;font-weight:900;font-size:1.05rem;box-shadow:0 4px 12px rgba(124,58,237,.35);}
 .g3-banner{display:flex;align-items:center;gap:10px;margin-bottom:14px;padding:12px 14px;border-radius:18px;background:linear-gradient(135deg,#7c3aed,#ec4899);color:#fff;font-weight:900;font-size:1rem;cursor:pointer;box-shadow:0 6px 18px rgba(124,58,237,.35);margin-right:54px;}
@@ -7856,11 +7858,15 @@ function lgMkMeasure(item){
 function initMeasureWords(area){ const order=lgShuffle(LG_MEASURE); lgQuiz(area,{total:10, make(i){ return lgMkMeasure(order[i%order.length]); }}); }
 
 /* ── 學習遊戲 8：英文拼字蜂 ── */
+const LG_SPELL_MORE=[['ant','🐜'],['bee','🐝'],['cow','🐄'],['fox','🦊'],['owl','🦉'],['hen','🐔'],['box','📦'],['toy','🧸'],['pie','🥧'],['nut','🥜'],
+  ['corn','🌽'],['rice','🍚'],['gift','🎁'],['bell','🔔'],['drum','🥁'],['ship','🚢'],['boat','⛵'],['sock','🧦'],['shoe','👟'],['door','🚪'],['key','🔑'],
+  ['bread','🍞'],['grape','🍇'],['lemon','🍋'],['pizza','🍕'],['tiger','🐯'],['zebra','🦓'],['horse','🐴'],['sheep','🐑'],['mouse','🐭'],['snake','🐍'],
+  ['whale','🐳'],['shark','🦈'],['house','🏠'],['clock','🕐'],['chair','🪑'],['train','🚆'],['plane','✈️'],['robot','🤖'],['hand','✋'],['ear','👂'],['nose','👃']];
 const LG_SPELL=[['cat','🐱'],['dog','🐶'],['pig','🐷'],['fish','🐟'],['bird','🐦'],['duck','🦆'],['frog','🐸'],['lion','🦁'],['bear','🐻'],
   ['apple','🍎'],['egg','🥚'],['milk','🥛'],['cake','🍰'],['book','📖'],['pen','🖊️'],['bag','🎒'],['sun','☀️'],['moon','🌙'],['star','⭐'],
   ['tree','🌳'],['bus','🚌'],['car','🚗'],['ball','⚽'],['hat','🎩'],['bed','🛏️'],['cup','🥤'],['kite','🪁'],['rain','🌧️']];
 function initSpellBee(area){
-  const TOTAL=8, order=lgShuffle(LG_SPELL); let round=0, word='', pos=0, miss=0, locked=false;
+  const TOTAL=8, order=lgShuffle(LG_SPELL.concat(LG_SPELL_MORE)); let round=0, word='', pos=0, miss=0, locked=false;
   area.innerHTML=
     '<div class="lg-wrap">'+
       '<div class="lg-top"><span id="lgProg"></span><span id="lgCombo"></span></div>'+
@@ -7916,14 +7922,15 @@ function initSpellBee(area){
 }
 
 function lgMkEnglish(){
-  const [w,emo]=lgPick(LG_SPELL);
-  const others=lgShuffle(LG_SPELL.filter(x=>x[0]!==w)).slice(0,3);
+  const ALL=LG_SPELL.concat(LG_SPELL_MORE);
+  const [w,emo]=lgPick(ALL);
+  const others=lgShuffle(ALL.filter(x=>x[0]!==w)).slice(0,3);
   if(Math.random()<0.55){
     return {q:'<div class="lg-sub">這是什麼？選出正確的英文</div><div style="font-size:3rem">'+emo+'</div>',
-      opts:[w,...others.map(x=>x[0])], ans:w, tip:emo+' = '+w};
+      opts:[w,...others.map(x=>x[0])], ans:w, tip:emo+' = '+w, word:w, emo:emo};
   }
   return {q:'<div class="lg-sub">聽聽看，是哪一個？</div><button class="lg-mini" style="background:#f59e0b" onclick="try{speakEn(\''+w+'\')}catch(e){}">🔊 再聽一次</button>',
-    opts:[emo,...others.map(x=>x[1])], ans:emo, tip:w+' = '+emo, speak:w};
+    opts:[emo,...others.map(x=>x[1])], ans:emo, tip:w+' = '+emo, speak:w, word:w, emo:emo};
 }
 
 /* ===================================================
@@ -8179,10 +8186,56 @@ function advQuestion(subj,region){
     const t=Math.random();
     return t<0.4 ? lgMkRadical(i) : t<0.7 ? lgMkMeasure() : lgMkIdiom();
   }
-  return lgMkEnglish();
+  return Math.random()<0.5 ? advSpellQ(region) : lgMkEnglish();
 }
 
 /* ── 進入點 ── */
+/* ── 英文拼字：quiz＝自己拼；fix＝訂正，照著拼對才能離開 ── */
+function advSpellUI(box, word, emo, mode, onDone){
+  const abc='abcdefghijklmnopqrstuvwxyz'.split('').filter(c=>!word.includes(c));
+  const letters=lgShuffle([...word.split(''), lgPick(abc), lgPick(abc), lgPick(abc)]);
+  const typed=[];
+  box.innerHTML='<div class="lg-q adv-q">'+
+    (mode==='fix'
+      ? '<div class="lg-sub">✏️ 訂正時間：照著拼對才能繼續</div><div class="adv-fixword">'+emo+' '+word+'</div>'
+      : '<div class="lg-sub">聽聽看，拼出這個英文單字（'+word.length+' 個字母）</div><div style="font-size:2.6rem">'+emo+'</div>')+
+    '<button class="lg-mini" style="background:#f59e0b" data-say>🔊 聽發音</button></div>'+
+    '<div class="lg-slots">'+word.split('').map(()=>'<div class="lg-slot"></div>').join('')+'</div>'+
+    '<div class="lg-tiles">'+letters.map(c=>'<button class="lg-tile">'+c+'</button>').join('')+'</div>'+
+    (mode==='quiz'?'<div class="lg-row"><button class="lg-mini" data-undo>⌫ 退一格</button></div>':'');
+  const say=()=>{ try{ speakEn(word); }catch(e){} };
+  say(); box.querySelector('[data-say]').onclick=say;
+  const slots=box.querySelectorAll('.lg-slot'), tiles=[...box.querySelectorAll('.lg-tile')];
+  let finished=false;
+  tiles.forEach(t=>t.onclick=()=>{
+    if(finished||t.disabled||typed.length>=word.length) return;
+    const c=t.textContent;
+    if(mode==='fix' && c!==word[typed.length]){ sfxWrong(); t.classList.add('bad'); setTimeout(()=>t.classList.remove('bad'),400); return; }
+    sfxClick(); t.disabled=true; t.classList.add('used'); typed.push(t);
+    const sl=slots[typed.length-1]; sl.textContent=c; sl.classList.add('filled');
+    if(typed.length===word.length){
+      finished=true;
+      const v=typed.map(x=>x.textContent).join('');
+      if(mode==='quiz') [...slots].forEach((x,i)=>{ x.classList.toggle('wrong', v[i]!==word[i]); });
+      setTimeout(()=>{ if(mode==='fix') say(); onDone(v); }, 300);
+    }
+  });
+  const u=box.querySelector('[data-undo]');
+  if(u) u.onclick=()=>{ if(finished) return; const t=typed.pop(); if(!t) return; t.disabled=false; t.classList.remove('used'); const sl=slots[typed.length]; sl.textContent=''; sl.classList.remove('filled'); };
+}
+function advSpellQ(region){
+  const maxL = region===0 ? 4 : region===1 ? 5 : 9;
+  const pool=LG_SPELL.concat(LG_SPELL_MORE).filter(x=>x[0].length<=maxL);
+  const [w,emo]=lgPick(pool);
+  return {spell:true, word:w, emo, ans:w, tip:emo+' = '+w};
+}
+/* 英文答錯後的訂正：拼對才呼叫 next */
+function advEnFix(panel, q, msgFn, next){
+  if(!q.word){ next(); return; }
+  panel.innerHTML='<div></div>';
+  advSpellUI(panel.firstChild, q.word, q.emo||'', 'fix', ()=>{ sfxCorrect(); msgFn('✏️ 訂正完成！記住了：'+(q.emo||'')+' '+q.word); next(); });
+}
+
 function initAdventure(area){
   const st=advLoad();
   if(!st || !st.starter){ advPickStarter(area); return; }
@@ -8356,17 +8409,18 @@ function advFight(cfg){
   function ask(k){
     if(busy||!gameRunning||ended) return; busy=true; sfxClick();
     const q=advQuestion(k,cfg.region), m=ADV_SUBJ[k];
-    msg(m.icon+' 準備使出「'+m.move+'」！答對就能命中！');
+    msg(m.icon+' 準備使出「'+m.move+'」！'+(q.spell?'拼對單字威力 ×1.5！':'答對就能命中！'));
+    if(q.spell){ $('advPanel').innerHTML='<div id="advSpell"></div>'; advSpellUI($('advSpell'), q.word, q.emo, 'quiz', v=>hit(k,q,null,v)); return; }
     $('advPanel').innerHTML='<div class="lg-q adv-q">'+q.q+'</div><div class="lg-opts" id="advOpts"></div>';
     lgShuffle(q.opts).forEach(o=>{ const b=document.createElement('button'); b.className='lg-opt'; b.innerHTML=o; b.dataset.v=o; b.onclick=()=>hit(k,q,b,o); $('advOpts').appendChild(b); });
     if(q.speak){ try{ speakEn(q.speak); }catch(e){} }
   }
   function hit(k,q,btn,o){
-    if(!gameRunning || ended || btn.parentNode.dataset.done) return;
-    btn.parentNode.dataset.done='1';
+    if(!gameRunning || ended) return;
+    if(btn){ if(btn.parentNode.dataset.done) return; btn.parentNode.dataset.done='1'; }
     const m=ADV_SUBJ[k];
     if(o===q.ans){
-      combo++; btn.classList.add('ok'); sfxCorrect();
+      combo++; if(btn) btn.classList.add('ok'); sfxCorrect();
       let line='', dmg=0;
       if(S0.heal && pHp<S0.hp){ const h=Math.min(S0.hp-pHp,S0.heal); pHp+=h; pop('advPMon','+'+h,'#22c55e'); }
       if(type==='shield' && shieldUp){
@@ -8377,10 +8431,10 @@ function advFight(cfg){
         if(trialShields.includes(k)){ trialShields=trialShields.filter(x=>x!==k); line=m.icon+' 護盾消失了！'+(trialShields.length?'還剩 '+trialShields.map(x=>ADV_SUBJ[x].icon).join(''):'護盾全破，開始攻擊！'); shake('advEMon'); }
         else line='這個護盾已經打掉了，換 '+trialShields.map(x=>ADV_SUBJ[x].icon+ADV_SUBJ[x].name).join('、')+' 試試！';
       } else {
-        const mult = k===foe.weak ? 2 : k===foe.resist ? 0.5 : 1, crit=combo>=3;
-        dmg=Math.max(1,Math.round(S0.atk*mult*(crit?1.5:1)));
+        const mult = k===foe.weak ? 2 : k===foe.resist ? 0.5 : 1, crit=combo>=3, sp=q.spell?1.5:1;
+        dmg=Math.max(1,Math.round(S0.atk*mult*sp*(crit?1.5:1)));
         eHp-=dmg; shake('advEMon'); pop('advEMon','-'+dmg,'#fde047');
-        line='使出 '+m.move+'！'+(mult===2?'<b class="adv-eff">效果絕佳！</b>':mult<1?'效果不太好…':'')+(crit?' 💥會心一擊！':'');
+        line=(q.spell?'✍️ 拼字成功！':'')+'使出 '+m.move+'！'+(mult===2?'<b class="adv-eff">效果絕佳！</b>':mult<1?'效果不太好…':'')+(crit?' 💥會心一擊！':'');
         addGameScore(10+(mult===2?5:0)+(crit?5:0));
       }
       if(type==='boss' && !enraged && eHp>0 && eHp<=foe.max/2){
@@ -8397,16 +8451,17 @@ function advFight(cfg){
         } else moves();
       },1300);
     } else {
-      combo=0; wrong++; btn.classList.add('bad'); sfxWrong();
-      [...$('advOpts').children].forEach(b=>{ if(b.dataset.v===q.ans) b.classList.add('ok'); });
+      combo=0; wrong++; if(btn) btn.classList.add('bad'); sfxWrong();
+      if($('advOpts')) [...$('advOpts').children].forEach(b=>{ if(b.dataset.v===q.ans) b.classList.add('ok'); });
       let extra='';
       if(type==='shield' && shieldHits>0 && shieldUp){ shieldHits=0; extra='🛡️ 護盾的裂痕恢復了！'; }
       if(type==='shield' && !shieldUp){ shieldUp=true; shieldHits=0; extra='🛡️ 護盾又長回來了！'; }
       pHp-=foe.atk; shake('advPMon'); pop('advPMon','-'+foe.atk,'#f87171'); info(); bars();
       msg('攻擊沒打中！'+foe.name+' 反擊，造成 '+foe.atk+' 點傷害！'+extra+'<br>💡 正確答案是 '+q.ans+(q.tip?'：'+q.tip:''));
-      const nb=document.createElement('button'); nb.className='lg-next'; nb.textContent='繼續 ➜';
-      nb.onclick=()=>{ if(ended) return; if(pHp<=0) lose('體力用完了'); else moves(); };
-      $('advPanel').appendChild(nb);
+      const goOn=()=>{ if(ended) return; const nb=document.createElement('button'); nb.className='lg-next'; nb.textContent='繼續 ➜';
+        nb.onclick=()=>{ if(ended) return; if(pHp<=0) lose('體力用完了'); else moves(); };
+        $('advPanel').appendChild(nb); };
+      if(k==='en') setTimeout(()=>{ if(!ended) advEnFix($('advPanel'), q, msg, goOn); }, q.spell?900:1200); else goOn();
     }
   }
   function stopTimer(){ if(window._lgTimer){ clearInterval(window._lgTimer); window._lgTimer=null; } }
@@ -8493,15 +8548,20 @@ function advChest(g){
     if(i>=8) return done();
     const k=ADV_KEYS[i%3], q=advQuestion(k,advRegion(w));
     $('advMsg').innerHTML='第 '+(i+1)+' / 8 題　'+ADV_SUBJ[k].icon+ADV_SUBJ[k].name+'　已答對 '+right+' 題';
+    const judge=(ok,b)=>{
+      i++;
+      if(ok){ right++; if(b) b.classList.add('ok'); sfxCorrect(); addGameScore(10); setTimeout(next,800); return; }
+      if(b) b.classList.add('bad'); sfxWrong();
+      if($('advOpts')) [...$('advOpts').children].forEach(x=>{ if(x.dataset.v===q.ans) x.classList.add('ok'); });
+      $('advMsg').innerHTML='💡 正確答案是 '+q.ans+(q.tip?'：'+q.tip:'');
+      const goOn=()=>{ const nb=document.createElement('button'); nb.className='lg-next'; nb.textContent='繼續 ➜'; nb.onclick=next; $('advPanel').appendChild(nb); };
+      if(k==='en') setTimeout(()=>advEnFix($('advPanel'), q, h=>{ $('advMsg').innerHTML=h; }, goOn), q.spell?900:1200); else goOn();
+    };
+    if(q.spell){ $('advPanel').innerHTML='<div id="advSpell"></div>'; advSpellUI($('advSpell'), q.word, q.emo, 'quiz', v=>judge(v===q.ans,null)); return; }
     $('advPanel').innerHTML='<div class="lg-q adv-q">'+q.q+'</div><div class="lg-opts" id="advOpts"></div>';
     lgShuffle(q.opts).forEach(o=>{ const b=document.createElement('button'); b.className='lg-opt'; b.innerHTML=o; b.dataset.v=o;
-      b.onclick=()=>{
-        if(b.parentNode.dataset.done) return; b.parentNode.dataset.done='1'; i++;
-        if(o===q.ans){ right++; b.classList.add('ok'); sfxCorrect(); addGameScore(10); setTimeout(next,800); }
-        else { b.classList.add('bad'); sfxWrong(); [...$('advOpts').children].forEach(x=>{ if(x.dataset.v===q.ans) x.classList.add('ok'); });
-          const nb=document.createElement('button'); nb.className='lg-next'; nb.textContent='繼續 ➜'; nb.onclick=next;
-          $('advMsg').innerHTML='💡 正確答案是 '+q.ans+(q.tip?'：'+q.tip:''); $('advPanel').appendChild(nb); }
-      }; $('advOpts').appendChild(b); });
+      b.onclick=()=>{ if(b.parentNode.dataset.done) return; b.parentNode.dataset.done='1'; judge(o===q.ans,b); };
+      $('advOpts').appendChild(b); });
     if(q.speak){ try{ speakEn(q.speak); }catch(e){} }
   }
   function done(){
@@ -9008,7 +9068,7 @@ init();
 
 
 /* ===== 自動更新：發現新版本就重新載入 ===== */
-const APP_VERSION = '2026-10-25-v6';
+const APP_VERSION = '2026-10-25-v7';
 function checkAppUpdate(){
   try{
     fetch(location.pathname + '?_=' + Date.now(), {cache:'no-store'})
