@@ -1572,6 +1572,32 @@ box-shadow:0 4px 0 #5b21b6;
 @keyframes advHitMe{0%,100%{transform:scaleX(-1) translateX(0)}20%{transform:scaleX(-1) translateX(-10px);filter:brightness(2)}60%{transform:scaleX(-1) translateX(10px)}}
 @keyframes advDmg{0%{opacity:1;top:0}100%{opacity:0;top:-40px}}
 
+/* ===== 波比冒險島 v2 ===== */
+.bp-form{position:relative;display:inline-block;line-height:0;}
+.bp-body{display:inline-block;}
+.bp-rainbow{animation:bpHue 3s linear infinite;}
+@keyframes bpHue{from{filter:hue-rotate(0deg) saturate(1.3)}to{filter:hue-rotate(360deg) saturate(1.3)}}
+.bp-badge{position:absolute;top:-4px;right:-6px;line-height:1;}
+.adv-hero{flex-shrink:0;}
+.adv-pal{position:absolute;right:-14px;bottom:-4px;font-size:1.5rem;transform:scaleX(-1);}
+.adv-trial{display:block;width:100%;padding:12px;border:none;border-radius:16px;background:linear-gradient(135deg,#facc15,#ec4899,#8b5cf6);color:#fff;font-weight:900;font-size:1rem;font-family:inherit;cursor:pointer;box-shadow:0 0 18px rgba(250,204,21,.6);animation:advPulse 1.2s ease-in-out infinite;}
+.adv-world{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.08);border-radius:14px;padding:8px;color:#fff;}
+.adv-wname{font-weight:900;color:#fde68a;}
+.adv-path{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;}
+.adv-ticon{position:absolute;top:-6px;left:-4px;font-size:.85rem;}
+.adv-stars{font-size:.7rem;color:#facc15;letter-spacing:-1px;}
+.adv-stars i,.adv-bigstars i{font-style:normal;color:rgba(255,255,255,.25);}
+.adv-result .adv-bigstars i{color:#d1d5db;}
+.adv-bigstars{font-size:2rem;color:#f59e0b;letter-spacing:4px;line-height:1.2;}
+.adv-legend{font-size:.7rem;color:#cbd5e1;text-align:center;line-height:1.7;}
+.adv-stage{font-size:.85rem;font-weight:900;color:#fde68a;}
+.adv-chest{font-size:4.5rem;text-align:center;animation:advPulse 1.4s ease-in-out infinite;}
+.adv-evo-stage{position:relative;height:130px;width:140px;margin:0 auto;}
+.adv-evo-old,.adv-evo-new{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);}
+.adv-evo-old{animation:advEvoOut 1.6s forwards;}
+.adv-evo-new{opacity:0;animation:advEvoIn 1.6s 1.2s forwards;}
+@keyframes advEvoOut{0%{opacity:1;filter:brightness(1)}50%{filter:brightness(3)}100%{opacity:0;filter:brightness(5);transform:translate(-50%,-50%) scale(1.3)}}
+@keyframes advEvoIn{0%{opacity:0;transform:translate(-50%,-50%) scale(.4);filter:brightness(4)}70%{transform:translate(-50%,-50%) scale(1.15)}100%{opacity:1;transform:translate(-50%,-50%) scale(1);filter:brightness(1)}}
 /* ===== 三年級版標示 ===== */
 .g3-badge{display:block;width:max-content;margin:6px auto 0;padding:6px 16px;border-radius:20px;background:linear-gradient(135deg,#7c3aed,#ec4899);color:#fff;font-weight:900;font-size:1.05rem;box-shadow:0 4px 12px rgba(124,58,237,.35);}
 .g3-banner{display:flex;align-items:center;gap:10px;margin-bottom:14px;padding:12px 14px;border-radius:18px;background:linear-gradient(135deg,#7c3aed,#ec4899);color:#fff;font-weight:900;font-size:1rem;cursor:pointer;box-shadow:0 6px 18px rgba(124,58,237,.35);margin-right:54px;}
@@ -1629,7 +1655,7 @@ box-shadow:0 4px 0 #5b21b6;
 
   <div class="g3-banner" onclick="document.getElementById('gameCenter').scrollIntoView({behavior:'smooth'})">
     <span class="g3-tag">三年級版</span>
-    <span>⚔️ 冒險島開放了！點我 👇</span>
+    <span id="g3BannerText">⚔️ 冒險島開放了！點我 👇</span>
   </div>
 
   <div class="card player-card">
@@ -6991,7 +7017,7 @@ const GAMES = [
   { id:'catch',  name:'🍎 接水果',    emoji:'🍎', desc:'接住掉下來的水果！',unlockDays:7,  color:'#22c55e' },
   { id:'bubble', name:'🔢 數字泡泡',  emoji:'🔢', desc:'按順序點破泡泡！', unlockDays:14, color:'#f59e0b' },
   // ── 冒險對戰 ──
-  { id:'adventure', cat:'adv', name:'⚔️ 波比冒險島', emoji:'⚔️', desc:'答題對戰、收服怪獸！', unlockDays:1, color:'#7c3aed' },
+  { id:'adventure', cat:'adv', name:'⚔️ 波比冒險島', emoji:'⚔️', desc:'8 個世界 80 關・波比十階進化', unlockDays:1, color:'#7c3aed' },
   // ── 三年級學習遊戲 ──
   { id:'khmath',   cat:'learn', name:'📐 三上數學挑戰', emoji:'📐', desc:'四位數、乘除、單位', unlockDays:1, color:'#0f766e' },
   { id:'multboss', cat:'learn', name:'🐲 乘除打怪獸', emoji:'🐲', desc:'算對就攻擊！', unlockDays:1, color:'#dc2626' },
@@ -7042,9 +7068,10 @@ function renderGameCenter(){
       + '<div style="font-size:0.82rem;font-weight:900;color:'+nameColor+';margin-top:4px;">'+g.name+'</div>'
       + '<div style="font-size:0.72rem;color:#6b7280;margin-top:3px;">'+descText+'</div>'
       + (g.cat==='learn' && lgGetBest(g.id) ? '<div style="font-size:0.7rem;color:'+g.color+';font-weight:800;margin-top:2px;">🏅 最佳 '+lgGetBest(g.id)+' 分</div>' : '')
-      + (g.cat==='adv' && advLoad() ? '<div style="font-size:0.72rem;color:'+g.color+';font-weight:800;margin-top:2px;">'+advForm(advLoad())[0]+' Lv.'+advLoad().lv+'　已過 '+advLoad().cleared+'/'+ADV_STAGES.length+' 關</div>' : '')
+      + (g.cat==='adv' && advLoad() ? '<div style="font-size:0.72rem;color:'+g.color+';font-weight:800;margin-top:2px;">'+advCardInfo()+'</div>' : '')
       + '</div>';
   }
+  advBannerUpdate();
   var adv = GAMES.filter(function(g){ return g.cat==='adv'; })[0];
   grid.innerHTML =
       '<div class="lg-group">⚔️ 冒險對戰</div>'
@@ -8022,37 +8049,128 @@ function khZhQuestion(){
 function initKhMath(area){ lgQuiz(area,{total:10, make(i){ return khMath(i<4?1:2); }}); }
 
 /* ===================================================
-   ⚔️ 波比冒險島：關卡對戰（原創怪獸；答題決定攻擊與閃避）
+   ⚔️ 波比冒險島 v2：8 個世界 × 10 關、7 種關卡、波比十階進化
+   原創怪獸；答對才能攻擊，答錯會被反擊
    =================================================== */
-const ADV_STARTERS=[
-  {id:'fire',  color:'#ef4444', type:'火', forms:[['🦎','火蜥寶'],['🐊','烈焰鱷'],['🐉','炎龍王']]},
-  {id:'water', color:'#3b82f6', type:'水', forms:[['🐢','水泡龜'],['🐬','浪花豚'],['🐳','深海鯨王']]},
-  {id:'leaf',  color:'#22c55e', type:'草', forms:[['🌱','葉芽寶'],['🦔','森林蝟'],['🦌','神木鹿']]},
-];
 const ADV_SUBJ={
   math:{icon:'📐', name:'數學', move:'數字衝擊', color:'#f97316'},
   zh:  {icon:'📖', name:'國語', move:'文字旋風', color:'#8b5cf6'},
   en:  {icon:'🔤', name:'英文', move:'字母光束', color:'#0ea5e9'},
 };
-const ADV_REGIONS=[
-  {name:'🌳 第一區・數字森林', bg:'linear-gradient(180deg,#14532d 0%,#1a1a2e 70%)'},
-  {name:'🌊 第二區・文字海灣', bg:'linear-gradient(180deg,#1e3a8a 0%,#1a1a2e 70%)'},
-  {name:'🌋 第三區・字母火山', bg:'linear-gradient(180deg,#7f1d1d 0%,#1a1a2e 70%)'},
+const ADV_KEYS=['math','zh','en'];
+const ADV_PARTNERS=[
+  {id:'fire',  color:'#ef4444', forms:[['🦎','火蜥寶'],['🐊','烈焰鱷'],['🐉','炎龍王']], perk:'攻擊力 +15%'},
+  {id:'water', color:'#3b82f6', forms:[['🐢','水泡龜'],['🐬','浪花豚'],['🐳','深海鯨王']], perk:'體力 +20%'},
+  {id:'leaf',  color:'#22c55e', forms:[['🌱','葉芽寶'],['🦔','森林蝟'],['🦌','神木鹿']], perk:'答對會回血'},
 ];
-// [圖示, 名字, 弱點科目, 抵抗科目]
-const ADV_STAGES=[
-  ['🐛','毛毛蟲','zh','math'], ['🐿️','松鼠兵','en','zh'], ['🦉','貓頭鷹博士','math','en'], ['🐻','森林熊大王','zh','math'],
-  ['🦀','螃蟹兵','math','zh'], ['🐙','章魚怪','en','math'], ['🦈','鯊魚將軍','zh','en'], ['🐲','海龍王','math','zh'],
-  ['🦇','蝙蝠精','en','math'], ['🦂','火蠍子','zh','en'], ['🦅','烈焰鷹','math','zh'], ['👾','火山魔王','en','math'],
+const BOPPY_FORMS=[
+  {name:'小波比',   badge:'',    hue:0,   glow:''},
+  {name:'見習波比', badge:'⭐',  hue:25,  glow:''},
+  {name:'魔法波比', badge:'🪄',  hue:250, glow:''},
+  {name:'騎士波比', badge:'🛡️', hue:200, glow:'#93c5fd'},
+  {name:'勇者波比', badge:'⚔️', hue:140, glow:'#86efac'},
+  {name:'守護波比', badge:'💎',  hue:180, glow:'#67e8f9'},
+  {name:'星光波比', badge:'🌟',  hue:40,  glow:'#fde047'},
+  {name:'彩虹波比', badge:'🌈',  hue:-1,  glow:'#f9a8d4'},
+  {name:'傳說波比', badge:'👑',  hue:60,  glow:'#facc15'},
+  {name:'宇宙波比', badge:'🌌',  hue:280, glow:'#c4b5fd'},
 ];
-const ADV_KEY='boppy_adv_v1';
-function advLoad(){ try{ return JSON.parse(localStorage.getItem(ADV_KEY)||'null'); }catch(e){ return null; } }
-function advSave(st){ try{ localStorage.setItem(ADV_KEY, JSON.stringify(st)); }catch(e){} }
-function advStarter(st){ return ADV_STARTERS.find(x=>x.id===st.starter)||ADV_STARTERS[0]; }
-function advFormIdx(lv){ return lv>=10?2:lv>=5?1:0; }
-function advForm(st){ return advStarter(st).forms[advFormIdx(st.lv)]; }
-function advMaxHp(lv){ return 30+lv*5; }
-function advExpNeed(lv){ return 40+lv*15; }
+const ADV_WORLDS=[
+  {icon:'🌳', name:'數字森林', focus:'math', bg:'#14532d', roster:[['🐛','毛毛蟲'],['🐿️','松鼠兵'],['🐌','蝸牛仔'],['🦔','刺刺球'],['🐸','跳跳蛙'],['🦉','貓頭鷹博士']], boss:['🐻','森林熊大王']},
+  {icon:'🌊', name:'文字海灣', focus:'zh',   bg:'#1e3a8a', roster:[['🦀','螃蟹兵'],['🐡','河豚泡泡'],['🦑','墨汁魷'],['🐙','章魚怪'],['🦭','海獅將'],['🦈','鯊魚將軍']], boss:['🐲','海龍王']},
+  {icon:'🌋', name:'字母火山', focus:'en',   bg:'#7f1d1d', roster:[['🦇','蝙蝠精'],['🦂','火蠍子'],['🐍','岩漿蛇'],['🦎','火蜥怪'],['🐗','熔岩豬'],['🦅','烈焰鷹']], boss:['👾','火山魔王']},
+  {icon:'⏳', name:'時光沙漠', focus:'math', bg:'#92400e', roster:[['🐪','駱駝商人'],['🦊','沙狐'],['🐫','雙峰駝'],['🌵','仙人掌怪'],['🦗','沙蟲'],['🦅','禿鷹']], boss:['🗿','時光石像']},
+  {icon:'❄️', name:'分數雪山', focus:'math', bg:'#0e7490', roster:[['🐧','企鵝兵'],['🦭','冰海豹'],['⛄','雪人怪'],['🦌','馴鹿'],['🐺','雪狼'],['🦣','長毛象']], boss:['🧊','冰晶巨人']},
+  {icon:'🏯', name:'成語古城', focus:'zh',   bg:'#7c2d12', roster:[['🐒','猴將軍'],['🦚','孔雀將'],['🐯','虎大將'],['🦢','白鶴仙'],['🐼','熊貓武士'],['🐉','石龍']], boss:['🏮','燈籠魔王']},
+  {icon:'🌌', name:'星空迷宮', focus:'en',   bg:'#312e81', roster:[['👽','外星寶'],['🛸','飛碟怪'],['🌠','流星精'],['🪐','土星環'],['🤖','機器兵'],['☄️','彗星獸']], boss:['🌑','黑洞魔王']},
+  {icon:'🏰', name:'雲端城堡', focus:'mix',  bg:'#6b21a8', roster:[['🦄','獨角獸'],['🧚','精靈'],['🦩','火鶴騎士'],['🐲','雲龍'],['🦁','雄獅王'],['🦉','智慧鴞']], boss:['🧙','大魔法師']},
+];
+const ADV_TYPES={
+  normal:{icon:'⚔️', name:'對戰',   desc:'打倒對手！'},
+  speed: {icon:'⏱️', name:'快攻戰', desc:'75 秒內打倒對手，時間到就輸了'},
+  shield:{icon:'🛡️', name:'護盾戰', desc:'連續答對 2 題打破護盾，才打得到；答錯護盾會恢復'},
+  subject:{icon:'📚', name:'主題戰', desc:'這一關只能用本區主題科目'},
+  horde: {icon:'👥', name:'連戰',   desc:'連續打倒 3 隻怪獸，中間不回血'},
+  chest: {icon:'🎁', name:'寶箱關', desc:'答 8 題開寶箱，答對越多獎勵越多'},
+  boss:  {icon:'👑', name:'頭目戰', desc:'頭目體力剩一半會憤怒，弱點也會改變'},
+};
+const ADV_KEY2='boppy_adv_v2', ADV_STAR_GATE=12;
+
+/* ── 存檔（自動沿用舊版夥伴與等級）── */
+function advSave(st){ try{ localStorage.setItem(ADV_KEY2, JSON.stringify(st)); }catch(e){} }
+function advLoad(){
+  let st=null;
+  try{ st=JSON.parse(localStorage.getItem(ADV_KEY2)||'null'); }catch(e){}
+  if(!st){
+    let old=null; try{ old=JSON.parse(localStorage.getItem('boppy_adv_v1')||'null'); }catch(e){}
+    if(old && old.starter){ st={starter:old.starter, lv:Math.min(old.lv||1,5), exp:0, evo:0, stars:{}, caught:[], potions:3, world:0, wins:old.wins||0}; advSave(st); }
+  }
+  if(st){ st.stars=st.stars||{}; st.caught=st.caught||[]; if(st.potions==null) st.potions=3; st.evo=st.evo||0; st.world=st.world||0; }
+  return st;
+}
+function advCap(st){ return st.evo>=BOPPY_FORMS.length-1 ? 60 : (st.evo+1)*5; }
+function advExpNeed(lv){ return 40+lv*12; }
+function advTrialReady(st){ return st.evo<BOPPY_FORMS.length-1 && st.lv>=advCap(st); }
+function advGainExp(st,n){
+  const before=st.lv; st.exp+=Math.round(n);
+  while(st.lv<advCap(st) && st.exp>=advExpNeed(st.lv)){ st.exp-=advExpNeed(st.lv); st.lv++; }
+  if(st.lv>=advCap(st)) st.exp=Math.min(st.exp, advExpNeed(st.lv));
+  return st.lv-before;
+}
+function advPartner(st){ return ADV_PARTNERS.find(p=>p.id===st.starter)||ADV_PARTNERS[0]; }
+function advPartnerForm(st){ const f=advPartner(st).forms; return f[st.lv>=25?2:st.lv>=10?1:0]; }
+function advStats(st){
+  let atk=8+st.lv*1.5+st.evo*3, hp=30+st.lv*4+st.evo*10;
+  if(st.starter==='fire') atk*=1.15;
+  if(st.starter==='water') hp*=1.2;
+  return {atk:Math.round(atk), hp:Math.round(hp), heal: st.starter==='leaf' ? 3+Math.floor(st.lv/5) : 0};
+}
+function advForm(st){ const f=BOPPY_FORMS[st.evo]; return [f.badge||'🌸', f.name]; }
+
+/* ── 波比進化型態的畫法 ── */
+function boppyForm(evo,size,expr,shadow){
+  const f=BOPPY_FORMS[Math.max(0,Math.min(evo,BOPPY_FORMS.length-1))];
+  const s=Math.round(size*(1+evo*0.04));
+  const glow = shadow ? '' : (f.glow ? 'filter:drop-shadow(0 0 8px '+f.glow+') drop-shadow(0 0 3px '+f.glow+');' : '');
+  const body = shadow ? 'filter:grayscale(1) brightness(.35);' : (f.hue>0 ? 'filter:hue-rotate('+f.hue+'deg) saturate(1.2);' : '');
+  return '<span class="bp-form" style="'+glow+'">'+
+    '<span class="bp-body'+(f.hue===-1&&!shadow?' bp-rainbow':'')+'" style="'+body+'">'+boppySVG(s,expr||'happy','',false)+'</span>'+
+    (f.badge&&!shadow?'<span class="bp-badge" style="font-size:'+Math.round(s*0.34)+'px">'+f.badge+'</span>':'')+
+    (shadow?'<span class="bp-badge" style="font-size:'+Math.round(s*0.34)+'px">❓</span>':'')+
+  '</span>';
+}
+
+/* ── 關卡資料 ── */
+function advStageType(w,k){
+  const base=['normal','normal','X','normal','chest','Y','normal','horde','Z','boss'];
+  const rot=[['speed','shield','subject'],['shield','subject','speed'],['subject','speed','shield']][w%3];
+  const t=base[k]; return t==='X'?rot[0] : t==='Y'?rot[1] : t==='Z'?rot[2] : t;
+}
+function advWorldFocus(w){ const f=ADV_WORLDS[w].focus; return f==='mix' ? ADV_KEYS[0] : f; }
+function advRegion(w){ return w<2?0 : w<5?1 : 2; }
+function advMonster(w,i,type){
+  const W=ADV_WORLDS[w], m = i==='b' ? W.boss : W.roster[i];
+  let weak, resist;
+  if(i==='b'){ weak=ADV_KEYS[(w+2)%3]; resist=ADV_KEYS[w%3]; }
+  else { weak=ADV_KEYS[(w+i)%3]; resist=ADV_KEYS[(w+i+1)%3]; }
+  if(type==='subject'){ weak=advWorldFocus(w); resist=ADV_KEYS.find(x=>x!==weak); }
+  return {id:w+'-'+i, emo:m[0], name:m[1], weak, resist};
+}
+function advStageFoes(w,k){
+  const type=advStageType(w,k), g=w*10+k;
+  const hp=40+g*9, atk=6+g*0.45, lv=1+Math.floor(g*0.6);
+  const mk=(i,hm,am,lv2)=>Object.assign(advMonster(w,i,type),{max:Math.round(hp*hm), atk:Math.round(atk*am), lv:lv2});
+  if(type==='chest') return [];
+  if(type==='horde') return [0,1,2].map(j=>mk((k+j)%6,0.55,0.9,lv));
+  if(type==='boss')  return [mk('b',2,1.15,lv+2)];
+  return [mk(k%6,1,1,lv)];
+}
+function advWorldStars(st,w){ let n=0; for(let k=0;k<10;k++) n+=st.stars[w*10+k]||0; return n; }
+function advWorldOpen(st,w){ return w===0 || ((st.stars[(w-1)*10+9]||0)>0 && advWorldStars(st,w-1)>=ADV_STAR_GATE); }
+function advStageOpen(st,g){ const w=Math.floor(g/10), k=g%10; return advWorldOpen(st,w) && (k===0 || (st.stars[g-1]||0)>0); }
+function advTotalStars(st){ return Object.values(st.stars).reduce((a,b)=>a+b,0); }
+function advMonsterCount(){ return ADV_WORLDS.length*7; }
+
 function advQuestion(subj,region){
   const i=lgRand(0,9);
   if(subj==='math') return khMath(region);
@@ -8064,215 +8182,362 @@ function advQuestion(subj,region){
   return lgMkEnglish();
 }
 
+/* ── 進入點 ── */
 function initAdventure(area){
   const st=advLoad();
   if(!st || !st.starter){ advPickStarter(area); return; }
   advMap(area);
 }
-
 function advPickStarter(area){
   area.innerHTML='<div class="lg-wrap adv" style="background:linear-gradient(180deg,#4c1d95,#1a1a2e 70%)">'+
     '<div class="adv-title">⚔️ 歡迎來到波比冒險島！</div>'+
-    '<div class="adv-note">選一隻夥伴陪你冒險。答對題目就能攻擊怪獸，打贏就能升級、進化，還能把怪獸收進圖鑑！</div>'+
-    '<div class="adv-starters">'+ADV_STARTERS.map(s=>
+    '<div style="text-align:center">'+boppyForm(0,70)+'</div>'+
+    '<div class="adv-note">波比會跟你一起冒險，一路升級進化成「宇宙波比」！<br>先選一隻夥伴，牠會給波比特別的力量。</div>'+
+    '<div class="adv-starters">'+ADV_PARTNERS.map(s=>
       '<button class="adv-starter" style="border-color:'+s.color+'" onclick="advChooseStarter(\''+s.id+'\')">'+
-        '<div style="font-size:3rem">'+s.forms[0][0]+'</div><b style="color:'+s.color+'">'+s.forms[0][1]+'</b>'+
-        '<span>'+s.type+'屬性</span><span class="adv-evo">'+s.forms.map(f=>f[0]).join(' → ')+'</span>'+
+        '<div style="font-size:2.6rem">'+s.forms[0][0]+'</div><b style="color:'+s.color+'">'+s.forms[0][1]+'</b>'+
+        '<span>'+s.perk+'</span><span class="adv-evo">'+s.forms.map(f=>f[0]).join(' → ')+'</span>'+
       '</button>').join('')+'</div></div>';
 }
 function advChooseStarter(id){
   if(!gameRunning) return;
   sfxLevelUp();
-  advSave({starter:id, lv:1, exp:0, cleared:0, caught:[], wins:0});
+  advSave({starter:id, lv:1, exp:0, evo:0, stars:{}, caught:[], potions:3, world:0, wins:0});
   advMap(document.getElementById('gameArea'));
 }
 
+/* ── 地圖 ── */
 function advMap(area){
   area=area||document.getElementById('gameArea');
   const st=advLoad(); if(!st) return advPickStarter(area);
-  const [emo,name]=advForm(st), need=advExpNeed(st.lv), sc=advStarter(st).color;
-  let html='<div class="lg-wrap adv" style="background:linear-gradient(180deg,#312e81,#1a1a2e 60%)">'+
+  const f=BOPPY_FORMS[st.evo], need=advExpNeed(st.lv), cap=advCap(st), pf=advPartnerForm(st), P=advPartner(st);
+  let w=Math.min(st.world, ADV_WORLDS.length-1); if(!advWorldOpen(st,w)) w=0;
+  const W=ADV_WORLDS[w], ws=advWorldStars(st,w);
+  let html='<div class="lg-wrap adv" style="background:linear-gradient(180deg,'+W.bg+',#1a1a2e 65%)">'+
     '<div class="adv-card">'+
-      '<div class="adv-mon-sm">'+emo+'</div>'+
-      '<div style="flex:1">'+
-        '<div><b style="color:'+sc+'">'+name+'</b>　Lv.'+st.lv+'</div>'+
+      '<div class="adv-hero">'+boppyForm(st.evo,46)+'</div>'+
+      '<div style="flex:1;min-width:0">'+
+        '<div><b style="color:#fde68a">'+f.name+'</b>　Lv.'+st.lv+'<span class="adv-small"> / 上限 '+cap+'</span></div>'+
         '<div class="adv-bar"><div style="width:'+Math.min(100,st.exp/need*100)+'%;background:#38bdf8"></div></div>'+
-        '<div class="adv-small">經驗值 '+st.exp+' / '+need+(st.lv<5?'　Lv.5 進化':st.lv<10?'　Lv.10 再進化':'　已是最終型態')+'</div>'+
+        '<div class="adv-small">'+pf[0]+' 夥伴 '+pf[1]+'：'+P.perk+'　🧪×'+st.potions+'</div>'+
       '</div>'+
-      '<button class="lg-mini" onclick="advDex()">📘 圖鑑<br>'+st.caught.length+'/'+ADV_STAGES.length+'</button>'+
+      '<button class="lg-mini" onclick="advDex()">📘<br>圖鑑</button>'+
     '</div>';
-  if(KH_ZH.length){
-    const up=khScope().zhUpTo||KH_ZH[KH_ZH.length-1].n, L=KH_ZH.find(x=>x.n===up)||KH_ZH[KH_ZH.length-1];
-    html+='<div class="adv-card" style="font-size:.85rem">📖 國語出題到：第 '+L.n+' 課〈'+L.title+'〉'+
-      '<button class="lg-mini" onclick="khStep(-1)">－</button><button class="lg-mini" onclick="khStep(1)">＋</button></div>';
+  if(advTrialReady(st)){
+    html+='<button class="adv-trial" onclick="advTrial()">✨ 進化試煉開放！打贏就能進化成「'+BOPPY_FORMS[st.evo+1].name+'」</button>';
+  } else if(st.evo<BOPPY_FORMS.length-1){
+    html+='<div class="adv-note" style="font-size:.78rem">升到 Lv.'+cap+' 就能挑戰進化試煉，進化成「'+BOPPY_FORMS[st.evo+1].name+'」</div>';
   }
-  ADV_REGIONS.forEach((r,ri)=>{
-    html+='<div class="adv-region"><div class="adv-rname">'+r.name+'</div><div class="adv-nodes">';
-    for(let k=0;k<4;k++){
-      const s=ri*4+k, [e,n]=ADV_STAGES[s], boss=k===3;
-      const done=s<st.cleared, open=s===st.cleared;
-      const cls='adv-node'+(done?' done':open?' open':' lock')+(boss?' boss':'');
-      const face = done||open ? e : '🔒';
-      html+='<button class="'+cls+'" '+(done||open?'onclick="advBattle('+s+')"':'disabled')+'>'+
-        (boss?'<span class="adv-crown">👑</span>':'')+'<div class="adv-face">'+face+'</div>'+
-        '<div class="adv-sn">'+(done?'⭐ ':'')+(s+1)+'</div><div class="adv-nn">'+(done||open?n:'？？？')+'</div></button>';
-    }
-    html+='</div></div>';
+  html+='<div class="adv-world">'+
+    '<button class="lg-mini" '+(w>0?'onclick="advSetWorld('+(w-1)+')"':'disabled style="opacity:.3"')+'>◀</button>'+
+    '<div style="flex:1;text-align:center"><div class="adv-wname">'+W.icon+' 第 '+(w+1)+' 區・'+W.name+'</div>'+
+      '<div class="adv-small">★ '+ws+' / 30　主題：'+(W.focus==='mix'?'三科混合':ADV_SUBJ[W.focus].icon+ADV_SUBJ[W.focus].name)+'</div></div>'+
+    '<button class="lg-mini" '+(w<ADV_WORLDS.length-1?'onclick="advSetWorld('+(w+1)+')"':'disabled style="opacity:.3"')+'>▶</button>'+
+  '</div><div class="adv-path">';
+  for(let k=0;k<10;k++){
+    const g=w*10+k, type=advStageType(w,k), T=ADV_TYPES[type], open=advStageOpen(st,g), stars=st.stars[g]||0;
+    const foes=advStageFoes(w,k), face = !open ? '🔒' : type==='chest' ? '🎁' : foes[0].emo;
+    html+='<button class="adv-node'+(stars?' done':open?' open':' lock')+(type==='boss'?' boss':'')+'" '+(open?'onclick="advStart('+g+')"':'disabled')+'>'+
+      '<span class="adv-ticon">'+T.icon+'</span><div class="adv-face">'+face+'</div>'+
+      '<div class="adv-sn">'+(w+1)+'-'+(k+1)+'</div><div class="adv-stars">'+'★'.repeat(stars)+'<i>'+'★'.repeat(3-stars)+'</i></div></button>';
+  }
+  html+='</div>';
+  if(w<ADV_WORLDS.length-1){
+    const nextOpen=advWorldOpen(st,w+1);
+    html+='<div class="adv-note" style="font-size:.8rem">'+(nextOpen?'🔓 第 '+(w+2)+' 區已開放，按 ▶ 前往':'🔒 第 '+(w+2)+' 區：打倒本區頭目，並收集 '+ADV_STAR_GATE+' 顆星（目前 '+ws+' 顆）')+'</div>';
+  } else if(advWorldStars(st,w)>=30){
+    html+='<div class="adv-note">🏆 全部 80 關三顆星！你是真正的冒險王！</div>';
+  }
+  html+='<div class="adv-legend">'+['speed','shield','subject','horde','chest','boss'].map(t=>ADV_TYPES[t].icon+ADV_TYPES[t].name).join('　')+'</div>'+
+    '<button class="lg-next" style="margin-top:4px" onclick="lgEnd()">🏁 結束冒險，領取迷你波</button></div>';
+  area.innerHTML=html;
+}
+function advSetWorld(w){ const st=advLoad(); if(!advWorldOpen(st,w)){ sfxWrong(); return; } st.world=w; advSave(st); sfxClick(); advMap(); }
+
+/* ── 圖鑑：怪獸＋波比進化 ── */
+function advDex(){
+  const st=advLoad(), area=document.getElementById('gameArea');
+  let html='<div class="lg-wrap adv" style="background:linear-gradient(180deg,#1e3a8a,#1a1a2e 60%)">'+
+    '<div class="adv-title">🌸 波比進化圖鑑　'+(st.evo+1)+' / '+BOPPY_FORMS.length+'</div><div class="adv-dex">'+
+    BOPPY_FORMS.map((f,i)=>'<div class="adv-dexc'+(i<=st.evo?'':' no')+'">'+boppyForm(i,34,'happy',i>st.evo)+'<b>'+(i<=st.evo?f.name:'？？？')+'</b><span>'+(i===0?'起點':'Lv.'+(i*5)+' 試煉')+'</span></div>').join('')+
+    '</div><div class="adv-title">📘 怪獸圖鑑　'+st.caught.length+' / '+advMonsterCount()+'</div>';
+  ADV_WORLDS.forEach((W,w)=>{
+    html+='<div class="adv-rname">'+W.icon+' '+W.name+'</div><div class="adv-dex">';
+    [0,1,2,3,4,5,'b'].forEach(i=>{
+      const m=advMonster(w,i,'normal'), got=st.caught.includes(m.id);
+      html+='<div class="adv-dexc'+(got?'':' no')+'"><div style="font-size:1.7rem">'+(got?m.emo:'❔')+'</div><b>'+(got?m.name:'？？？')+(i==='b'?' 👑':'')+'</b>'+
+        (got?'<span>弱點 '+ADV_SUBJ[m.weak].icon+'</span>':'')+'</div>';
+    });
+    html+='</div>';
   });
-  if(st.cleared>=ADV_STAGES.length) html+='<div class="adv-note">🏆 全部破關了！可以重打任何關卡繼續練功升級。</div>';
-  html+='<button class="lg-next" style="margin-top:4px" onclick="lgEnd()">🏁 結束冒險，領取迷你波</button></div>';
+  html+='<button class="lg-next" onclick="advMap()">🗺️ 回地圖</button></div>';
   area.innerHTML=html;
 }
 
-function advDex(){
-  const st=advLoad(); const area=document.getElementById('gameArea');
-  area.innerHTML='<div class="lg-wrap adv" style="background:linear-gradient(180deg,#1e3a8a,#1a1a2e 60%)">'+
-    '<div class="adv-title">📘 怪獸圖鑑　'+st.caught.length+' / '+ADV_STAGES.length+'</div>'+
-    '<div class="adv-dex">'+ADV_STAGES.map((m,s)=>{
-      const got=st.caught.includes(s);
-      return '<div class="adv-dexc'+(got?'':' no')+'"><div style="font-size:2rem">'+(got?m[0]:'❔')+'</div><b>'+(got?m[1]:'？？？')+'</b>'+
-        (got?'<span>弱點 '+ADV_SUBJ[m[2]].icon+ADV_SUBJ[m[2]].name+'</span>':'<span>No.'+(s+1)+'</span>')+'</div>';
-    }).join('')+'</div>'+
-    '<button class="lg-next" onclick="advMap()">🗺️ 回地圖</button></div>';
+/* ── 開始關卡 ── */
+function advStart(g){
+  if(!gameRunning) return;
+  const w=Math.floor(g/10), k=g%10, type=advStageType(w,k);
+  if(type==='chest') return advChest(g);
+  advFight({g, w, type, foes:advStageFoes(w,k), region:advRegion(w), focus:advWorldFocus(w)});
+}
+function advTrial(){
+  const st=advLoad(); if(!advTrialReady(st)) return;
+  const e=st.evo, hp=Math.round(80+e*70), atk=Math.round(8+e*3.4);
+  advFight({trial:true, type:'trial', region:Math.min(2,Math.floor(e/3)),
+    foes:[{id:'trial', emo:'', name:'影子'+BOPPY_FORMS[e+1].name, weak:ADV_KEYS[e%3], resist:'', max:hp, atk, lv:advCap(st)+1}]});
 }
 
-function advBattle(s){
-  if(!gameRunning) return;
+/* ── 對戰引擎 ── */
+function advFight(cfg){
   sfxStart();
-  const area=document.getElementById('gameArea');
-  const st=advLoad(); const region=Math.floor(s/4), boss=s%4===3;
-  const [eEmo,eName,weak,resist]=ADV_STAGES[s];
-  const eLv=s+1+(boss?1:0), eMax=Math.round((28+s*7)*(boss?1.5:1)), eAtk=Math.round((6+s*1.0)*(boss?1.15:1));
-  const [pEmo,pName]=advForm(st), pMax=advMaxHp(st.lv), pAtk=8+st.lv*2;
-  let eHp=eMax, pHp=pMax, potions=2, combo=0, busy=false;
-
-  area.innerHTML='<div class="lg-wrap adv" style="background:'+ADV_REGIONS[region].bg+'">'+
-    '<div class="adv-foe">'+
-      '<div class="adv-info"><div><b>'+eName+'</b>'+(boss?' 👑':'')+'　Lv.'+eLv+'</div>'+
-        '<div class="adv-bar"><div id="advEHp" style="width:100%"></div></div>'+
-        '<div class="adv-small">弱點 '+ADV_SUBJ[weak].icon+ADV_SUBJ[weak].name+'　抵抗 '+ADV_SUBJ[resist].icon+ADV_SUBJ[resist].name+'</div></div>'+
-      '<div class="adv-mon" id="advEMon">'+eEmo+'</div>'+
-    '</div>'+
-    '<div class="adv-me">'+
-      '<div class="adv-mon me" id="advPMon">'+pEmo+'</div>'+
-      '<div class="adv-info"><div><b>'+pName+'</b>　Lv.'+st.lv+'</div>'+
-        '<div class="adv-bar"><div id="advPHp" style="width:100%;background:#22c55e"></div></div>'+
-        '<div class="adv-small" id="advPHpTxt">'+pHp+' / '+pMax+'</div></div>'+
-    '</div>'+
-    '<div class="adv-msg" id="advMsg">'+(boss?'👑 頭目 ':'野生的 ')+eName+' 出現了！</div>'+
-    '<div id="advPanel"></div></div>';
+  const area=document.getElementById('gameArea'), st=advLoad(), S0=advStats(st);
+  const type=cfg.type, T=ADV_TYPES[type]||{icon:'✨',name:'進化試煉',desc:'三科各命中一次，打掉三個護盾後才能造成傷害'};
+  const bg = cfg.trial ? '#581c87' : ADV_WORLDS[cfg.w].bg;
+  let fi=0, foe=null, eHp=0, pHp=S0.hp, combo=0, wrong=0, busy=false, ended=false;
+  let shieldHits=0, shieldUp=(type==='shield'), trialShields=cfg.trial?ADV_KEYS.slice():[], enraged=false, timeLeft=75;
+  area.innerHTML='<div class="lg-wrap adv" style="background:linear-gradient(180deg,'+bg+',#1a1a2e 70%)">'+
+    '<div class="adv-stage">'+T.icon+' '+(cfg.trial?'進化試煉':((cfg.w+1)+'-'+(cfg.g%10+1)+' '+T.name))+'<span id="advTimer"></span></div>'+
+    '<div class="adv-foe"><div class="adv-info"><div id="advEName"></div>'+
+      '<div class="adv-bar"><div id="advEHp" style="width:100%"></div></div><div class="adv-small" id="advEInfo"></div></div>'+
+      '<div class="adv-mon" id="advEMon"></div></div>'+
+    '<div class="adv-me"><div class="adv-mon me" id="advPMon">'+boppyForm(st.evo,58)+'<span class="adv-pal">'+advPartnerForm(st)[0]+'</span></div>'+
+      '<div class="adv-info"><div><b>'+BOPPY_FORMS[st.evo].name+'</b>　Lv.'+st.lv+'</div>'+
+      '<div class="adv-bar"><div id="advPHp" style="width:100%;background:#22c55e"></div></div><div class="adv-small" id="advPHpTxt"></div></div></div>'+
+    '<div class="adv-msg" id="advMsg"></div><div id="advPanel"></div></div>';
   const $=id=>document.getElementById(id);
 
+  function loadFoe(){
+    foe=Object.assign({},cfg.foes[fi]); eHp=foe.max; enraged=false;
+    $('advEMon').innerHTML = cfg.trial ? boppyForm(st.evo+1,58,'normal',true) : foe.emo;
+    $('advEName').innerHTML='<b>'+foe.name+'</b>'+(type==='boss'?' 👑':'')+'　Lv.'+foe.lv+(cfg.foes.length>1?'　<span class="adv-small">（'+(fi+1)+'/'+cfg.foes.length+'）</span>':'');
+    info(); bars();
+  }
+  function info(){
+    let t='弱點 '+ADV_SUBJ[foe.weak].icon+ADV_SUBJ[foe.weak].name+(foe.resist?'　抵抗 '+ADV_SUBJ[foe.resist].icon+ADV_SUBJ[foe.resist].name:'');
+    if(type==='shield') t+='　'+(shieldUp?'🛡️ 護盾中（連對 '+shieldHits+'/2）':'💥 護盾已破');
+    if(cfg.trial && trialShields.length) t+='　護盾：'+trialShields.map(k=>ADV_SUBJ[k].icon).join('');
+    if(enraged) t+='　😡 憤怒中';
+    $('advEInfo').innerHTML=t;
+  }
   function bars(){
-    $('advEHp').style.width=Math.max(0,eHp/eMax*100)+'%';
-    const p=Math.max(0,pHp/pMax*100);
+    $('advEHp').style.width=Math.max(0,eHp/foe.max*100)+'%';
+    const p=Math.max(0,pHp/S0.hp*100);
     $('advPHp').style.width=p+'%';
     $('advPHp').style.background=p>50?'#22c55e':p>20?'#f59e0b':'#ef4444';
-    $('advPHpTxt').textContent=Math.max(0,pHp)+' / '+pMax;
+    $('advPHpTxt').textContent=Math.max(0,pHp)+' / '+S0.hp;
   }
   function shake(id){ const el=$(id); if(!el) return; el.classList.remove('hit'); void el.offsetWidth; el.classList.add('hit'); }
-  function pop(id,text,color){
-    const el=$(id); if(!el) return;
-    const d=document.createElement('div'); d.className='adv-dmg'; d.textContent=text; d.style.color=color;
-    el.appendChild(d); setTimeout(()=>d.remove(),900);
-  }
+  function pop(id,text,color){ const el=$(id); if(!el) return; const d=document.createElement('div'); d.className='adv-dmg'; d.textContent=text; d.style.color=color; el.appendChild(d); setTimeout(()=>d.remove(),900); }
+  function msg(h){ $('advMsg').innerHTML=h; }
+
   function moves(){
-    if(!gameRunning) return;
+    if(!gameRunning || ended) return;
     busy=false;
-    $('advPanel').innerHTML='<div class="adv-moves">'+Object.keys(ADV_SUBJ).map(k=>{
-      const m=ADV_SUBJ[k];
-      return '<button class="adv-move" style="--mc:'+m.color+'" data-k="'+k+'">'+m.icon+' '+m.move+'<span>'+m.name+'題</span></button>';
+    const allowed = type==='subject' ? [cfg.focus] : ADV_KEYS;
+    $('advPanel').innerHTML='<div class="adv-moves">'+ADV_KEYS.map(k=>{
+      const m=ADV_SUBJ[k], ok=allowed.includes(k);
+      return '<button class="adv-move" style="--mc:'+m.color+'" data-k="'+k+'" '+(ok?'':'disabled')+'>'+m.icon+' '+m.move+'<span>'+(ok?m.name+'題':'這關不能用')+'</span></button>';
     }).join('')+
-    '<button class="adv-move small" id="advPot" style="--mc:#ec4899">🧪 補血藥 ×'+potions+'</button>'+
+    '<button class="adv-move small" id="advPot" style="--mc:#ec4899">🧪 補血藥 ×'+st.potions+'</button>'+
     '<button class="adv-move small" id="advRun" style="--mc:#64748b">🏃 回地圖</button></div>';
-    [...$('advPanel').querySelectorAll('[data-k]')].forEach(b=>b.onclick=()=>ask(b.dataset.k));
-    $('advPot').onclick=potion; $('advRun').onclick=()=>{ sfxClick(); advMap(); };
-    if(potions<=0) $('advPot').disabled=true;
+    [...$('advPanel').querySelectorAll('[data-k]')].forEach(b=>{ if(!b.disabled) b.onclick=()=>ask(b.dataset.k); });
+    $('advPot').onclick=potion; $('advRun').onclick=()=>{ stopTimer(); sfxClick(); advMap(); };
+    if(st.potions<=0) $('advPot').disabled=true;
   }
   function potion(){
-    if(busy||potions<=0) return;
-    if(pHp>=pMax){ $('advMsg').textContent='體力是滿的，先把補血藥留著吧！'; return; }
-    potions--; const heal=Math.min(pMax-pHp, Math.round(pMax*0.4)); pHp+=heal;
+    if(busy||st.potions<=0) return;
+    if(pHp>=S0.hp){ msg('體力是滿的，先把補血藥留著吧！'); return; }
+    st.potions--; const s2=advLoad(); s2.potions=st.potions; advSave(s2);
+    const heal=Math.min(S0.hp-pHp, Math.round(S0.hp*0.4)); pHp+=heal;
     sfxCorrect(); pop('advPMon','+'+heal,'#22c55e'); bars();
-    $('advMsg').textContent='🧪 '+pName+' 喝下補血藥，回復了 '+heal+' 點體力！';
-    moves();
+    msg('🧪 喝下補血藥，回復了 '+heal+' 點體力！'); moves();
   }
   function ask(k){
-    if(busy||!gameRunning) return; busy=true; sfxClick();
-    const q=advQuestion(k,region), m=ADV_SUBJ[k];
-    $('advMsg').innerHTML=m.icon+' 準備使出「'+m.move+'」！答對就能命中！';
+    if(busy||!gameRunning||ended) return; busy=true; sfxClick();
+    const q=advQuestion(k,cfg.region), m=ADV_SUBJ[k];
+    msg(m.icon+' 準備使出「'+m.move+'」！答對就能命中！');
     $('advPanel').innerHTML='<div class="lg-q adv-q">'+q.q+'</div><div class="lg-opts" id="advOpts"></div>';
-    lgShuffle(q.opts).forEach(o=>{
-      const b=document.createElement('button'); b.className='lg-opt'; b.innerHTML=o; b.dataset.v=o;
-      b.onclick=()=>hit(k,q,b,o); $('advOpts').appendChild(b);
-    });
+    lgShuffle(q.opts).forEach(o=>{ const b=document.createElement('button'); b.className='lg-opt'; b.innerHTML=o; b.dataset.v=o; b.onclick=()=>hit(k,q,b,o); $('advOpts').appendChild(b); });
     if(q.speak){ try{ speakEn(q.speak); }catch(e){} }
   }
   function hit(k,q,btn,o){
-    if(!gameRunning || btn.parentNode.dataset.done) return;
+    if(!gameRunning || ended || btn.parentNode.dataset.done) return;
     btn.parentNode.dataset.done='1';
     const m=ADV_SUBJ[k];
     if(o===q.ans){
       combo++; btn.classList.add('ok'); sfxCorrect();
-      let mult = k===weak?2 : k===resist?0.5 : 1;
-      const crit = combo>=3;
-      const dmg=Math.max(1,Math.round(pAtk*mult*(crit?1.5:1)));
-      eHp-=dmg; shake('advEMon'); pop('advEMon','-'+dmg,'#fde047'); bars();
-      addGameScore(10+(k===weak?5:0)+(crit?5:0));
-      $('advMsg').innerHTML=pName+' 使出 '+m.move+'！'+(mult===2?'<b class="adv-eff">效果絕佳！</b>':mult<1?'效果不太好…':'')+(crit?' 💥會心一擊！':'')+'<br>'+eName+' 來不及反擊！';
-      setTimeout(()=>{ if(eHp<=0) win(); else moves(); }, 1300);
+      let line='', dmg=0;
+      if(S0.heal && pHp<S0.hp){ const h=Math.min(S0.hp-pHp,S0.heal); pHp+=h; pop('advPMon','+'+h,'#22c55e'); }
+      if(type==='shield' && shieldUp){
+        shieldHits++;
+        if(shieldHits>=2){ shieldUp=false; line='💥 護盾被打破了！'; } else line='🛡️ 擊中護盾！再答對 1 題就能打破！';
+        shake('advEMon');
+      } else if(cfg.trial && trialShields.length){
+        if(trialShields.includes(k)){ trialShields=trialShields.filter(x=>x!==k); line=m.icon+' 護盾消失了！'+(trialShields.length?'還剩 '+trialShields.map(x=>ADV_SUBJ[x].icon).join(''):'護盾全破，開始攻擊！'); shake('advEMon'); }
+        else line='這個護盾已經打掉了，換 '+trialShields.map(x=>ADV_SUBJ[x].icon+ADV_SUBJ[x].name).join('、')+' 試試！';
+      } else {
+        const mult = k===foe.weak ? 2 : k===foe.resist ? 0.5 : 1, crit=combo>=3;
+        dmg=Math.max(1,Math.round(S0.atk*mult*(crit?1.5:1)));
+        eHp-=dmg; shake('advEMon'); pop('advEMon','-'+dmg,'#fde047');
+        line='使出 '+m.move+'！'+(mult===2?'<b class="adv-eff">效果絕佳！</b>':mult<1?'效果不太好…':'')+(crit?' 💥會心一擊！':'');
+        addGameScore(10+(mult===2?5:0)+(crit?5:0));
+      }
+      if(type==='boss' && !enraged && eHp>0 && eHp<=foe.max/2){
+        enraged=true; foe.atk=Math.round(foe.atk*1.3);
+        const nw=ADV_KEYS.filter(x=>x!==foe.weak)[lgRand(0,1)]; foe.weak=nw; if(foe.resist===nw) foe.resist=ADV_KEYS.find(x=>x!==nw);
+        line+='<br>😡 '+foe.name+' 憤怒了！弱點變成 '+ADV_SUBJ[nw].icon+ADV_SUBJ[nw].name+'！';
+      }
+      info(); bars(); msg(line+'<br>'+foe.name+' 來不及反擊！');
+      setTimeout(()=>{
+        if(!gameRunning || ended) return;
+        if(eHp<=0){
+          if(fi<cfg.foes.length-1){ fi++; sfxLevelUp(); loadFoe(); msg('打倒了！下一隻 '+cfg.foes[fi].name+' 衝過來了！'); moves(); }
+          else win();
+        } else moves();
+      },1300);
     } else {
-      combo=0; btn.classList.add('bad'); sfxWrong();
+      combo=0; wrong++; btn.classList.add('bad'); sfxWrong();
       [...$('advOpts').children].forEach(b=>{ if(b.dataset.v===q.ans) b.classList.add('ok'); });
-      pHp-=eAtk; shake('advPMon'); pop('advPMon','-'+eAtk,'#f87171'); bars();
-      $('advMsg').innerHTML='攻擊沒打中！'+eName+' 反擊，造成 '+eAtk+' 點傷害！<br>💡 正確答案是 '+q.ans+(q.tip?'：'+q.tip:'');
+      let extra='';
+      if(type==='shield' && shieldHits>0 && shieldUp){ shieldHits=0; extra='🛡️ 護盾的裂痕恢復了！'; }
+      if(type==='shield' && !shieldUp){ shieldUp=true; shieldHits=0; extra='🛡️ 護盾又長回來了！'; }
+      pHp-=foe.atk; shake('advPMon'); pop('advPMon','-'+foe.atk,'#f87171'); info(); bars();
+      msg('攻擊沒打中！'+foe.name+' 反擊，造成 '+foe.atk+' 點傷害！'+extra+'<br>💡 正確答案是 '+q.ans+(q.tip?'：'+q.tip:''));
       const nb=document.createElement('button'); nb.className='lg-next'; nb.textContent='繼續 ➜';
-      nb.onclick=()=>{ if(pHp<=0) lose(); else moves(); };
+      nb.onclick=()=>{ if(ended) return; if(pHp<=0) lose('體力用完了'); else moves(); };
       $('advPanel').appendChild(nb);
     }
   }
+  function stopTimer(){ if(window._lgTimer){ clearInterval(window._lgTimer); window._lgTimer=null; } }
   function win(){
-    const st2=advLoad(); const first=s===st2.cleared;
-    const gain=30+s*8+(boss?20:0);
-    const oldForm=advFormIdx(st2.lv), oldLv=st2.lv;
-    if(first) st2.cleared++;
-    const newCatch=!st2.caught.includes(s); if(newCatch) st2.caught.push(s);
-    st2.exp+=gain; st2.wins=(st2.wins||0)+1;
-    while(st2.exp>=advExpNeed(st2.lv)){ st2.exp-=advExpNeed(st2.lv); st2.lv++; }
-    advSave(st2);
-    addGameScore(30+s*5+(first?20:0));
-    const evolved=advFormIdx(st2.lv)!==oldForm, nf=advForm(st2);
-    if(st2.lv>oldLv) sfxLevelUp(); else sfxCorrect();
-    const hasNext = s+1<ADV_STAGES.length && s+1<=st2.cleared;
-    $('advMsg').innerHTML='🎉 打敗了 '+eName+'！';
+    if(ended) return; ended=true; stopTimer();
+    const s2=advLoad(), oldLv=s2.lv;
+    if(cfg.trial){
+      s2.evo++; advSave(s2); sfxLevelUp(); addGameScore(100);
+      return advEvolveScene(s2.evo);
+    }
+    const stars = wrong===0 ? 3 : pHp>=S0.hp/2 ? 2 : 1, prev=s2.stars[cfg.g]||0, first=!prev;
+    s2.stars[cfg.g]=Math.max(prev,stars);
+    let gain=25+cfg.g*2.2; if(type==='boss') gain*=1.5; if(!first) gain*=0.6;
+    gain=Math.round(gain);
+    const ups=advGainExp(s2,gain);
+    const newMon=[]; cfg.foes.forEach(f=>{ if(!s2.caught.includes(f.id)){ s2.caught.push(f.id); newMon.push(f); } });
+    let gotPot=false; if(type==='boss' && first && s2.potions<9){ s2.potions++; gotPot=true; }
+    s2.wins=(s2.wins||0)+1;
+    const w=cfg.w, worldUnlock = w<ADV_WORLDS.length-1 && !advWorldOpen(advLoad(),w+1) && advWorldOpen(s2,w+1);
+    if(worldUnlock) s2.world=w+1;
+    advSave(s2);
+    addGameScore(30+cfg.g*2+(first?20:0)+stars*10);
+    if(ups) sfxLevelUp(); else sfxCorrect();
+    const nextG=cfg.g+1, hasNext = nextG<ADV_WORLDS.length*10 && advStageOpen(s2,nextG) && Math.floor(nextG/10)===w;
+    msg('🎉 過關了！');
     $('advPanel').innerHTML='<div class="adv-result">'+
-      '<div>⭐ 獲得經驗值 +'+gain+'</div>'+
-      (st2.lv>oldLv?'<div>⬆️ 升級了！Lv.'+oldLv+' → Lv.'+st2.lv+'</div>':'')+
-      (evolved?'<div class="adv-evolve">✨ '+pName+' 進化成 '+nf[0]+' '+nf[1]+'！</div>':'')+
-      (newCatch?'<div>📘 '+eEmo+' '+eName+' 加入圖鑑！</div>':'')+
-      (first&&s+1<ADV_STAGES.length?'<div>🔓 第 '+(s+2)+' 關開放了！</div>':'')+
-      (first&&s===ADV_STAGES.length-1?'<div>🏆 恭喜全部破關！</div>':'')+
-      '</div><div class="lg-row">'+
-      '<button class="lg-mini" onclick="advMap()">🗺️ 回地圖</button>'+
-      (hasNext?'<button class="lg-next" onclick="advBattle('+(s+1)+')">▶ 下一關</button>':'')+
-      '</div>';
+      '<div class="adv-bigstars">'+'★'.repeat(stars)+'<i>'+'★'.repeat(3-stars)+'</i></div>'+
+      '<div class="adv-small" style="color:#6b7280">'+(stars===3?'一題都沒錯，滿分三顆星！':stars===2?'全對可以拿三顆星喔！':'體力剩一半以上可以拿兩顆星')+'</div>'+
+      '<div>⭐ 經驗值 +'+gain+'</div>'+
+      (ups?'<div>⬆️ 升級！Lv.'+oldLv+' → Lv.'+s2.lv+'</div>':'')+
+      (advTrialReady(s2)?'<div class="adv-evolve">✨ 達到等級上限！可以挑戰進化試煉了！</div>':'')+
+      newMon.map(f=>'<div>📘 '+f.emo+' '+f.name+' 加入圖鑑！</div>').join('')+
+      (gotPot?'<div>🧪 獲得補血藥 1 瓶</div>':'')+
+      (worldUnlock?'<div>🔓 第 '+(w+2)+' 區「'+ADV_WORLDS[w+1].name+'」開放了！</div>':'')+
+      '</div><div class="lg-row"><button class="lg-mini" onclick="advMap()">🗺️ 回地圖</button>'+
+      (advTrialReady(s2)?'<button class="lg-next" onclick="advTrial()">✨ 進化試煉</button>':'')+
+      (hasNext?'<button class="lg-next" onclick="advStart('+nextG+')">▶ 下一關</button>':'')+'</div>';
   }
-  function lose(){
-    const st2=advLoad(); st2.exp+=10;
-    while(st2.exp>=advExpNeed(st2.lv)){ st2.exp-=advExpNeed(st2.lv); st2.lv++; }
-    advSave(st2);
-    $('advMsg').innerHTML=pName+' 累倒了… 沒關係，每一次都在變強！';
-    $('advPanel').innerHTML='<div class="adv-result"><div>⭐ 努力的經驗值 +10</div><div>💡 小祕訣：用對手「弱點」的科目攻擊，傷害加倍！</div></div>'+
-      '<div class="lg-row"><button class="lg-mini" onclick="advMap()">🗺️ 回地圖</button><button class="lg-next" onclick="advBattle('+s+')">🔁 再挑戰</button></div>';
+  function lose(why){
+    if(ended) return; ended=true; stopTimer();
+    const s2=advLoad(); advGainExp(s2,10); advSave(s2);
+    msg(why+'… 沒關係，每一次都在變強！');
+    $('advPanel').innerHTML='<div class="adv-result"><div>⭐ 努力的經驗值 +10</div>'+
+      '<div>💡 小祕訣：'+(type==='shield'?'先連續答對 2 題打破護盾':type==='speed'?'選對手的弱點科目，打得比較快':cfg.trial?'三科各答對一題，就能打掉三個護盾':'用對手的弱點科目攻擊，傷害加倍')+'</div></div>'+
+      '<div class="lg-row"><button class="lg-mini" onclick="advMap()">🗺️ 回地圖</button>'+
+      '<button class="lg-next" onclick="'+(cfg.trial?'advTrial()':'advStart('+cfg.g+')')+'">🔁 再挑戰</button></div>';
   }
-  bars(); moves();
+  loadFoe();
+  msg((cfg.trial?'✨ 進化試煉！打敗影子，證明你夠強！<br>':'')+T.icon+' '+T.desc);
+  if(type==='speed'){
+    window._lgTimer=setInterval(()=>{
+      if(!gameRunning) return;
+      timeLeft--; const t=$('advTimer'); if(t) t.textContent='　⏱ '+timeLeft+' 秒';
+      if(timeLeft<=0) lose('時間到了');
+    },1000);
+    $('advTimer').textContent='　⏱ '+timeLeft+' 秒';
+  }
+  moves();
 }
 
+/* ── 進化動畫 ── */
+function advEvolveScene(evo){
+  const area=document.getElementById('gameArea'), f=BOPPY_FORMS[evo], prev=BOPPY_FORMS[evo-1];
+  area.innerHTML='<div class="lg-wrap adv" style="background:radial-gradient(circle at 50% 35%,#fde68a,#7c3aed 45%,#1a1a2e 80%);align-items:center;justify-content:center;min-height:100%">'+
+    '<div class="adv-title">✨ 波比進化了！ ✨</div>'+
+    '<div class="adv-evo-stage"><div class="adv-evo-old">'+boppyForm(evo-1,80)+'</div><div class="adv-evo-new">'+boppyForm(evo,90)+'</div></div>'+
+    '<div class="adv-result" style="width:100%"><div>'+prev.name+' → <b style="color:#7c3aed">'+f.name+'</b></div>'+
+      '<div>⬆️ 等級上限提升到 Lv.'+advCap(advLoad())+'</div><div>💪 攻擊力和體力都變強了！</div>'+
+      (evo<BOPPY_FORMS.length-1?'<div class="adv-small" style="color:#6b7280">下一個型態：'+BOPPY_FORMS[evo+1].name+'（Lv.'+((evo+1)*5)+' 試煉）</div>':'<div>🌌 已經是最終型態了！</div>')+
+    '</div><button class="lg-next" onclick="advMap()">🗺️ 繼續冒險</button></div>';
+}
+
+/* ── 寶箱關 ── */
+function advChest(g){
+  const w=Math.floor(g/10), area=document.getElementById('gameArea');
+  let i=0, right=0;
+  area.innerHTML='<div class="lg-wrap adv" style="background:linear-gradient(180deg,#a16207,#1a1a2e 70%)">'+
+    '<div class="adv-stage">🎁 '+(w+1)+'-'+(g%10+1)+' 寶箱關</div>'+
+    '<div class="adv-chest" id="advChestBox">🎁</div>'+
+    '<div class="adv-msg" id="advMsg">答 8 題開寶箱！答對 6 題以上可以拿到補血藥！</div><div id="advPanel"></div></div>';
+  const $=id=>document.getElementById(id);
+  function next(){
+    if(!gameRunning) return;
+    if(i>=8) return done();
+    const k=ADV_KEYS[i%3], q=advQuestion(k,advRegion(w));
+    $('advMsg').innerHTML='第 '+(i+1)+' / 8 題　'+ADV_SUBJ[k].icon+ADV_SUBJ[k].name+'　已答對 '+right+' 題';
+    $('advPanel').innerHTML='<div class="lg-q adv-q">'+q.q+'</div><div class="lg-opts" id="advOpts"></div>';
+    lgShuffle(q.opts).forEach(o=>{ const b=document.createElement('button'); b.className='lg-opt'; b.innerHTML=o; b.dataset.v=o;
+      b.onclick=()=>{
+        if(b.parentNode.dataset.done) return; b.parentNode.dataset.done='1'; i++;
+        if(o===q.ans){ right++; b.classList.add('ok'); sfxCorrect(); addGameScore(10); setTimeout(next,800); }
+        else { b.classList.add('bad'); sfxWrong(); [...$('advOpts').children].forEach(x=>{ if(x.dataset.v===q.ans) x.classList.add('ok'); });
+          const nb=document.createElement('button'); nb.className='lg-next'; nb.textContent='繼續 ➜'; nb.onclick=next;
+          $('advMsg').innerHTML='💡 正確答案是 '+q.ans+(q.tip?'：'+q.tip:''); $('advPanel').appendChild(nb); }
+      }; $('advOpts').appendChild(b); });
+    if(q.speak){ try{ speakEn(q.speak); }catch(e){} }
+  }
+  function done(){
+    const s2=advLoad(), stars= right>=8?3 : right>=6?2 : 1, prev=s2.stars[g]||0, first=!prev;
+    s2.stars[g]=Math.max(prev,stars);
+    let gain=Math.round((right*(5+g*0.3))*(first?1:0.6)); const ups=advGainExp(s2,gain);
+    const pot = right>=6 && s2.potions<9; if(pot) s2.potions++;
+    advSave(s2); sfxLevelUp();
+    $('advChestBox').textContent='💰';
+    $('advMsg').innerHTML='🎉 寶箱打開了！答對 '+right+' / 8 題';
+    const nextG=g+1, hasNext=advStageOpen(s2,nextG) && Math.floor(nextG/10)===w;
+    $('advPanel').innerHTML='<div class="adv-result"><div class="adv-bigstars">'+'★'.repeat(stars)+'<i>'+'★'.repeat(3-stars)+'</i></div>'+
+      '<div>⭐ 經驗值 +'+gain+'</div>'+(ups?'<div>⬆️ 升到 Lv.'+s2.lv+'</div>':'')+(pot?'<div>🧪 獲得補血藥 1 瓶</div>':'')+
+      (advTrialReady(s2)?'<div class="adv-evolve">✨ 可以挑戰進化試煉了！</div>':'')+
+      '</div><div class="lg-row"><button class="lg-mini" onclick="advMap()">🗺️ 回地圖</button>'+(hasNext?'<button class="lg-next" onclick="advStart('+nextG+')">▶ 下一關</button>':'')+'</div>';
+  }
+  next();
+}
+
+/* ── 國語課次切換（有課本資料時才會出現）── */
 function khStep(d){
   if(!KH_ZH.length) return;
   const ns=KH_ZH.map(x=>x.n), cur=khScope().zhUpTo||ns[ns.length-1];
   const i=Math.max(0,Math.min(ns.length-1, ns.indexOf(cur)+d));
   khSetScope({zhUpTo:ns[i]}); sfxClick(); advMap();
+}
+/* ── 首頁橫幅與遊樂場卡片顯示目前進度 ── */
+function advCardInfo(){
+  const st=advLoad(); if(!st) return '';
+  let cleared=0; for(const g in st.stars) if(st.stars[g]>0) cleared++;
+  return BOPPY_FORMS[st.evo].name+' Lv.'+st.lv+'　已過 '+cleared+'/80 關　★'+advTotalStars(st);
+}
+function advBannerUpdate(){
+  const el=document.getElementById('g3BannerText'); if(!el) return;
+  const st=advLoad();
+  el.textContent = st ? ('⚔️ '+BOPPY_FORMS[st.evo].name+' Lv.'+st.lv+'　點我繼續冒險 👇') : '⚔️ 冒險島開放了！點我 👇';
 }
 
 /* ===================================================
@@ -8743,7 +9008,7 @@ init();
 
 
 /* ===== 自動更新：發現新版本就重新載入 ===== */
-const APP_VERSION = '2026-10-25-v5c';
+const APP_VERSION = '2026-10-25-v6';
 function checkAppUpdate(){
   try{
     fetch(location.pathname + '?_=' + Date.now(), {cache:'no-store'})
