@@ -57,10 +57,10 @@ overflow-x:hidden;
 /* ===== CARD BASE ===== */
 .card{
 background:rgba(255,252,240,0.97);
-border-radius:var(–radius);
+border-radius:var(--radius);
 padding:22px;
 margin-bottom:14px;
-box-shadow:var(–shadow-warm);
+box-shadow:var(--shadow-warm);
 border:2.5px solid rgba(245,158,11,0.18);
 position:relative;
 overflow:hidden;
@@ -114,7 +114,7 @@ margin-bottom:10px;
 
 .welcome-title{
 font-size:2.1rem;font-weight:900;
-color:var(–amber-deep);
+color:var(--amber-deep);
 text-align:center;
 text-shadow:3px 3px 0 rgba(251,191,36,0.4);
 letter-spacing:1px;
@@ -122,7 +122,7 @@ margin-bottom:4px;
 }
 .welcome-sub{
 font-size:1.1rem;font-weight:700;
-color:var(–amber-dark);
+color:var(--amber-dark);
 text-align:center;margin-bottom:20px;
 }
 
@@ -138,16 +138,16 @@ border:2px solid #fed7aa;
 background:white;border-radius:18px;padding:20px;
 margin:16px 0;border:2.5px solid #fde68a;
 }
-.name-label{font-size:1.15rem;font-weight:800;color:var(–amber-deep);margin-bottom:12px;display:block;}
+.name-label{font-size:1.15rem;font-weight:800;color:var(--amber-deep);margin-bottom:12px;display:block;}
 .name-input{
 width:100%;padding:15px;font-size:1.5rem;font-weight:800;
 border:3px solid #fde68a;border-radius:13px;
-text-align:center;color:var(–amber-deep);
+text-align:center;color:var(--amber-deep);
 font-family:'Nunito',sans-serif;
 outline:none;background:#fffbeb;
 transition:border-color 0.2s,box-shadow 0.2s;
 }
-.name-input:focus{border-color:var(–amber);box-shadow:0 0 0 4px rgba(251,191,36,0.2);}
+.name-input:focus{border-color:var(--amber);box-shadow:0 0 0 4px rgba(251,191,36,0.2);}
 
 .start-btn{
 width:100%;padding:20px;font-size:1.5rem;font-weight:900;
@@ -191,8 +191,8 @@ flex-shrink:0;
 0%,100%{transform:rotate(-4deg);}
 50%{transform:rotate(4deg) translateY(-3px);}
 }
-.player-name{font-size:1.65rem;font-weight:900;color:var(–amber-deep);}
-.player-title{font-size:0.95rem;font-weight:700;color:var(–amber-dark);}
+.player-name{font-size:1.65rem;font-weight:900;color:var(--amber-deep);}
+.player-title{font-size:0.95rem;font-weight:700;color:var(--amber-dark);}
 .player-streak{
 font-size:0.9rem;font-weight:700;
 color:#d97706;margin-top:4px;
@@ -216,7 +216,7 @@ border:2px solid #fde68a;
 transition:transform 0.3s,box-shadow 0.3s;
 }
 .badge-item.earned{
-border-color:var(–amber);
+border-color:var(--amber);
 box-shadow:0 4px 14px rgba(251,191,36,0.3);
 transform:translateY(-2px);
 }
@@ -224,13 +224,13 @@ transform:translateY(-2px);
 .badge-item:not(.earned) .badge-icon{filter:grayscale(1);opacity:0.4;}
 .badge-item.earned .badge-icon{animation:badgePulse 2s ease-in-out infinite;}
 @keyframes badgePulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
-.badge-count{font-size:1.15rem;font-weight:900;color:var(–amber-deep);}
+.badge-count{font-size:1.15rem;font-weight:900;color:var(--amber-deep);}
 .badge-name{font-size:0.72rem;color:#a16207;font-weight:700;}
 
 /* Encourage Card */
 .encourage-card{
 background:linear-gradient(135deg,rgba(236,253,245,0.98),rgba(209,250,229,0.98));
-border:2.5px solid var(–green);
+border:2.5px solid var(--green);
 }
 .enc-head{display:flex;align-items:center;gap:12px;margin-bottom:11px;}
 .enc-avatar{
@@ -257,11 +257,11 @@ transition:transform 0.25s cubic-bezier(.34,1.56,.64,1),box-shadow 0.25s;
 }
 .subject:hover{transform:translateY(-5px) scale(1.015);box-shadow:0 16px 40px rgba(0,0,0,0.14);}
 .subject:active{transform:translateY(-2px);}
-.subject.chinese{border-color:var(–red);background:linear-gradient(135deg,#fff,#fef2f2);}
-.subject.english{border-color:var(–blue);background:linear-gradient(135deg,#fff,#eff6ff);}
-.subject.math{border-color:var(–purple);background:linear-gradient(135deg,#fff,#faf5ff);}
+.subject.chinese{border-color:var(--red);background:linear-gradient(135deg,#fff,#fef2f2);}
+.subject.english{border-color:var(--blue);background:linear-gradient(135deg,#fff,#eff6ff);}
+.subject.math{border-color:var(--purple);background:linear-gradient(135deg,#fff,#faf5ff);}
 .subject.done{opacity:0.55;cursor:default;}
-.subject.done:hover{transform:none;box-shadow:var(–shadow-warm);}
+.subject.done:hover{transform:none;box-shadow:var(--shadow-warm);}
 .subj-icon{
 width:68px;height:68px;border-radius:18px;
 display:flex;align-items:center;justify-content:center;
@@ -273,19 +273,19 @@ box-shadow:0 4px 14px rgba(0,0,0,0.12);
 .subject.math .subj-icon{background:linear-gradient(135deg,#e9d5ff,#d8b4fe);}
 .subj-info{flex:1;}
 .subj-name{font-size:1.35rem;font-weight:900;}
-.subject.chinese .subj-name{color:var(–red);}
-.subject.english .subj-name{color:var(–blue);}
-.subject.math .subj-name{color:var(–purple);}
+.subject.chinese .subj-name{color:var(--red);}
+.subject.english .subj-name{color:var(--blue);}
+.subject.math .subj-name{color:var(--purple);}
 .subj-desc{font-size:0.95rem;color:#888;margin-top:2px;font-weight:600;}
 .subj-badge{
 padding:10px 16px;border-radius:22px;
 font-size:1.05rem;font-weight:800;
-background:linear-gradient(135deg,var(–amber),var(–amber-dark));
+background:linear-gradient(135deg,var(--amber),var(--amber-dark));
 color:white;
 box-shadow:0 3px 10px rgba(245,158,11,0.3);
 white-space:nowrap;
 }
-.done-badge{background:linear-gradient(135deg,var(–green),var(–green-dark))!important;}
+.done-badge{background:linear-gradient(135deg,var(--green),var(--green-dark))!important;}
 
 /* Exchange */
 .exchange-card{
@@ -298,10 +298,10 @@ display:flex;align-items:center;justify-content:space-between;
 padding:12px 14px;background:white;border-radius:12px;
 margin-bottom:9px;border:2px solid #fde68a;
 }
-.exch-info{font-size:1rem;font-weight:700;color:var(–amber-deep);}
+.exch-info{font-size:1rem;font-weight:700;color:var(--amber-deep);}
 .exch-btn{
 padding:9px 16px;font-size:0.95rem;font-weight:800;
-background:linear-gradient(135deg,var(–green),var(–green-dark));
+background:linear-gradient(135deg,var(--green),var(--green-dark));
 color:white;border:none;border-radius:10px;cursor:pointer;
 font-family:'Nunito',sans-serif;
 box-shadow:0 3px 8px rgba(34,197,94,0.3);
@@ -339,7 +339,7 @@ line-height:1;
 .learn-back:hover{transform:translateX(-4px);}
 .learn-title{font-size:1.15rem;font-weight:900;color:#333;}
 .learn-score{
-font-size:1.1rem;font-weight:800;color:var(–amber-dark);
+font-size:1.1rem;font-weight:800;color:var(--amber-dark);
 display:flex;align-items:center;gap:4px;
 }
 .score-anim{animation:scorePop 0.4s ease;}
@@ -360,9 +360,9 @@ animation:cardIn 0.5s cubic-bezier(.34,1.56,.64,1);
 .chapter-intro{
 background:linear-gradient(135deg,#fef3c7,#fde68a);
 border-radius:18px;padding:18px;margin-bottom:22px;
-border:3px solid var(–amber);
+border:3px solid var(--amber);
 }
-.ch-title{font-size:1.35rem;font-weight:900;color:var(–amber-deep);margin-bottom:9px;}
+.ch-title{font-size:1.35rem;font-weight:900;color:var(--amber-deep);margin-bottom:9px;}
 .ch-story{font-size:1.1rem;color:#78350f;line-height:1.8;}
 
 /* Hamster Talk */
@@ -401,27 +401,27 @@ flex-shrink:0;
 60%{transform:rotate(-12deg)}
 80%{transform:rotate(12deg)}
 }
-.ham-label{font-size:1rem;font-weight:800;color:var(–amber-deep);}
+.ham-label{font-size:1rem;font-weight:800;color:var(--amber-deep);}
 
 .ham-bubble{
 background:linear-gradient(135deg,#ecfdf5,#d1fae5);
 border-radius:18px;padding:18px;
-border:3px solid var(–green);
+border:3px solid var(--green);
 margin-left:24px;position:relative;
 }
 .ham-bubble::before{
 content:'';position:absolute;left:-10px;top:16px;
 border:10px solid transparent;
-border-right-color:var(–green);
+border-right-color:var(--green);
 }
 .ham-text{font-size:1.15rem;color:#166534;line-height:1.85;font-weight:600;}
-.char-big{font-size:1.5rem;font-weight:900;color:var(–red);}
-.eng-big{font-size:1.4rem;font-weight:900;color:var(–blue);}
+.char-big{font-size:1.5rem;font-weight:900;color:var(--red);}
+.eng-big{font-size:1.4rem;font-weight:900;color:var(--blue);}
 
 /* Content Display */
 .content-display{text-align:center;margin:22px 0;}
 .big-char{
-font-size:9rem;font-weight:900;color:var(–red);
+font-size:9rem;font-weight:900;color:var(--red);
 text-shadow:5px 5px 0 #fecaca,8px 8px 20px rgba(239,68,68,0.2);
 line-height:1;
 animation:charReveal 0.6s cubic-bezier(.34,1.56,.64,1);
@@ -436,13 +436,13 @@ display:block;
 }
 @keyframes emojiIn{from{opacity:0;transform:scale(0) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
 .big-letter{
-font-size:10rem;font-weight:900;color:var(–blue);
+font-size:10rem;font-weight:900;color:var(--blue);
 text-shadow:5px 5px 0 #bfdbfe,8px 8px 20px rgba(59,130,246,0.2);
 line-height:1;
 animation:charReveal 0.6s cubic-bezier(.34,1.56,.64,1);
 }
 .big-word{
-font-size:3.3rem;font-weight:900;color:var(–blue);
+font-size:3.3rem;font-weight:900;color:var(--blue);
 text-shadow:3px 3px 0 #bfdbfe;
 letter-spacing:3px;margin:12px 0;
 }
@@ -451,7 +451,7 @@ letter-spacing:3px;margin:12px 0;
 .meaning{font-size:1.35rem;color:#444;margin-top:8px;font-weight:600;}
 
 .speak-btn{
-background:linear-gradient(135deg,var(–amber),var(–amber-dark));
+background:linear-gradient(135deg,var(--amber),var(--amber-dark));
 border:none;border-radius:50%;
 width:76px;height:76px;font-size:2.5rem;
 cursor:pointer;
@@ -490,11 +490,11 @@ border:3px solid #fbbf24;
 box-shadow:0 4px 12px rgba(251,191,36,0.25);
 }
 .math-item{font-size:2.1rem;}
-.math-op{font-size:3.2rem;font-weight:900;color:var(–purple);}
+.math-op{font-size:3.2rem;font-weight:900;color:var(--purple);}
 .math-result{
 font-size:3.2rem;font-weight:900;color:white;
 padding:11px 24px;
-background:linear-gradient(135deg,var(–green),var(–green-dark));
+background:linear-gradient(135deg,var(--green),var(--green-dark));
 border-radius:16px;
 box-shadow:0 5px 15px rgba(34,197,94,0.35);
 animation:resultPop 0.5s cubic-bezier(.34,1.56,.64,1);
@@ -503,7 +503,7 @@ animation:resultPop 0.5s cubic-bezier(.34,1.56,.64,1);
 .math-q{
 font-size:3.2rem;font-weight:900;color:white;
 padding:11px 24px;
-background:linear-gradient(135deg,var(–amber),var(–amber-dark));
+background:linear-gradient(135deg,var(--amber),var(--amber-dark));
 border-radius:16px;
 box-shadow:0 5px 15px rgba(245,158,11,0.35);
 }
@@ -514,7 +514,7 @@ box-shadow:0 5px 15px rgba(245,158,11,0.35);
 .practice-hint{
 background:linear-gradient(135deg,#fef3c7,#fde68a);
 border-radius:13px;padding:13px 17px;margin-bottom:18px;
-font-size:1.05rem;color:var(–amber-deep);font-weight:700;
+font-size:1.05rem;color:var(--amber-deep);font-weight:700;
 text-align:center;border:2px solid #fbbf24;
 }
 .options{display:grid;grid-template-columns:repeat(2,1fr);gap:11px;}
@@ -537,14 +537,14 @@ background:linear-gradient(135deg,rgba(255,255,255,0.5),transparent);
 pointer-events:none;
 }
 .opt-btn:hover:not(:disabled){
-border-color:var(–green);
+border-color:var(--green);
 background:#f0fdf4;
 transform:translateY(-4px) scale(1.04);
 box-shadow:0 8px 24px rgba(34,197,94,0.2);
 }
 .opt-btn.correct{
-background:linear-gradient(135deg,var(–green),var(–green-dark));
-border-color:var(–green-dark);color:white;
+background:linear-gradient(135deg,var(--green),var(--green-dark));
+border-color:var(--green-dark);color:white;
 animation:correctBounce 0.6s cubic-bezier(.34,1.56,.64,1);
 box-shadow:0 8px 24px rgba(34,197,94,0.4);
 }
@@ -573,7 +573,7 @@ padding:20px;border-radius:20px;margin:18px 0;
 animation:fbIn 0.4s cubic-bezier(.34,1.56,.64,1);
 }
 @keyframes fbIn{from{opacity:0;transform:translateY(16px) scale(0.95)}to{opacity:1;transform:translateY(0) scale(1)}}
-.feedback.correct{background:linear-gradient(135deg,#dcfce7,#bbf7d0);border:3.5px solid var(–green);}
+.feedback.correct{background:linear-gradient(135deg,#dcfce7,#bbf7d0);border:3.5px solid var(--green);}
 .feedback.retry{background:linear-gradient(135deg,#fff7ed,#ffedd5);border:3.5px solid #f97316;}
 .fb-head{display:flex;align-items:center;gap:11px;margin-bottom:9px;}
 .fb-icon{font-size:2.8rem;}
@@ -602,9 +602,9 @@ font-size:0.97rem;color:#555;font-style:italic;font-weight:600;
 .next-btn{
 width:100%;padding:19px;
 font-size:1.35rem;font-weight:900;
-background:linear-gradient(135deg,var(–green),var(–green-dark));
+background:linear-gradient(135deg,var(--green),var(--green-dark));
 color:white;border:none;border-radius:18px;cursor:pointer;
-box-shadow:0 5px 0 var(–green-deep),0 8px 24px rgba(34,197,94,0.3);
+box-shadow:0 5px 0 var(--green-deep),0 8px 24px rgba(34,197,94,0.3);
 font-family:'Nunito',sans-serif;
 margin-top:17px;
 transition:transform 0.1s,box-shadow 0.1s;
@@ -616,7 +616,7 @@ background:linear-gradient(90deg,transparent,rgba(255,255,255,0.2),transparent);
 animation:btnShine 2.5s ease-in-out infinite;
 }
 @keyframes btnShine{0%,100%{left:-100%}50%{left:150%}}
-.next-btn:active{transform:translateY(4px);box-shadow:0 1px 0 var(–green-deep);}
+.next-btn:active{transform:translateY(4px);box-shadow:0 1px 0 var(--green-deep);}
 .retry-btn{
 width:100%;padding:19px;
 font-size:1.35rem;font-weight:900;
@@ -644,7 +644,7 @@ display:block;filter:drop-shadow(0 10px 25px rgba(180,120,30,0.35));
 100%{transform:translateY(0) rotate(-10deg) scale(1);}
 }
 .complete-title{
-font-size:2.3rem;font-weight:900;color:var(–amber-deep);
+font-size:2.3rem;font-weight:900;color:var(--amber-deep);
 margin:14px 0;
 text-shadow:3px 3px 0 rgba(251,191,36,0.4);
 }
@@ -663,7 +663,7 @@ border-radius:16px;border:3px solid #fbbf24;
 box-shadow:0 6px 20px rgba(251,191,36,0.3);
 }
 .comp-b-icon{font-size:2.9rem;animation:badgePulse 1.5s ease infinite;}
-.comp-b-count{font-size:1.45rem;font-weight:900;color:var(–amber-deep);}
+.comp-b-count{font-size:1.45rem;font-weight:900;color:var(--amber-deep);}
 .comp-b-name{font-size:0.88rem;color:#b45309;font-weight:700;}
 
 /* ===== PARTICLES ===== */
@@ -686,17 +686,17 @@ animation:popIn 0.5s cubic-bezier(.34,1.56,.64,1);
 @keyframes popIn{0%{transform:scale(0.4) rotate(-10deg);opacity:0;}70%{transform:scale(1.06) rotate(2deg);}100%{transform:scale(1) rotate(0);opacity:1;}}
 .popup-icon{font-size:7rem;animation:spinIn 0.7s ease;display:block;}
 @keyframes spinIn{from{transform:rotateY(0) scale(0)}to{transform:rotateY(360deg) scale(1)}}
-.popup-title{font-size:1.8rem;font-weight:900;color:var(–amber-deep);margin:10px 0;}
+.popup-title{font-size:1.8rem;font-weight:900;color:var(--amber-deep);margin:10px 0;}
 .popup-desc{font-size:1.1rem;color:#b45309;margin-bottom:18px;font-weight:600;}
 .popup-btn{
 padding:14px 35px;font-size:1.2rem;font-weight:900;
-background:linear-gradient(135deg,var(–green),var(–green-dark));
+background:linear-gradient(135deg,var(--green),var(--green-dark));
 color:white;border:none;border-radius:14px;cursor:pointer;
 font-family:'Nunito',sans-serif;
-box-shadow:0 5px 0 var(–green-deep);
+box-shadow:0 5px 0 var(--green-deep);
 transition:transform 0.1s,box-shadow 0.1s;
 }
-.popup-btn:active{transform:translateY(3px);box-shadow:0 2px 0 var(–green-deep);}
+.popup-btn:active{transform:translateY(3px);box-shadow:0 2px 0 var(--green-deep);}
 
 /* ===== SOUND TOGGLE ===== */
 .sound-toggle{
@@ -711,6 +711,8 @@ box-shadow:0 3px 12px rgba(180,120,30,0.2);
 transition:transform 0.2s;
 }
 .sound-toggle:active{transform:scale(0.9);}
+/* 遊戲進行中，音效鍵移到右下角，不蓋住分數 */
+body:has(#gameOverlay:not(.hidden)) .sound-toggle{top:auto;bottom:14px;z-index:6000;}
 
 /* ===== PHONICS 自然拼音 CSS ===== */
 .phonics-sound-box{
@@ -828,7 +830,7 @@ content:'';position:absolute;left:0;top:0;bottom:0;width:4px;
 background:linear-gradient(180deg,#6366f1,#818cf8);
 border-radius:4px 0 0 4px;
 }
-.mission-item.done::before{background:linear-gradient(180deg,var(–green),var(–green-dark));}
+.mission-item.done::before{background:linear-gradient(180deg,var(--green),var(--green-dark));}
 .mission-item.special::before{background:linear-gradient(180deg,#f59e0b,#fbbf24);}
 .mission-item.holiday::before{background:linear-gradient(180deg,#ec4899,#f472b6);}
 
@@ -1465,6 +1467,107 @@ font-size:1rem;font-weight:900;cursor:pointer;
 font-family:Nunito,sans-serif;margin-top:8px;
 box-shadow:0 4px 0 #5b21b6;
 }
+
+/* ===== 三年級學習遊戲 ===== */
+.lg-wrap{display:flex;flex-direction:column;gap:10px;max-height:100%;overflow-y:auto;padding:2px 2px 12px;color:#fff;-webkit-overflow-scrolling:touch;}
+.lg-top{display:flex;justify-content:space-between;gap:8px;font-size:.85rem;font-weight:800;color:#ffd700;}
+.lg-q{background:rgba(255,252,240,.97);color:#3b2a0a;border-radius:18px;padding:14px;text-align:center;font-weight:800;font-size:1rem;line-height:1.6;}
+.lg-q svg{display:inline-block;max-width:100%;}
+.lg-big{font-size:2.2rem;font-weight:900;letter-spacing:3px;color:#92400e;margin:4px 0;line-height:1.3;}
+.lg-sub{font-size:.88rem;color:#6b7280;font-weight:700;}
+.lg-blank{color:#ea580c;border-bottom:4px solid #ea580c;padding:0 4px;}
+.lg-opts{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.lg-opt{min-height:58px;border:none;border-radius:16px;background:#fff;color:#1f2937;font-size:1.3rem;font-weight:900;cursor:pointer;box-shadow:0 4px 0 rgba(0,0,0,.3);font-family:inherit;padding:6px;}
+.lg-opt:active{transform:translateY(2px);box-shadow:0 2px 0 rgba(0,0,0,.3);}
+.lg-opt.ok{background:#22c55e;color:#fff;}
+.lg-opt.bad{background:#ef4444;color:#fff;animation:lgShake .35s;}
+.lg-tip{min-height:22px;text-align:center;font-size:.92rem;font-weight:800;color:#fde68a;line-height:1.55;}
+.lg-next{display:block;margin:0 auto;padding:10px 26px;border:none;border-radius:20px;background:#f59e0b;color:#fff;font-weight:900;font-size:1rem;font-family:inherit;cursor:pointer;box-shadow:0 4px 0 #b45309;}
+.lg-mini{padding:9px 14px;border:none;border-radius:16px;background:rgba(255,255,255,.18);color:#fff;font-weight:800;font-size:.9rem;font-family:inherit;cursor:pointer;}
+.lg-row{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;}
+.lg-frac{display:inline-flex;flex-direction:column;align-items:center;line-height:1.1;vertical-align:middle;margin:0 2px;}
+.lg-frac b,.lg-frac i{font-style:normal;font-weight:900;}
+.lg-frac b{border-bottom:3px solid currentColor;padding:0 6px;}
+.lg-boss{display:flex;align-items:center;gap:10px;}
+.lg-boss-face{font-size:2.8rem;transition:transform .15s,filter .15s;}
+.lg-boss-face.hit{transform:scale(.8) rotate(-14deg);filter:brightness(1.8);}
+.lg-hp{flex:1;height:14px;background:rgba(255,255,255,.15);border-radius:8px;overflow:hidden;}
+.lg-hp div{height:100%;background:linear-gradient(90deg,#ef4444,#f97316);transition:width .3s;}
+.lg-paid{text-align:center;font-weight:800;color:#fff;}
+.lg-paid b{font-size:1.5rem;color:#ffd700;}
+.lg-paidcoins{display:flex;flex-wrap:wrap;justify-content:center;gap:4px;min-height:26px;}
+.lg-chip{display:inline-flex;align-items:center;justify-content:center;min-width:26px;height:26px;padding:0 4px;border-radius:13px;background:#f59e0b;color:#78350f;font-size:.75rem;font-weight:900;}
+.lg-chip.bill,.lg-coin.bill{background:linear-gradient(135deg,#bfdbfe,#60a5fa);color:#1e3a8a;border-color:#1d4ed8;}
+.lg-coins{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;}
+.lg-coin{aspect-ratio:1;border-radius:50%;border:3px solid #b45309;background:radial-gradient(circle at 35% 35%,#fde68a,#f59e0b);font-weight:900;color:#78350f;font-size:1.05rem;cursor:pointer;font-family:inherit;}
+.lg-coin.bill{border-radius:10px;aspect-ratio:auto;}
+.lg-coin:active{transform:scale(.92);}
+.lg-slots,.lg-tiles{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;}
+.lg-slot{width:42px;height:50px;border-radius:10px;background:rgba(255,255,255,.1);border:2px dashed rgba(255,255,255,.45);display:flex;align-items:center;justify-content:center;font-size:1.6rem;font-weight:900;color:#fff;}
+.lg-slot.filled{background:#22c55e;border:2px solid #16a34a;}
+.lg-tile{width:48px;height:52px;border:none;border-radius:12px;background:#fff;color:#1f2937;font-size:1.6rem;font-weight:900;font-family:inherit;cursor:pointer;box-shadow:0 4px 0 rgba(0,0,0,.3);}
+.lg-tile.used{opacity:.2;}
+.lg-tile.bad{background:#ef4444;color:#fff;animation:lgShake .35s;}
+.lg-tile.glow{background:#fde047;}
+.lg-group{grid-column:1/-1;font-size:.88rem;font-weight:900;color:#92400e;margin:2px 0 -2px;}
+@keyframes lgShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+
+/* ===== 波比冒險島 ===== */
+.adv{border-radius:18px;padding:10px;}
+.adv-title{text-align:center;font-size:1.2rem;font-weight:900;color:#fde68a;}
+.adv-note{text-align:center;font-size:.88rem;font-weight:700;color:#e0e7ff;line-height:1.6;}
+.adv-starters{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+.adv-starter{display:flex;flex-direction:column;align-items:center;gap:4px;padding:12px 4px;border-radius:16px;border:3px solid;background:rgba(255,252,240,.97);font-family:inherit;cursor:pointer;}
+.adv-starter span{font-size:.75rem;color:#6b7280;font-weight:700;}
+.adv-starter .adv-evo{font-size:.95rem;}
+.adv-card{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.1);border-radius:16px;padding:10px;color:#fff;font-weight:800;}
+.adv-mon-sm{font-size:2.6rem;}
+.adv-bar{height:10px;background:rgba(255,255,255,.2);border-radius:6px;overflow:hidden;margin:4px 0 2px;}
+.adv-bar div{height:100%;background:linear-gradient(90deg,#ef4444,#f97316);transition:width .4s;}
+.adv-small{font-size:.72rem;color:#cbd5e1;font-weight:700;}
+.adv-region{background:rgba(255,255,255,.06);border-radius:14px;padding:8px;}
+.adv-rname{font-size:.85rem;font-weight:900;color:#fde68a;margin-bottom:6px;}
+.adv-nodes{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;}
+.adv-node{position:relative;border:none;border-radius:14px;padding:8px 2px 6px;background:rgba(255,255,255,.12);color:#fff;font-family:inherit;cursor:pointer;}
+.adv-node.done{background:rgba(34,197,94,.3);}
+.adv-node.open{background:#f59e0b;animation:advPulse 1.2s ease-in-out infinite;}
+.adv-node.lock{opacity:.45;cursor:default;}
+.adv-node.boss{box-shadow:inset 0 0 0 2px #fde047;}
+.adv-crown{position:absolute;top:-8px;right:-2px;font-size:.9rem;}
+.adv-face{font-size:1.7rem;}
+.adv-sn{font-size:.72rem;font-weight:900;}
+.adv-nn{font-size:.62rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:clip;}
+.adv-dex{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+.adv-dexc{display:flex;flex-direction:column;align-items:center;gap:2px;background:rgba(255,252,240,.97);color:#3b2a0a;border-radius:14px;padding:8px 4px;}
+.adv-dexc b{font-size:.82rem;}
+.adv-dexc span{font-size:.68rem;color:#6b7280;font-weight:700;}
+.adv-dexc.no{background:rgba(255,255,255,.1);color:#94a3b8;}
+.adv-foe,.adv-me{display:flex;align-items:center;gap:10px;}
+.adv-info{flex:1;background:rgba(255,252,240,.95);color:#3b2a0a;border-radius:14px;padding:8px 10px;font-size:.9rem;font-weight:800;}
+.adv-info .adv-small{color:#6b7280;}
+.adv-mon{position:relative;font-size:3.6rem;line-height:1;filter:drop-shadow(0 6px 6px rgba(0,0,0,.4));}
+.adv-mon.me{transform:scaleX(-1);}
+.adv-mon.hit{animation:advHit .45s;}
+.adv-mon.me.hit{animation:advHitMe .45s;}
+.adv-dmg{position:absolute;left:50%;top:0;font-size:1.3rem;font-weight:900;text-shadow:0 2px 4px #000;animation:advDmg .9s forwards;pointer-events:none;transform:translateX(-50%);}
+.adv-mon.me .adv-dmg{transform:scaleX(-1) translateX(50%);}
+.adv-msg{background:rgba(0,0,0,.45);border:2px solid rgba(255,255,255,.25);border-radius:12px;padding:8px 10px;color:#fff;font-weight:800;font-size:.9rem;line-height:1.55;min-height:46px;}
+.adv-eff{color:#fde047;}
+.adv-moves{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.adv-move{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:58px;border:none;border-radius:14px;background:var(--mc);color:#fff;font-size:1rem;font-weight:900;font-family:inherit;cursor:pointer;box-shadow:0 4px 0 rgba(0,0,0,.35);}
+.adv-move span{font-size:.7rem;opacity:.9;}
+.adv-move.small{min-height:44px;font-size:.88rem;}
+.adv-move:disabled{opacity:.4;}
+.adv-move:active{transform:translateY(2px);}
+.adv-q{padding:10px;}
+.adv-q svg{width:110px;height:110px;}
+.adv-q .lg-big{font-size:1.9rem;}
+.adv-result{background:rgba(255,252,240,.97);color:#3b2a0a;border-radius:14px;padding:12px;font-weight:800;line-height:1.9;text-align:center;}
+.adv-evolve{color:#7c3aed;font-size:1.1rem;}
+@keyframes advPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
+@keyframes advHit{0%,100%{transform:translateX(0)}20%{transform:translateX(-10px);filter:brightness(2)}60%{transform:translateX(10px)}}
+@keyframes advHitMe{0%,100%{transform:scaleX(-1) translateX(0)}20%{transform:scaleX(-1) translateX(-10px);filter:brightness(2)}60%{transform:scaleX(-1) translateX(10px)}}
+@keyframes advDmg{0%{opacity:1;top:0}100%{opacity:0;top:-40px}}
 
 /* ===== RESPONSIVE ===== */
 @media(max-width:400px){
@@ -6866,7 +6969,7 @@ function updateBadmintonCard(){
 
 
 /* ===================================================
-   GAME CENTER — 四個遊戲
+   GAME CENTER — 冒險對戰＋三年級學習遊戲＋四個反應遊戲
    =================================================== */
 
 const GAMES = [
@@ -6874,6 +6977,18 @@ const GAMES = [
   { id:'memory', name:'🎴 記憶翻牌',  emoji:'🎴', desc:'找出相同圖案！',   unlockDays:3,  color:'#8b5cf6' },
   { id:'catch',  name:'🍎 接水果',    emoji:'🍎', desc:'接住掉下來的水果！',unlockDays:7,  color:'#22c55e' },
   { id:'bubble', name:'🔢 數字泡泡',  emoji:'🔢', desc:'按順序點破泡泡！', unlockDays:14, color:'#f59e0b' },
+  // ── 冒險對戰 ──
+  { id:'adventure', cat:'adv', name:'⚔️ 波比冒險島', emoji:'⚔️', desc:'答題對戰、收服怪獸！', unlockDays:1, color:'#7c3aed' },
+  // ── 三年級學習遊戲 ──
+  { id:'khmath',   cat:'learn', name:'📐 三上數學挑戰', emoji:'📐', desc:'四位數、乘除、單位', unlockDays:1, color:'#0f766e' },
+  { id:'multboss', cat:'learn', name:'🐲 乘除打怪獸', emoji:'🐲', desc:'算對就攻擊！', unlockDays:1, color:'#dc2626' },
+  { id:'pizza',    cat:'learn', name:'🍕 分數披薩店', emoji:'🍕', desc:'認識幾分之幾', unlockDays:1, color:'#ea580c' },
+  { id:'clock',    cat:'learn', name:'🕐 時鐘偵探',   emoji:'🕐', desc:'讀時間、算時間', unlockDays:1, color:'#0891b2' },
+  { id:'shop',     cat:'learn', name:'🛒 波比商店',   emoji:'🛒', desc:'剛好付錢', unlockDays:1, color:'#16a34a' },
+  { id:'radical',  cat:'learn', name:'🧩 部首拼字',   emoji:'🧩', desc:'部件合成新字', unlockDays:1, color:'#7c3aed' },
+  { id:'idiom',    cat:'learn', name:'📜 成語填空',   emoji:'📜', desc:'成語少一個字', unlockDays:1, color:'#b45309' },
+  { id:'measure',  cat:'learn', name:'🐟 量詞配對',   emoji:'🐟', desc:'一隻？一條？', unlockDays:1, color:'#2563eb' },
+  { id:'spell',    cat:'learn', name:'🐝 英文拼字蜂', emoji:'🐝', desc:'聽音拼單字', unlockDays:1, color:'#ca8a04' },
 ];
 
 let currentGameId  = null;
@@ -6893,11 +7008,9 @@ function renderGameCenter(){
   const dayNum = getDayNumber();
   const stoppedKey = 'boppy_game_' + todayStr();
   const stoppedToday = localStorage.getItem(stoppedKey) === 'stopped';
-  const playCount = parseInt(localStorage.getItem(stoppedKey+'_count')||'0');
-  const maxPlays = 3;
-  const playsLeft = Math.max(0, maxPlays - playCount);
+  const playsLeft = Infinity; // 不限每日次數（只保留每天 25 分鐘遊戲時間）
 
-  grid.innerHTML = GAMES.map(function(g){
+  function cardHtml(g){
     var unlocked = dayNum >= g.unlockDays;
     var locked   = !unlocked;
     var daysLeft = g.unlockDays - dayNum;
@@ -6908,15 +7021,25 @@ function renderGameCenter(){
     var cursor = (locked||stoppedToday||playsLeft===0) ? 'default' : 'pointer';
     var opacity = locked ? 0.5 : 1;
     var nameColor = locked ? '#9ca3af' : g.color;
-    var descText = (stoppedToday || playsLeft===0) ? '今日3次已用完 🔒' :
+    var descText = stoppedToday ? '今天的遊戲時間到了 🔒' :
                    locked ? ('再'+daysLeft+'天解鎖') :
-                   (g.desc+' (還可玩'+playsLeft+'次)');
+                   g.desc;
     return '<div '+clickAttr+' style="background:'+bg+';border:2px solid '+border+';border-radius:18px;padding:14px 10px;text-align:center;cursor:'+cursor+';opacity:'+opacity+';transition:transform 0.15s;">'
       + iconHtml
       + '<div style="font-size:0.82rem;font-weight:900;color:'+nameColor+';margin-top:4px;">'+g.name+'</div>'
       + '<div style="font-size:0.72rem;color:#6b7280;margin-top:3px;">'+descText+'</div>'
+      + (g.cat==='learn' && lgGetBest(g.id) ? '<div style="font-size:0.7rem;color:'+g.color+';font-weight:800;margin-top:2px;">🏅 最佳 '+lgGetBest(g.id)+' 分</div>' : '')
+      + (g.cat==='adv' && advLoad() ? '<div style="font-size:0.72rem;color:'+g.color+';font-weight:800;margin-top:2px;">'+advForm(advLoad())[0]+' Lv.'+advLoad().lv+'　已過 '+advLoad().cleared+'/'+ADV_STAGES.length+' 關</div>' : '')
       + '</div>';
-  }).join('');
+  }
+  var adv = GAMES.filter(function(g){ return g.cat==='adv'; })[0];
+  grid.innerHTML =
+      '<div class="lg-group">⚔️ 冒險對戰</div>'
+    + '<div style="grid-column:1/-1;">'+cardHtml(adv)+'</div>'
+    + '<div class="lg-group">📚 三年級學習遊戲</div>'
+    + GAMES.filter(function(g){ return g.cat==='learn'; }).map(cardHtml).join('')
+    + '<div class="lg-group">⚡ 反應小遊戲</div>'
+    + GAMES.filter(function(g){ return !g.cat; }).map(cardHtml).join('');
 }
 
 // ── 開啟遊戲 ──
@@ -6927,13 +7050,7 @@ function openGame(gameId){
     alert('😊 今天的遊戲時間結束了！明天再來！');
     return;
   }
-  // 每天最多玩3次
-  const playCount = parseInt(localStorage.getItem(key+'_count')||'0');
-  if(playCount >= 3){
-    alert('😊 今天已經玩了3次囉！好好休息，明天再來！');
-    return;
-  }
-  localStorage.setItem(key+'_count', String(playCount+1));
+  // 不限每日次數；仍保留每天 25 分鐘遊戲時間
   currentGameId = gameId;
   gameScore = 0;
   gameRunning = false;
@@ -7051,6 +7168,16 @@ function initGame(id){
   else if(id==='memory') initMemory(area);
   else if(id==='catch')  initCatch(area);
   else if(id==='bubble') initBubble(area);
+  else if(id==='adventure') initAdventure(area);
+  else if(id==='khmath')   initKhMath(area);
+  else if(id==='multboss') initMultBoss(area);
+  else if(id==='pizza')    initFractionPizza(area);
+  else if(id==='clock')    initClockDetective(area);
+  else if(id==='shop')     initShop(area);
+  else if(id==='radical')  initRadicalBuild(area);
+  else if(id==='idiom')    initIdiomFill(area);
+  else if(id==='measure')  initMeasureWords(area);
+  else if(id==='spell')    initSpellBee(area);
 }
 function stopCurrentGame(){
   gameRunning = false;
@@ -7059,6 +7186,8 @@ function stopCurrentGame(){
   if(window._catchTimer){ clearInterval(window._catchTimer); window._catchTimer=null; }
   if(window._bubbleTimer){ clearInterval(window._bubbleTimer); window._bubbleTimer=null; }
   if(window._gameCountdown){ clearInterval(window._gameCountdown); window._gameCountdown=null; }
+  if(window._lgTimer){ clearInterval(window._lgTimer); window._lgTimer=null; }
+  if(window._lgNextT){ clearTimeout(window._lgNextT); window._lgNextT=null; }
 }
 
 /* ─────────────────────────────
@@ -7338,6 +7467,799 @@ function initBubble(area){
     const tw=document.getElementById('bubbleTime'); if(tw) tw.textContent=timeLeft;
     if(timeLeft<=0){ clearInterval(window._gameCountdown);window._gameCountdown=null; showGameEnd(); }
   },1000);
+}
+
+
+/* ===================================================
+   📚 三年級學習遊戲（8 款）— 接在波比遊樂場同一套計時與獎勵
+   =================================================== */
+function lgPick(a){ return a[Math.floor(Math.random()*a.length)]; }
+function lgShuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); const t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+function lgRand(lo,hi){ return lo+Math.floor(Math.random()*(hi-lo+1)); }
+function lgNumOpts(ans,cands){
+  const set=new Set([ans]);
+  lgShuffle(cands).forEach(c=>{ if(set.size<4 && c>0 && Number.isInteger(c)) set.add(c); });
+  let guard=0;
+  while(set.size<4 && guard++<200){ const c=ans+lgRand(-9,9); if(c>0) set.add(c); }
+  return [...set].map(String);
+}
+function lgFillOpts(ans,pool,n){
+  const out=[ans];
+  lgShuffle(pool).forEach(p=>{ if(out.length<n && !out.includes(p)) out.push(p); });
+  return out;
+}
+function lgGetBest(id){ try{ return (JSON.parse(localStorage.getItem('boppy_lg_best')||'{}'))[id]||0; }catch(e){ return 0; } }
+function lgSaveBest(id,score){
+  try{
+    const b=JSON.parse(localStorage.getItem('boppy_lg_best')||'{}');
+    if(!b[id] || score>b[id]){ b[id]=score; localStorage.setItem('boppy_lg_best',JSON.stringify(b)); }
+  }catch(e){}
+}
+function lgEnd(){
+  if(!gameRunning) return;
+  lgSaveBest(currentGameId, gameScore);
+  showGameEnd();
+}
+function lgLater(fn,ms){ window._lgNextT=setTimeout(fn,ms); }
+
+/* ── 共用問答引擎：一般關卡 or 打怪模式 ── */
+function lgQuiz(area,cfg){
+  let i=0, combo=0, locked=false, cur=null;
+  let timeLeft=cfg.seconds||0, hp=cfg.boss?cfg.hp:0;
+  area.innerHTML=
+    '<div class="lg-wrap">'+
+      '<div class="lg-top"><span id="lgProg"></span><span id="lgCombo"></span></div>'+
+      (cfg.boss?'<div class="lg-boss"><div class="lg-boss-face" id="lgBossFace">'+cfg.boss+'</div><div class="lg-hp"><div id="lgHp" style="width:100%"></div></div></div>':'')+
+      '<div class="lg-q" id="lgQ"></div>'+
+      '<div class="lg-opts" id="lgOpts"></div>'+
+      '<div class="lg-tip" id="lgTip"></div>'+
+      '<button class="lg-next hidden" id="lgNext">下一題 ➜</button>'+
+    '</div>';
+  const $=id=>document.getElementById(id);
+  $('lgNext').onclick=()=>{ $('lgNext').classList.add('hidden'); next(); };
+
+  function prog(){
+    const p=$('lgProg'); if(!p) return;
+    p.textContent = cfg.boss ? ('⏱ '+timeLeft+' 秒　怪獸血量 '+hp+'/'+cfg.hp) : ('第 '+Math.min(i+1,cfg.total)+' / '+cfg.total+' 題');
+    $('lgCombo').textContent = combo>=2 ? ('🔥 連對 '+combo) : '';
+  }
+  function next(){
+    if(!gameRunning) return;
+    if(cfg.boss ? hp<=0 : i>=cfg.total){ finish(); return; }
+    cur=cfg.make(i); locked=false;
+    $('lgQ').innerHTML=cur.q;
+    $('lgTip').textContent='';
+    const box=$('lgOpts');
+    box.style.gridTemplateColumns = cur.opts.length===2 ? '1fr 1fr' : '';
+    box.innerHTML='';
+    lgShuffle(cur.opts).forEach(o=>{
+      const b=document.createElement('button');
+      b.className='lg-opt'; b.innerHTML=o; b.dataset.v=o;
+      b.onclick=()=>answer(b,o);
+      box.appendChild(b);
+    });
+    prog();
+  }
+  function answer(btn,o){
+    if(locked||!gameRunning) return; locked=true;
+    const ok = o===cur.ans;
+    if(ok){
+      combo++; addGameScore(10+Math.min(combo-1,5)*2); sfxCorrect();
+      btn.classList.add('ok');
+      $('lgTip').innerHTML='✅ '+(cur.tip||'答對了！');
+      if(cfg.boss){
+        hp--; const h=$('lgHp'); if(h) h.style.width=(hp/cfg.hp*100)+'%';
+        const f=$('lgBossFace'); if(f){ f.classList.add('hit'); setTimeout(()=>f.classList.remove('hit'),250); }
+      }
+      i++; prog();
+      lgLater(next, 900);
+    } else {
+      combo=0; sfxWrong();
+      btn.classList.add('bad');
+      [...$('lgOpts').children].forEach(b=>{ if(b.dataset.v===cur.ans) b.classList.add('ok'); });
+      $('lgTip').innerHTML='💡 正確答案是 '+cur.ans+(cur.tip?('<br>'+cur.tip):'');
+      i++; prog();
+      $('lgNext').classList.remove('hidden');
+    }
+  }
+  function finish(){
+    if(window._lgTimer){ clearInterval(window._lgTimer); window._lgTimer=null; }
+    if(cfg.boss && hp<=0){ addGameScore(50+timeLeft); }
+    lgEnd();
+  }
+  if(cfg.boss){
+    window._lgTimer=setInterval(()=>{
+      if(!gameRunning) return;
+      timeLeft--; prog();
+      if(timeLeft<=0){ clearInterval(window._lgTimer); window._lgTimer=null; finish(); }
+    },1000);
+  }
+  next();
+}
+
+/* ── 學習遊戲 1：乘除法打怪獸 ── */
+function lgMkMult(lvl){
+  const t=Math.random();
+  if(t<0.45 || (lvl===0 && t<0.7)){
+    const a=lgRand(2,9), b=lgRand(2,9), ans=a*b;
+    return {q:'<div class="lg-sub">九九乘法</div><div class="lg-big">'+a+' × '+b+' = ?</div>',
+      opts:lgNumOpts(ans,[a*(b+1),a*(b-1),(a+1)*b,ans+10,ans-1]), ans:String(ans), tip:a+' × '+b+' = '+ans};
+  } else if(t<0.75 && lvl!==0){
+    const a=lgRand(11,lvl>=2?99:49), b=lgRand(2,lvl>=2?9:6), ans=a*b;
+    return {q:'<div class="lg-sub">兩位數乘一位數</div><div class="lg-big">'+a+' × '+b+' = ?</div>',
+      opts:lgNumOpts(ans,[ans+b,ans-b,ans+10,ans-10]), ans:String(ans),
+      tip:a+' × '+b+' = '+(Math.floor(a/10)*10)+'×'+b+' ＋ '+(a%10)+'×'+b+' = '+ans};
+  }
+  const a=lgRand(2,9), b=lgRand(2,9), c=a*b;
+  return {q:'<div class="lg-sub">除法：想想乘法表</div><div class="lg-big">'+c+' ÷ '+b+' = ?</div>',
+    opts:lgNumOpts(a,[a+1,a-1,a+2,b===a?a+3:b]), ans:String(a), tip:'因為 '+b+' × '+a+' = '+c};
+}
+function initMultBoss(area){
+  lgQuiz(area,{boss:'🐲', hp:15, seconds:90, make(){ return lgMkMult(1); }});
+}
+
+/* ── 學習遊戲 2：分數披薩店 ── */
+function lgFrac(n,d){ return '<span class="lg-frac"><b>'+n+'</b><i>'+d+'</i></span>'; }
+function lgPizza(k,d,size){
+  size=size||150; const r=size/2-6, c=size/2;
+  let s='<svg width="'+size+'" height="'+size+'" viewBox="0 0 '+size+' '+size+'">';
+  for(let j=0;j<d;j++){
+    const a0=(-90+j*360/d)*Math.PI/180, a1=(-90+(j+1)*360/d)*Math.PI/180;
+    const x0=c+r*Math.cos(a0), y0=c+r*Math.sin(a0), x1=c+r*Math.cos(a1), y1=c+r*Math.sin(a1);
+    const large=(360/d)>180?1:0;
+    const fill=j<k?'#f97316':'#fde9b5';
+    s+='<path d="M'+c+','+c+' L'+x0.toFixed(2)+','+y0.toFixed(2)+' A'+r+','+r+' 0 '+large+' 1 '+x1.toFixed(2)+','+y1.toFixed(2)+' Z" fill="'+fill+'" stroke="#92400e" stroke-width="2.5"/>';
+  }
+  return s+'</svg>';
+}
+function lgMkPizza(i){
+  {
+    if(i%3!==2){
+      const d=lgPick([2,3,4,5,6,8]), k=lgRand(1,d-1);
+      const ans=lgFrac(k,d);
+      const pool=[lgFrac(d-k,d), lgFrac(k,d===8?6:d+1), lgFrac(d,k), lgFrac(k+1<d?k+1:k-1||1,d), lgFrac(1,k===1?d+2:k)]
+        .filter(x=>x!==ans);
+      return {q:'<div class="lg-sub">披薩平分成 '+d+' 塊，橘色的部分是幾分之幾？</div><div>'+lgPizza(k,d)+'</div>',
+        opts:lgFillOpts(ans,pool,4), ans, tip:'平分成 '+d+' 塊、塗了 '+k+' 塊，就是 '+d+' 分之 '+k};
+    }
+    if(Math.random()<0.5){
+      const d=lgPick([4,5,6,8,10]); let a=lgRand(1,d-1), b=lgRand(1,d-1); while(b===a) b=lgRand(1,d-1);
+      const big=Math.max(a,b);
+      return {q:'<div class="lg-sub">哪一塊披薩比較多？</div><div class="lg-big" style="font-size:1.6rem">'+lgFrac(a,d)+'　和　'+lgFrac(b,d)+'</div>',
+        opts:[lgFrac(a,d),lgFrac(b,d)], ans:lgFrac(big,d), tip:'分母一樣，分子越大就越多'};
+    } else {
+      let a=lgPick([2,3,4,5,6,8]), b=lgPick([2,3,4,5,6,8]); while(b===a) b=lgPick([2,3,4,5,6,8]);
+      const small=Math.min(a,b);
+      return {q:'<div class="lg-sub">哪一塊披薩比較大？</div><div style="display:flex;justify-content:center;gap:12px">'+lgPizza(1,a,100)+lgPizza(1,b,100)+'</div>',
+        opts:[lgFrac(1,a),lgFrac(1,b)], ans:lgFrac(1,small), tip:'分子都是 1 的時候，切得越多塊，每一塊就越小'};
+    }
+  }
+}
+function initFractionPizza(area){ lgQuiz(area,{total:10, make:lgMkPizza}); }
+
+/* ── 學習遊戲 3：時鐘偵探 ── */
+function lgClock(h,m,size){
+  size=size||150; const c=size/2, r=size/2-6;
+  let s='<svg width="'+size+'" height="'+size+'" viewBox="0 0 '+size+' '+size+'"><circle cx="'+c+'" cy="'+c+'" r="'+r+'" fill="#fffdf5" stroke="#92400e" stroke-width="4"/>';
+  for(let n=1;n<=12;n++){
+    const a=(n*30-90)*Math.PI/180;
+    s+='<text x="'+(c+(r-16)*Math.cos(a)).toFixed(1)+'" y="'+(c+(r-16)*Math.sin(a)).toFixed(1)+'" font-size="'+(size*0.1)+'" font-weight="800" fill="#3b2a0a" text-anchor="middle" dominant-baseline="central">'+n+'</text>';
+  }
+  for(let t=0;t<60;t++){
+    if(t%5===0) continue;
+    const a=(t*6-90)*Math.PI/180;
+    s+='<circle cx="'+(c+(r-4)*Math.cos(a)).toFixed(1)+'" cy="'+(c+(r-4)*Math.sin(a)).toFixed(1)+'" r="1" fill="#b45309"/>';
+  }
+  const ha=((h%12)+m/60)*30-90, ma=m*6-90;
+  const hx=c+r*0.48*Math.cos(ha*Math.PI/180), hy=c+r*0.48*Math.sin(ha*Math.PI/180);
+  const mx=c+r*0.78*Math.cos(ma*Math.PI/180), my=c+r*0.78*Math.sin(ma*Math.PI/180);
+  s+='<line x1="'+c+'" y1="'+c+'" x2="'+hx.toFixed(1)+'" y2="'+hy.toFixed(1)+'" stroke="#1f2937" stroke-width="6" stroke-linecap="round"/>';
+  s+='<line x1="'+c+'" y1="'+c+'" x2="'+mx.toFixed(1)+'" y2="'+my.toFixed(1)+'" stroke="#ef4444" stroke-width="3.5" stroke-linecap="round"/>';
+  return s+'<circle cx="'+c+'" cy="'+c+'" r="5" fill="#1f2937"/></svg>';
+}
+function lgTime(h,m){ return h+' 點 '+(m===0?'整':(m<10?'0'+m:m)+' 分'); }
+function lgAddMin(h,m,d){ let t=(h%12)*60+m+d; t=((t%720)+720)%720; let hh=Math.floor(t/60); if(hh===0) hh=12; return [hh,t%60]; }
+function lgMkClock(i,hard){
+  {
+    if(i%3!==2){
+      const h=lgRand(1,12), m = hard ? lgRand(0,59) : lgRand(0,11)*5;
+      const ans=lgTime(h,m);
+      const swapH = Math.round(m/5)||12, swapM=(h*5)%60;
+      const pool=[lgTime(swapH,swapM), lgTime(...lgAddMin(h,m,60)), lgTime(...lgAddMin(h,m,-60)),
+        lgTime(...lgAddMin(h,m,5)), lgTime(...lgAddMin(h,m,-5))].filter(x=>x!==ans);
+      return {q:'<div class="lg-sub">短針是時針、紅色長針是分針，現在是幾點幾分？</div><div>'+lgClock(h,m)+'</div>',
+        opts:lgFillOpts(ans,pool,4), ans, tip:'短針看「點」，長針一大格是 5 分鐘'};
+    }
+    const h=lgRand(1,12), m=lgRand(0,11)*5, d=lgPick([10,15,20,25,30,35,40,45,50]);
+    const [rh,rm]=lgAddMin(h,m,d), ans=lgTime(rh,rm);
+    const pool=[lgTime(...lgAddMin(rh,rm,5)), lgTime(...lgAddMin(rh,rm,-5)), lgTime(...lgAddMin(rh,rm,60)), lgTime(...lgAddMin(rh,rm,-60))].filter(x=>x!==ans);
+    return {q:'<div class="lg-sub">時鐘上是現在的時間，再過 <b style="color:#ea580c">'+d+' 分鐘</b> 是幾點幾分？</div><div>'+lgClock(h,m,130)+'</div>',
+      opts:lgFillOpts(ans,pool,4), ans, tip:lgTime(h,m)+' 再過 '+d+' 分鐘是 '+ans+(m+d>=60?'，分鐘超過 60 要進 1 點喔':'')};
+  }
+}
+function initClockDetective(area){ lgQuiz(area,{total:8, make(i){ return lgMkClock(i, i>=4); }}); }
+
+/* ── 學習遊戲 4：波比商店（剛好付錢）── */
+const LG_SHOP_ITEMS=[['🍙','飯糰'],['🧃','果汁'],['🍪','餅乾'],['✏️','鉛筆'],['📒','筆記本'],['🎈','氣球'],['🧸','小熊'],['🍦','冰淇淋'],['🎨','蠟筆'],['🪀','溜溜球'],['📕','故事書'],['🧩','拼圖'],['⚽','足球'],['🎒','書包']];
+function lgMinCoins(p){ const out=[]; [100,50,10,5,1].forEach(c=>{ while(p>=c){ out.push(c); p-=c; } }); return out; }
+function initShop(area){
+  const TOTAL=8; let round=0, paid=[], price=0, item=null, tries=0, locked=false;
+  area.innerHTML=
+    '<div class="lg-wrap">'+
+      '<div class="lg-top"><span id="lgProg"></span><span>剛好付錢就成功！</span></div>'+
+      '<div class="lg-q" id="lgQ"></div>'+
+      '<div class="lg-paid">已經放了 <b id="lgPaid">0</b> 元</div>'+
+      '<div class="lg-paidcoins" id="lgPaidCoins"></div>'+
+      '<div class="lg-coins" id="lgCoins"></div>'+
+      '<div class="lg-row"><button class="lg-mini" id="lgUndo">↩️ 拿回一個</button><button class="lg-next" id="lgPay">💰 付錢</button></div>'+
+      '<div class="lg-tip" id="lgTip"></div>'+
+    '</div>';
+  const $=id=>document.getElementById(id);
+  [1,5,10,50,100].forEach(v=>{
+    const b=document.createElement('button');
+    b.className='lg-coin'+(v===100?' bill':''); b.textContent=v;
+    b.onclick=()=>{ if(locked||!gameRunning) return; paid.push(v); sfxClick(); show(); };
+    $('lgCoins').appendChild(b);
+  });
+  $('lgUndo').onclick=()=>{ if(locked) return; paid.pop(); show(); };
+  $('lgPay').onclick=pay;
+  function show(){
+    const sum=paid.reduce((a,b)=>a+b,0);
+    $('lgPaid').textContent=sum;
+    $('lgPaidCoins').innerHTML=paid.map(v=>'<span class="lg-chip'+(v===100?' bill':'')+'">'+v+'</span>').join('');
+  }
+  function nextItem(){
+    if(!gameRunning) return;
+    if(round>=TOTAL){ lgEnd(); return; }
+    item=lgPick(LG_SHOP_ITEMS);
+    price = round<3 ? lgRand(6,60) : round<6 ? lgRand(40,160) : lgRand(120,300);
+    paid=[]; tries=0; locked=false;
+    $('lgProg').textContent='第 '+(round+1)+' / '+TOTAL+' 位客人';
+    $('lgQ').innerHTML='<div style="font-size:3rem">'+item[0]+'</div><div class="lg-sub">'+item[1]+'</div><div class="lg-big">'+price+' 元</div>';
+    $('lgTip').textContent='';
+    show();
+  }
+  function pay(){
+    if(locked||!gameRunning) return;
+    const sum=paid.reduce((a,b)=>a+b,0);
+    if(sum===price){
+      locked=true; sfxCorrect();
+      const best=lgMinCoins(price);
+      let pts=tries===0?12:8, msg='✅ 剛好 '+price+' 元，付款成功！';
+      if(paid.length===best.length){ pts+=5; msg+='<br>⭐ 而且用了最少的錢幣！'; }
+      else msg+='<br>💡 也可以只用 '+best.length+' 個：'+best.join('＋');
+      addGameScore(pts); $('lgTip').innerHTML=msg;
+      round++; lgLater(nextItem, 1800);
+    } else {
+      tries++; sfxWrong();
+      $('lgTip').innerHTML = sum<price ? ('還差 '+(price-sum)+' 元喔！') : ('多放了 '+(sum-price)+' 元，拿回一些吧！');
+    }
+  }
+  nextItem();
+}
+
+/* ── 學習遊戲 5：部首拼字 ── */
+const LG_RADICAL_FAMILIES=[
+  {p:'青', items:[['氵','清','水很乾淨，所以有三點水'],['日','晴','太陽出來，天氣晴朗'],['目','睛','眼睛和「目」有關'],['言','請','說話有禮貌，所以是言字旁'],['忄','情','心裡的感覺，所以是豎心旁']]},
+  {p:'也', items:[['土','地','土地和「土」有關'],['氵','池','池塘裡有水'],['亻','他','人字旁，指一個人'],['女','她','女字旁，指女生']]},
+  {p:'包', items:[['扌','抱','用手抱，所以是提手旁'],['足','跑','用腳跑步，所以是足字旁'],['氵','泡','水裡冒泡泡'],['飠','飽','吃東西吃飽了'],['火','炮','鞭炮要用火點']]},
+  {p:'方', items:[['言','訪','拜訪別人要說話'],['戶','房','房子有門戶'],['糸','紡','紡紗要用絲線'],['艹','芳','花草的香味很芬芳']]},
+  {p:'皮', items:[['衤','被','棉被和衣服一樣是布做的，所以是衣字旁'],['扌','披','用手把衣服披上'],['氵','波','水面起波浪'],['石','破','被石頭打破了']]},
+  {p:'古', items:[['木','枯','樹木乾掉了'],['女','姑','姑姑是女生'],['艹','苦','苦瓜是植物，所以有草字頭']]},
+];
+function lgMkRadical(i){
+  const allChars=[], allRads=[];
+  LG_RADICAL_FAMILIES.forEach(f=>f.items.forEach(it=>{ allChars.push(it[1]); if(!allRads.includes(it[0])) allRads.push(it[0]); }));
+  {
+    const f=lgPick(LG_RADICAL_FAMILIES), it=lgPick(f.items);
+    if(i%2===0){
+      const fam=f.items.map(x=>x[1]).filter(x=>x!==it[1]);
+      const opts=lgFillOpts(it[1], fam, 4);
+      while(opts.length<4){ const c=lgPick(allChars); if(!opts.includes(c)) opts.push(c); }
+      return {q:'<div class="lg-sub">把兩個部件合起來，變成哪個字？</div><div class="lg-big">'+it[0]+' ＋ '+f.p+' ＝ ？</div>', opts, ans:it[1], tip:'「'+it[1]+'」：'+it[2]};
+    }
+    const fam=[...new Set(f.items.map(x=>x[0]))].filter(x=>x!==it[0]);
+    const opts=lgFillOpts(it[0], fam, 4);
+    while(opts.length<4){ const c=lgPick(allRads); if(!opts.includes(c)) opts.push(c); }
+    return {q:'<div class="lg-sub">要加上哪一個部件，才會變成「'+it[1]+'」？</div><div class="lg-big">？ ＋ '+f.p+' ＝ '+it[1]+'</div>', opts, ans:it[0], tip:'「'+it[1]+'」：'+it[2]};
+  }
+}
+function initRadicalBuild(area){ lgQuiz(area,{total:10, make:lgMkRadical}); }
+
+/* ── 學習遊戲 6：成語填空 ── */
+const LG_IDIOMS=[
+  ['守株待兔',1,['珠','朱','蛛'],'比喻死守老方法不知變通，或想不努力就有收穫'],
+  ['畫蛇添足',2,['天','田','甜'],'做了多餘的事，反而把事情弄壞'],
+  ['井底之蛙',3,['娃','哇','窪'],'比喻見識很少、眼光狹小的人'],
+  ['亡羊補牢',3,['老','勞','撈'],'出了錯趕快補救，還來得及'],
+  ['對牛彈琴',3,['勤','秦','情'],'對不懂的人講道理，白費力氣'],
+  ['狐假虎威',1,['價','架','家'],'借別人的力量來嚇唬人'],
+  ['半途而廢',3,['費','飛','肺'],'事情做到一半就放棄'],
+  ['一舉兩得',1,['句','巨','具'],'做一件事，得到兩種好處'],
+  ['五顏六色',1,['言','鹽','眼'],'顏色很多，非常豐富'],
+  ['十全十美',3,['每','妹','沒'],'非常完美，沒有缺點'],
+  ['自言自語',3,['雨','魚','與'],'自己對自己說話'],
+  ['四面八方',3,['芳','房','放'],'各個方向、到處'],
+  ['百發百中',3,['鐘','忠','終'],'每次都命中目標，比喻做事很有把握'],
+  ['拔苗助長',1,['描','貓','秒'],'太急著想要成功，反而把事情弄壞'],
+  ['三心二意',3,['義','藝','憶'],'拿不定主意，做事不專心'],
+  ['九牛一毛',3,['貓','帽','冒'],'很多很多裡面極少的一部分'],
+];
+function lgMkIdiom(item){
+  {
+    const [w,pos,wrong,mean]=item||lgPick(LG_IDIOMS);
+    const shown=w.split('').map((c,k)=>k===pos?'<span class="lg-blank">？</span>':c).join('');
+    return {q:'<div class="lg-sub">選出正確的字，完成成語</div><div class="lg-big">'+shown+'</div><div class="lg-sub">意思：'+mean+'</div>',
+      opts:[w[pos],...wrong], ans:w[pos], tip:'「'+w+'」'};
+  }
+}
+function initIdiomFill(area){ const order=lgShuffle(LG_IDIOMS); lgQuiz(area,{total:8, make(i){ return lgMkIdiom(order[i%order.length]); }}); }
+
+/* ── 學習遊戲 7：量詞配對 ── */
+const LG_MEASURE=[
+  ['🐶','狗','隻',['條','頭']],['📖','書','本',[]],['🐟','魚','條',['隻','尾']],['🌸','花','朵',['枝','束','株','棵']],
+  ['🚗','汽車','輛',['部','台']],['🌳','樹','棵',['株']],['📄','紙','張',['片']],['👟','鞋子','雙',['隻']],
+  ['☂️','雨傘','把',['支','枝']],['⛰️','山','座',[]],['👕','衣服','件',['套']],['🐴','馬','匹',['隻','頭']],
+  ['🎵','歌','首',['支','曲']],['✈️','飛機','架',['台','部','班']],['🚢','船','艘',['條','隻']],['✉️','信','封',[]],
+  ['🏫','教室','間',[]],['🍃','葉子','片',[]],['🐮','牛','頭',['隻','條']],['🌊','河','條',['道']],
+  ['✏️','鉛筆','枝',['支','根']],['🌉','橋','座',['條']],['⭐','星星','顆',['個']],
+];
+function lgMkMeasure(item){
+  const allM=[...new Set(LG_MEASURE.map(x=>x[2]))];
+  {
+    const [emo,noun,m,also]=item||lgPick(LG_MEASURE);
+    const pool=allM.filter(x=>x!==m && !also.includes(x));
+    return {q:'<div class="lg-sub">選出正確的量詞</div><div style="font-size:3rem">'+emo+'</div><div class="lg-big">一 <span class="lg-blank">？</span> '+noun+'</div>',
+      opts:lgFillOpts(m,pool,4), ans:m, tip:'一'+m+noun};
+  }
+}
+function initMeasureWords(area){ const order=lgShuffle(LG_MEASURE); lgQuiz(area,{total:10, make(i){ return lgMkMeasure(order[i%order.length]); }}); }
+
+/* ── 學習遊戲 8：英文拼字蜂 ── */
+const LG_SPELL=[['cat','🐱'],['dog','🐶'],['pig','🐷'],['fish','🐟'],['bird','🐦'],['duck','🦆'],['frog','🐸'],['lion','🦁'],['bear','🐻'],
+  ['apple','🍎'],['egg','🥚'],['milk','🥛'],['cake','🍰'],['book','📖'],['pen','🖊️'],['bag','🎒'],['sun','☀️'],['moon','🌙'],['star','⭐'],
+  ['tree','🌳'],['bus','🚌'],['car','🚗'],['ball','⚽'],['hat','🎩'],['bed','🛏️'],['cup','🥤'],['kite','🪁'],['rain','🌧️']];
+function initSpellBee(area){
+  const TOTAL=8, order=lgShuffle(LG_SPELL); let round=0, word='', pos=0, miss=0, locked=false;
+  area.innerHTML=
+    '<div class="lg-wrap">'+
+      '<div class="lg-top"><span id="lgProg"></span><span id="lgCombo"></span></div>'+
+      '<div class="lg-q" id="lgQ"></div>'+
+      '<div class="lg-slots" id="lgSlots"></div>'+
+      '<div class="lg-tiles" id="lgTiles"></div>'+
+      '<div class="lg-row"><button class="lg-mini" id="lgSay">🔊 再聽一次</button><button class="lg-mini" id="lgHint">💡 提示</button></div>'+
+      '<div class="lg-tip" id="lgTip"></div>'+
+    '</div>';
+  const $=id=>document.getElementById(id);
+  $('lgSay').onclick=()=>{ try{ speakEn(word); }catch(e){} };
+  $('lgHint').onclick=()=>{
+    if(locked) return;
+    const t=[...$('lgTiles').children].find(b=>!b.disabled && b.textContent===word[pos]);
+    if(t){ miss++; t.classList.add('glow'); setTimeout(()=>t.classList.remove('glow'),900); }
+  };
+  function nextWord(){
+    if(!gameRunning) return;
+    if(round>=TOTAL){ lgEnd(); return; }
+    const [w,emo]=order[round]; word=w; pos=0; miss=0; locked=false;
+    $('lgProg').textContent='第 '+(round+1)+' / '+TOTAL+' 個單字';
+    $('lgQ').innerHTML='<div style="font-size:3.4rem">'+emo+'</div><div class="lg-sub">聽聽看，把單字拼出來</div>';
+    $('lgTip').textContent='';
+    $('lgSlots').innerHTML=w.split('').map(()=>'<div class="lg-slot"></div>').join('');
+    const abc='abcdefghijklmnopqrstuvwxyz'.split('').filter(c=>!w.includes(c));
+    const letters=lgShuffle([...w.split(''), lgPick(abc), lgPick(abc)]);
+    const box=$('lgTiles'); box.innerHTML='';
+    letters.forEach(ch=>{
+      const b=document.createElement('button'); b.className='lg-tile'; b.textContent=ch;
+      b.onclick=()=>tap(b,ch); box.appendChild(b);
+    });
+    try{ speakEn(w); }catch(e){}
+  }
+  function tap(b,ch){
+    if(locked||!gameRunning||b.disabled) return;
+    if(ch===word[pos]){
+      sfxClick(); b.disabled=true; b.classList.add('used');
+      const s=$('lgSlots').children[pos]; s.textContent=ch; s.classList.add('filled');
+      pos++;
+      if(pos===word.length){
+        locked=true; sfxCorrect();
+        const pts = miss===0 ? 15 : 10;
+        addGameScore(pts);
+        $('lgTip').innerHTML='✅ '+word+(miss===0?'　⭐ 一次就拼對！':'');
+        try{ speakEn(word); }catch(e){}
+        round++; lgLater(nextWord, 1500);
+      }
+    } else {
+      miss++; sfxWrong(); b.classList.add('bad'); setTimeout(()=>b.classList.remove('bad'),400);
+    }
+  }
+  nextWord();
+}
+
+function lgMkEnglish(){
+  const [w,emo]=lgPick(LG_SPELL);
+  const others=lgShuffle(LG_SPELL.filter(x=>x[0]!==w)).slice(0,3);
+  if(Math.random()<0.55){
+    return {q:'<div class="lg-sub">這是什麼？選出正確的英文</div><div style="font-size:3rem">'+emo+'</div>',
+      opts:[w,...others.map(x=>x[0])], ans:w, tip:emo+' = '+w};
+  }
+  return {q:'<div class="lg-sub">聽聽看，是哪一個？</div><button class="lg-mini" style="background:#f59e0b" onclick="try{speakEn(\''+w+'\')}catch(e){}">🔊 再聽一次</button>',
+    opts:[emo,...others.map(x=>x[1])], ans:emo, tip:w+' = '+emo, speak:w};
+}
+
+/* ===================================================
+   📚 三年級上學期題庫（數學依課綱主題產生；國語依康軒課次，資料待補）
+   =================================================== */
+function khDigits(n){ return String(n).split('').map(Number); }
+function khNoCarryAdd(a,b){ const A=String(a).padStart(4,'0'), B=String(b).padStart(4,'0'); return Number(A.split('').map((d,i)=>(+d + +B[i])%10).join('')); }
+function khNoBorrowSub(a,b){ const A=String(a).padStart(4,'0'), B=String(b).padStart(4,'0'); return Number(A.split('').map((d,i)=>Math.abs(+d - +B[i])).join('')); }
+
+// 一萬以內的數：位值
+function khMathPlace(){
+  if(Math.random()<0.5){
+    const n=lgRand(1000,9999), names=['千','百','十','個'], k=lgRand(0,3), d=khDigits(n)[k];
+    const opts=[String(d)]; khDigits(n).forEach(x=>{ if(opts.length<4 && !opts.includes(String(x))) opts.push(String(x)); });
+    while(opts.length<4){ const x=String(lgRand(0,9)); if(!opts.includes(x)) opts.push(x); }
+    return {q:'<div class="lg-sub">一萬以內的數</div><div class="lg-big">'+n+'</div><div class="lg-sub">的「'+names[k]+'位」數字是多少？</div>',
+      opts, ans:String(d), tip:n+' 的'+names[k]+'位是 '+d};
+  }
+  const th=lgRand(1,9), h=lgRand(0,9), t=lgRand(0,9), o=lgRand(0,9);
+  let tt=t; if(h===0&&t===0) tt=lgRand(1,9);
+  const ans=th*1000+h*100+tt*10+o;
+  const pool=[th*1000+h*100+o*10+tt, Number(''+th+h+tt+o+'0')>9999?ans+1000:Number(''+th+h+tt+o+'0'), th*100+h*10+tt, th*1000+tt*100+h*10+o, ans+1, ans+10].filter(x=>x!==ans && x<=9999).map(String);
+  return {q:'<div class="lg-sub">合起來是多少？</div><div class="lg-big" style="font-size:1.4rem">'+th+' 個千、'+h+' 個百、'+tt+' 個十、'+o+' 個一</div>',
+    opts:lgFillOpts(String(ans),pool,4), ans:String(ans), tip:'千位 '+th+'、百位 '+h+'、十位 '+tt+'、個位 '+o+'，就是 '+ans};
+}
+// 四位數加減
+function khMathAddSub(){
+  if(Math.random()<0.5){
+    const a=lgRand(1000,7999), b=lgRand(100,9999-a), ans=a+b;
+    return {q:'<div class="lg-sub">四位數加法，記得進位</div><div class="lg-big" style="font-size:1.9rem">'+a+' ＋ '+b+' = ?</div>',
+      opts:lgFillOpts(String(ans),[khNoCarryAdd(a,b),ans+10,ans-10,ans+100,ans-100].filter(x=>x>0&&x!==ans).map(String),4), ans:String(ans), tip:a+' ＋ '+b+' = '+ans};
+  }
+  const a=lgRand(2000,9999), b=lgRand(100,a-100), ans=a-b;
+  return {q:'<div class="lg-sub">四位數減法，不夠減要借位</div><div class="lg-big" style="font-size:1.9rem">'+a+' － '+b+' = ?</div>',
+    opts:lgFillOpts(String(ans),[khNoBorrowSub(a,b),ans+10,ans-10,ans+100,ans-100].filter(x=>x>0&&x!==ans).map(String),4), ans:String(ans), tip:a+' － '+b+' = '+ans+'，可以用 '+ans+' ＋ '+b+' = '+a+' 驗算'};
+}
+// 乘法：二、三位數 × 一位數
+function khMathMul(){
+  const b=lgRand(2,9), a=lgRand(12, b<=3?999:Math.floor(9999/b)>999?999:Math.floor(9999/b)), ans=a*b;
+  return {q:'<div class="lg-sub">乘法：多位數 × 一位數</div><div class="lg-big">'+a+' × '+b+' = ?</div>',
+    opts:lgNumOpts(ans,[ans+b,ans-b,ans+10*b,ans-10*b,ans+100]), ans:String(ans), tip:a+' × '+b+' = '+ans};
+}
+// 除法（有餘數）
+function khMathDiv(){
+  const d=lgRand(2,9), qt=lgRand(2,12), r=lgRand(0,d-1), n=d*qt+r;
+  const f=(a,b)=> b===0 ? a+' 沒有餘數' : a+' 餘 '+b;
+  const ans=f(qt,r);
+  const pool=[ (r+d<10? f(qt-1,r+d):f(qt+1,r)), f(qt+1,r), r+1<d?f(qt,r+1):f(qt-1,r), f(qt,(r+2)%d) ].filter(x=>x!==ans);
+  return {q:'<div class="lg-sub">除法：餘數要比除數小</div><div class="lg-big">'+n+' ÷ '+d+' = ?</div>',
+    opts:lgFillOpts(ans,pool,4), ans, tip:d+' × '+qt+(r?' ＋ '+r:'')+' = '+n+(r?'，餘數 '+r+' 比 '+d+' 小':'')};
+}
+// 長度：公分與毫米
+function khMathLength(){
+  if(Math.random()<0.5){
+    const c=lgRand(1,25), m=lgRand(1,9), ans=c*10+m;
+    return {q:'<div class="lg-sub">1 公分 = 10 毫米</div><div class="lg-big" style="font-size:1.7rem">'+c+' 公分 '+m+' 毫米 = ? 毫米</div>',
+      opts:lgNumOpts(ans,[c+m,c*100+m,Number(''+m+c),ans+10]), ans:String(ans), tip:c+' 公分是 '+(c*10)+' 毫米，再加 '+m+' 毫米'};
+  }
+  const v=lgRand(11,250); if(v%10===0) return khMathLength();
+  const ans=Math.floor(v/10)+' 公分 '+(v%10)+' 毫米';
+  const pool=[Math.floor(v/100)+' 公分 '+(v%100)+' 毫米', (v%10)+' 公分 '+Math.floor(v/10)+' 毫米', (Math.floor(v/10)+1)+' 公分 '+(v%10)+' 毫米', v+' 公分'].filter(x=>x!==ans);
+  return {q:'<div class="lg-sub">1 公分 = 10 毫米</div><div class="lg-big" style="font-size:1.7rem">'+v+' 毫米 = ?</div>',
+    opts:lgFillOpts(ans,pool,4), ans, tip:v+' 毫米 = '+ans};
+}
+// 重量：公斤與公克
+function khMathWeight(){
+  const kg=lgRand(1,9), g=lgPick([50,100,200,250,300,400,500,600,750,800,900]), ans=kg*1000+g;
+  if(Math.random()<0.5){
+    return {q:'<div class="lg-sub">1 公斤 = 1000 公克</div><div class="lg-big" style="font-size:1.6rem">'+kg+' 公斤 '+g+' 公克 = ? 公克</div>',
+      opts:lgFillOpts(String(ans),[kg*100+g, kg*10000+g, Number(String(kg)+String(g).padStart(2,'0'))===ans?ans+1000:Number(String(kg)+String(g).padStart(2,'0')), ans+1000].filter(x=>x!==ans).map(String),4),
+      ans:String(ans), tip:kg+' 公斤是 '+(kg*1000)+' 公克，再加 '+g+' 公克'};
+  }
+  const a=kg+' 公斤 '+g+' 公克';
+  const pool=[(kg*10)+' 公斤 '+g+' 公克', kg+' 公斤 '+(g/10)+' 公克', (kg+1)+' 公斤 '+g+' 公克', ans+' 公斤'].filter(x=>x!==a);
+  return {q:'<div class="lg-sub">1 公斤 = 1000 公克</div><div class="lg-big" style="font-size:1.7rem">'+ans+' 公克 = ?</div>',
+    opts:lgFillOpts(a,pool,4), ans:a, tip:ans+' 公克 = '+a};
+}
+// 周長
+function khMathPerimeter(){
+  const sq=Math.random()<0.35;
+  const l=lgRand(3,15), w=sq?l:lgRand(2,l-1), ans=2*(l+w);
+  const W=150, H=Math.max(50,Math.round(150*w/l));
+  const svg='<svg width="'+(W+60)+'" height="'+(H+40)+'" viewBox="0 0 '+(W+60)+' '+(H+40)+'"><rect x="30" y="10" width="'+W+'" height="'+H+'" fill="#fde9b5" stroke="#92400e" stroke-width="3"/>'+
+    '<text x="'+(30+W/2)+'" y="'+(H+32)+'" text-anchor="middle" font-size="14" font-weight="800" fill="#3b2a0a">'+l+' 公分</text>'+
+    '<text x="22" y="'+(10+H/2)+'" text-anchor="end" dominant-baseline="central" font-size="14" font-weight="800" fill="#3b2a0a">'+w+'</text></svg>';
+  return {q:'<div class="lg-sub">'+(sq?'正方形每邊 '+l+' 公分':'長方形長 '+l+' 公分、寬 '+w+' 公分')+'，周長是幾公分？</div><div>'+svg+'</div>',
+    opts:lgNumOpts(ans,[l+w,l*w,2*l+w,l+2*w,4*l]), ans:String(ans), tip:'周長是四個邊加起來：'+l+' ＋ '+w+' ＋ '+l+' ＋ '+w+' = '+ans};
+}
+function khMath(region){
+  const easy=[khMathPlace,khMathAddSub,()=>lgMkMult(0)];
+  const mid=[khMathPlace,khMathAddSub,khMathMul,khMathDiv,khMathLength,khMathWeight];
+  const hard=[khMathMul,khMathDiv,khMathLength,khMathWeight,khMathPerimeter,()=>lgMkPizza(lgRand(0,9)),()=>lgMkClock(lgRand(0,9),true)];
+  return lgPick(region===0?easy:region===1?mid:hard)();
+}
+
+/* ── 國語課本題庫：康軒三上（115學年）。⚠ 只能放課本原文核對過的資料 ──
+   格式：{n:課次, title:'課名', chars:[['字','注音',['詞語','詞語']], ...]} */
+const KH_ZH = [];
+function khScope(){ try{ return JSON.parse(localStorage.getItem('boppy_kh_scope')||'{}'); }catch(e){ return {}; } }
+function khSetScope(o){ try{ localStorage.setItem('boppy_kh_scope',JSON.stringify(Object.assign(khScope(),o))); }catch(e){} }
+function khZhLessons(){
+  if(!KH_ZH.length) return [];
+  const up=khScope().zhUpTo || KH_ZH[KH_ZH.length-1].n;
+  return KH_ZH.filter(L=>L.n<=up);
+}
+function khZhQuestion(){
+  const ls=khZhLessons(); if(!ls.length) return null;
+  const recent=ls.slice(-2), L=Math.random()<0.6?lgPick(recent):lgPick(ls);
+  const all=[]; ls.forEach(x=>x.chars.forEach(c=>all.push(c)));
+  const [c,zy,words]=lgPick(L.chars);
+  const tag='第 '+L.n+' 課〈'+L.title+'〉';
+  if(Math.random()<0.45 || !words.length){
+    const pool=[...new Set(all.map(x=>x[1]).filter(z=>z!==zy))];
+    return {q:'<div class="lg-sub">'+tag+'　這個字怎麼念？</div><div class="lg-big" style="font-size:3rem">'+c+'</div>',
+      opts:lgFillOpts(zy,pool,4), ans:zy, tip:'「'+c+'」念 '+zy+(words.length?'，例如：'+words.join('、'):'')};
+  }
+  const w=lgPick(words), k=w.indexOf(c);
+  const shown=w.split('').map((x,i)=>i===k?'<span class="lg-blank">？</span>':x).join('');
+  const pool=[...new Set(all.map(x=>x[0]).filter(x=>x!==c && !w.includes(x)))];
+  return {q:'<div class="lg-sub">'+tag+'　選出正確的字</div><div class="lg-big">'+shown+'</div><div class="lg-sub">'+zy+'</div>',
+    opts:lgFillOpts(c,pool,4), ans:c, tip:'「'+w+'」'};
+}
+function initKhMath(area){ lgQuiz(area,{total:10, make(i){ return khMath(i<4?1:2); }}); }
+
+/* ===================================================
+   ⚔️ 波比冒險島：關卡對戰（原創怪獸；答題決定攻擊與閃避）
+   =================================================== */
+const ADV_STARTERS=[
+  {id:'fire',  color:'#ef4444', type:'火', forms:[['🦎','火蜥寶'],['🐊','烈焰鱷'],['🐉','炎龍王']]},
+  {id:'water', color:'#3b82f6', type:'水', forms:[['🐢','水泡龜'],['🐬','浪花豚'],['🐳','深海鯨王']]},
+  {id:'leaf',  color:'#22c55e', type:'草', forms:[['🌱','葉芽寶'],['🦔','森林蝟'],['🦌','神木鹿']]},
+];
+const ADV_SUBJ={
+  math:{icon:'📐', name:'數學', move:'數字衝擊', color:'#f97316'},
+  zh:  {icon:'📖', name:'國語', move:'文字旋風', color:'#8b5cf6'},
+  en:  {icon:'🔤', name:'英文', move:'字母光束', color:'#0ea5e9'},
+};
+const ADV_REGIONS=[
+  {name:'🌳 第一區・數字森林', bg:'linear-gradient(180deg,#14532d 0%,#1a1a2e 70%)'},
+  {name:'🌊 第二區・文字海灣', bg:'linear-gradient(180deg,#1e3a8a 0%,#1a1a2e 70%)'},
+  {name:'🌋 第三區・字母火山', bg:'linear-gradient(180deg,#7f1d1d 0%,#1a1a2e 70%)'},
+];
+// [圖示, 名字, 弱點科目, 抵抗科目]
+const ADV_STAGES=[
+  ['🐛','毛毛蟲','zh','math'], ['🐿️','松鼠兵','en','zh'], ['🦉','貓頭鷹博士','math','en'], ['🐻','森林熊大王','zh','math'],
+  ['🦀','螃蟹兵','math','zh'], ['🐙','章魚怪','en','math'], ['🦈','鯊魚將軍','zh','en'], ['🐲','海龍王','math','zh'],
+  ['🦇','蝙蝠精','en','math'], ['🦂','火蠍子','zh','en'], ['🦅','烈焰鷹','math','zh'], ['👾','火山魔王','en','math'],
+];
+const ADV_KEY='boppy_adv_v1';
+function advLoad(){ try{ return JSON.parse(localStorage.getItem(ADV_KEY)||'null'); }catch(e){ return null; } }
+function advSave(st){ try{ localStorage.setItem(ADV_KEY, JSON.stringify(st)); }catch(e){} }
+function advStarter(st){ return ADV_STARTERS.find(x=>x.id===st.starter)||ADV_STARTERS[0]; }
+function advFormIdx(lv){ return lv>=10?2:lv>=5?1:0; }
+function advForm(st){ return advStarter(st).forms[advFormIdx(st.lv)]; }
+function advMaxHp(lv){ return 30+lv*5; }
+function advExpNeed(lv){ return 40+lv*15; }
+function advQuestion(subj,region){
+  const i=lgRand(0,9);
+  if(subj==='math') return khMath(region);
+  if(subj==='zh'){
+    if(Math.random()<0.6){ const kq=khZhQuestion(); if(kq) return kq; }
+    const t=Math.random();
+    return t<0.4 ? lgMkRadical(i) : t<0.7 ? lgMkMeasure() : lgMkIdiom();
+  }
+  return lgMkEnglish();
+}
+
+function initAdventure(area){
+  const st=advLoad();
+  if(!st || !st.starter){ advPickStarter(area); return; }
+  advMap(area);
+}
+
+function advPickStarter(area){
+  area.innerHTML='<div class="lg-wrap adv" style="background:linear-gradient(180deg,#4c1d95,#1a1a2e 70%)">'+
+    '<div class="adv-title">⚔️ 歡迎來到波比冒險島！</div>'+
+    '<div class="adv-note">選一隻夥伴陪你冒險。答對題目就能攻擊怪獸，打贏就能升級、進化，還能把怪獸收進圖鑑！</div>'+
+    '<div class="adv-starters">'+ADV_STARTERS.map(s=>
+      '<button class="adv-starter" style="border-color:'+s.color+'" onclick="advChooseStarter(\''+s.id+'\')">'+
+        '<div style="font-size:3rem">'+s.forms[0][0]+'</div><b style="color:'+s.color+'">'+s.forms[0][1]+'</b>'+
+        '<span>'+s.type+'屬性</span><span class="adv-evo">'+s.forms.map(f=>f[0]).join(' → ')+'</span>'+
+      '</button>').join('')+'</div></div>';
+}
+function advChooseStarter(id){
+  if(!gameRunning) return;
+  sfxLevelUp();
+  advSave({starter:id, lv:1, exp:0, cleared:0, caught:[], wins:0});
+  advMap(document.getElementById('gameArea'));
+}
+
+function advMap(area){
+  area=area||document.getElementById('gameArea');
+  const st=advLoad(); if(!st) return advPickStarter(area);
+  const [emo,name]=advForm(st), need=advExpNeed(st.lv), sc=advStarter(st).color;
+  let html='<div class="lg-wrap adv" style="background:linear-gradient(180deg,#312e81,#1a1a2e 60%)">'+
+    '<div class="adv-card">'+
+      '<div class="adv-mon-sm">'+emo+'</div>'+
+      '<div style="flex:1">'+
+        '<div><b style="color:'+sc+'">'+name+'</b>　Lv.'+st.lv+'</div>'+
+        '<div class="adv-bar"><div style="width:'+Math.min(100,st.exp/need*100)+'%;background:#38bdf8"></div></div>'+
+        '<div class="adv-small">經驗值 '+st.exp+' / '+need+(st.lv<5?'　Lv.5 進化':st.lv<10?'　Lv.10 再進化':'　已是最終型態')+'</div>'+
+      '</div>'+
+      '<button class="lg-mini" onclick="advDex()">📘 圖鑑<br>'+st.caught.length+'/'+ADV_STAGES.length+'</button>'+
+    '</div>';
+  if(KH_ZH.length){
+    const up=khScope().zhUpTo||KH_ZH[KH_ZH.length-1].n, L=KH_ZH.find(x=>x.n===up)||KH_ZH[KH_ZH.length-1];
+    html+='<div class="adv-card" style="font-size:.85rem">📖 國語出題到：第 '+L.n+' 課〈'+L.title+'〉'+
+      '<button class="lg-mini" onclick="khStep(-1)">－</button><button class="lg-mini" onclick="khStep(1)">＋</button></div>';
+  }
+  ADV_REGIONS.forEach((r,ri)=>{
+    html+='<div class="adv-region"><div class="adv-rname">'+r.name+'</div><div class="adv-nodes">';
+    for(let k=0;k<4;k++){
+      const s=ri*4+k, [e,n]=ADV_STAGES[s], boss=k===3;
+      const done=s<st.cleared, open=s===st.cleared;
+      const cls='adv-node'+(done?' done':open?' open':' lock')+(boss?' boss':'');
+      const face = done||open ? e : '🔒';
+      html+='<button class="'+cls+'" '+(done||open?'onclick="advBattle('+s+')"':'disabled')+'>'+
+        (boss?'<span class="adv-crown">👑</span>':'')+'<div class="adv-face">'+face+'</div>'+
+        '<div class="adv-sn">'+(done?'⭐ ':'')+(s+1)+'</div><div class="adv-nn">'+(done||open?n:'？？？')+'</div></button>';
+    }
+    html+='</div></div>';
+  });
+  if(st.cleared>=ADV_STAGES.length) html+='<div class="adv-note">🏆 全部破關了！可以重打任何關卡繼續練功升級。</div>';
+  html+='<button class="lg-next" style="margin-top:4px" onclick="lgEnd()">🏁 結束冒險，領取迷你波</button></div>';
+  area.innerHTML=html;
+}
+
+function advDex(){
+  const st=advLoad(); const area=document.getElementById('gameArea');
+  area.innerHTML='<div class="lg-wrap adv" style="background:linear-gradient(180deg,#1e3a8a,#1a1a2e 60%)">'+
+    '<div class="adv-title">📘 怪獸圖鑑　'+st.caught.length+' / '+ADV_STAGES.length+'</div>'+
+    '<div class="adv-dex">'+ADV_STAGES.map((m,s)=>{
+      const got=st.caught.includes(s);
+      return '<div class="adv-dexc'+(got?'':' no')+'"><div style="font-size:2rem">'+(got?m[0]:'❔')+'</div><b>'+(got?m[1]:'？？？')+'</b>'+
+        (got?'<span>弱點 '+ADV_SUBJ[m[2]].icon+ADV_SUBJ[m[2]].name+'</span>':'<span>No.'+(s+1)+'</span>')+'</div>';
+    }).join('')+'</div>'+
+    '<button class="lg-next" onclick="advMap()">🗺️ 回地圖</button></div>';
+}
+
+function advBattle(s){
+  if(!gameRunning) return;
+  sfxStart();
+  const area=document.getElementById('gameArea');
+  const st=advLoad(); const region=Math.floor(s/4), boss=s%4===3;
+  const [eEmo,eName,weak,resist]=ADV_STAGES[s];
+  const eLv=s+1+(boss?1:0), eMax=Math.round((28+s*7)*(boss?1.5:1)), eAtk=Math.round((6+s*1.0)*(boss?1.15:1));
+  const [pEmo,pName]=advForm(st), pMax=advMaxHp(st.lv), pAtk=8+st.lv*2;
+  let eHp=eMax, pHp=pMax, potions=2, combo=0, busy=false;
+
+  area.innerHTML='<div class="lg-wrap adv" style="background:'+ADV_REGIONS[region].bg+'">'+
+    '<div class="adv-foe">'+
+      '<div class="adv-info"><div><b>'+eName+'</b>'+(boss?' 👑':'')+'　Lv.'+eLv+'</div>'+
+        '<div class="adv-bar"><div id="advEHp" style="width:100%"></div></div>'+
+        '<div class="adv-small">弱點 '+ADV_SUBJ[weak].icon+ADV_SUBJ[weak].name+'　抵抗 '+ADV_SUBJ[resist].icon+ADV_SUBJ[resist].name+'</div></div>'+
+      '<div class="adv-mon" id="advEMon">'+eEmo+'</div>'+
+    '</div>'+
+    '<div class="adv-me">'+
+      '<div class="adv-mon me" id="advPMon">'+pEmo+'</div>'+
+      '<div class="adv-info"><div><b>'+pName+'</b>　Lv.'+st.lv+'</div>'+
+        '<div class="adv-bar"><div id="advPHp" style="width:100%;background:#22c55e"></div></div>'+
+        '<div class="adv-small" id="advPHpTxt">'+pHp+' / '+pMax+'</div></div>'+
+    '</div>'+
+    '<div class="adv-msg" id="advMsg">'+(boss?'👑 頭目 ':'野生的 ')+eName+' 出現了！</div>'+
+    '<div id="advPanel"></div></div>';
+  const $=id=>document.getElementById(id);
+
+  function bars(){
+    $('advEHp').style.width=Math.max(0,eHp/eMax*100)+'%';
+    const p=Math.max(0,pHp/pMax*100);
+    $('advPHp').style.width=p+'%';
+    $('advPHp').style.background=p>50?'#22c55e':p>20?'#f59e0b':'#ef4444';
+    $('advPHpTxt').textContent=Math.max(0,pHp)+' / '+pMax;
+  }
+  function shake(id){ const el=$(id); if(!el) return; el.classList.remove('hit'); void el.offsetWidth; el.classList.add('hit'); }
+  function pop(id,text,color){
+    const el=$(id); if(!el) return;
+    const d=document.createElement('div'); d.className='adv-dmg'; d.textContent=text; d.style.color=color;
+    el.appendChild(d); setTimeout(()=>d.remove(),900);
+  }
+  function moves(){
+    if(!gameRunning) return;
+    busy=false;
+    $('advPanel').innerHTML='<div class="adv-moves">'+Object.keys(ADV_SUBJ).map(k=>{
+      const m=ADV_SUBJ[k];
+      return '<button class="adv-move" style="--mc:'+m.color+'" data-k="'+k+'">'+m.icon+' '+m.move+'<span>'+m.name+'題</span></button>';
+    }).join('')+
+    '<button class="adv-move small" id="advPot" style="--mc:#ec4899">🧪 補血藥 ×'+potions+'</button>'+
+    '<button class="adv-move small" id="advRun" style="--mc:#64748b">🏃 回地圖</button></div>';
+    [...$('advPanel').querySelectorAll('[data-k]')].forEach(b=>b.onclick=()=>ask(b.dataset.k));
+    $('advPot').onclick=potion; $('advRun').onclick=()=>{ sfxClick(); advMap(); };
+    if(potions<=0) $('advPot').disabled=true;
+  }
+  function potion(){
+    if(busy||potions<=0) return;
+    if(pHp>=pMax){ $('advMsg').textContent='體力是滿的，先把補血藥留著吧！'; return; }
+    potions--; const heal=Math.min(pMax-pHp, Math.round(pMax*0.4)); pHp+=heal;
+    sfxCorrect(); pop('advPMon','+'+heal,'#22c55e'); bars();
+    $('advMsg').textContent='🧪 '+pName+' 喝下補血藥，回復了 '+heal+' 點體力！';
+    moves();
+  }
+  function ask(k){
+    if(busy||!gameRunning) return; busy=true; sfxClick();
+    const q=advQuestion(k,region), m=ADV_SUBJ[k];
+    $('advMsg').innerHTML=m.icon+' 準備使出「'+m.move+'」！答對就能命中！';
+    $('advPanel').innerHTML='<div class="lg-q adv-q">'+q.q+'</div><div class="lg-opts" id="advOpts"></div>';
+    lgShuffle(q.opts).forEach(o=>{
+      const b=document.createElement('button'); b.className='lg-opt'; b.innerHTML=o; b.dataset.v=o;
+      b.onclick=()=>hit(k,q,b,o); $('advOpts').appendChild(b);
+    });
+    if(q.speak){ try{ speakEn(q.speak); }catch(e){} }
+  }
+  function hit(k,q,btn,o){
+    if(!gameRunning || btn.parentNode.dataset.done) return;
+    btn.parentNode.dataset.done='1';
+    const m=ADV_SUBJ[k];
+    if(o===q.ans){
+      combo++; btn.classList.add('ok'); sfxCorrect();
+      let mult = k===weak?2 : k===resist?0.5 : 1;
+      const crit = combo>=3;
+      const dmg=Math.max(1,Math.round(pAtk*mult*(crit?1.5:1)));
+      eHp-=dmg; shake('advEMon'); pop('advEMon','-'+dmg,'#fde047'); bars();
+      addGameScore(10+(k===weak?5:0)+(crit?5:0));
+      $('advMsg').innerHTML=pName+' 使出 '+m.move+'！'+(mult===2?'<b class="adv-eff">效果絕佳！</b>':mult<1?'效果不太好…':'')+(crit?' 💥會心一擊！':'')+'<br>'+eName+' 來不及反擊！';
+      setTimeout(()=>{ if(eHp<=0) win(); else moves(); }, 1300);
+    } else {
+      combo=0; btn.classList.add('bad'); sfxWrong();
+      [...$('advOpts').children].forEach(b=>{ if(b.dataset.v===q.ans) b.classList.add('ok'); });
+      pHp-=eAtk; shake('advPMon'); pop('advPMon','-'+eAtk,'#f87171'); bars();
+      $('advMsg').innerHTML='攻擊沒打中！'+eName+' 反擊，造成 '+eAtk+' 點傷害！<br>💡 正確答案是 '+q.ans+(q.tip?'：'+q.tip:'');
+      const nb=document.createElement('button'); nb.className='lg-next'; nb.textContent='繼續 ➜';
+      nb.onclick=()=>{ if(pHp<=0) lose(); else moves(); };
+      $('advPanel').appendChild(nb);
+    }
+  }
+  function win(){
+    const st2=advLoad(); const first=s===st2.cleared;
+    const gain=30+s*8+(boss?20:0);
+    const oldForm=advFormIdx(st2.lv), oldLv=st2.lv;
+    if(first) st2.cleared++;
+    const newCatch=!st2.caught.includes(s); if(newCatch) st2.caught.push(s);
+    st2.exp+=gain; st2.wins=(st2.wins||0)+1;
+    while(st2.exp>=advExpNeed(st2.lv)){ st2.exp-=advExpNeed(st2.lv); st2.lv++; }
+    advSave(st2);
+    addGameScore(30+s*5+(first?20:0));
+    const evolved=advFormIdx(st2.lv)!==oldForm, nf=advForm(st2);
+    if(st2.lv>oldLv) sfxLevelUp(); else sfxCorrect();
+    const hasNext = s+1<ADV_STAGES.length && s+1<=st2.cleared;
+    $('advMsg').innerHTML='🎉 打敗了 '+eName+'！';
+    $('advPanel').innerHTML='<div class="adv-result">'+
+      '<div>⭐ 獲得經驗值 +'+gain+'</div>'+
+      (st2.lv>oldLv?'<div>⬆️ 升級了！Lv.'+oldLv+' → Lv.'+st2.lv+'</div>':'')+
+      (evolved?'<div class="adv-evolve">✨ '+pName+' 進化成 '+nf[0]+' '+nf[1]+'！</div>':'')+
+      (newCatch?'<div>📘 '+eEmo+' '+eName+' 加入圖鑑！</div>':'')+
+      (first&&s+1<ADV_STAGES.length?'<div>🔓 第 '+(s+2)+' 關開放了！</div>':'')+
+      (first&&s===ADV_STAGES.length-1?'<div>🏆 恭喜全部破關！</div>':'')+
+      '</div><div class="lg-row">'+
+      '<button class="lg-mini" onclick="advMap()">🗺️ 回地圖</button>'+
+      (hasNext?'<button class="lg-next" onclick="advBattle('+(s+1)+')">▶ 下一關</button>':'')+
+      '</div>';
+  }
+  function lose(){
+    const st2=advLoad(); st2.exp+=10;
+    while(st2.exp>=advExpNeed(st2.lv)){ st2.exp-=advExpNeed(st2.lv); st2.lv++; }
+    advSave(st2);
+    $('advMsg').innerHTML=pName+' 累倒了… 沒關係，每一次都在變強！';
+    $('advPanel').innerHTML='<div class="adv-result"><div>⭐ 努力的經驗值 +10</div><div>💡 小祕訣：用對手「弱點」的科目攻擊，傷害加倍！</div></div>'+
+      '<div class="lg-row"><button class="lg-mini" onclick="advMap()">🗺️ 回地圖</button><button class="lg-next" onclick="advBattle('+s+')">🔁 再挑戰</button></div>';
+  }
+  bars(); moves();
+}
+
+function khStep(d){
+  if(!KH_ZH.length) return;
+  const ns=KH_ZH.map(x=>x.n), cur=khScope().zhUpTo||ns[ns.length-1];
+  const i=Math.max(0,Math.min(ns.length-1, ns.indexOf(cur)+d));
+  khSetScope({zhUpTo:ns[i]}); sfxClick(); advMap();
 }
 
 /* ===================================================
