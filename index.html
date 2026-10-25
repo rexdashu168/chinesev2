@@ -455,8 +455,8 @@ letter-spacing:3px;margin:12px 0;
 
 .speak-btn{
 background:linear-gradient(135deg,var(--amber),var(--amber-dark));
-border:none;border-radius:50%;
-width:76px;height:76px;font-size:2.5rem;
+border:none;border-radius:38px;
+min-width:76px;height:68px;padding:0 22px;font-size:1.35rem;font-weight:900;color:#fff;white-space:nowrap;font-family:inherit;
 cursor:pointer;
 box-shadow:0 6px 20px rgba(245,158,11,0.4),0 0 0 0 rgba(245,158,11,0.4);
 margin:16px 0;
@@ -5771,6 +5771,7 @@ function checkAns(correct, btn){
     btn.classList.add('correct');
     sfxCorrect();
     logCorrect(u, S.subj);
+    if(typeof g3ItemResult==='function') g3ItemResult(u,true);
     logAccuracy(S.subj, true, u);
     if(ham){ ham.classList.remove('sad'); ham.classList.add('happy'); ham.innerHTML=boppySVG(52,'happy','',false); }
     const isRetry = S.retries>0;
@@ -5810,6 +5811,7 @@ function checkAns(correct, btn){
     btn.classList.add('wrong');
     sfxWrong();
     logMistake(u, S.subj);
+    if(typeof g3ItemResult==='function') g3ItemResult(u,false);
     logAccuracy(S.subj, false, u);
     if(ham){ ham.classList.remove('happy'); ham.classList.add('sad'); ham.innerHTML=boppySVG(52,'sad','',false); }
     S.retries++;
@@ -6011,6 +6013,7 @@ function showComplete(){
   if(S.makeupMode){ showMakeupComplete(); return; }
   endSessionTimer();
   S.today[S.subj].done = true;
+  if(getActiveGrade()==='g3' && typeof g3CommitPlan==='function') g3CommitPlan(S.subj);
   const today = new Date().toISOString().split('T')[0];
   if(S.stats.lastDate !== today){ S.stats.streak++; S.stats.lastDate=today; }
 
@@ -8059,8 +8062,8 @@ function khMathPerimeter(){
 }
 function khMath(region){
   const easy=[khMathPlace,khMathAddSub,()=>lgMkMult(0)];
-  const mid=[khMathPlace,khMathAddSub,khMathMul,khMathDiv,khMathLength,khMathWeight];
-  const hard=[khMathMul,khMathDiv,khMathLength,khMathWeight,khMathPerimeter,()=>lgMkPizza(lgRand(0,9)),()=>lgMkClock(lgRand(0,9),true)];
+  const mid=[khMathPlace,khMathAddSub,khMathMul,khMathDiv,khMathLength,khMathWeight,()=>khMathCapacity(),()=>khMathTimeConv(),()=>khMathChange()];
+  const hard=[khMathMul,khMathDiv,khMathLength,khMathWeight,khMathPerimeter,()=>lgMkPizza(lgRand(0,9)),()=>lgMkClock(lgRand(0,9),true),()=>khMathWord2(),()=>khMath24h(),()=>khMathAngle(),()=>khMathCircle()];
   return lgPick(region===0?easy:region===1?mid:hard)();
 }
 
@@ -8222,7 +8225,8 @@ function advQuestion(subj,region){
   if(subj==='zh'){
     if(Math.random()<0.6){ const kq=khZhQuestion(); if(kq) return kq; }
     const t=Math.random();
-    return t<0.4 ? lgMkRadical(i) : t<0.7 ? lgMkMeasure() : lgMkIdiom();
+    if(t<0.45 && typeof g3Q==='function'){ const cat=lgPick(['ant','syn','wc','de']); const q=g3Q(lgPick(g3CatItems(cat))); if(q) return q; }
+    return t<0.6 ? lgMkRadical(i) : t<0.8 ? lgMkMeasure() : lgMkIdiom();
   }
   return Math.random()<(enLearning().length?0.7:0.5) ? advSpellQ(region) : lgMkEnglish();
 }
@@ -9277,71 +9281,11 @@ function g3Seeded(seed, fn){
   Math.random=function(){ s^=s<<13; s>>>=0; s^=s>>>17; s^=s<<5; s>>>=0; return s/4294967296; };
   try{ return fn(); } finally{ Math.random=orig; }
 }
-function g3DayIndex(){
-  if(!S.g3Start) S.g3Start=todayStr();
-  const d=Math.round((new Date(todayStr()+'T00:00:00Z') - new Date(S.g3Start+'T00:00:00Z'))/86400000);
-  return Math.max(0,d);
-}
 function g3Practice(q, extra){
   return Object.assign({type:'practice', q:q.q, opts:q.opts.map(t=>({t, c:t===q.ans})),
     hint:'仔細想一想再作答', okMsg:q.tip||'答對了！', failMsg:'再想一次，答對才能往下走喔！'}, extra||{});
 }
 const _g3Cache={};
-function g3DailyCourse(subj){
-  const key=subj+'|'+todayStr()+'|'+(S.g3Start||'');
-  if(_g3Cache[key]) return _g3Cache[key];
-  const day=g3DayIndex();
-  const course=g3Seeded(g3Hash(key), ()=> subj==='chinese' ? g3Chinese(day) : subj==='math' ? g3Math(day) : g3English(day));
-  _g3Cache[key]=course; return course;
-}
-function g3Chinese(day){
-  const units=[], I=LG_IDIOMS, n=I.length;
-  const ids=[I[(day*2)%n], I[(day*2+1)%n]];
-  ids.forEach(it=>{
-    const [w,,,mean]=it;
-    units.push({type:'g3teach', big:w, sub:'今日成語', lines:['意思：'+mean], example:G3_IDIOM_EX[w]||'', say:w, lang:'zh', talk:'今天來學成語「'+w+'」！先聽聽看怎麼念。'});
-    units.push(g3Practice(lgMkIdiom(it)));
-  });
-  const M=LG_MEASURE, m1=M[(day*2)%M.length], m2=M[(day*2+1)%M.length];
-  units.push({type:'g3teach', big:'一'+m1[2]+m1[1]+'　一'+m2[2]+m2[1], emoji:m1[0]+' '+m2[0], sub:'量詞', say:'一'+m1[2]+m1[1]+'，一'+m2[2]+m2[1], lang:'zh',
-    lines:['說「一個什麼」的時候，不同的東西要用不同的量詞。','「'+m1[1]+'」要說一'+m1[2]+m1[1]+'，「'+m2[1]+'」要說一'+m2[2]+m2[1]+'。'], talk:'量詞小教室！'});
-  units.push(g3Practice(lgMkMeasure(m1)));
-  units.push(g3Practice(lgMkMeasure(m2)));
-  const F=LG_RADICAL_FAMILIES[day%LG_RADICAL_FAMILIES.length];
-  units.push({type:'g3teach', big:F.p, sub:'部首家族：「'+F.p+'」的朋友', say:F.items.map(x=>x[1]).join('，'), lang:'zh',
-    lines:F.items.map(x=>x[0]+' ＋ '+F.p+' ＝ <b>'+x[1]+'</b>　'+x[2]), talk:'同一個部件加上不同部首，就變成不同的字！'});
-  for(let k=0;k<2;k++){
-    let q; for(let t=0;t<30;t++){ q=lgMkRadical(k); if(q.q.includes(F.p)) break; }
-    units.push(g3Practice(q));
-  }
-  if(day>0){ const old=I[lgRand(0,Math.min(day*2,n)-1)]; units.push(g3Practice(lgMkIdiom(old),{hint:'這是之前學過的成語，還記得嗎？'})); }
-  const why='三年級的國語會讀到更多成語和量詞。學會它們，說話和寫作文都會更精彩！';
-  return {chapter:'📖 三年級國語：'+ids.map(x=>x[0]).join('、'), why, units};
-}
-function g3Math(day){
-  const T=G3_MATH_TOPICS, t=T[day%T.length], units=[];
-  units.push({type:'g3teach', big:t.big, sub:'今日主題：'+t.name, lines:t.lines, talk:'今天的數學主題是「'+t.name+'」，先看懂觀念！'});
-  for(let i=0;i<6;i++) units.push(g3Practice(t.gen(i)));
-  if(day>0){ for(let k=0;k<2;k++){ const r=T[lgRand(0,T.length-1)]; units.push(g3Practice(r.gen(lgRand(0,9)),{hint:'複習題：'+r.name})); } }
-  return {chapter:'🔢 三年級數學：'+t.name, why:'「'+t.name+'」是三年級上學期的數學重點，學會了，買東西、量長度、看時間都用得到！', units};
-}
-function g3English(day){
-  const ALL=LG_SPELL.concat(LG_SPELL_MORE).slice().sort((a,b)=>a[0].length-b[0].length);
-  const N=ALL.length, words=[0,1,2,3].map(k=>ALL[(day*4+k)%N]);
-  const units=[];
-  words.forEach(([w,emo])=>units.push({type:'teach', letter:w[0].toUpperCase()+w[0], emoji:emo, word:w, zh:G3_EN_ZH[w]||'',
-    talk:['今天的新單字是「'+w+'」！','它的意思是「'+(G3_EN_ZH[w]||'')+'」，先點🔊聽發音，跟著念三次！']}));
-  words.forEach(([w,emo])=>{
-    const others=lgShuffle(ALL.filter(x=>x[0]!==w)).slice(0,3).map(x=>x[0]);
-    units.push({type:'practice', q:'<div style="font-size:3rem">'+emo+'</div>這是哪一個英文單字？', opts:[w,...others].map(t=>({t, c:t===w})),
-      hint:G3_EN_ZH[w]||'', okMsg:emo+' = '+w, failMsg:'再看一次今天學的單字！', word:w, emoji:emo, zh:G3_EN_ZH[w]||''});
-  });
-  words.forEach(([w,emo])=>units.push({type:'g3spell', word:w, emoji:emo, zh:G3_EN_ZH[w]||''}));
-  const review=enDue().filter(x=>!words.some(y=>y[0]===x)).slice(0,2);
-  const b=enLoad();
-  review.forEach(w=>units.push({type:'g3spell', word:w, emoji:b[w].emo, zh:G3_EN_ZH[w]||'', review:true}));
-  return {chapter:'🔤 三年級英文：'+words.map(x=>x[0]).join('、'), why:'每天學 4 個新單字，聽、選、拼都會了，才算真的學會！拼錯的字會放進單字本，過幾天再考一次。', units, newWords:words};
-}
 function enAddNew(word,emo){
   const b=enLoad(); if(b[word]) return;
   b[word]={emo:emo, streak:0, wrong:0, mastered:false, due:_addDays(todayStr(),1), last:''}; enSave(b);
@@ -9375,6 +9319,7 @@ function g3SpellSetup(u){
   const subj='english';
   const nextBtn=label=>{ document.getElementById('btns').innerHTML=`<button class="next-btn" onclick="sfxFlip();nextUnit()">${label}</button>`; };
   advSpellUI(box, u.word, u.emoji, 'quiz', v=>{
+    if(!u._answered){ u._answered=true; if(typeof g3PushAcc==='function') g3PushAcc('english', v===u.word); }
     if(v===u.word){
       sfxCorrect(); logCorrect(u,subj); logAccuracy(subj,true,u);
       if(!u.review) enAddNew(u.word,u.emoji); else enMarkRight(u.word);
@@ -9391,8 +9336,458 @@ function g3SpellSetup(u){
 }
 function g3AllDoneToday(){ return !!(S && S.today && S.today.chinese.done && S.today.english.done && S.today.math.done); }
 
+/* ===================================================
+   📚 三年級擴充題庫（國語／英文資料；數學由程式產生）
+   =================================================== */
+// 成語：[成語, 空格位置, 三個錯字（音近或形近）, 意思, 例句]
+const G3_IDIOMS_3=[
+  ['一心一意',1,['新','星','欣'],'專心做一件事','他一心一意想把字寫漂亮。'],
+  ['一路順風',3,['蜂','豐','封'],'祝福旅途平安順利','祝你一路順風，平安到家。'],
+  ['一乾二淨',1,['甘','肝','竿'],'非常乾淨，一點也不剩','他把便當吃得一乾二淨。'],
+  ['三言兩語',3,['雨','魚','與'],'很少的幾句話','他三言兩語就把事情說清楚了。'],
+  ['四季如春',3,['純','唇','蠢'],'一年到頭都像春天一樣溫暖','這個地方四季如春，非常舒服。'],
+  ['十萬火急',2,['伙','夥','或'],'非常緊急','他十萬火急地跑去找老師。'],
+  ['千言萬語',3,['雨','魚','與'],'想說的話非常多','心裡有千言萬語，卻不知道從哪裡說起。'],
+  ['千奇百怪',3,['乖','快','拐'],'各種奇怪的東西都有','海底有千奇百怪的生物。'],
+  ['百花齊放',2,['其','奇','騎'],'各種花一起開放，非常熱鬧','春天來了，公園裡百花齊放。'],
+  ['萬紫千紅',1,['子','字','仔'],'花朵顏色鮮豔、種類很多','花園裡萬紫千紅，美極了。'],
+  ['一清二楚',3,['處','觸','礎'],'非常清楚','老師把規則說得一清二楚。'],
+  ['七上八下',2,['把','爸','巴'],'心裡很不安','等考試成績時，我心裡七上八下。'],
+  ['九死一生',2,['衣','依','醫'],'經歷很大的危險，差一點活不下來','登山隊在暴風雪中九死一生。'],
+  ['五光十色',1,['廣','逛','觀'],'顏色鮮豔、花樣很多','夜晚的城市五光十色。'],
+  ['四通八達',3,['答','搭','打'],'交通非常方便','這裡的道路四通八達。'],
+  ['六神無主',2,['吳','舞','五'],'心慌意亂，不知道怎麼辦','找不到鑰匙，他急得六神無主。'],
+  ['不約而同',2,['兒','耳','爾'],'事先沒有約好，卻一起做了同樣的事','下雨了，大家不約而同地跑進教室。'],
+  ['不知不覺',3,['決','絕','角'],'沒有察覺','看書看得太入迷，不知不覺天就黑了。'],
+  ['井井有條',2,['又','友','右'],'整齊有條理','他的書桌整理得井井有條。'],
+  ['全神貫注',2,['慣','灌','罐'],'精神非常集中','他全神貫注地看著棋盤。'],
+  ['專心致志',2,['至','治','智'],'專心一意，集中精神','弟弟專心致志地做模型。'],
+  ['聚精會神',2,['惠','慧','繪'],'集中精神','同學們聚精會神地聽故事。'],
+  ['目瞪口呆',1,['登','燈','凳'],'吃驚得說不出話來','魔術師的表演讓大家目瞪口呆。'],
+  ['眉開眼笑',3,['校','孝','效'],'非常高興的樣子','收到禮物，妹妹眉開眼笑。'],
+  ['笑容滿面',1,['榮','溶','融'],'臉上充滿笑容','媽媽笑容滿面地迎接我們。'],
+  ['垂頭喪氣',2,['桑','嗓','傘'],'失望、沒有精神的樣子','比賽輸了，隊員們垂頭喪氣。'],
+  ['手舞足蹈',3,['到','道','倒'],'高興得手腳跳動','聽到要去遊樂園，弟弟高興得手舞足蹈。'],
+  ['自由自在',3,['再','載','材'],'沒有拘束，很輕鬆','小鳥在天空中自由自在地飛。'],
+  ['無憂無慮',3,['綠','律','率'],'沒有任何擔心','小時候的生活無憂無慮。'],
+  ['有說有笑',3,['校','孝','效'],'一邊說話一邊笑，很愉快','大家有說有笑地走回家。'],
+  ['助人為樂',2,['圍','維','唯'],'把幫助別人當成快樂','他助人為樂，大家都喜歡他。'],
+  ['光明磊落',2,['壘','淚','累'],'心地坦白，正大光明','做人要光明磊落。'],
+  ['誠心誠意',3,['義','藝','億'],'真心誠懇','我誠心誠意地向他道歉。'],
+  ['一絲不苟',3,['狗','夠','購'],'做事非常認真，一點也不馬虎','爸爸做事一絲不苟。'],
+  ['腳踏實地',1,['塔','他','榻'],'做事踏實，認真努力','學習要腳踏實地，一步一步來。'],
+  ['持之以恆',3,['橫','衡','哼'],'長久堅持下去','練琴要持之以恆才會進步。'],
+  ['勤能補拙',3,['卓','濁','捉'],'勤奮可以彌補不夠聰明的地方','勤能補拙，多練習就會進步。'],
+  ['熟能生巧',3,['敲','橋','翹'],'熟練了就能找到好方法','寫字熟能生巧，越寫越好看。'],
+  ['學以致用',2,['至','智','治'],'把學到的知識用在生活中','學會了數學，買東西時就能學以致用。'],
+  ['溫故知新',1,['固','顧','雇'],'複習學過的知識，得到新的體會','考試前溫故知新，效果最好。'],
+  ['舉一反三',2,['翻','返','飯'],'學會一件事，能推想到其他類似的事','他舉一反三，很快就學會新題目。'],
+  ['不恥下問',2,['夏','嚇','廈'],'不怕向知道得比自己少的人請教','不恥下問是很好的學習態度。'],
+  ['一鳴驚人',1,['明','名','銘'],'平時不出名，突然有驚人的表現','他在比賽中一鳴驚人，得到第一名。'],
+  ['一帆風順',1,['番','翻','凡'],'事情進行得很順利','祝你新學期一帆風順。'],
+  ['一知半解',3,['姐','介','借'],'知道得不多，了解得不透徹','對問題一知半解，就不要亂說。'],
+  ['一目了然',3,['燃','染','冉'],'一眼就看清楚','這張表格整理得一目了然。'],
+  ['半信半疑',3,['移','宜','姨'],'有點相信又有點懷疑','聽了他的話，我半信半疑。'],
+  ['左顧右盼',3,['判','叛','盤'],'向左右兩邊看來看去','他站在路口左顧右盼，等朋友來。'],
+  ['前因後果',3,['國','過','裹'],'事情的起因和結果','老師聽完事情的前因後果，才下結論。'],
+  ['天長地久',3,['九','酒','韭'],'時間非常長久','祝福我們的友誼天長地久。'],
+  ['天真無邪',3,['斜','鞋','協'],'單純可愛，沒有壞心思','小妹妹的笑容天真無邪。'],
+  ['不慌不忙',3,['芒','盲','茫'],'很鎮定，不急躁','他不慌不忙地回答問題。'],
+  ['大公無私',3,['司','思','絲'],'公正，沒有私心','班長處理事情大公無私。'],
+  ['大吃一驚',3,['京','經','精'],'非常吃驚','看到滿分的考卷，我大吃一驚。'],
+  ['人來人往',3,['網','王','忘'],'人很多，來來去去','車站裡人來人往，非常熱鬧。'],
+  ['走馬看花',3,['華','化','畫'],'大略地看一看，不仔細','參觀博物館不能走馬看花。'],
+  ['對答如流',3,['留','劉','柳'],'回答問題又快又流利','老師發問，他對答如流。'],
+  ['滔滔不絕',3,['決','覺','掘'],'說話連續不斷','他一說起恐龍就滔滔不絕。'],
+  ['樂此不疲',3,['皮','脾','啤'],'因為喜歡做這件事而不覺得累','他每天練球，樂此不疲。'],
+  ['破涕為笑',1,['替','剃','屜'],'停止哭泣，露出笑容','拿到玩具，弟弟破涕為笑。'],
+  ['恍然大悟',3,['誤','霧','物'],'突然明白過來','聽完解釋，我恍然大悟。'],
+  ['鴉雀無聲',1,['卻','確','鵲'],'非常安靜，沒有一點聲音','考試時，教室裡鴉雀無聲。'],
+  ['風和日麗',3,['力','立','利'],'天氣晴朗，風很溫和','風和日麗的週末，我們去野餐。'],
+  ['春暖花開',1,['亂','卵','軟'],'春天天氣溫暖、花朵盛開','春暖花開的季節，到處都很美。'],
+  ['秋高氣爽',3,['雙','霜','傷'],'秋天天空高遠、天氣涼爽','秋高氣爽，最適合去爬山。'],
+  ['冰天雪地',3,['低','滴','弟'],'非常寒冷，到處是冰雪','北極是一片冰天雪地。'],
+  ['狼吞虎嚥',3,['燕','厭','驗'],'吃東西又急又快','他太餓了，狼吞虎嚥地吃完飯。'],
+  ['如虎添翼',3,['意','易','益'],'本來就強，又得到幫助，變得更強','有了新隊友，我們的球隊如虎添翼。'],
+  ['龍飛鳳舞',3,['五','午','武'],'字寫得很有氣勢、很活潑','書法家的字龍飛鳳舞。'],
+  ['雞飛狗跳',3,['條','挑','調'],'形容非常混亂','小貓跑進廚房，弄得雞飛狗跳。'],
+  ['馬到成功',3,['工','公','攻'],'一開始就成功','祝你比賽馬到成功！'],
+  ['鳥語花香',1,['雨','魚','與'],'鳥兒歌唱、花兒飄香，風景很美','春天的公園鳥語花香。'],
+  ['魚目混珠',3,['豬','朱','株'],'用假的冒充真的','不要拿假貨魚目混珠。'],
+];
+// 相反詞：[詞, 相反詞, 也算對的相反詞（不出現在選項）]
+const G3_ANTONYMS=[
+  ['大','小',[]],['多','少',[]],['長','短',[]],['快','慢',[]],['冷','熱',[]],['黑','白',[]],['上','下',[]],['前','後',[]],
+  ['左','右',[]],['開','關',['合']],['哭','笑',[]],['胖','瘦',[]],['遠','近',[]],['早','晚',['遲']],['新','舊',[]],['輕','重',[]],
+  ['深','淺',[]],['寬','窄',[]],['乾','濕',[]],['軟','硬',[]],['甜','苦',[]],['真','假',[]],['對','錯',[]],['進','出',['退']],
+  ['來','去',[]],['買','賣',[]],['高','矮',['低']],['美','醜',[]],['粗','細',[]],['厚','薄',[]],['強','弱',[]],['明','暗',[]],
+  ['忙','閒',[]],['動','靜',[]],
+  ['開心','難過',['傷心','悲傷']],['安全','危險',[]],['簡單','困難',['複雜']],['乾淨','骯髒',[]],['勇敢','膽小',[]],
+  ['聰明','愚笨',[]],['成功','失敗',[]],['開始','結束',[]],['喜歡','討厭',[]],['認真','馬虎',[]],['整齊','凌亂',[]],
+  ['增加','減少',[]],['前進','後退',[]],['光明','黑暗',[]],['熟悉','陌生',[]],['勤勞','懶惰',[]],['緊張','輕鬆',[]],
+  ['寒冷','炎熱',[]],['進步','退步',[]],['白天','黑夜',[]],['出口','入口',[]],
+];
+// 相似詞：[詞, 相似詞, 同一組（同組的詞不互當錯誤選項）]
+const G3_SYNONYMS=[
+  ['美麗','漂亮','beauty'],['快樂','開心','happy'],['高興','愉快','happy'],['立刻','馬上','fast'],['認真','用心','careful'],
+  ['仔細','細心','careful'],['害怕','恐懼','fear'],['喜歡','喜愛','like'],['幫助','協助','help'],['聰明','伶俐','smart'],
+  ['安靜','寧靜','quiet'],['突然','忽然','sudden'],['願意','樂意','willing'],['討論','商量','discuss'],['明白','了解','know'],
+  ['照顧','照料','care'],['溫暖','暖和','warm'],['勇敢','英勇','brave'],['努力','用功','careful'],['生氣','憤怒','angry'],
+  ['難過','傷心','sad'],['堅固','牢固','firm'],['準備','預備','prepare'],['失望','灰心','sad'],['奇怪','古怪','odd'],
+  ['迅速','快速','fast'],['美味','可口','tasty'],['寬闊','廣闊','wide'],['原來','本來','orig'],['一定','肯定','sure'],
+  ['舒服','舒適','comfy'],['擔心','憂慮','worry'],['疲倦','勞累','tired'],['尋找','搜尋','find'],['欣賞','觀賞','view'],
+];
+// 量詞（擴充）：[圖, 名稱, 量詞, 也可以用的量詞]
+const G3_MEASURE_MORE=[
+  ['🐱','貓','隻',['頭']],['🐍','蛇','條',['尾','隻']],['🚲','腳踏車','輛',['部','台']],['📺','電視','台',['部','架']],
+  ['💻','電腦','台',['部']],['🛏️','床','張',['個']],['🪑','椅子','張',['把']],['🏠','房子','間',['棟','座','幢']],
+  ['🍉','西瓜','顆',['個','粒']],['🍰','蛋糕','塊',['個','片']],['🧦','襪子','雙',['隻']],['👓','眼鏡','副',[]],
+  ['🧤','手套','雙',['副','隻']],['🎻','小提琴','把',['支']],['🎹','鋼琴','台',['架','部']],['✂️','剪刀','把',[]],
+  ['🔑','鑰匙','把',['支']],['🖼️','畫','幅',['張']],['📰','報紙','份',['張']],['🎬','電影','部',['場','齣']],
+  ['🌕','月亮','輪',['個']],['🌈','彩虹','道',['條']],['☁️','雲','朵',['片','團','塊']],['🌲','森林','片',['座']],
+  ['🏝️','島','座',['個']],['🦋','蝴蝶','隻',[]],['🐘','大象','頭',['隻']],['🐑','羊','隻',['頭']],['🐔','雞','隻',[]],
+  ['🐉','龍','條',['隻']],['🚌','公車','輛',['部','台']],['🚂','火車','列',['輛','部']],['🪥','牙刷','支',['枝','把']],
+  ['🏀','籃球','顆',['個']],['🍇','葡萄','串',['顆','粒']],['🍌','香蕉','根',['條','把']],['🥢','筷子','雙',['根','支']],
+  ['👖','褲子','條',['件']],['🖊️','原子筆','支',['枝']],
+];
+// 部首家族（擴充）
+const G3_RADICAL_MORE=[
+  {p:'巴', items:[['扌','把','用手拿著，所以是提手旁'],['爪','爬','用手腳爬，所以有爪'],['口','吧','說話的語氣，所以是口字旁'],['父','爸','爸爸是父親']]},
+  {p:'且', items:[['礻','祖','祖先和祭拜有關'],['糸','組','用絲線把東西連在一起'],['女','姐','姐姐是女生'],['禾','租','古時候用稻禾來付租金']]},
+  {p:'寺', items:[['日','時','時間和太陽有關'],['言','詩','詩是用語言寫的'],['扌','持','用手拿著'],['彳','待','等待時要走來走去']]},
+  {p:'主', items:[['亻','住','人住在房子裡'],['氵','注','把水倒進去'],['木','柱','木頭做的柱子'],['馬','駐','馬停下來駐守']]},
+  {p:'生', items:[['女','姓','姓氏'],['牛','牲','牛羊是牲畜'],['日','星','星星在天上發光'],['忄','性','個性在心裡']]},
+  {p:'交', items:[['木','校','學校'],['口','咬','用嘴巴咬'],['飠','餃','餃子是食物'],['車','較','比較']]},
+  {p:'采', items:[['扌','採','用手採花'],['艹','菜','蔬菜是植物'],['足','踩','用腳踩']]},
+  {p:'令', items:[['冫','冷','冰冷，所以有兩點冰'],['金','鈴','鈴鐺是金屬做的'],['雨','零','零星的雨滴'],['齒','齡','看牙齒可以知道年齡']]},
+  {p:'化', items:[['艹','花','花是植物'],['貝','貨','貨物和錢有關'],['革','靴','靴子是皮革做的']]},
+  {p:'門', items:[['口','問','用嘴巴問'],['耳','聞','用耳朵聽'],['心','悶','心裡很悶'],['日','間','陽光從門縫照進來']]},
+  {p:'相', items:[['心','想','用心想'],['竹','箱','竹子編的箱子'],['雨','霜','霜和天氣有關']]},
+  {p:'分', items:[['米','粉','米磨成粉'],['貝','貧','貧窮和錢有關'],['扌','扮','打扮要動手'],['口','吩','吩咐用嘴巴說']]},
+  {p:'央', items:[['日','映','陽光照映'],['艹','英','英原本是花的意思'],['禾','秧','秧苗是稻子']]},
+  {p:'亡', items:[['忄','忙','很忙，心裡很急'],['心','忘','忘記是心裡的事'],['目','盲','眼睛看不見']]},
+  {p:'工', items:[['氵','江','江裡有水'],['糸','紅','紅色的線'],['虫','虹','古人以為彩虹是一種蟲'],['力','功','用力做出功勞'],['穴','空','洞穴裡面是空的']]},
+  {p:'里', items:[['土','埋','埋在土裡'],['王','理','整理玉石'],['魚','鯉','鯉魚']]},
+  {p:'由', items:[['氵','油','油是液體'],['竹','笛','竹子做的笛子'],['衤','袖','袖子是衣服的一部分'],['扌','抽','用手抽出來']]},
+];
+// 易錯字：[詞, 空格位置, 錯字]
+const G3_WRONGCHAR=[
+  ['再見',0,['在','載']],['現在',1,['再','載']],['已經',0,['己','巳']],['自己',1,['已','巳']],['因為',1,['位','圍']],
+  ['今天',0,['金','斤']],['明天',0,['名','鳴']],['休息',0,['修','秀']],['辦法',0,['半','班']],['幫忙',0,['邦','綁']],
+  ['禮物',0,['理','裡']],['裡面',0,['理','禮']],['道理',1,['裡','禮']],['安靜',1,['淨','精']],['乾淨',1,['靜','精']],
+  ['精神',0,['睛','晴']],['眼睛',1,['精','晴']],['晴天',0,['睛','精']],['請客',0,['情','清']],['心情',1,['請','清']],
+  ['清楚',0,['請','情']],['朋友',1,['有','又']],['右手',0,['有','又']],['座位',0,['坐','做']],['坐下',0,['座','做']],
+  ['蝴蝶',1,['碟','諜']],['美麗',1,['力','利']],['快樂',1,['勒','落']],['跳舞',1,['午','五']],['中午',1,['舞','五']],
+  ['完成',0,['玩','晚']],['玩具',0,['完','晚']],['晚上',0,['完','玩']],['紅色',0,['虹','江']],['彩虹',1,['紅','洪']],
+  ['游泳',0,['遊','由']],['旅遊',1,['游','由']],['到達',0,['倒','道']],['知道',1,['到','倒']],['跌倒',1,['到','道']],
+  ['意思',0,['義','藝']],['藝術',0,['意','義']],['電話',1,['畫','化']],['變化',1,['話','畫']],['顏色',0,['言','岩']],
+  ['問題',1,['提','體']],['提出',0,['題','體']],['身體',1,['題','提']],['決定',0,['絕','覺']],['睡覺',1,['決','絕']],
+];
+// 的、得、地：[句子（用 ○ 表示空格）, 答案]
+const G3_DE=[
+  ['我○書包是藍色的。','的'],['他跑○很快。','得'],['小鳥快樂○唱歌。','地'],['媽媽煮○菜很好吃。','的'],['弟弟高興○跳起來。','地'],
+  ['妹妹畫○真漂亮。','得'],['這是老師○筆。','的'],['他認真○寫功課。','地'],['我累○走不動了。','得'],['天上○星星一閃一閃。','的'],
+  ['大家安靜○看書。','地'],['哥哥長○好高。','得'],['我們開心○去郊遊。','地'],['她唱歌唱○很好聽。','得'],['公園裡○花開了。','的'],
+  ['小狗慢慢○走過來。','地'],['爸爸做○蛋糕很香。','的'],['他笑○眼淚都流出來了。','得'],['我小心○拿著杯子。','地'],['風吹○樹葉沙沙響。','得'],
+];
+// 英文單字（擴充）：[單字, 圖示, 中文]
+const G3_EN_MORE=[
+  ['red','🔴','紅色'],['yellow','🟡','黃色'],['green','🟢','綠色'],['blue','🔵','藍色'],['purple','🟣','紫色'],['black','⚫','黑色'],['white','⚪','白色'],['brown','🟤','咖啡色'],['orange','🟠','橘色'],
+  ['one','1️⃣','一'],['two','2️⃣','二'],['three','3️⃣','三'],['four','4️⃣','四'],['five','5️⃣','五'],['six','6️⃣','六'],['seven','7️⃣','七'],['eight','8️⃣','八'],['nine','9️⃣','九'],['ten','🔟','十'],
+  ['baby','👶','嬰兒'],['boy','👦','男孩'],['girl','👧','女孩'],['man','👨','男人'],['woman','👩','女人'],['family','👪','家人'],['grandma','👵','奶奶'],['grandpa','👴','爺爺'],
+  ['eye','👁️','眼睛'],['mouth','👄','嘴巴'],['tooth','🦷','牙齒'],['foot','🦶','腳'],['leg','🦵','腿'],['arm','💪','手臂'],
+  ['rabbit','🐰','兔子'],['monkey','🐒','猴子'],['panda','🐼','貓熊'],['koala','🐨','無尾熊'],['elephant','🐘','大象'],['giraffe','🦒','長頸鹿'],['camel','🐫','駱駝'],
+  ['penguin','🐧','企鵝'],['turtle','🐢','烏龜'],['dolphin','🐬','海豚'],['octopus','🐙','章魚'],['crab','🦀','螃蟹'],['spider','🕷️','蜘蛛'],['butterfly','🦋','蝴蝶'],
+  ['chicken','🐓','雞'],['dragon','🐉','龍'],['wolf','🐺','狼'],['deer','🦌','鹿'],['goat','🐐','山羊'],['snail','🐌','蝸牛'],['bat','🦇','蝙蝠'],['parrot','🦜','鸚鵡'],['kangaroo','🦘','袋鼠'],
+  ['banana','🍌','香蕉'],['strawberry','🍓','草莓'],['cherry','🍒','櫻桃'],['peach','🍑','桃子'],['pear','🍐','梨子'],['watermelon','🍉','西瓜'],['tomato','🍅','番茄'],['carrot','🥕','紅蘿蔔'],
+  ['potato','🥔','馬鈴薯'],['noodles','🍜','麵'],['soup','🍲','湯'],['candy','🍬','糖果'],['cookie','🍪','餅乾'],['juice','🧃','果汁'],['tea','🍵','茶'],['water','💧','水'],['ice','🧊','冰'],
+  ['cheese','🧀','起司'],['hamburger','🍔','漢堡'],['sandwich','🥪','三明治'],['donut','🍩','甜甜圈'],['popcorn','🍿','爆米花'],['chocolate','🍫','巧克力'],['salad','🥗','沙拉'],['meat','🍖','肉'],['honey','🍯','蜂蜜'],
+  ['pencil','✏️','鉛筆'],['ruler','📏','尺'],['scissors','✂️','剪刀'],['crayon','🖍️','蠟筆'],['paper','📄','紙'],['notebook','📓','筆記本'],['map','🗺️','地圖'],['computer','💻','電腦'],['phone','📱','手機'],['school','🏫','學校'],
+  ['shirt','👕','襯衫'],['dress','👗','洋裝'],['coat','🧥','外套'],['pants','👖','褲子'],['glasses','👓','眼鏡'],['cap','🧢','棒球帽'],['scarf','🧣','圍巾'],['gloves','🧤','手套'],['boots','👢','靴子'],
+  ['cloud','☁️','雲'],['snow','❄️','雪'],['rainbow','🌈','彩虹'],['flower','🌸','花'],['leaf','🍃','葉子'],['mountain','⛰️','山'],['sea','🌊','海'],['beach','🏖️','海灘'],['fire','🔥','火'],
+  ['bike','🚲','腳踏車'],['taxi','🚕','計程車'],['truck','🚚','卡車'],['rocket','🚀','火箭'],
+  ['park','🏞️','公園'],['hospital','🏥','醫院'],['bank','🏦','銀行'],['store','🏪','商店'],['castle','🏰','城堡'],['tent','⛺','帳篷'],
+  ['light','💡','燈'],['umbrella','☂️','雨傘'],['watch','⌚','手錶'],['camera','📷','相機'],['balloon','🎈','氣球'],['candle','🕯️','蠟燭'],['guitar','🎸','吉他'],['piano','🎹','鋼琴'],['violin','🎻','小提琴'],
+  ['run','🏃','跑'],['swim','🏊','游泳'],['sing','🎤','唱歌'],['dance','💃','跳舞'],['sleep','😴','睡覺'],['cry','😢','哭'],['laugh','😂','大笑'],['eat','🍽️','吃'],['read','📚','讀'],['write','✍️','寫'],['cook','🍳','煮'],['walk','🚶','走路'],['ride','🚴','騎'],
+  ['happy','😀','快樂的'],['sad','😞','難過的'],['angry','😠','生氣的'],['hot','🥵','熱的'],['cold','🥶','冷的'],['tired','😫','累的'],['sick','🤒','生病的'],
+];
+
+/* ── 三上數學新主題 ── */
+// 容量：公升與毫升
+function khMathCapacity(){
+  const L=lgRand(1,9), ml=lgPick([100,200,250,300,400,500,600,750,800,900]), tot=L*1000+ml;
+  if(Math.random()<0.5) return {q:'<div class="lg-sub">1 公升 ＝ 1000 毫升</div><div class="lg-big" style="font-size:1.6rem">'+L+' 公升 '+ml+' 毫升 ＝ ? 毫升</div>',
+    opts:lgFillOpts(String(tot),[L*100+ml, L*10000+ml, tot+1000, tot-100].filter(x=>x>0&&x!==tot).map(String),4), ans:String(tot), tip:L+' 公升是 '+(L*1000)+' 毫升，再加 '+ml+' 毫升'};
+  const a=L+' 公升 '+ml+' 毫升';
+  return {q:'<div class="lg-sub">1 公升 ＝ 1000 毫升</div><div class="lg-big" style="font-size:1.6rem">'+tot+' 毫升 ＝ ?</div>',
+    opts:lgFillOpts(a,[(L*10)+' 公升 '+ml+' 毫升', (L+1)+' 公升 '+ml+' 毫升', L+' 公升 '+(ml/10)+' 毫升', tot+' 公升'].filter(x=>x!==a),4), ans:a, tip:tot+' 毫升 ＝ '+a};
+}
+// 時間換算：時、分、秒
+function khMathTimeConv(){
+  const t=Math.random();
+  if(t<0.4){ const h=lgRand(1,4), m=lgRand(1,59), ans=h*60+m;
+    return {q:'<div class="lg-sub">1 小時 ＝ 60 分鐘</div><div class="lg-big" style="font-size:1.6rem">'+h+' 小時 '+m+' 分 ＝ ? 分</div>',
+      opts:lgNumOpts(ans,[h*100+m, h+m, ans+60, ans-60, h*10+m]), ans:String(ans), tip:h+' 小時是 '+(h*60)+' 分，再加 '+m+' 分'}; }
+  if(t<0.7){ const v=lgRand(61,250); if(v%60===0) return khMathTimeConv(); const a=Math.floor(v/60)+' 小時 '+(v%60)+' 分';
+    return {q:'<div class="lg-sub">1 小時 ＝ 60 分鐘</div><div class="lg-big" style="font-size:1.6rem">'+v+' 分 ＝ ?</div>',
+      opts:lgFillOpts(a,[Math.floor(v/100)+' 小時 '+(v%100)+' 分', (Math.floor(v/60)+1)+' 小時 '+(v%60)+' 分', Math.floor(v/60)+' 小時 '+((v%60)+10)+' 分', Math.floor(v/10)+' 小時 '+(v%10)+' 分'].filter(x=>x!==a),4), ans:a, tip:v+' 分 ＝ '+a}; }
+  const m=lgRand(1,5), s=lgRand(1,59), ans=m*60+s;
+  return {q:'<div class="lg-sub">1 分鐘 ＝ 60 秒</div><div class="lg-big" style="font-size:1.6rem">'+m+' 分 '+s+' 秒 ＝ ? 秒</div>',
+    opts:lgNumOpts(ans,[m*100+s, m+s, ans+60, ans-60]), ans:String(ans), tip:m+' 分是 '+(m*60)+' 秒，再加 '+s+' 秒'};
+}
+// 24 小時制
+function khMath24h(){
+  if(Math.random()<0.5){ const h=lgRand(1,5), m=lgPick([0,10,15,20,30,40,45,50]), mm=m===0?'':' '+(m<10?'0'+m:m)+' 分';
+    const ans=(h+12)+' 點'+mm;
+    return {q:'<div class="lg-sub">換成 24 小時制</div><div class="lg-big" style="font-size:1.7rem">下午 '+h+' 點'+mm+'</div>',
+      opts:lgFillOpts(ans,[(h+10)+' 點'+mm, (h+2)+' 點'+mm, (h+11)+' 點'+mm, (h+13)+' 點'+mm],4), ans, tip:'下午的時間加 12：'+h+' ＋ 12 ＝ '+(h+12)}; }
+  const H=lgRand(13,17), ans='下午 '+(H-12)+' 點';
+  return {q:'<div class="lg-sub">24 小時制的時間是？</div><div class="lg-big" style="font-size:1.7rem">'+H+' 點</div>',
+    opts:lgFillOpts(ans,['下午 '+(H-10)+' 點','上午 '+(H-12)+' 點','下午 '+(H-11)+' 點','下午 '+(H-13)+' 點'],4), ans, tip:H+' 點減 12，就是下午 '+(H-12)+' 點'};
+}
+// 找零錢
+function khMathChange(){
+  const it=lgPick(LG_SHOP_ITEMS), p=lgRand(12,480), pay=p<100?100:p<500?500:1000, ans=pay-p;
+  return {q:'<div class="lg-sub">'+it[0]+' '+it[1]+' 一個 '+p+' 元</div><div class="lg-big" style="font-size:1.5rem">付了 '+pay+' 元，要找回多少元？</div>',
+    opts:lgNumOpts(ans,[ans+10, ans-10, ans+100, pay-p+1, p]), ans:String(ans), tip:pay+' － '+p+' ＝ '+ans};
+}
+// 兩步驟應用題
+function khMathWord2(){
+  const name=lgPick(['小明','小美','阿均','小華','波比']), k=lgRand(0,4);
+  if(k===0){ const a=lgPick([100,200,500]), b=lgRand(15,Math.floor(a/2)-5), c=lgRand(10,a-b-5), ans=a-b-c;
+    return {q:name+'有 '+a+' 元，先買了一本書 '+b+' 元，又買了一枝筆 '+c+' 元，還剩多少元？', opts:lgNumOpts(ans,[a-b, a-c, a-b+c, ans+10]), ans:String(ans), tip:a+' － '+b+' － '+c+' ＝ '+ans}; }
+  if(k===1){ const a=lgRand(6,12), b=lgRand(3,9), c=lgRand(5,a*b-5), ans=a*b-c;
+    return {q:'每盒有 '+a+' 顆糖，'+name+'買了 '+b+' 盒，分給同學 '+c+' 顆，還剩幾顆？', opts:lgNumOpts(ans,[a*b, a*b+c, a+b-c>0?a+b-c:ans+5, ans+a]), ans:String(ans), tip:a+' × '+b+' ＝ '+(a*b)+'，'+(a*b)+' － '+c+' ＝ '+ans}; }
+  if(k===2){ const d=lgRand(8,25), days=lgRand(3,7), p=d*days+lgRand(10,80), ans=p-d*days;
+    return {q:'一本書有 '+p+' 頁，'+name+'每天看 '+d+' 頁，看了 '+days+' 天，還剩幾頁？', opts:lgNumOpts(ans,[d*days, p-d, ans+d, ans-d]), ans:String(ans), tip:d+' × '+days+' ＝ '+(d*days)+'，'+p+' － '+(d*days)+' ＝ '+ans}; }
+  if(k===3){ const g=lgRand(3,6), groups=lgRand(4,9), tot=g*groups, b=lgRand(5,tot-5), a=tot-b;
+    return {q:'班上有 '+a+' 個男生、'+b+' 個女生，每 '+g+' 個人一組，可以分成幾組？', opts:lgNumOpts(groups,[groups+1, groups-1, tot, groups+2]), ans:String(groups), tip:a+' ＋ '+b+' ＝ '+tot+'，'+tot+' ÷ '+g+' ＝ '+groups}; }
+  const price=lgRand(12,45), n=lgRand(3,8), pay=price*n<100?100:price*n<500?500:1000, ans=pay-price*n;
+  return {q:'一個麵包 '+price+' 元，'+name+'買了 '+n+' 個，付了 '+pay+' 元，要找回多少元？', opts:lgNumOpts(ans,[pay-price, price*n, ans+price, ans+10]), ans:String(ans), tip:price+' × '+n+' ＝ '+(price*n)+'，'+pay+' － '+(price*n)+' ＝ '+ans};
+}
+// 角
+function khMathAngle(){
+  const deg=lgPick([30,40,45,60,70,90,90,110,120,135,150]);
+  const ans=deg<90?'銳角':deg===90?'直角':'鈍角';
+  const r=70, cx=30, cy=95, x2=cx+r*Math.cos(-deg*Math.PI/180), y2=cy+r*Math.sin(-deg*Math.PI/180);
+  const svg='<svg width="170" height="110" viewBox="0 0 170 110"><line x1="'+cx+'" y1="'+cy+'" x2="'+(cx+110)+'" y2="'+cy+'" stroke="#92400e" stroke-width="4" stroke-linecap="round"/>'+
+    '<line x1="'+cx+'" y1="'+cy+'" x2="'+x2.toFixed(1)+'" y2="'+y2.toFixed(1)+'" stroke="#92400e" stroke-width="4" stroke-linecap="round"/>'+
+    (deg===90?'<rect x="'+cx+'" y="'+(cy-14)+'" width="14" height="14" fill="none" stroke="#ef4444" stroke-width="2"/>':'<path d="M'+(cx+22)+','+cy+' A22,22 0 0 0 '+(cx+22*Math.cos(-deg*Math.PI/180)).toFixed(1)+','+(cy+22*Math.sin(-deg*Math.PI/180)).toFixed(1)+'" fill="none" stroke="#ef4444" stroke-width="2"/>')+'</svg>';
+  return {q:'<div class="lg-sub">這是什麼角？（直角是 90 度）</div><div>'+svg+'</div>', opts:['銳角','直角','鈍角'], ans, tip:ans==='銳角'?'比直角小，是銳角':ans==='直角'?'剛好 90 度，是直角':'比直角大，是鈍角'};
+}
+// 圓：半徑與直徑
+function khMathCircle(){
+  const r=lgRand(2,15);
+  const svg='<svg width="120" height="120" viewBox="0 0 120 120"><circle cx="60" cy="60" r="52" fill="#fde9b5" stroke="#92400e" stroke-width="3"/><circle cx="60" cy="60" r="3" fill="#92400e"/><line x1="60" y1="60" x2="112" y2="60" stroke="#ef4444" stroke-width="3"/></svg>';
+  if(Math.random()<0.5) return {q:'<div class="lg-sub">圓的半徑是 '+r+' 公分，直徑是幾公分？</div><div>'+svg+'</div>', opts:lgNumOpts(2*r,[r, r+2, 4*r, r*r]), ans:String(2*r), tip:'直徑是半徑的 2 倍：'+r+' × 2 ＝ '+(2*r)};
+  return {q:'<div class="lg-sub">圓的直徑是 '+(2*r)+' 公分，半徑是幾公分？</div><div>'+svg+'</div>', opts:lgNumOpts(r,[2*r, 4*r, r+1, r+2]), ans:String(r), tip:'半徑是直徑的一半：'+(2*r)+' ÷ 2 ＝ '+r};
+}
+G3_MATH_TOPICS.push(
+  {name:'公升和毫升', gen:()=>khMathCapacity(), big:'1 公升 ＝ 1000 毫升', lines:['一大瓶水大約是 1 公升。','2 公升 300 毫升 ＝ 2300 毫升。','比較多少前，先換成同一個單位。']},
+  {name:'時、分、秒', gen:()=>khMathTimeConv(), big:'1 小時 ＝ 60 分', lines:['1 小時 ＝ 60 分鐘，1 分鐘 ＝ 60 秒。','2 小時 15 分 ＝ 120 ＋ 15 ＝ 135 分。','150 分 ＝ 2 小時 30 分。']},
+  {name:'24 小時制', gen:()=>khMath24h(), big:'下午 3 點 ＝ 15 點', lines:['一天有 24 小時。','中午 12 點以後，下午的時間加 12，就是 24 小時制。','例：下午 5 點 ＝ 17 點；14 點 ＝ 下午 2 點。']},
+  {name:'找零錢', gen:()=>khMathChange(), big:'找回 ＝ 付的錢 － 價錢', lines:['付了 100 元，買了 65 元的東西。','100 － 65 ＝ 35，要找回 35 元。','可以用 65 ＋ 35 ＝ 100 檢查。']},
+  {name:'兩步驟應用題', gen:()=>khMathWord2(), big:'先算一步，再算一步', lines:['讀題目，找出「先算什麼、再算什麼」。','例：每盒 6 顆，買 3 盒，送出 5 顆。','先 6 × 3 ＝ 18，再 18 － 5 ＝ 13。']},
+  {name:'角', gen:()=>khMathAngle(), big:'銳角＜直角＜鈍角', lines:['直角是 90 度，像書本的角。','比直角小的是銳角，比直角大的是鈍角。','可以拿三角板的直角來比一比。']},
+  {name:'圓', gen:()=>khMathCircle(), big:'直徑 ＝ 半徑 × 2', lines:['圓中心的點叫圓心。','從圓心到圓周的線是半徑。','穿過圓心、兩端都在圓上的線是直徑，長度是半徑的 2 倍。']}
+);
+
+/* ===================================================
+   🎒 三年級每日課程 v2：依學習狀況推進，不固定循環
+   - 每個題目都有記憶盒：答對間隔 1→2→4→8→16 天再考，答錯回到隔天
+   - 新內容在當天課程「完成」後才往前推進；沒上完隔天會重教
+   - 正確率高每天多教，低就少教新的、多複習；數學優先練最弱的主題
+   =================================================== */
+LG_IDIOMS.push(...G3_IDIOMS_3.map(x=>[x[0],x[1],x[2],x[3]]));
+LG_MEASURE.push(...G3_MEASURE_MORE);
+LG_RADICAL_FAMILIES.push(...G3_RADICAL_MORE);
+LG_SPELL_MORE.push(...G3_EN_MORE.map(x=>[x[0],x[1]]));
+G3_EN_MORE.forEach(x=>{ G3_EN_ZH[x[0]]=x[2]; });
+G3_IDIOMS_3.forEach(x=>{ G3_IDIOM_EX[x[0]]=x[4]; });
+
+const G3_KEY='boppy_g3_v2';
+function g3Load(){ let st=null; try{ st=JSON.parse(localStorage.getItem(G3_KEY)||'null'); }catch(e){}
+  st=st||{}; st.ptr=st.ptr||{}; st.items=st.items||{}; st.plans=st.plans||{}; st.math=st.math||{}; st.acc=st.acc||{}; return st; }
+function g3Save(st){ try{ localStorage.setItem(G3_KEY, JSON.stringify(st)); }catch(e){} }
+const G3_GAPS=[1,2,4,8,16];
+function g3ItemUpdate(id, ok){
+  const st=g3Load(), t=todayStr(), it=st.items[id]||{box:0, seen:0, wrong:0};
+  it.seen++;
+  if(ok){ it.box=Math.min(it.box+1, G3_GAPS.length); it.due = it.box>=G3_GAPS.length ? '' : _addDays(t, G3_GAPS[it.box-1]); }
+  else { it.wrong++; it.box=0; it.due=_addDays(t,1); }
+  st.items[id]=it; g3Save(st);
+}
+function g3Acc(subj){ const a=(g3Load().acc[subj]||[]); if(a.length<6) return 0.8; return a.filter(Boolean).length/a.length; }
+function g3PushAcc(subj, ok){ const st=g3Load(); const a=st.acc[subj]||[]; a.push(ok?1:0); while(a.length>30) a.shift(); st.acc[subj]=a; g3Save(st); }
+function g3Due(prefixes){ const st=g3Load(), t=todayStr();
+  return Object.keys(st.items).filter(id=>prefixes.some(p=>id.startsWith(p)) && st.items[id].due && st.items[id].due<=t)
+    .sort((a,b)=>st.items[a].due<st.items[b].due?-1:1); }
+/* 由課程答題呼叫：只算第一次作答 */
+function g3ItemResult(u, ok){
+  if(!u || (!u.itemId && u.mathTopic==null)) return;
+  if(u._answered) return; u._answered=true;
+  const subj = u.mathTopic!=null ? 'math' : (u.enWord ? 'english' : 'chinese');
+  g3PushAcc(subj, ok);
+  if(u.itemId) g3ItemUpdate(u.itemId, ok);
+  if(u.mathTopic!=null){ const st=g3Load(), m=st.math[u.mathTopic]||{c:0,t:0}; m.t++; if(ok) m.c++; st.math[u.mathTopic]=m; g3Save(st); }
+}
+
+/* ── 題目產生（依 id 重建，種子固定）── */
+const G3_CATS=['ant','syn','meas','rad','wc','de'];
+const G3_CAT_NAME={ant:'相反詞', syn:'相似詞', meas:'量詞', rad:'部首家族', wc:'易錯字', de:'的、得、地'};
+function g3Q(id){
+  const [cat,key]=[id.slice(0,id.indexOf(':')), id.slice(id.indexOf(':')+1)];
+  if(cat==='idiom'){ const it=LG_IDIOMS.find(x=>x[0]===key); return it && lgMkIdiom(it); }
+  if(cat==='meas'){ const it=LG_MEASURE.find(x=>x[1]===key); return it && lgMkMeasure(it); }
+  if(cat==='ant'){
+    const it=G3_ANTONYMS.find(x=>x[0]===key); if(!it) return null;
+    const pool=G3_ANTONYMS.filter(x=>x!==it && x[0].length===it[0].length).map(x=>x[0]).filter(w=>w!==it[1] && !it[2].includes(w));
+    return {q:'<div class="lg-sub">選出相反詞</div><div class="lg-big">「'+it[0]+'」的相反是？</div>', opts:lgFillOpts(it[1],pool,4), ans:it[1], tip:'「'+it[0]+'」的相反詞是「'+it[1]+'」'};
+  }
+  if(cat==='syn'){
+    const it=G3_SYNONYMS.find(x=>x[0]===key); if(!it) return null;
+    const pool=G3_SYNONYMS.filter(x=>x[2]!==it[2]).map(x=>x[0]);
+    return {q:'<div class="lg-sub">選出意思最接近的詞</div><div class="lg-big">「'+it[0]+'」</div>', opts:lgFillOpts(it[1],pool,4), ans:it[1], tip:'「'+it[0]+'」和「'+it[1]+'」意思差不多'};
+  }
+  if(cat==='rad'){
+    for(const f of LG_RADICAL_FAMILIES){ const it=f.items.find(x=>x[1]===key); if(!it) continue;
+      const fam=f.items.map(x=>x[1]).filter(x=>x!==it[1]); const all=[]; LG_RADICAL_FAMILIES.forEach(g=>g.items.forEach(x=>all.push(x[1])));
+      const opts=lgFillOpts(it[1],fam,4); while(opts.length<4){ const c=lgPick(all); if(!opts.includes(c)) opts.push(c); }
+      return {q:'<div class="lg-sub">把兩個部件合起來，變成哪個字？</div><div class="lg-big">'+it[0]+' ＋ '+f.p+' ＝ ？</div>', opts, ans:it[1], tip:'「'+it[1]+'」：'+it[2]}; }
+    return null;
+  }
+  if(cat==='wc'){
+    const it=G3_WRONGCHAR.find(x=>x[0]===key); if(!it) return null;
+    const [w,p,wr]=it, shown=w.split('').map((c,i)=>i===p?'<span class="lg-blank">？</span>':c).join('');
+    return {q:'<div class="lg-sub">小心易錯字！選出正確的字</div><div class="lg-big">'+shown+'</div>', opts:[w[p],...wr], ans:w[p], tip:'正確寫法是「'+w+'」'};
+  }
+  if(cat==='de'){
+    const it=G3_DE.find(x=>x[0]===key); if(!it) return null;
+    const why={ '的':'「的」後面接東西或人（誰的什麼）', '地':'「地」後面接動作（怎麼做）', '得':'「得」放在動作後面（做得怎麼樣）'}[it[1]];
+    return {q:'<div class="lg-sub">「的、得、地」選哪一個？</div><div class="lg-big" style="font-size:1.6rem">'+it[0].replace('○','<span class="lg-blank">？</span>')+'</div>', opts:['的','得','地'], ans:it[1], tip:why};
+  }
+  return null;
+}
+function g3CatItems(cat){
+  if(cat==='ant') return G3_ANTONYMS.map(x=>'ant:'+x[0]);
+  if(cat==='syn') return G3_SYNONYMS.map(x=>'syn:'+x[0]);
+  if(cat==='meas') return LG_MEASURE.map(x=>'meas:'+x[1]);
+  if(cat==='rad'){ const a=[]; LG_RADICAL_FAMILIES.forEach(f=>f.items.forEach(x=>a.push('rad:'+x[1]))); return a; }
+  if(cat==='wc') return G3_WRONGCHAR.map(x=>'wc:'+x[0]);
+  if(cat==='de') return G3_DE.map(x=>'de:'+x[0]);
+  return [];
+}
+function g3TeachFor(cat, ids){
+  const keys=ids.map(id=>id.slice(id.indexOf(':')+1));
+  let lines=[], big=G3_CAT_NAME[cat], emoji='', say='';
+  if(cat==='ant'){ lines=keys.map(k=>{ const x=G3_ANTONYMS.find(y=>y[0]===k); return '「'+x[0]+'」↔「<b>'+x[1]+'</b>」'; }); say=keys.map(k=>{ const x=G3_ANTONYMS.find(y=>y[0]===k); return x[0]+'，'+x[1]; }).join('。'); }
+  if(cat==='syn'){ lines=keys.map(k=>{ const x=G3_SYNONYMS.find(y=>y[0]===k); return '「'+x[0]+'」≈「<b>'+x[1]+'</b>」'; }); say=keys.map(k=>{ const x=G3_SYNONYMS.find(y=>y[0]===k); return x[0]+'，'+x[1]; }).join('。'); }
+  if(cat==='meas'){ lines=keys.map(k=>{ const x=LG_MEASURE.find(y=>y[1]===k); return x[0]+' 一<b>'+x[2]+'</b>'+x[1]; }); say=keys.map(k=>{ const x=LG_MEASURE.find(y=>y[1]===k); return '一'+x[2]+x[1]; }).join('，'); }
+  if(cat==='rad'){ lines=keys.map(k=>{ for(const f of LG_RADICAL_FAMILIES){ const x=f.items.find(y=>y[1]===k); if(x) return x[0]+' ＋ '+f.p+' ＝ <b>'+x[1]+'</b>　'+x[2]; } return k; }); say=keys.join('，'); }
+  if(cat==='wc'){ lines=keys.map(k=>{ const x=G3_WRONGCHAR.find(y=>y[0]===k); return '<b>'+x[0]+'</b>　不是「'+x[0].split('').map((c,i)=>i===x[1]?x[2][0]:c).join('')+'」'; }); say=keys.join('，'); }
+  if(cat==='de'){ lines=['<b>的</b>：後面接東西或人（我的書包）','<b>地</b>：後面接動作（快樂地唱歌）','<b>得</b>：在動作後面（跑得很快）'].concat(keys.map(k=>'例：'+k.replace('○','<b>'+G3_DE.find(y=>y[0]===k)[1]+'</b>'))); say='的，地，得'; }
+  return {type:'g3teach', big, sub:'今日學習', lines, say, lang:'zh', talk:'今天來學「'+G3_CAT_NAME[cat]+'」！先看一看、聽一聽。'};
+}
+
+/* ── 每日課表：一天產生一次並存起來；完成課程才推進 ── */
+function g3Plan(subj){
+  const st=g3Load(), t=todayStr(), old=st.plans[subj];
+  if(old && old.date===t) return old;
+  const acc=g3Acc(subj), ptr=Object.assign({}, st.ptr);
+  const plan={date:t, specs:[], endPtr:null, committed:false};
+  if(subj==='chinese'){
+    const backlog=g3Due(['idiom:','ant:','syn:','meas:','rad:','wc:','de:']).length;
+    const nId = backlog>20 ? 1 : acc<0.7?1 : acc>0.9?3 : 2;
+    const cat=G3_CATS[(st.ptr.zhDay||0)%G3_CATS.length];
+    const newIds=[]; for(let k=0;k<nId;k++){ const i=(ptr.idiom||0); if(i<LG_IDIOMS.length){ newIds.push('idiom:'+LG_IDIOMS[i][0]); ptr.idiom=i+1; } }
+    newIds.forEach(id=>{ plan.specs.push({k:'teachIdiom', id}); plan.specs.push({k:'q', id}); });
+    const items=g3CatItems(cat), nCat = backlog>25 ? 0 : backlog>20 ? 1 : acc<0.7?2:3, catIds=[];
+    for(let k=0;k<nCat;k++){ const i=(ptr[cat]||0); if(i<items.length){ catIds.push(items[i]); ptr[cat]=i+1; } }
+    if(catIds.length){ plan.specs.push({k:'teachCat', cat, ids:catIds}); catIds.forEach(id=>plan.specs.push({k:'q', id})); }
+    ptr.zhDay=(st.ptr.zhDay||0)+1;
+    const due=g3Due(['idiom:','ant:','syn:','meas:','rad:','wc:','de:']).filter(id=>!newIds.includes(id)&&!catIds.includes(id)).slice(0, backlog>25 ? 12 : backlog>12 ? 8 : acc<0.7 ? 6 : 4);
+    due.forEach(id=>plan.specs.push({k:'q', id, review:true}));
+    plan.title = (newIds.length?newIds.map(x=>x.split(':')[1]).join('、'):'成語複習')+(catIds.length?'＋'+G3_CAT_NAME[cat]:'');
+    plan.counts={neu:newIds.length+catIds.length, rev:due.length};
+  }
+  if(subj==='math'){
+    const T=G3_MATH_TOPICS, done=(st.ptr.mathFirst||0);
+    let topic;
+    if(done<T.length) topic=done;
+    else {
+      const recent=(st.ptr.mathRecent||[]).slice(-3), hist=st.ptr.mathRecent||[];
+      let best=null, bv=2;
+      if((st.ptr.mathRot||0)%3===2){
+        // 每三天一次：挑最久沒練的主題
+        let oldest=Infinity; T.forEach((x,i)=>{ const last=hist.lastIndexOf(i); if(last<oldest){ oldest=last; best=i; } });
+      } else {
+        T.forEach((x,i)=>{ if(recent.includes(i)) return; const m=st.math[i]||{c:0,t:0}; const v=m.t?m.c/m.t:0; if(v<bv-1e-9){ bv=v; best=i; } });
+      }
+      topic = best!=null ? best : (st.ptr.mathRot||0)%T.length; ptr.mathRot=(st.ptr.mathRot||0)+1;
+    }
+    ptr.mathFirst=Math.max(done, topic+1);
+    ptr.mathRecent=((st.ptr.mathRecent||[]).concat([topic])).slice(-20);
+    const n = acc<0.7?5 : 6;
+    plan.specs.push({k:'teachMath', topic});
+    for(let i=0;i<n;i++) plan.specs.push({k:'mq', topic, i});
+    const weak=T.map((x,i)=>{ const m=st.math[i]||{c:0,t:0}; return {i, v:m.t?m.c/m.t:1, t:m.t}; }).filter(x=>x.i!==topic && x.t>0).sort((a,b)=>a.v-b.v).slice(0,3);
+    weak.forEach(w=>plan.specs.push({k:'mq', topic:w.i, i:lgRand(0,9), review:true}));
+    plan.title=T[topic].name; plan.counts={neu:n, rev:weak.length};
+  }
+  if(subj==='english'){
+    const ALL=LG_SPELL.concat(LG_SPELL_MORE);
+    const enBack=enDue().length;
+    const nW = enBack>25 ? 1 : enBack>15 ? 2 : acc<0.7?3 : acc>0.9?5 : 4, words=[];
+    for(let k=0;k<nW;k++){ const i=(ptr.en||0); if(i<ALL.length){ words.push(ALL[i][0]); ptr.en=i+1; } }
+    words.forEach(w=>plan.specs.push({k:'enTeach', w}));
+    words.forEach(w=>plan.specs.push({k:'enChoose', w}));
+    words.forEach(w=>plan.specs.push({k:'enSpell', w}));
+    const rev=enDue().filter(x=>!words.includes(x)).slice(0, enBack>20 ? 12 : enBack>10 ? 8 : acc<0.7 ? 6 : 4);
+    rev.forEach(w=>plan.specs.push({k:'enSpell', w, review:true}));
+    plan.title=words.length?words.join('、'):'單字複習'; plan.counts={neu:words.length, rev:rev.length};
+  }
+  plan.endPtr=ptr; st.plans[subj]=plan; g3Save(st);
+  return plan;
+}
+function g3CommitPlan(subj){
+  const st=g3Load(), p=st.plans[subj];
+  if(!p || p.committed || p.date!==todayStr()) return;
+  p.committed=true; st.ptr=Object.assign({}, st.ptr, p.endPtr); g3Save(st);
+}
+
+/* ── 依課表建立單元 ── */
+function g3BuildUnits(subj, plan){
+  const units=[], ENALL=LG_SPELL.concat(LG_SPELL_MORE), enEmo=w=>(ENALL.find(x=>x[0]===w)||[w,'🔤'])[1];
+  plan.specs.forEach(sp=>{
+    if(sp.k==='teachIdiom'){ const w=sp.id.split(':')[1], it=LG_IDIOMS.find(x=>x[0]===w);
+      units.push({type:'g3teach', big:w, sub:'今日成語', lines:['意思：'+it[3]], example:G3_IDIOM_EX[w]||'', say:w, lang:'zh', talk:'今天來學成語「'+w+'」！先聽聽看怎麼念。'}); }
+    else if(sp.k==='teachCat') units.push(g3TeachFor(sp.cat, sp.ids));
+    else if(sp.k==='q'){ const q=g3Q(sp.id); if(q) units.push(g3Practice(q,{itemId:sp.id, hint: sp.review?'複習題：之前學過的，還記得嗎？':'仔細想一想再作答'})); }
+    else if(sp.k==='teachMath'){ const t=G3_MATH_TOPICS[sp.topic]; units.push({type:'g3teach', big:t.big, sub:'今日主題：'+t.name, lines:t.lines, talk:'今天的數學主題是「'+t.name+'」，先看懂觀念！'}); }
+    else if(sp.k==='mq'){ const t=G3_MATH_TOPICS[sp.topic]; units.push(g3Practice(t.gen(sp.i),{mathTopic:sp.topic, hint: sp.review?'複習：'+t.name:'仔細算一算'})); }
+    else if(sp.k==='enTeach'){ const w=sp.w; units.push({type:'teach', letter:w[0].toUpperCase()+w[0], emoji:enEmo(w), word:w, zh:G3_EN_ZH[w]||'',
+      talk:['今天的新單字是「'+w+'」！','它的意思是「'+(G3_EN_ZH[w]||'')+'」，先點🔊聽發音，跟著念三次！']}); }
+    else if(sp.k==='enChoose'){ const w=sp.w, others=lgShuffle(ENALL.filter(x=>x[0]!==w)).slice(0,3).map(x=>x[0]);
+      units.push({type:'practice', q:'<div style="font-size:3rem">'+enEmo(w)+'</div>這是哪一個英文單字？', opts:[w,...others].map(t=>({t, c:t===w})),
+        hint:G3_EN_ZH[w]||'', okMsg:enEmo(w)+' = '+w, failMsg:'再看一次今天學的單字！', word:w, emoji:enEmo(w), zh:G3_EN_ZH[w]||'', enWord:w}); }
+    else if(sp.k==='enSpell') units.push({type:'g3spell', word:sp.w, emoji:enEmo(sp.w), zh:G3_EN_ZH[sp.w]||'', review:!!sp.review});
+  });
+  return units;
+}
+function g3DailyCourse(subj){
+  const plan=g3Plan(subj), key=subj+'|'+plan.date+'|'+JSON.stringify(plan.specs).length;
+  if(_g3Cache[key]) return _g3Cache[key];
+  const units=g3Seeded(g3Hash(key), ()=>g3BuildUnits(subj, plan));
+  const head={chinese:'📖 三年級國語：', math:'🔢 三年級數學：', english:'🔤 三年級英文：'}[subj];
+  const c=plan.counts||{neu:0,rev:0};
+  const why='今天新學 '+c.neu+' 個、複習 '+c.rev+' 個。'+({chinese:'答錯的題目過幾天會再出現，答對越多次，間隔越長，直到真的記住！',
+    math:'先看懂觀念再練習，最弱的主題會多練幾次。', english:'聽、選、拼都會了才算學會，拼錯的字會放進單字本，過幾天再考。'}[subj]);
+  const course={chapter:head+plan.title, why, units};
+  _g3Cache[key]=course; return course;
+}
+
 /* ===== 自動更新：發現新版本就重新載入 ===== */
-const APP_VERSION = '2026-10-25-v10';
+const APP_VERSION = '2026-10-25-v13';
 function checkAppUpdate(){
   try{
     fetch(location.pathname + '?_=' + Date.now(), {cache:'no-store'})
