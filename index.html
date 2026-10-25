@@ -1964,6 +1964,7 @@ box-shadow:0 4px 0 #5b21b6;
       <div class="badminton-stop-title">今天玩夠了！😊</div>
       <div class="badminton-stop-msg">阿均今天已經玩了一個半小時！<br>眼睛要休息了，<br><b>明天再來！</b>🌟</div>
       <button class="badminton-stop-btn" onclick="forceCloseGame()">好的，明天見！👋</button>
+      <button class="badminton-stop-btn" style="margin-top:8px;background:#64748b;font-size:.85rem;" onclick="parentUnlockGame()">👨‍👩‍👦 家長解鎖（再 30 分鐘）</button>
     </div>
   </div>
 
@@ -7114,7 +7115,8 @@ function renderGameCenter(){
       '<div class="g3-locked">📚 先上完今天的三堂課，遊樂場就會開放！<br>'
     + [['chinese','國語'],['math','數學'],['english','英文']].map(function(x){ return '<span class="g3-subj'+(S.today[x[0]].done?' ok':'')+'">'+(S.today[x[0]].done?'✅ ':'⬜ ')+x[1]+'</span>'; }).join('')
     + '</div>';
-  var timeHtml = '<div class="g3-time">⏱ 今天還可以玩 <b>'+leftMin+'</b> 分鐘（每天最多 90 分鐘）</div>';
+  var timeHtml = '<div class="g3-time">⏱ 今天還可以玩 <b>'+leftMin+'</b> 分鐘（每天最多 90 分鐘）'
+    + (leftMin<=0 ? '　<button class="lg-mini" style="background:#64748b;color:#fff" onclick="parentUnlockGame()">👨‍👩‍👦 家長解鎖</button>' : '') + '</div>';
   grid.innerHTML = timeHtml + lockHtml +
       '<div class="lg-group">⚔️ 冒險對戰</div>'
     + '<div style="grid-column:1/-1;">'+cardHtml(adv)+'</div>'
@@ -7151,6 +7153,7 @@ function openGame(gameId){
   const savedMs = parseInt(localStorage.getItem(key+'_ms')||'0');
   gameTotalMs = savedMs;
   gameStartTime = Date.now();
+  gameLastTick = Date.now();
   gameWarn15Done = gameTotalMs >= GAME_WARN_MS;
   if(gameTimerID) clearInterval(gameTimerID);
   gameTimerID = setInterval(updateGameTimer, 1000);
@@ -7159,9 +7162,16 @@ function openGame(gameId){
   setTimeout(()=>{ initGame(gameId); }, 100);
 }
 
+/* 只計算「畫面開著、真的在玩」的時間：
+   平板蓋上或切到別的 App 時不算；兩次計時之間最多只算 2 秒，避免回來時一次加上一大段 */
+let gameLastTick = 0;
 function updateGameTimer(){
   if(!gameStartTime) return;
-  const elapsed = gameTotalMs + (Date.now()-gameStartTime);
+  const now = Date.now(), gap = now - (gameLastTick||now);
+  gameLastTick = now;
+  if(document.visibilityState === 'visible' && gap > 0) gameTotalMs += Math.min(gap, 2000);
+  localStorage.setItem('boppy_game_'+todayStr()+'_ms', String(gameTotalMs));
+  const elapsed = gameTotalMs;
   const pct = Math.max(0, 100 - (elapsed/GAME_STOP_MS)*100);
   const bar = document.getElementById('gameTimerBar');
   if(bar) bar.style.width = pct+'%';
@@ -7181,8 +7191,22 @@ function updateGameTimer(){
 
 function saveGameTime(){
   if(!gameStartTime) return;
-  const elapsed = gameTotalMs+(Date.now()-gameStartTime);
-  localStorage.setItem('boppy_game_'+todayStr()+'_ms', String(elapsed));
+  localStorage.setItem('boppy_game_'+todayStr()+'_ms', String(gameTotalMs));
+}
+/* 家長解鎖：答對一題大人的乘法，再給 30 分鐘 */
+function parentUnlockGame(){
+  const a=23+Math.floor(Math.random()*67), b=12+Math.floor(Math.random()*37);
+  const v=prompt('👨‍👩‍👦 家長確認：'+a+' × '+b+' ＝ ?');
+  if(v===null) return;
+  if(parseInt(String(v).trim(),10)!==a*b){ alert('答案不對喔，請家長再試一次。'); return; }
+  const k='boppy_game_'+todayStr();
+  localStorage.setItem(k+'_ms', String(Math.max(0, Math.min(gameUsedMs(), GAME_STOP_MS-30*60*1000))));
+  localStorage.removeItem(k);
+  gameTotalMs = gameUsedMs();
+  document.getElementById('gameStop25').classList.add('hidden');
+  if(gameStartTime){ document.getElementById('gameOverlay').classList.add('hidden'); gameStartTime=null; if(gameTimerID){ clearInterval(gameTimerID); gameTimerID=null; } }
+  renderGameCenter();
+  alert('✅ 已解鎖！今天可以再玩 30 分鐘。');
 }
 
 function closeGame(){
@@ -9200,7 +9224,7 @@ function load(){
 }
 
 // ===== BOOT =====
-init();
+// （init() 移到檔案最後，確保所有資料都載入後才啟動）
 
 
 /* ===================================================
@@ -9786,8 +9810,19 @@ function g3DailyCourse(subj){
   _g3Cache[key]=course; return course;
 }
 
+/* ===== 2026-10-25 計時修正：今天被誤算的遊戲時間歸零（只做一次）===== */
+try{
+  if(localStorage.getItem('boppy_time_fix_v14')!=='1'){
+    const k='boppy_game_'+new Date().toISOString().split('T')[0];
+    localStorage.removeItem(k); localStorage.removeItem(k+'_ms');
+    localStorage.setItem('boppy_time_fix_v14','1');
+  }
+}catch(e){}
+/* ===== 所有程式與資料都定義完成後才啟動 ===== */
+init();
+
 /* ===== 自動更新：發現新版本就重新載入 ===== */
-const APP_VERSION = '2026-10-25-v13';
+const APP_VERSION = '2026-10-25-v15';
 function checkAppUpdate(){
   try{
     fetch(location.pathname + '?_=' + Date.now(), {cache:'no-store'})
